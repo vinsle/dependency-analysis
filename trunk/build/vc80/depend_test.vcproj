@@ -209,6 +209,18 @@
 				RelativePath="..\..\src\tests\depend_test\depend_test_pch.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\tests\depend_test\FileSubjectTest.cpp"
+				>
+			</File>
+			<Filter
+				Name="mock"
+				>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockFileObserver.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
