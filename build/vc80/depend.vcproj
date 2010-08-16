@@ -182,6 +182,18 @@
 				RelativePath="..\..\src\libraries\depend\depend_pch.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\FileObserver_ABC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\FileVisitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\FileVisitor.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
