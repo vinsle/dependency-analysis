@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_test_MockLibrary_h
-#define depend_test_MockLibrary_h
+#ifndef depend_test_MockFileObserver_h
+#define depend_test_MockFileObserver_h
 
 #include "depend/FileObserver_ABC.h"
 
@@ -26,4 +26,4 @@ MOCK_BASE_CLASS( MockFileObserver, FileObserver_ABC )
 
 }
 
-#endif // depend_test_MockLibrary_h
+#endif // depend_test_MockFileObserver_h
