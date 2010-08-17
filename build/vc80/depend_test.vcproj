@@ -210,7 +210,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\depend_test\FileSubjectTest.cpp"
+				RelativePath="..\..\src\tests\depend_test\FileVisitorTest.cpp"
 				>
 			</File>
 			<Filter
