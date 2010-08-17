@@ -49,3 +49,17 @@ BOOST_FIXTURE_TEST_CASE( file_visitor_is_not_sensible_to_end_slash, Fixture )
     visitor.Visit( BOOST_RESOLVE( "file_visitor_lists_all_include_files_and_notifies_listeners/" ) );
     visitor.Unregister( observer );
 }
+
+BOOST_AUTO_TEST_CASE( no_extension_makes_file_visitor_notify_every_file )
+{
+    const std::vector< std::string > extensions;
+    FileVisitor visitor( extensions );
+    MockFileObserver observer;
+    visitor.Register( observer );
+    MOCK_EXPECT( observer, Notify ).once().with( "header.h" );
+    MOCK_EXPECT( observer, Notify ).once().with( "header.hpp" );
+    MOCK_EXPECT( observer, Notify ).once().with( "code.cpp" );
+    MOCK_EXPECT( observer, Notify ).once().with( "module/module-header.h" );
+    visitor.Visit( BOOST_RESOLVE( "file_visitor_lists_all_include_files_and_notifies_listeners/" ) );
+    visitor.Unregister( observer );
+}

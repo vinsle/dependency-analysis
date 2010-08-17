@@ -48,7 +48,7 @@ namespace
     template< typename T >
     bool CheckExtension( const boost::filesystem::path& path, const T& extensions )
     {
-        return std::find( extensions.begin(), extensions.end(), path.extension() ) != extensions.end();
+        return extensions.empty() || std::find( extensions.begin(), extensions.end(), path.extension() ) != extensions.end();
     }
     template< typename T, typename U >
     void Visit( const boost::filesystem::path& root, const boost::filesystem::path& current, T& observers, const U& extensions )
