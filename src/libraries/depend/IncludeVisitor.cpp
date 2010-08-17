@@ -8,6 +8,8 @@
 
 #include "depend_pch.h"
 #include "IncludeVisitor.h"
+#include "LineVisitor_ABC.h"
+#include "IncludeObserver_ABC.h"
 #include <algorithm>
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )
@@ -38,19 +40,10 @@ IncludeVisitor::~IncludeVisitor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: IncludeVisitor::Visit
-// Created: SLI 2010-08-17
-// -----------------------------------------------------------------------------
-void IncludeVisitor::Visit( std::istream& stream )
-{
-    visitor_.Visit( stream );
-}
-
-// -----------------------------------------------------------------------------
 // Name: IncludeVisitor::Register
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void IncludeVisitor::Register( LineObserver_ABC& observer )
+void IncludeVisitor::Register( IncludeObserver_ABC& observer )
 {
     observers_.push_back( &observer );
 }
@@ -59,7 +52,7 @@ void IncludeVisitor::Register( LineObserver_ABC& observer )
 // Name: IncludeVisitor::Unregister
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void IncludeVisitor::Unregister( LineObserver_ABC& observer )
+void IncludeVisitor::Unregister( IncludeObserver_ABC& observer )
 {
     observers_.erase( std::remove( observers_.begin(), observers_.end(), &observer ), observers_.end() );
 }
@@ -70,16 +63,19 @@ void IncludeVisitor::Unregister( LineObserver_ABC& observer )
 // -----------------------------------------------------------------------------
 void IncludeVisitor::Notify( const std::string& line )
 {
-    const mark_tag include( 1 );
+    const mark_tag internal_tag( 1 );
+    const mark_tag external_tag( 2 );
     const sregex spaces = *space;
-    const sregex opening_include = ( set = '<', '\"' );
-    const sregex closing_include = ( set = '>', '\"' );
-    const sregex file = opening_include >> *_ >> closing_include;
     const sregex keyword = "#" >> spaces >> "include";
-    const sregex rule = bos >> spaces >> keyword >> spaces >> ( include = file );
+    const sregex rule = bos >> spaces >> keyword >> spaces >>
+                        ( ( '\"' >> ( internal_tag = ( *_ ) ) >> '\"' )
+                        | ( '<'  >> ( external_tag = ( *_ ) ) >> '>' ) );
     sregex_iterator it( line.begin(), line.end(), rule );
     sregex_iterator end;
     if( it != end )
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
-            observer->Notify( (*it)[ include ] );
+            if( !std::string( (*it)[ internal_tag ] ).empty() )
+                observer->NotifyInternal( (*it)[ internal_tag ] );
+            else
+                observer->NotifyExternal( (*it)[ external_tag ] );
 }

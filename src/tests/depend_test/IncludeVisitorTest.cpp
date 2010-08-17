@@ -10,6 +10,7 @@
 #include "depend/IncludeVisitor.h"
 #include "MockLineObserver.h"
 #include "MockLineVisitor.h"
+#include "MockIncludeObserver.h"
 
 using namespace depend;
 
@@ -33,53 +34,41 @@ namespace
             : visitor( mockVisitor )
         {
             BOOST_REQUIRE( lineObserver );
-        }
-        IncludeVisitor visitor;
-    };
-}
-
-BOOST_FIXTURE_TEST_CASE( include_visitor_forwards_visit, IncludeFixture )
-{
-    std::istringstream ss;
-    MOCK_EXPECT( mockVisitor, Visit ).once().with( mock::same( ss ) );
-    visitor.Visit( ss );
-}
-
-namespace
-{
-    class RegularExpressionFixture : public IncludeFixture
-    {
-    public:
-        RegularExpressionFixture()
-        {
             visitor.Register( includeObserver );
         }
-        virtual ~RegularExpressionFixture()
+        virtual ~IncludeFixture()
         {
             visitor.Unregister( includeObserver );
         }
-        MockLineObserver includeObserver;
+        IncludeVisitor visitor;
+        MockIncludeObserver includeObserver;
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( include_visitor_does_not_notify_listeners_on_empty_line, RegularExpressionFixture )
+BOOST_FIXTURE_TEST_CASE( include_visitor_does_not_notify_listeners_on_empty_line, IncludeFixture )
 {
     lineObserver->Notify( "" );
 }
 
-BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_listeners_on_include_lines, RegularExpressionFixture )
+BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_listeners_with_filename, IncludeFixture )
 {
-    MOCK_EXPECT( includeObserver, Notify ).once().with( "\"test\"" );
+    MOCK_EXPECT( includeObserver, NotifyInternal ).once().with( "test" );
     lineObserver->Notify( "#include \"test\"" );
 }
 
-BOOST_FIXTURE_TEST_CASE( regular_expression_handles_spaces, RegularExpressionFixture )
+BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_with_external_include, IncludeFixture )
 {
-    MOCK_EXPECT( includeObserver, Notify ).once().with( "\"test\"" );
+    MOCK_EXPECT( includeObserver, NotifyExternal ).once().with( "test" );
+    lineObserver->Notify( "#include <test>" );
+}
+
+BOOST_FIXTURE_TEST_CASE( regular_expression_handles_spaces, IncludeFixture )
+{
+    MOCK_EXPECT( includeObserver, NotifyInternal ).once().with( "test" );
     lineObserver->Notify( "  #  include \t  \"test\"  " );
 }
 
-BOOST_FIXTURE_TEST_CASE( commented_line_is_not_an_include, RegularExpressionFixture )
+BOOST_FIXTURE_TEST_CASE( commented_line_is_not_an_include, IncludeFixture )
 {
     lineObserver->Notify( "//#include \"test\"" );
     lineObserver->Notify( "/*#include \"test\"" );

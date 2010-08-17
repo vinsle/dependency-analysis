@@ -12,6 +12,7 @@
 #include "depend/FileObserver_ABC.h"
 #include "depend/LineVisitor.h"
 #include "depend/IncludeVisitor.h"
+#include "depend/IncludeObserver_ABC.h"
 #include "depend/LineObserver_ABC.h"
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
@@ -41,10 +42,10 @@ namespace
             throw std::invalid_argument( "Invalid application option argument: missing path file" );
         return vm;
     }
-    class IncludeObserver : private depend::LineObserver_ABC
+    class IncludeObserver : private depend::IncludeObserver_ABC
     {
     public:
-        explicit IncludeObserver( depend::LineVisitor_ABC& visitor )
+        explicit IncludeObserver( depend::IncludeVisitor& visitor )
             : visitor_( visitor )
         {
             visitor_.Register( *this );
@@ -54,12 +55,16 @@ namespace
             visitor_.Unregister( *this );
         }
     private:
-        virtual void Notify( const std::string& line )
+        virtual void NotifyInternal( const std::string& file )
         {
-            std::cout << line << std::endl;
+            std::cout <<  "internal: " << file << std::endl;
+        }
+        virtual void NotifyExternal( const std::string& file )
+        {
+            std::cout << "external: " << file << std::endl;
         }
     private:
-        depend::LineVisitor_ABC& visitor_;
+        depend::IncludeVisitor& visitor_;
     };
     class FileObserver : private depend::FileObserver_ABC
     {
