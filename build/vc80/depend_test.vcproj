@@ -182,6 +182,10 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
+				RelativePath="..\..\src\tests\depend_test\ClassVisitorTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\depend_test_pch.cpp"
 				>
 				<FileConfiguration
@@ -231,7 +235,15 @@
 				Name="mock"
 				>
 				<File
+					RelativePath="..\..\src\tests\depend_test\MockClassObserver.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\tests\depend_test\MockFileObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockIncludeObserver.h"
 					>
 				</File>
 				<File
