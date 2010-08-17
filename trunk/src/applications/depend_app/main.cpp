@@ -11,6 +11,7 @@
 #include "depend/FileVisitor.h"
 #include "depend/FileObserver_ABC.h"
 #include "depend/LineVisitor.h"
+#include "depend/IncludeVisitor.h"
 #include "depend/LineObserver_ABC.h"
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
@@ -43,7 +44,7 @@ namespace
     class IncludeObserver : private depend::LineObserver_ABC
     {
     public:
-        explicit IncludeObserver( depend::LineVisitor& visitor )
+        explicit IncludeObserver( depend::LineVisitor_ABC& visitor )
             : visitor_( visitor )
         {
             visitor_.Register( *this );
@@ -55,11 +56,10 @@ namespace
     private:
         virtual void Notify( const std::string& line )
         {
-            if( boost::algorithm::contains( line, "#include" ) )
-                std::cout << line << std::endl;
+            std::cout << line << std::endl;
         }
     private:
-        depend::LineVisitor& visitor_;
+        depend::LineVisitor_ABC& visitor_;
     };
     class FileObserver : private depend::FileObserver_ABC
     {
@@ -79,7 +79,8 @@ namespace
         {
             std::cout << module_ << ":" << path << std::endl;
             depend::LineVisitor visitor;
-            IncludeObserver observer( visitor );
+            depend::IncludeVisitor includeVisitor( visitor );
+            IncludeObserver observer( includeVisitor );
             visitor.Visit( stream );
         }
     private:
