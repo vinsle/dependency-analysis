@@ -213,11 +213,19 @@
 				RelativePath="..\..\src\tests\depend_test\FileVisitorTest.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\tests\depend_test\ModuleVisitorTest.cpp"
+				>
+			</File>
 			<Filter
 				Name="mock"
 				>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockFileObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockModuleObserver.h"
 					>
 				</File>
 			</Filter>
