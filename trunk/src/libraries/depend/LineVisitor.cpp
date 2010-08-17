@@ -11,6 +11,7 @@
 #include "LineObserver_ABC.h"
 #include <algorithm>
 #include <boost/foreach.hpp>
+#include <string>
 
 using namespace depend;
 

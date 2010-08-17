@@ -9,14 +9,11 @@
 #ifndef depend_LineVisitor_h
 #define depend_LineVisitor_h
 
-#include <boost/noncopyable.hpp>
-#include <string>
+#include "LineVisitor_ABC.h"
 #include <vector>
-#include <istream>
 
 namespace depend
 {
-    class LineObserver_ABC;
 
 // =============================================================================
 /** @class  LineVisitor
@@ -24,7 +21,7 @@ namespace depend
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class LineVisitor : private boost::noncopyable
+class LineVisitor : public LineVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -35,9 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    void Visit( std::istream& stream );
-    void Register( LineObserver_ABC& observer );
-    void Unregister( LineObserver_ABC& observer );
+    virtual void Visit( std::istream& stream );
+    virtual void Register( LineObserver_ABC& observer );
+    virtual void Unregister( LineObserver_ABC& observer );
     //@}
 
 private:
