@@ -9,19 +9,21 @@
 #ifndef depend_IncludeVisitor_h
 #define depend_IncludeVisitor_h
 
-#include "LineVisitor_ABC.h"
 #include "LineObserver_ABC.h"
 #include <vector>
 
 namespace depend
 {
+    class LineVisitor_ABC;
+    class IncludeObserver_ABC;
+
 // =============================================================================
 /** @class  IncludeVisitor
     @brief  Include visitor
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class IncludeVisitor : public LineVisitor_ABC, private LineObserver_ABC
+class IncludeVisitor : private LineObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -32,9 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( std::istream& stream );
-    virtual void Register( LineObserver_ABC& observer );
-    virtual void Unregister( LineObserver_ABC& observer );
+    virtual void Register( IncludeObserver_ABC& observer );
+    virtual void Unregister( IncludeObserver_ABC& observer );
     //@}
 
 private:
@@ -46,7 +47,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< LineObserver_ABC* > T_Observers;
+    typedef std::vector< IncludeObserver_ABC* > T_Observers;
     //@}
 
 private:

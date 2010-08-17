@@ -6,35 +6,35 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_LineObserver_ABC_h
-#define depend_LineObserver_ABC_h
+#ifndef depend_IncludeObserver_ABC_h
+#define depend_IncludeObserver_ABC_h
 
 #include <boost/noncopyable.hpp>
-#include <string>
 
 namespace depend
 {
 // =============================================================================
-/** @class  LineObserver_ABC
-    @brief  Line observer definition
+/** @class  IncludeObserver_ABC
+    @brief  Include observer definition
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class LineObserver_ABC : private boost::noncopyable
+class IncludeObserver_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LineObserver_ABC() {}
-    virtual ~LineObserver_ABC() {}
+             IncludeObserver_ABC() {}
+    virtual ~IncludeObserver_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Notify( const std::string& line ) = 0;
+    virtual void NotifyInternal( const std::string& file ) = 0;
+    virtual void NotifyExternal( const std::string& file ) = 0;
     //@}
 };
 
 }
 
-#endif // depend_LineObserver_ABC_h
+#endif // depend_IncludeObserver_ABC_h
