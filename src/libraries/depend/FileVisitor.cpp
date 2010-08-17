@@ -9,6 +9,7 @@
 #include "depend_pch.h"
 #include "FileVisitor.h"
 #include "FileObserver_ABC.h"
+#include "istream_guard.h"
 #include <algorithm>
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
@@ -59,8 +60,14 @@ namespace
                     Visit( root, *it, observers, extensions );
                 else
                     if( CheckExtension( *it, extensions ) )
+                    {
+                        std::ifstream ifs( it->string().c_str() );
                         BOOST_FOREACH( T::value_type& observer, observers )
-                            observer->Notify( Relative( root, *it ) );
+                        {
+                            istream_guard guard( ifs );
+                            observer->Notify( Relative( root, *it ), ifs );
+                        }
+                    }
     }
 }
 

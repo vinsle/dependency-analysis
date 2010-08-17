@@ -51,7 +51,7 @@ namespace
             visitor_.Unregister( *this );
         }
     private:
-        virtual void Notify( const std::string& path )
+        virtual void Notify( const std::string& path, std::istream& /*stream*/ )
         {
             std::cout << module_ << ":" << path << std::endl;
         }

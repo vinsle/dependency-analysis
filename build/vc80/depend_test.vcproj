@@ -215,6 +215,10 @@
 				RelativePath="..\..\src\tests\depend_test\ModuleVisitorTest.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\tests\depend_test\StreamGuardTest.cpp"
+				>
+			</File>
 			<Filter
 				Name="mock"
 				>

@@ -21,7 +21,7 @@ namespace depend
 // =============================================================================
 MOCK_BASE_CLASS( MockFileObserver, FileObserver_ABC )
 {
-    MOCK_METHOD( Notify, 1 )
+    MOCK_METHOD( Notify, 2 )
 };
 
 }

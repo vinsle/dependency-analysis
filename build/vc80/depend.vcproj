@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\depend\istream_guard.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\depend\ModuleObserver_ABC.h"
 				>
 			</File>
