@@ -195,6 +195,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\depend\IncludeVisitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\IncludeVisitor.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\depend\LineObserver_ABC.h"
 				>
 			</File>
