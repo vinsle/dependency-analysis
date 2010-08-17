@@ -13,11 +13,35 @@
 
 using namespace depend;
 
-BOOST_AUTO_TEST_CASE( file_visitor_lists_all_include_files_and_notifies_listeners )
+namespace
 {
-    const std::vector< std::string > extensions = boost::assign::list_of( ".h" )( ".hpp" );
-    FileVisitor visitor( extensions );
-    MockFileObserver observer;
+    class Fixture
+    {
+    public:
+        Fixture()
+            : extensions( boost::assign::list_of( ".h" )( ".hpp" ) )
+            , visitor   ( extensions )
+        {
+            // NOTHING
+        }
+        const std::vector< std::string > extensions;
+        FileVisitor visitor;
+        MockFileObserver observer;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( file_visitor_lists_all_include_files_and_notifies_listeners, Fixture )
+{
+    visitor.Register( observer );
+    MOCK_EXPECT( observer, Notify ).once().with( "header.h" );
+    MOCK_EXPECT( observer, Notify ).once().with( "header.hpp" );
+    MOCK_EXPECT( observer, Notify ).once().with( "module/module-header.h" );
+    visitor.Visit( BOOST_RESOLVE( "file_visitor_lists_all_include_files_and_notifies_listeners" ) );
+    visitor.Unregister( observer );
+}
+
+BOOST_FIXTURE_TEST_CASE( file_visitor_is_not_sensible_to_end_slash, Fixture )
+{
     visitor.Register( observer );
     MOCK_EXPECT( observer, Notify ).once().with( "header.h" );
     MOCK_EXPECT( observer, Notify ).once().with( "header.hpp" );
