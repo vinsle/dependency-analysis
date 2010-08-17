@@ -75,7 +75,9 @@ namespace
     private:
         virtual void Notify( const std::string& module )
         {
-            const std::vector< std::string > extensions = boost::assign::list_of( ".h" )( ".hpp" )( ".inl" )( ".cpp" )( ".hh" )( ".cc" );
+            const std::vector< std::string > extensions = boost::assign::list_of( ".h" )( ".hh" )( ".hpp" )( ".hxx" )
+                                                                                ( ".inl" )( ".ipp" )( ".cxx" )
+                                                                                ( ".c" )( ".cc" )( ".cpp" );
             depend::FileVisitor visitor( extensions );
             FileObserver observer( visitor, module );
             visitor.Visit( path_ + "/" + module );
