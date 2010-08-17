@@ -13,7 +13,7 @@
 
 using namespace depend;
 
-BOOST_AUTO_TEST_CASE( file_visitor_lists_all_include_files_and_notify_listeners )
+BOOST_AUTO_TEST_CASE( file_visitor_lists_all_include_files_and_notifies_listeners )
 {
     const std::vector< std::string > extensions = boost::assign::list_of( ".h" )( ".hpp" );
     FileVisitor visitor( extensions );
@@ -22,6 +22,6 @@ BOOST_AUTO_TEST_CASE( file_visitor_lists_all_include_files_and_notify_listeners 
     MOCK_EXPECT( observer, Notify ).once().with( "header.h" );
     MOCK_EXPECT( observer, Notify ).once().with( "header.hpp" );
     MOCK_EXPECT( observer, Notify ).once().with( "module/module-header.h" );
-    visitor.Visit( BOOST_RESOLVE( "file_subject_lists_all_include_files_and_notify_listeners/" ) );
+    visitor.Visit( BOOST_RESOLVE( "file_visitor_lists_all_include_files_and_notifies_listeners/" ) );
     visitor.Unregister( observer );
 }
