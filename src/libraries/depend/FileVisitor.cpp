@@ -78,9 +78,9 @@ void FileVisitor::Visit( const std::string& filename )
 // Name: FileVisitor::Register
 // Created: SLI 2010-08-16
 // -----------------------------------------------------------------------------
-void FileVisitor::Register( FileObserver_ABC& oberver )
+void FileVisitor::Register( FileObserver_ABC& observer )
 {
-    observers_.push_back( &oberver );
+    observers_.push_back( &observer );
 }
 
 // -----------------------------------------------------------------------------
