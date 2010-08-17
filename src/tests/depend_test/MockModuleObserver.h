@@ -17,7 +17,7 @@ namespace depend
 /** @class  MockModuleObserver
     @brief  Mock module observer
 */
-// Created: SLI 2010-08-16
+// Created: SLI 2010-08-17
 // =============================================================================
 MOCK_BASE_CLASS( MockModuleObserver, ModuleObserver_ABC )
 {

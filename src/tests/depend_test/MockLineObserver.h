@@ -17,7 +17,7 @@ namespace depend
 /** @class  MockLineObserver
     @brief  Mock line observer
 */
-// Created: SLI 2010-08-16
+// Created: SLI 2010-08-17
 // =============================================================================
 MOCK_BASE_CLASS( MockLineObserver, LineObserver_ABC )
 {
