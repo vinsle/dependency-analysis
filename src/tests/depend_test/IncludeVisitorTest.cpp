@@ -8,7 +8,6 @@
 
 #include "depend_test_pch.h"
 #include "depend/IncludeVisitor.h"
-#include "MockLineObserver.h"
 #include "MockLineVisitor.h"
 #include "MockIncludeObserver.h"
 
