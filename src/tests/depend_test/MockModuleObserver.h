@@ -15,7 +15,7 @@ namespace depend
 {
 // =============================================================================
 /** @class  MockModuleObserver
-    @brief  Mock file observer
+    @brief  Mock module observer
 */
 // Created: SLI 2010-08-16
 // =============================================================================
