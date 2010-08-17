@@ -70,7 +70,7 @@ namespace
 // -----------------------------------------------------------------------------
 void FileVisitor::Visit( const std::string& filename )
 {
-    const boost::filesystem::path root( filename );
+    const boost::filesystem::path root( filename + "/" );
     ::Visit( root, root, observers_, extensions_ );
 }
 
