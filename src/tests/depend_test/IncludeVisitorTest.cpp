@@ -45,13 +45,42 @@ BOOST_FIXTURE_TEST_CASE( include_visitor_forwards_visit, IncludeFixture )
     visitor.Visit( ss );
 }
 
-BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_listeners_only_with_include_lines, IncludeFixture )
+namespace
 {
-    MockLineObserver includeObserver;
-    visitor.Register( includeObserver );
-    MOCK_EXPECT( includeObserver, Notify ).once().with( "#include \"test\"" );
+    class RegularExpressionFixture : public IncludeFixture
+    {
+    public:
+        RegularExpressionFixture()
+        {
+            visitor.Register( includeObserver );
+        }
+        virtual ~RegularExpressionFixture()
+        {
+            visitor.Unregister( includeObserver );
+        }
+        MockLineObserver includeObserver;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( include_visitor_does_not_notify_listeners_on_empty_line, RegularExpressionFixture )
+{
+    lineObserver->Notify( "" );
+}
+
+BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_listeners_on_include_lines, RegularExpressionFixture )
+{
+    MOCK_EXPECT( includeObserver, Notify ).once().with( "\"test\"" );
     lineObserver->Notify( "#include \"test\"" );
-    lineObserver->Notify( "include \"test\"" );
-    lineObserver->Notify( "\"test\"" );
-    visitor.Unregister( includeObserver );
+}
+
+BOOST_FIXTURE_TEST_CASE( regular_expression_handles_spaces, RegularExpressionFixture )
+{
+    MOCK_EXPECT( includeObserver, Notify ).once().with( "\"test\"" );
+    lineObserver->Notify( "  #  include \t  \"test\"  " );
+}
+
+BOOST_FIXTURE_TEST_CASE( commented_line_is_not_an_include, RegularExpressionFixture )
+{
+    lineObserver->Notify( "//#include \"test\"" );
+    lineObserver->Notify( "/*#include \"test\"" );
 }
