@@ -195,7 +195,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\depend\istream_guard.h"
+				RelativePath="..\..\src\libraries\depend\LineObserver_ABC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\LineVisitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\LineVisitor.h"
 				>
 			</File>
 			<File
@@ -210,6 +218,14 @@
 				RelativePath="..\..\src\libraries\depend\ModuleVisitor.h"
 				>
 			</File>
+			<Filter
+				Name="tools"
+				>
+				<File
+					RelativePath="..\..\src\libraries\depend\istream_guard.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
