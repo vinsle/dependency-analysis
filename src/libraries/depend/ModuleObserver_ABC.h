@@ -30,7 +30,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Notify( const std::string& path ) = 0;
+    virtual void Notify( const std::string& module ) = 0;
     //@}
 };
 
