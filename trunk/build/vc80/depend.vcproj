@@ -194,6 +194,18 @@
 				RelativePath="..\..\src\libraries\depend\FileVisitor.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\ModuleObserver_ABC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\ModuleVisitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\ModuleVisitor.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
