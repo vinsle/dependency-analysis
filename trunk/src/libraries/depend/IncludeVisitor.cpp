@@ -10,9 +10,13 @@
 #include "IncludeVisitor.h"
 #include <algorithm>
 #include <boost/foreach.hpp>
-#include <boost/algorithm/string.hpp>
+#pragma warning( push, 0 )
+#pragma warning( disable: 4996 )
+#include <boost/xpressive/xpressive.hpp>
+#pragma warning( pop )
 
 using namespace depend;
+using namespace boost::xpressive;
 
 // -----------------------------------------------------------------------------
 // Name: IncludeVisitor constructor
@@ -66,7 +70,16 @@ void IncludeVisitor::Unregister( LineObserver_ABC& observer )
 // -----------------------------------------------------------------------------
 void IncludeVisitor::Notify( const std::string& line )
 {
-    if( boost::algorithm::contains( line, "#include" ) )
+    const mark_tag include( 1 );
+    const sregex spaces = *space;
+    const sregex opening_include = ( set = '<', '\"' );
+    const sregex closing_include = ( set = '>', '\"' );
+    const sregex file = opening_include >> *_ >> closing_include;
+    const sregex keyword = "#" >> spaces >> "include";
+    const sregex rule = bos >> spaces >> keyword >> spaces >> ( include = file );
+    sregex_iterator it( line.begin(), line.end(), rule );
+    sregex_iterator end;
+    if( it != end )
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
-            observer->Notify( line );
+            observer->Notify( (*it)[ include ] );
 }
