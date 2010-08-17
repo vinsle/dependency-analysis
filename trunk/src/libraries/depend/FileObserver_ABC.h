@@ -10,6 +10,7 @@
 #define depend_FileObserver_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <istream>
 
 namespace depend
 {
@@ -30,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Notify( const std::string& path ) = 0;
+    virtual void Notify( const std::string& path, std::istream& stream ) = 0;
     //@}
 };
 
