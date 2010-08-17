@@ -10,9 +10,12 @@
 #include "depend/ModuleObserver_ABC.h"
 #include "depend/FileVisitor.h"
 #include "depend/FileObserver_ABC.h"
+#include "depend/LineVisitor.h"
+#include "depend/LineObserver_ABC.h"
 #include <boost/assign.hpp>
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 #include <iostream>
 
 namespace bpo = boost::program_options;
@@ -37,6 +40,27 @@ namespace
             throw std::invalid_argument( "Invalid application option argument: missing path file" );
         return vm;
     }
+    class IncludeObserver : private depend::LineObserver_ABC
+    {
+    public:
+        explicit IncludeObserver( depend::LineVisitor& visitor )
+            : visitor_( visitor )
+        {
+            visitor_.Register( *this );
+        }
+        virtual ~IncludeObserver()
+        {
+            visitor_.Unregister( *this );
+        }
+    private:
+        virtual void Notify( const std::string& line )
+        {
+            if( boost::algorithm::contains( line, "#include" ) )
+                std::cout << line << std::endl;
+        }
+    private:
+        depend::LineVisitor& visitor_;
+    };
     class FileObserver : private depend::FileObserver_ABC
     {
     public:
@@ -46,14 +70,17 @@ namespace
         {
             visitor_.Register( *this );
         }
-        ~FileObserver()
+        virtual ~FileObserver()
         {
             visitor_.Unregister( *this );
         }
     private:
-        virtual void Notify( const std::string& path, std::istream& /*stream*/ )
+        virtual void Notify( const std::string& path, std::istream& stream )
         {
             std::cout << module_ << ":" << path << std::endl;
+            depend::LineVisitor visitor;
+            IncludeObserver observer( visitor );
+            visitor.Visit( stream );
         }
     private:
         depend::FileVisitor& visitor_;
@@ -68,7 +95,7 @@ namespace
         {
             visitor_.Register( *this );
         }
-        ~ModuleObserver()
+        virtual ~ModuleObserver()
         {
             visitor_.Unregister( *this );
         }
