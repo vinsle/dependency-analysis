@@ -157,6 +157,10 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
+				RelativePath="..\..\src\libraries\depend\ClassObserver_ABC.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\depend\depend_pch.cpp"
 				>
 				<FileConfiguration
@@ -187,31 +191,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\depend\FileVisitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\FileVisitor.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\IncludeVisitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\IncludeVisitor.h"
+				RelativePath="..\..\src\libraries\depend\IncludeObserver_ABC.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\depend\LineObserver_ABC.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\LineVisitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\LineVisitor.h"
 				>
 			</File>
 			<File
@@ -222,19 +206,55 @@
 				RelativePath="..\..\src\libraries\depend\ModuleObserver_ABC.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\ModuleVisitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\ModuleVisitor.h"
-				>
-			</File>
 			<Filter
 				Name="tools"
 				>
 				<File
 					RelativePath="..\..\src\libraries\depend\istream_guard.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="visitors"
+				>
+				<File
+					RelativePath="..\..\src\libraries\depend\ClassVisitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ClassVisitor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\FileVisitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\FileVisitor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\IncludeVisitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\IncludeVisitor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\LineVisitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\LineVisitor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleVisitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleVisitor.h"
 					>
 				</File>
 			</Filter>
