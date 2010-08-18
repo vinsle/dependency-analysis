@@ -9,7 +9,7 @@
 #ifndef depend_ModuleVisitor_ABC_h
 #define depend_ModuleVisitor_ABC_h
 
-#include <boost/noncopyable.hpp>
+#include "Subject.h"
 #include <string>
 
 namespace depend
@@ -22,7 +22,7 @@ namespace depend
 */
 // Created: SLI 2010-08-18
 // =============================================================================
-class ModuleVisitor_ABC : private boost::noncopyable
+class ModuleVisitor_ABC : public Subject< ModuleObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -34,8 +34,6 @@ public:
     //! @name Operations
     //@{
     virtual void Visit( const std::string& filename ) = 0;
-    virtual void Register( ModuleObserver_ABC& observer ) = 0;
-    virtual void Unregister( ModuleObserver_ABC& observer ) = 0;
     //@}
 
 };

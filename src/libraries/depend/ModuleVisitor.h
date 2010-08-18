@@ -10,7 +10,6 @@
 #define depend_ModuleVisitor_h
 
 #include "ModuleVisitor_ABC.h"
-#include <vector>
 
 namespace depend
 {
@@ -34,20 +33,6 @@ public:
     //! @name Operations
     //@{
     virtual void Visit( const std::string& filename );
-    virtual void Register( ModuleObserver_ABC& observer );
-    virtual void Unregister( ModuleObserver_ABC& observer );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< ModuleObserver_ABC* > T_Observers;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_Observers observers_;
     //@}
 };
 

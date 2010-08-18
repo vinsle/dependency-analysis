@@ -221,6 +221,10 @@
 					RelativePath="..\..\src\libraries\depend\istream_guard.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\Subject.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="visitors"

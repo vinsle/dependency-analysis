@@ -10,7 +10,6 @@
 #include "FileVisitor.h"
 #include "FileObserver_ABC.h"
 #include "istream_guard.h"
-#include <algorithm>
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
@@ -79,22 +78,4 @@ void FileVisitor::Visit( const std::string& filename )
 {
     const boost::filesystem::path root( filename + "/" );
     ::Visit( root, root, observers_, extensions_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FileVisitor::Register
-// Created: SLI 2010-08-16
-// -----------------------------------------------------------------------------
-void FileVisitor::Register( FileObserver_ABC& observer )
-{
-    observers_.push_back( &observer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FileVisitor::Unregister
-// Created: SLI 2010-08-16
-// -----------------------------------------------------------------------------
-void FileVisitor::Unregister( FileObserver_ABC& observer )
-{
-    observers_.erase( std::remove( observers_.begin(), observers_.end(), &observer ), observers_.end() );
 }

@@ -10,11 +10,9 @@
 #define depend_LineVisitor_h
 
 #include "LineVisitor_ABC.h"
-#include <vector>
 
 namespace depend
 {
-
 // =============================================================================
 /** @class  LineVisitor
     @brief  Line visitor
@@ -33,20 +31,6 @@ public:
     //! @name Operations
     //@{
     virtual void Visit( std::istream& stream );
-    virtual void Register( LineObserver_ABC& observer );
-    virtual void Unregister( LineObserver_ABC& observer );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< LineObserver_ABC* > T_Observers;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_Observers observers_;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #include "IncludeVisitor.h"
 #include "LineVisitor_ABC.h"
 #include "IncludeObserver_ABC.h"
-#include <algorithm>
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )
 #pragma warning( disable: 4996 )
@@ -37,24 +36,6 @@ IncludeVisitor::IncludeVisitor( LineVisitor_ABC& visitor )
 IncludeVisitor::~IncludeVisitor()
 {
     visitor_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: IncludeVisitor::Register
-// Created: SLI 2010-08-17
-// -----------------------------------------------------------------------------
-void IncludeVisitor::Register( IncludeObserver_ABC& observer )
-{
-    observers_.push_back( &observer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: IncludeVisitor::Unregister
-// Created: SLI 2010-08-17
-// -----------------------------------------------------------------------------
-void IncludeVisitor::Unregister( IncludeObserver_ABC& observer )
-{
-    observers_.erase( std::remove( observers_.begin(), observers_.end(), &observer ), observers_.end() );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,8 +9,8 @@
 #ifndef depend_IncludeVisitor_h
 #define depend_IncludeVisitor_h
 
+#include "Subject.h"
 #include "LineObserver_ABC.h"
-#include <vector>
 
 namespace depend
 {
@@ -23,19 +23,13 @@ namespace depend
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class IncludeVisitor : private LineObserver_ABC
+class IncludeVisitor : public Subject< IncludeObserver_ABC >, private LineObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit IncludeVisitor( LineVisitor_ABC& visitor );
     virtual ~IncludeVisitor();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Register( IncludeObserver_ABC& observer );
-    virtual void Unregister( IncludeObserver_ABC& observer );
     //@}
 
 private:
@@ -45,16 +39,9 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< IncludeObserver_ABC* > T_Observers;
-    //@}
-
-private:
     //! @name Member data
     //@{
     LineVisitor_ABC& visitor_;
-    T_Observers observers_;
     //@}
 };
 

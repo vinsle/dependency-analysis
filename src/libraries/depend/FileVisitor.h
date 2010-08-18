@@ -10,11 +10,9 @@
 #define depend_FileVisitor_h
 
 #include "FileVisitor_ABC.h"
-#include <vector>
 
 namespace depend
 {
-
 // =============================================================================
 /** @class  FileVisitor
     @brief  File visitor
@@ -39,21 +37,12 @@ public:
     //! @name Operations
     //@{
     virtual void Visit( const std::string& filename );
-    virtual void Register( FileObserver_ABC& observer );
-    virtual void Unregister( FileObserver_ABC& observer );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< FileObserver_ABC* > T_Observers;
     //@}
 
 private:
     //! @name Member data
     //@{
     const T_Extensions extensions_;
-    T_Observers observers_;
     //@}
 };
 
