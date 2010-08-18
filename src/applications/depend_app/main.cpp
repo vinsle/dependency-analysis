@@ -10,6 +10,7 @@
 #include "depend/FileObserver_ABC.h"
 #include "depend/IncludeObserver_ABC.h"
 #include "depend/LineObserver_ABC.h"
+#include "depend/ClassObserver_ABC.h"
 #include "depend/Facade.h"
 #pragma warning( push, 0 )
 #pragma warning( disable: 4512 )
@@ -38,10 +39,34 @@ namespace
             throw std::invalid_argument( "Invalid application option argument: missing path file" );
         return vm;
     }
+    class ClassObserver : private depend::ClassObserver_ABC
+    {
+    public:
+        explicit ClassObserver( depend::Subject< depend::ClassObserver_ABC >& facade )
+            : facade_( facade )
+        {
+            facade_.Register( *this );
+        }
+        virtual ~ClassObserver()
+        {
+            facade_.Unregister( *this );
+        }
+    private:
+        virtual void NotifyClass( const std::string& name )
+        {
+            std::cout <<  "class " << name << std::endl;
+        }
+        virtual void NotifyAbstractness()
+        {
+            std::cout <<  "abstract" << std::endl;
+        }
+    private:
+        depend::Subject< depend::ClassObserver_ABC >& facade_;
+    };
     class IncludeObserver : private depend::IncludeObserver_ABC
     {
     public:
-        explicit IncludeObserver( depend::Subject< IncludeObserver_ABC >& facade )
+        explicit IncludeObserver( depend::Subject< depend::IncludeObserver_ABC >& facade )
             : facade_( facade )
         {
             facade_.Register( *this );
@@ -60,12 +85,12 @@ namespace
             std::cout << "external: " << file << std::endl;
         }
     private:
-        depend::Subject< IncludeObserver_ABC >& facade_;
+        depend::Subject< depend::IncludeObserver_ABC >& facade_;
     };
     class FileObserver : private depend::FileObserver_ABC
     {
     public:
-        FileObserver( depend::Subject< FileObserver_ABC >& facade )
+        FileObserver( depend::Subject< depend::FileObserver_ABC >& facade )
             : facade_( facade )
         {
             facade_.Register( *this );
@@ -80,12 +105,12 @@ namespace
             std::cout << "file: " << path << std::endl;
         }
     private:
-        depend::Subject< FileObserver_ABC >& facade_;
+        depend::Subject< depend::FileObserver_ABC >& facade_;
     };
     class ModuleObserver : private depend::ModuleObserver_ABC
     {
     public:
-        ModuleObserver( depend::Subject< ModuleObserver_ABC >& facade )
+        ModuleObserver( depend::Subject< depend::ModuleObserver_ABC >& facade )
             : facade_( facade )
         {
             facade_.Register( *this );
@@ -100,7 +125,7 @@ namespace
             std::cout << "module: " << module << std::endl;
         }
     private:
-        depend::Subject< ModuleObserver_ABC >& facade_;
+        depend::Subject< depend::ModuleObserver_ABC >& facade_;
     };
 }
 
@@ -116,6 +141,7 @@ int main( int argc, char* argv[] )
         ModuleObserver moduleObserver( facade );
         FileObserver fileObserver( facade );
         IncludeObserver includeObserver( facade );
+        ClassObserver classObserver( facade );
         facade.Visit( path );
         return EXIT_SUCCESS;
     }
