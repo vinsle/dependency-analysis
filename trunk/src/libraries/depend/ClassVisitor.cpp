@@ -10,7 +10,6 @@
 #include "ClassVisitor.h"
 #include "LineVisitor_ABC.h"
 #include "ClassObserver_ABC.h"
-#include <algorithm>
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )
 #pragma warning( disable: 4996 )
@@ -39,24 +38,6 @@ ClassVisitor::ClassVisitor( LineVisitor_ABC& visitor )
 ClassVisitor::~ClassVisitor()
 {
     visitor_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClassVisitor::Register
-// Created: SLI 2010-08-17
-// -----------------------------------------------------------------------------
-void ClassVisitor::Register( ClassObserver_ABC& observer )
-{
-    observers_.push_back( &observer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClassVisitor::Unregister
-// Created: SLI 2010-08-17
-// -----------------------------------------------------------------------------
-void ClassVisitor::Unregister( ClassObserver_ABC& observer )
-{
-    observers_.erase( std::remove( observers_.begin(), observers_.end(), &observer ), observers_.end() );
 }
 
 namespace

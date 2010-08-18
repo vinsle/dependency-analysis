@@ -9,7 +9,7 @@
 #ifndef depend_LineVisitor_ABC_h
 #define depend_LineVisitor_ABC_h
 
-#include <boost/noncopyable.hpp>
+#include "Subject.h"
 #include <istream>
 
 namespace depend
@@ -22,7 +22,7 @@ namespace depend
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class LineVisitor_ABC : private boost::noncopyable
+class LineVisitor_ABC : public Subject< LineObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -34,8 +34,6 @@ public:
     //! @name Operations
     //@{
     virtual void Visit( std::istream& stream ) = 0;
-    virtual void Register( LineObserver_ABC& observer ) = 0;
-    virtual void Unregister( LineObserver_ABC& observer ) = 0;
     //@}
 };
 

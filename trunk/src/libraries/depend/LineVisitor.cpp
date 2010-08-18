@@ -9,7 +9,6 @@
 #include "depend_pch.h"
 #include "LineVisitor.h"
 #include "LineObserver_ABC.h"
-#include <algorithm>
 #include <boost/foreach.hpp>
 #include <string>
 
@@ -43,22 +42,4 @@ void LineVisitor::Visit( std::istream& stream )
     while( std::getline( stream, line ) )
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
             observer->Notify( line );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LineVisitor::Register
-// Created: SLI 2010-08-17
-// -----------------------------------------------------------------------------
-void LineVisitor::Register( LineObserver_ABC& observer )
-{
-    observers_.push_back( &observer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LineVisitor::Unregister
-// Created: SLI 2010-08-17
-// -----------------------------------------------------------------------------
-void LineVisitor::Unregister( LineObserver_ABC& observer )
-{
-    observers_.erase( std::remove( observers_.begin(), observers_.end(), &observer ), observers_.end() );
 }
