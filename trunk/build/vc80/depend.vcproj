@@ -203,10 +203,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\depend\LineVisitor_ABC.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\depend\ModuleObserver_ABC.h"
 				>
 			</File>

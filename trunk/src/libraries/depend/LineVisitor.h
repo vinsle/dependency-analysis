@@ -9,17 +9,19 @@
 #ifndef depend_LineVisitor_h
 #define depend_LineVisitor_h
 
-#include "LineVisitor_ABC.h"
+#include "Subject.h"
 
 namespace depend
 {
+    class LineObserver_ABC;
+
 // =============================================================================
 /** @class  LineVisitor
     @brief  Line visitor
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class LineVisitor : public LineVisitor_ABC
+class LineVisitor : public Subject< LineObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -30,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( std::istream& stream );
+    void Visit( std::istream& stream );
     //@}
 };
 
