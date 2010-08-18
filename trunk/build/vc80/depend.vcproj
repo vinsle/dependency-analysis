@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\depend\FileVisitor_ABC.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\depend\IncludeObserver_ABC.h"
 				>
 			</File>

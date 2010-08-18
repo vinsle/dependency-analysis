@@ -9,13 +9,11 @@
 #ifndef depend_FileVisitor_h
 #define depend_FileVisitor_h
 
-#include <boost/noncopyable.hpp>
+#include "FileVisitor_ABC.h"
 #include <vector>
-#include <string>
 
 namespace depend
 {
-    class FileObserver_ABC;
 
 // =============================================================================
 /** @class  FileVisitor
@@ -23,7 +21,7 @@ namespace depend
 */
 // Created: SLI 2010-08-16
 // =============================================================================
-class FileVisitor : private boost::noncopyable
+class FileVisitor : public FileVisitor_ABC
 {
 public:
     //! @name Types
@@ -40,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    void Visit( const std::string& filename );
-    void Register( FileObserver_ABC& observer );
-    void Unregister( FileObserver_ABC& observer );
+    virtual void Visit( const std::string& filename );
+    virtual void Register( FileObserver_ABC& observer );
+    virtual void Unregister( FileObserver_ABC& observer );
     //@}
 
 private:
