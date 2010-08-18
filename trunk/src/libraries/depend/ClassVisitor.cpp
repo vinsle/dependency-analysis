@@ -66,7 +66,7 @@ namespace
     {
         const mark_tag class_tag( 1 );
         const sregex spaces = *space;
-        const sregex rule = bos >> spaces >> "class" >> spaces >> ( class_tag = ( *alnum ) ) >> spaces >> *( set = ':' );
+        const sregex rule = bos >> spaces >> ( as_xpr( "class" ) | as_xpr( "struct" ) ) >> spaces >> ( class_tag = ( *alnum ) ) >> spaces >> *( set = ':' );
         sregex_iterator it( line.begin(), line.end(), rule );
         sregex_iterator end;
         if( it != end )
@@ -80,7 +80,7 @@ namespace
     bool DetectAbstractness( const std::string& line )
     {
         const sregex spaces = *space;
-        const sregex rule = ')' >> spaces >> repeat< 0, 1 >( "const" ) >> spaces >> '=' >> spaces >> '0' >> spaces >> *( set = ';' ) >> spaces >> eos;
+        const sregex rule = ')' >> spaces >> !as_xpr( "const" ) >> spaces >> '=' >> spaces >> '0' >> spaces >> *( set = ';' ) >> spaces >> eos;
         sregex_iterator it( line.begin(), line.end(), rule );
         sregex_iterator end;
         return  it != end;

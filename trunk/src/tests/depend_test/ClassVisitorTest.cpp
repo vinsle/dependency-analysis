@@ -55,6 +55,12 @@ BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_listeners_with_class_name, Class
     lineObserver->Notify( "class test" );
 }
 
+BOOST_FIXTURE_TEST_CASE( class_visitor_also_notifies_listeners_with_struct, ClassFixture )
+{
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
+    lineObserver->Notify( "struct test" );
+}
+
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_with_commented_class, ClassFixture )
 {
     lineObserver->Notify( " // class test" );
