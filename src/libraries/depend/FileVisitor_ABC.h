@@ -1,11 +1,10 @@
-// *****************************************************************************
 //
-// This file is part of a MASA library or program.
-// Refer to the included end-user license agreement for restrictions.
+//  Copyright Silvin Lubecki 2010
 //
-// Copyright (c) 2010 MASA Group
+//  Distributed under the Boost Software License, Version 1.0. (See
+//  accompanying file LICENSE_1_0.txt or copy at
+//  http://www.boost.org/LICENSE_1_0.txt)
 //
-// *****************************************************************************
 
 #ifndef depend_FileVisitor_ABC_h
 #define depend_FileVisitor_ABC_h
