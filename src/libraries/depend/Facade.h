@@ -10,13 +10,13 @@
 #define depend_Facade_h
 
 #include "Subject.h"
-#include "ModuleObserver_ABC.h"
-#include "FileObserver_ABC.h"
-#include "LineObserver_ABC.h"
-#include "IncludeObserver_ABC.h"
 
 namespace depend
 {
+    class ModuleObserver_ABC;
+    class FileObserver_ABC;
+    class LineObserver_ABC;
+    class IncludeObserver_ABC;
     class ModuleVisitor;
     class FileVisitor;
     class LineVisitor;

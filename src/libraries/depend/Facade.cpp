@@ -12,6 +12,10 @@
 #include "FileVisitor.h"
 #include "LineVisitor.h"
 #include "IncludeVisitor.h"
+#include "ModuleObserver_ABC.h"
+#include "FileObserver_ABC.h"
+#include "LineObserver_ABC.h"
+#include "IncludeObserver_ABC.h"
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
 
