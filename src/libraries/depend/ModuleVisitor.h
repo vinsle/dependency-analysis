@@ -9,7 +9,7 @@
 #ifndef depend_ModuleVisitor_h
 #define depend_ModuleVisitor_h
 
-#include "ModuleVisitor_ABC.h"
+#include "Subject.h"
 
 namespace depend
 {
@@ -21,7 +21,7 @@ namespace depend
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class ModuleVisitor : public ModuleVisitor_ABC
+class ModuleVisitor : public Subject< ModuleObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( const std::string& filename );
+    void Visit( const std::string& filename );
     //@}
 };
 

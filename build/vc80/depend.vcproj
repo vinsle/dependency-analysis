@@ -191,10 +191,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\depend\FileVisitor_ABC.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\depend\IncludeObserver_ABC.h"
 				>
 			</File>
@@ -204,10 +200,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\depend\ModuleObserver_ABC.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\ModuleVisitor_ABC.h"
 				>
 			</File>
 			<Filter
