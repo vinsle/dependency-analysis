@@ -8,7 +8,7 @@
 
 #include "depend_test_pch.h"
 #include "depend/ClassVisitor.h"
-#include "MockLineVisitor.h"
+#include "MockSubject.h"
 #include "MockClassObserver.h"
 
 using namespace depend;
@@ -24,7 +24,7 @@ namespace
             MOCK_EXPECT( mockVisitor, Unregister ).once();
         }
         LineObserver_ABC* lineObserver;
-        MockLineVisitor mockVisitor;
+        MockSubject< LineObserver_ABC > mockVisitor;
     };
     class ClassFixture : public Fixture
     {
