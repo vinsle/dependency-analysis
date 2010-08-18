@@ -6,25 +6,18 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include "depend/ModuleVisitor.h"
 #include "depend/ModuleObserver_ABC.h"
-#include "depend/FileVisitor.h"
 #include "depend/FileObserver_ABC.h"
-#include "depend/LineVisitor.h"
-#include "depend/IncludeVisitor.h"
 #include "depend/IncludeObserver_ABC.h"
 #include "depend/LineObserver_ABC.h"
-#include <boost/assign.hpp>
+#include "depend/Facade.h"
 #pragma warning( push, 0 )
 #pragma warning( disable: 4512 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
 #include <iostream>
 
 namespace bpo = boost::program_options;
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -48,79 +41,66 @@ namespace
     class IncludeObserver : private depend::IncludeObserver_ABC
     {
     public:
-        explicit IncludeObserver( depend::IncludeVisitor& visitor )
-            : visitor_( visitor )
+        explicit IncludeObserver( depend::Subject< IncludeObserver_ABC >& facade )
+            : facade_( facade )
         {
-            visitor_.Register( *this );
+            facade_.Register( *this );
         }
         virtual ~IncludeObserver()
         {
-            visitor_.Unregister( *this );
+            facade_.Unregister( *this );
         }
     private:
-        virtual void NotifyInternal( const std::string& file )
+        virtual void NotifyInternalInclude( const std::string& file )
         {
             std::cout <<  "internal: " << file << std::endl;
         }
-        virtual void NotifyExternal( const std::string& file )
+        virtual void NotifyExternalInclude( const std::string& file )
         {
             std::cout << "external: " << file << std::endl;
         }
     private:
-        depend::IncludeVisitor& visitor_;
+        depend::Subject< IncludeObserver_ABC >& facade_;
     };
     class FileObserver : private depend::FileObserver_ABC
     {
     public:
-        FileObserver( depend::FileVisitor& visitor, const std::string& module )
-            : visitor_( visitor )
-            , module_ ( module )
+        FileObserver( depend::Subject< FileObserver_ABC >& facade )
+            : facade_( facade )
         {
-            visitor_.Register( *this );
+            facade_.Register( *this );
         }
         virtual ~FileObserver()
         {
-            visitor_.Unregister( *this );
+            facade_.Unregister( *this );
         }
     private:
-        virtual void Notify( const std::string& path, std::istream& stream )
+        virtual void NotifyFile( const std::string& path, std::istream& /*stream*/ )
         {
-            std::cout << module_ << ":" << path << std::endl;
-            depend::LineVisitor visitor;
-            depend::IncludeVisitor includeVisitor( visitor );
-            IncludeObserver observer( includeVisitor );
-            visitor.Visit( stream );
+            std::cout << "file: " << path << std::endl;
         }
     private:
-        depend::FileVisitor& visitor_;
-        const std::string module_;
+        depend::Subject< FileObserver_ABC >& facade_;
     };
     class ModuleObserver : private depend::ModuleObserver_ABC
     {
     public:
-        ModuleObserver( depend::ModuleVisitor& visitor, const std::string& path )
-            : visitor_( visitor )
-            , path_   ( path )
+        ModuleObserver( depend::Subject< ModuleObserver_ABC >& facade )
+            : facade_( facade )
         {
-            visitor_.Register( *this );
+            facade_.Register( *this );
         }
         virtual ~ModuleObserver()
         {
-            visitor_.Unregister( *this );
+            facade_.Unregister( *this );
         }
     private:
-        virtual void Notify( const std::string& module )
+        virtual void NotifyModule( const std::string& module )
         {
-            const std::vector< std::string > extensions = boost::assign::list_of( ".h" )( ".hh" )( ".hpp" )( ".hxx" )
-                                                                                ( ".inl" )( ".ipp" )( ".cxx" )
-                                                                                ( ".c" )( ".cc" )( ".cpp" );
-            depend::FileVisitor visitor( extensions );
-            FileObserver observer( visitor, module );
-            visitor.Visit( path_ + "/" + module );
+            std::cout << "module: " << module << std::endl;
         }
     private:
-        depend::ModuleVisitor& visitor_;
-        const std::string path_;
+        depend::Subject< ModuleObserver_ABC >& facade_;
     };
 }
 
@@ -132,9 +112,11 @@ int main( int argc, char* argv[] )
         if( vm.count( "help" ) )
             return EXIT_SUCCESS;
         const std::string path = vm[ "path" ].as< std::string >();
-        depend::ModuleVisitor visitor;
-        ModuleObserver observer( visitor, path );
-        visitor.Visit( path );
+        depend::Facade facade;
+        ModuleObserver moduleObserver( facade );
+        FileObserver fileObserver( facade );
+        IncludeObserver includeObserver( facade );
+        facade.Visit( path );
         return EXIT_SUCCESS;
     }
     catch( std::exception& e )

@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Notify( const std::string& path, std::istream& stream ) = 0;
+    virtual void NotifyFile( const std::string& path, std::istream& stream ) = 0;
     //@}
 };
 

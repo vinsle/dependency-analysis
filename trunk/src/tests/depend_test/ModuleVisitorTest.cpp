@@ -17,8 +17,8 @@ BOOST_AUTO_TEST_CASE( module_visitor_lists_all_first_level_directories_and_notif
     ModuleVisitor visitor;
     MockModuleObserver observer;
     visitor.Register( observer );
-    MOCK_EXPECT( observer, Notify ).once().with( "first" );
-    MOCK_EXPECT( observer, Notify ).once().with( "second" );
+    MOCK_EXPECT( observer, NotifyModule ).once().with( "first" );
+    MOCK_EXPECT( observer, NotifyModule ).once().with( "second" );
     visitor.Visit( BOOST_RESOLVE( "module_visitor_lists_all_first_level_directories_and_notifies_listeners" ) );
     visitor.Unregister( observer );
 }

@@ -46,89 +46,89 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_listeners_on_empty_line, ClassFixture )
 {
-    lineObserver->Notify( "" );
+    lineObserver->NotifyLine( "" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_listeners_with_class_name, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->Notify( "class test" );
+    lineObserver->NotifyLine( "class test" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_also_notifies_listeners_with_struct, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->Notify( "struct test" );
+    lineObserver->NotifyLine( "struct test" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_with_commented_class, ClassFixture )
 {
-    lineObserver->Notify( " // class test" );
-    lineObserver->Notify( "/*class test" );
+    lineObserver->NotifyLine( " // class test" );
+    lineObserver->NotifyLine( "/*class test" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_inheritance, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->Notify( "class test:public test_abc" );
+    lineObserver->NotifyLine( "class test:public test_abc" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_abstractness, ClassFixture )
 {
     mock::sequence s;
     MOCK_EXPECT( classObserver, NotifyClass ).once().in( s );
-    lineObserver->Notify( "class test" );
+    lineObserver->NotifyLine( "class test" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    lineObserver->Notify( "void method() = 0" );
+    lineObserver->NotifyLine( "void method() = 0" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_abstractness_if_statement, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once();
-    lineObserver->Notify( "class test" );
-    lineObserver->Notify( "a=0;" );
+    lineObserver->NotifyLine( "class test" );
+    lineObserver->NotifyLine( "a=0;" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_const_abstractness, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once();
-    lineObserver->Notify( "class test" );
+    lineObserver->NotifyLine( "class test" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once();
-    lineObserver->Notify( "void method() const = 0" );
+    lineObserver->NotifyLine( "void method() const = 0" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_spaces, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once();
-    lineObserver->Notify( "class test" );
+    lineObserver->NotifyLine( "class test" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once();
-    lineObserver->Notify( "void method() const=0" );
+    lineObserver->NotifyLine( "void method() const=0" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_abstractness_if_no_class, ClassFixture )
 {
-    lineObserver->Notify( "void method() = 0" );
+    lineObserver->NotifyLine( "void method() = 0" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_abstractness_only_once, ClassFixture )
 {
     mock::sequence s;
     MOCK_EXPECT( classObserver, NotifyClass ).once().in( s );
-    lineObserver->Notify( "class test" );
+    lineObserver->NotifyLine( "class test" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    lineObserver->Notify( "void method() = 0" );
-    lineObserver->Notify( "void method() = 0" );
+    lineObserver->NotifyLine( "void method() = 0" );
+    lineObserver->NotifyLine( "void method() = 0" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_multiple_classes_in_the_same_file, ClassFixture )
 {
     mock::sequence s;
     MOCK_EXPECT( classObserver, NotifyClass ).once().in( s );
-    lineObserver->Notify( "class test" );
+    lineObserver->NotifyLine( "class test" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    lineObserver->Notify( "void method() = 0" );
+    lineObserver->NotifyLine( "void method() = 0" );
     MOCK_EXPECT( classObserver, NotifyClass ).once().in( s );
-    lineObserver->Notify( "class test2" );
+    lineObserver->NotifyLine( "class test2" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    lineObserver->Notify( "void method() = 0" );
+    lineObserver->NotifyLine( "void method() = 0" );
 }

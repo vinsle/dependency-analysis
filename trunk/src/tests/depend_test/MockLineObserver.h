@@ -21,7 +21,7 @@ namespace depend
 // =============================================================================
 MOCK_BASE_CLASS( MockLineObserver, LineObserver_ABC )
 {
-    MOCK_METHOD( Notify, 1 )
+    MOCK_METHOD( NotifyLine, 1 )
 };
 
 }

@@ -10,6 +10,7 @@
 #define depend_ModuleObserver_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <string>
 
 namespace depend
 {
@@ -30,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Notify( const std::string& module ) = 0;
+    virtual void NotifyModule( const std::string& module ) = 0;
     //@}
 };
 

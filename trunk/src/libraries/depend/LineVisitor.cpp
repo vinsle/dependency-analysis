@@ -41,5 +41,5 @@ void LineVisitor::Visit( std::istream& stream )
     std::string line;
     while( std::getline( stream, line ) )
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
-            observer->Notify( line );
+            observer->NotifyLine( line );
 }

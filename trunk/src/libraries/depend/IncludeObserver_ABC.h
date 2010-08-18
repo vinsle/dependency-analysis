@@ -30,8 +30,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyInternal( const std::string& file ) = 0;
-    virtual void NotifyExternal( const std::string& file ) = 0;
+    virtual void NotifyInternalInclude( const std::string& file ) = 0;
+    virtual void NotifyExternalInclude( const std::string& file ) = 0;
     //@}
 };
 
