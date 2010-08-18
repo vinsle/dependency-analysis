@@ -61,12 +61,6 @@ BOOST_FIXTURE_TEST_CASE( class_name_can_be_valid_c_identifier, ClassFixture )
     lineObserver->NotifyLine( "class _test_Name_3" );
 }
 
-BOOST_FIXTURE_TEST_CASE( class_visitor_also_notifies_listeners_with_struct, ClassFixture )
-{
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyLine( "struct test" );
-}
-
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notifies_forward_declaration, ClassFixture )
 {
     lineObserver->NotifyLine( "class test;" );
