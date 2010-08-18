@@ -74,8 +74,8 @@ namespace
 // Name: FileVisitor::Visit
 // Created: SLI 2010-08-16
 // -----------------------------------------------------------------------------
-void FileVisitor::Visit( const std::string& filename )
+void FileVisitor::Visit( const std::string& path )
 {
-    const boost::filesystem::path root( filename + "/" );
+    const boost::filesystem::path root( path + "/" );
     ::Visit( root, root, observers_, extensions_ );
 }

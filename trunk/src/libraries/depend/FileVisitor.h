@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( const std::string& filename );
+    virtual void Visit( const std::string& path );
     //@}
 
 private:
