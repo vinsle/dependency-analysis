@@ -14,7 +14,6 @@
 
 namespace depend
 {
-    class LineVisitor_ABC;
     class ClassObserver_ABC;
 
 // =============================================================================
@@ -28,7 +27,7 @@ class ClassVisitor : public Subject< ClassObserver_ABC >, private LineObserver_A
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ClassVisitor( LineVisitor_ABC& visitor );
+    explicit ClassVisitor( Subject< LineObserver_ABC >& visitor );
     virtual ~ClassVisitor();
     //@}
 
@@ -41,7 +40,7 @@ private:
 private:
     //! @name Member data
     //@{
-    LineVisitor_ABC& visitor_;
+    Subject< LineObserver_ABC >& visitor_;
     bool insideClass_;
     bool abstract_;
     //@}
