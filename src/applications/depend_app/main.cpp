@@ -15,7 +15,10 @@
 #include "depend/IncludeObserver_ABC.h"
 #include "depend/LineObserver_ABC.h"
 #include <boost/assign.hpp>
+#pragma warning( push, 0 )
+#pragma warning( disable: 4512 )
 #include <boost/program_options.hpp>
+#pragma warning( pop )
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 #include <iostream>
