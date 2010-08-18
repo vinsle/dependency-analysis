@@ -8,7 +8,6 @@
 
 #include "depend_pch.h"
 #include "ClassVisitor.h"
-#include "LineVisitor_ABC.h"
 #include "ClassObserver_ABC.h"
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )
@@ -23,7 +22,7 @@ using namespace boost::xpressive;
 // Name: ClassVisitor constructor
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-ClassVisitor::ClassVisitor( LineVisitor_ABC& visitor )
+ClassVisitor::ClassVisitor( Subject< LineObserver_ABC >& visitor )
     : visitor_    ( visitor )
     , insideClass_( false )
     , abstract_   ( false )

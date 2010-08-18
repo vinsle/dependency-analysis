@@ -8,7 +8,6 @@
 
 #include "depend_pch.h"
 #include "IncludeVisitor.h"
-#include "LineVisitor_ABC.h"
 #include "IncludeObserver_ABC.h"
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )
@@ -23,7 +22,7 @@ using namespace boost::xpressive;
 // Name: IncludeVisitor constructor
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-IncludeVisitor::IncludeVisitor( LineVisitor_ABC& visitor )
+IncludeVisitor::IncludeVisitor( Subject< LineObserver_ABC >& visitor )
     : visitor_( visitor )
 {
     visitor_.Register( *this );

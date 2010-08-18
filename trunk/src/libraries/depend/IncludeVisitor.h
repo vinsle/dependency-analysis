@@ -14,7 +14,6 @@
 
 namespace depend
 {
-    class LineVisitor_ABC;
     class IncludeObserver_ABC;
 
 // =============================================================================
@@ -28,7 +27,7 @@ class IncludeVisitor : public Subject< IncludeObserver_ABC >, private LineObserv
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IncludeVisitor( LineVisitor_ABC& visitor );
+    explicit IncludeVisitor( Subject< LineObserver_ABC >& visitor );
     virtual ~IncludeVisitor();
     //@}
 
@@ -41,7 +40,7 @@ private:
 private:
     //! @name Member data
     //@{
-    LineVisitor_ABC& visitor_;
+    Subject< LineObserver_ABC >& visitor_;
     //@}
 };
 
