@@ -38,10 +38,10 @@ IncludeVisitor::~IncludeVisitor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: IncludeVisitor::Notify
+// Name: IncludeVisitor::NotifyLine
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void IncludeVisitor::Notify( const std::string& line )
+void IncludeVisitor::NotifyLine( const std::string& line )
 {
     const mark_tag internal_tag( 1 );
     const mark_tag external_tag( 2 );
@@ -55,7 +55,7 @@ void IncludeVisitor::Notify( const std::string& line )
     if( it != end )
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
             if( !std::string( (*it)[ internal_tag ] ).empty() )
-                observer->NotifyInternal( (*it)[ internal_tag ] );
+                observer->NotifyInternalInclude( (*it)[ internal_tag ] );
             else
-                observer->NotifyExternal( (*it)[ external_tag ] );
+                observer->NotifyExternalInclude( (*it)[ external_tag ] );
 }

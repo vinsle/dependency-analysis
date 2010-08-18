@@ -68,10 +68,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClassVisitor::Notify
+// Name: ClassVisitor::NotifyLine
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void ClassVisitor::Notify( const std::string& line )
+void ClassVisitor::NotifyLine( const std::string& line )
 {
     if( DetectClass( line, observers_ ) )
     {

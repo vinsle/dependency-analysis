@@ -64,7 +64,7 @@ namespace
                         BOOST_FOREACH( T::value_type& observer, observers )
                         {
                             istream_guard guard( ifs );
-                            observer->Notify( Relative( root, *it ), ifs );
+                            observer->NotifyFile( Relative( root, *it ), ifs );
                         }
                     }
     }

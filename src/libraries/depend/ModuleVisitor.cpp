@@ -51,5 +51,5 @@ void ModuleVisitor::Visit( const std::string& filename )
     for( boost::filesystem::directory_iterator it( path ); it != boost::filesystem::directory_iterator(); ++it )
         if( IsDirectory( *it ) )
             BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
-                observer->Notify( it->filename() );
+                observer->NotifyModule( it->filename() );
 }

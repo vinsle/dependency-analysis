@@ -21,8 +21,8 @@ namespace depend
 // =============================================================================
 MOCK_BASE_CLASS( MockIncludeObserver, IncludeObserver_ABC )
 {
-    MOCK_METHOD( NotifyInternal, 1 )
-    MOCK_METHOD( NotifyExternal, 1 )
+    MOCK_METHOD( NotifyInternalInclude, 1 )
+    MOCK_METHOD( NotifyExternalInclude, 1 )
 };
 
 }

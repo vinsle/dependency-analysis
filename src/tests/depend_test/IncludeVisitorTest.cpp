@@ -8,8 +8,8 @@
 
 #include "depend_test_pch.h"
 #include "depend/IncludeVisitor.h"
-#include "MockLineVisitor.h"
 #include "MockIncludeObserver.h"
+#include "MockSubject.h"
 
 using namespace depend;
 
@@ -24,7 +24,7 @@ namespace
             MOCK_EXPECT( mockVisitor, Unregister ).once();
         }
         LineObserver_ABC* lineObserver;
-        MockLineVisitor mockVisitor;
+        MockSubject< LineObserver_ABC > mockVisitor;
     };
     class IncludeFixture : public Fixture
     {
@@ -46,29 +46,29 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( include_visitor_does_not_notify_listeners_on_empty_line, IncludeFixture )
 {
-    lineObserver->Notify( "" );
+    lineObserver->NotifyLine( "" );
 }
 
 BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_listeners_with_filename, IncludeFixture )
 {
-    MOCK_EXPECT( includeObserver, NotifyInternal ).once().with( "test" );
-    lineObserver->Notify( "#include \"test\"" );
+    MOCK_EXPECT( includeObserver, NotifyInternalInclude ).once().with( "test" );
+    lineObserver->NotifyLine( "#include \"test\"" );
 }
 
 BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_with_external_include, IncludeFixture )
 {
-    MOCK_EXPECT( includeObserver, NotifyExternal ).once().with( "test" );
-    lineObserver->Notify( "#include <test>" );
+    MOCK_EXPECT( includeObserver, NotifyExternalInclude ).once().with( "test" );
+    lineObserver->NotifyLine( "#include <test>" );
 }
 
 BOOST_FIXTURE_TEST_CASE( regular_expression_handles_spaces, IncludeFixture )
 {
-    MOCK_EXPECT( includeObserver, NotifyInternal ).once().with( "test" );
-    lineObserver->Notify( "  #  include \t  \"test\"  " );
+    MOCK_EXPECT( includeObserver, NotifyInternalInclude ).once().with( "test" );
+    lineObserver->NotifyLine( "  #  include \t  \"test\"  " );
 }
 
 BOOST_FIXTURE_TEST_CASE( commented_line_is_not_an_include, IncludeFixture )
 {
-    lineObserver->Notify( "//#include \"test\"" );
-    lineObserver->Notify( "/*#include \"test\"" );
+    lineObserver->NotifyLine( "//#include \"test\"" );
+    lineObserver->NotifyLine( "/*#include \"test\"" );
 }
