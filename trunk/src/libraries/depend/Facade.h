@@ -17,10 +17,12 @@ namespace depend
     class FileObserver_ABC;
     class LineObserver_ABC;
     class IncludeObserver_ABC;
+    class ClassObserver_ABC;
     class ModuleVisitor;
     class FileVisitor;
     class LineVisitor;
     class IncludeVisitor;
+    class ClassVisitor;
 
 // =============================================================================
 /** @class  Facade
@@ -32,6 +34,7 @@ class Facade : public Subject< ModuleObserver_ABC >
              , public Subject< FileObserver_ABC >
              , public Subject< LineObserver_ABC >
              , public Subject< IncludeObserver_ABC >
+             , public Subject< ClassObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -51,10 +54,12 @@ public:
     virtual void Register( FileObserver_ABC& observer );
     virtual void Register( LineObserver_ABC& observer );
     virtual void Register( IncludeObserver_ABC& observer );
+    virtual void Register( ClassObserver_ABC& observer );
     virtual void Unregister( ModuleObserver_ABC& observer );
     virtual void Unregister( FileObserver_ABC& observer );
     virtual void Unregister( LineObserver_ABC& observer );
     virtual void Unregister( IncludeObserver_ABC& observer );
+    virtual void Unregister( ClassObserver_ABC& observer );
     //@}
 
 private:
@@ -64,6 +69,7 @@ private:
     std::auto_ptr< FileVisitor > fileVisitor_;
     std::auto_ptr< LineVisitor > lineVisitor_;
     std::auto_ptr< IncludeVisitor > includeVisitor_;
+    std::auto_ptr< ClassVisitor > classVisitor_;
     //@}
 };
 

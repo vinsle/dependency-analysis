@@ -12,10 +12,12 @@
 #include "FileVisitor.h"
 #include "LineVisitor.h"
 #include "IncludeVisitor.h"
+#include "ClassVisitor.h"
 #include "ModuleObserver_ABC.h"
 #include "FileObserver_ABC.h"
 #include "LineObserver_ABC.h"
 #include "IncludeObserver_ABC.h"
+#include "ClassObserver_ABC.h"
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
 
@@ -37,6 +39,7 @@ Facade::Facade()
     , fileVisitor_   ( new FileVisitor( extensions ) )
     , lineVisitor_   ( new LineVisitor() )
     , includeVisitor_( new IncludeVisitor( *lineVisitor_ ) )
+    , classVisitor_  ( new ClassVisitor( *lineVisitor_ ) )
 {
     // NOTHING
 }
@@ -153,6 +156,15 @@ void Facade::Register( IncludeObserver_ABC& observer )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade::Register
+// Created: SLI 2010-08-18
+// -----------------------------------------------------------------------------
+void Facade::Register( ClassObserver_ABC& observer )
+{
+    classVisitor_->Register( observer );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade::Unregister
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
@@ -186,4 +198,13 @@ void Facade::Unregister( LineObserver_ABC& observer )
 void Facade::Unregister( IncludeObserver_ABC& observer )
 {
     includeVisitor_->Unregister( observer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::Unregister
+// Created: SLI 2010-08-18
+// -----------------------------------------------------------------------------
+void Facade::Unregister( ClassObserver_ABC& observer )
+{
+    classVisitor_->Unregister( observer );
 }
