@@ -67,6 +67,19 @@ BOOST_FIXTURE_TEST_CASE( class_visitor_also_notifies_listeners_with_struct, Clas
     lineObserver->NotifyLine( "struct test" );
 }
 
+BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notifies_forward_declaration, ClassFixture )
+{
+    lineObserver->NotifyLine( "class test;" );
+}
+
+BOOST_FIXTURE_TEST_CASE( class_definition_on_same_line_is_not_a_forward_declaration, ClassFixture )
+{
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
+    lineObserver->NotifyLine( "class test{};" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
+    lineObserver->NotifyLine( "class test:public test_abc{ virtual void method() { 1+1; } };" );
+}
+
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_with_commented_class, ClassFixture )
 {
     lineObserver->NotifyLine( " // class test" );

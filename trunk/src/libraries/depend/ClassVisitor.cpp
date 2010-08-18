@@ -46,7 +46,8 @@ namespace
     {
         const mark_tag class_tag( 1 );
         const sregex spaces = *space;
-        const sregex rule = bos >> spaces >> ( as_xpr( "class" ) | as_xpr( "struct" ) ) >> spaces >> ( class_tag = ( *( alnum | as_xpr( '_' ) ) ) ) >> spaces >> !( set = ':' );
+        const sregex rule = bos >> spaces >> ( as_xpr( "class" ) | as_xpr( "struct" ) ) >> spaces >> ( class_tag = ( *( alnum | as_xpr( '_' ) ) ) ) >> spaces >> !( set = ':' )
+            >> *_ >> ( ( '{' >> *_ >> '}' >> spaces >> ';' ) | ( spaces >> ~after( ';' ) ) ) >> spaces >> eos;
         sregex_iterator it( line.begin(), line.end(), rule );
         sregex_iterator end;
         if( it != end )
