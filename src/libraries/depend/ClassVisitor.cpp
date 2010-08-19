@@ -22,7 +22,7 @@ using namespace boost::xpressive;
 // Name: ClassVisitor constructor
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-ClassVisitor::ClassVisitor( Subject< LineObserver_ABC >& visitor )
+ClassVisitor::ClassVisitor( Subject< UncommentedLineObserver_ABC >& visitor )
     : visitor_    ( visitor )
     , insideClass_( false )
     , abstract_   ( false )
@@ -46,8 +46,8 @@ namespace
     {
         const mark_tag class_tag( 1 );
         const sregex spaces = *space;
-        const sregex rule = bos >> spaces >> "class" >> spaces >> ( class_tag = ( *( alnum | as_xpr( '_' ) ) ) ) >> spaces >> !( set = ':' )
-            >> *_ >> ( ( '{' >> *_ >> '}' >> spaces >> ';' ) | ( spaces >> ~after( ';' ) ) ) >> spaces >> eos;
+        const sregex identifier = *( alnum | as_xpr( '_' ) );
+        const sregex rule = "class" >> spaces >> ( class_tag = ( identifier ) ) >> spaces >> ( ( set = ':', '{' ) | eos );
         sregex_iterator it( line.begin(), line.end(), rule );
         sregex_iterator end;
         if( it != end )
@@ -69,10 +69,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClassVisitor::NotifyLine
+// Name: ClassVisitor::NotifyUncommentedLine
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void ClassVisitor::NotifyLine( const std::string& line )
+void ClassVisitor::NotifyUncommentedLine( const std::string& line )
 {
     if( DetectClass( line, observers_ ) )
     {

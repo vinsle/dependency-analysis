@@ -231,6 +231,10 @@
 				RelativePath="..\..\src\tests\depend_test\StreamGuardTest.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\tests\depend_test\UncommentedLineVisitorTest.cpp"
+				>
+			</File>
 			<Filter
 				Name="mock"
 				>
@@ -256,6 +260,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockSubject.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockUncommentedLineObserver.h"
 					>
 				</File>
 			</Filter>

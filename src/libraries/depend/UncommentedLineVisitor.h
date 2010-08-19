@@ -6,44 +6,44 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_IncludeVisitor_h
-#define depend_IncludeVisitor_h
+#ifndef depend_UncommentedLineVisitor_h
+#define depend_UncommentedLineVisitor_h
 
 #include "Subject.h"
-#include "UncommentedLineObserver_ABC.h"
+#include "LineObserver_ABC.h"
 
 namespace depend
 {
-    class IncludeObserver_ABC;
+    class UncommentedLineObserver_ABC;
 
 // =============================================================================
-/** @class  IncludeVisitor
-    @brief  Include visitor
+/** @class  UncommentedLineVisitor
+    @brief  UncommentedLine visitor
 */
-// Created: SLI 2010-08-17
+// Created: SLI 2010-08-19
 // =============================================================================
-class IncludeVisitor : public Subject< IncludeObserver_ABC >, private UncommentedLineObserver_ABC
+class UncommentedLineVisitor : public Subject< UncommentedLineObserver_ABC >, private LineObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IncludeVisitor( Subject< UncommentedLineObserver_ABC >& visitor );
-    virtual ~IncludeVisitor();
+    explicit UncommentedLineVisitor( Subject< LineObserver_ABC >& visitor );
+    virtual ~UncommentedLineVisitor();
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void NotifyUncommentedLine( const std::string& line );
+    virtual void NotifyLine( const std::string& line );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Subject< UncommentedLineObserver_ABC >& visitor_;
+    Subject< LineObserver_ABC >& visitor_;
     //@}
 };
 
 }
 
-#endif // depend_IncludeVisitor_h
+#endif // depend_UncommentedLineVisitor_h

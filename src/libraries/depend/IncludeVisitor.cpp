@@ -22,7 +22,7 @@ using namespace boost::xpressive;
 // Name: IncludeVisitor constructor
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-IncludeVisitor::IncludeVisitor( Subject< LineObserver_ABC >& visitor )
+IncludeVisitor::IncludeVisitor( Subject< UncommentedLineObserver_ABC >& visitor )
     : visitor_( visitor )
 {
     visitor_.Register( *this );
@@ -38,16 +38,16 @@ IncludeVisitor::~IncludeVisitor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: IncludeVisitor::NotifyLine
+// Name: IncludeVisitor::NotifyUncommentedLine
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void IncludeVisitor::NotifyLine( const std::string& line )
+void IncludeVisitor::NotifyUncommentedLine( const std::string& line )
 {
     const mark_tag internal_tag( 1 );
     const mark_tag external_tag( 2 );
     const sregex spaces = *space;
     const sregex keyword = "#" >> spaces >> "include";
-    const sregex rule = bos >> spaces >> keyword >> spaces >>
+    const sregex rule = keyword >> spaces >>
                         ( ( '\"' >> ( internal_tag = ( *_ ) ) >> '\"' )
                         | ( '<'  >> ( external_tag = ( *_ ) ) >> '>' ) );
     sregex_iterator it( line.begin(), line.end(), rule );
