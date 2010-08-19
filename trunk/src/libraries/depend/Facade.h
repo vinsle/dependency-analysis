@@ -21,6 +21,7 @@ namespace depend
     class ModuleVisitor;
     class FileVisitor;
     class LineVisitor;
+    class UncommentedLineVisitor;
     class IncludeVisitor;
     class ClassVisitor;
 
@@ -68,6 +69,7 @@ private:
     std::auto_ptr< ModuleVisitor > moduleVisitor_;
     std::auto_ptr< FileVisitor > fileVisitor_;
     std::auto_ptr< LineVisitor > lineVisitor_;
+    std::auto_ptr< UncommentedLineVisitor > uncommentedLineVisitor_;
     std::auto_ptr< IncludeVisitor > includeVisitor_;
     std::auto_ptr< ClassVisitor > classVisitor_;
     //@}

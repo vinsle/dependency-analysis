@@ -11,6 +11,7 @@
 #include "ModuleVisitor.h"
 #include "FileVisitor.h"
 #include "LineVisitor.h"
+#include "UncommentedLineVisitor.h"
 #include "IncludeVisitor.h"
 #include "ClassVisitor.h"
 #include "ModuleObserver_ABC.h"
@@ -35,11 +36,12 @@ namespace
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
 Facade::Facade()
-    : moduleVisitor_ ( new ModuleVisitor() )
-    , fileVisitor_   ( new FileVisitor( extensions ) )
-    , lineVisitor_   ( new LineVisitor() )
-    , includeVisitor_( new IncludeVisitor( *lineVisitor_ ) )
-    , classVisitor_  ( new ClassVisitor( *lineVisitor_ ) )
+    : moduleVisitor_         ( new ModuleVisitor() )
+    , fileVisitor_           ( new FileVisitor( extensions ) )
+    , lineVisitor_           ( new LineVisitor() )
+    , uncommentedLineVisitor_( new UncommentedLineVisitor( *lineVisitor_ ) )
+    , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
+    , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
 {
     // NOTHING
 }

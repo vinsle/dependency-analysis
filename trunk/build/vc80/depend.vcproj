@@ -210,6 +210,10 @@
 				RelativePath="..\..\src\libraries\depend\ModuleObserver_ABC.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\libraries\depend\UncommentedLineObserver_ABC.h"
+				>
+			</File>
 			<Filter
 				Name="tools"
 				>
@@ -263,6 +267,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\ModuleVisitor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\UncommentedLineVisitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\UncommentedLineVisitor.h"
 					>
 				</File>
 			</Filter>
