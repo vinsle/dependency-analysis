@@ -182,6 +182,10 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
+				RelativePath="..\..\src\tests\depend_test\ClassMetricTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\ClassVisitorTest.cpp"
 				>
 			</File>
@@ -238,6 +242,10 @@
 			<Filter
 				Name="mock"
 				>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockClassMetricVisitor.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockClassObserver.h"
 					>
