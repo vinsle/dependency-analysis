@@ -77,8 +77,6 @@ namespace
     private:
         virtual void NotifyFile( const std::string& /*path*/, std::istream& stream )
         {
-            //IncludeVisitor includeVisitor( visitor );
-            //IncludeObserver observer( includeVisitor );
             lineVisitor_.Visit( stream );
         }
     private:
