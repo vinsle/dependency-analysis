@@ -87,6 +87,21 @@ BOOST_FIXTURE_TEST_CASE( class_visitor_handles_inheritance, ClassFixture )
     lineObserver->NotifyUncommentedLine( "class test:public test_abc" );
 }
 
+BOOST_FIXTURE_TEST_CASE( class_visitor_handles_templates, ClassFixture )
+{
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
+    lineObserver->NotifyUncommentedLine( "class< T > test" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
+    lineObserver->NotifyUncommentedLine( "class< T, U > test" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
+    lineObserver->NotifyUncommentedLine( "class< < T, U >, K > test" );
+}
+
+BOOST_FIXTURE_TEST_CASE( class_visitor_handles_template_forward_declaration, ClassFixture )
+{
+    lineObserver->NotifyUncommentedLine( "template< typename Type > class test;" );
+}
+
 BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_abstractness, ClassFixture )
 {
     mock::sequence s;

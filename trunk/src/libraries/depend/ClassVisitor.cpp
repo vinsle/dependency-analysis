@@ -47,7 +47,8 @@ namespace
         const mark_tag class_tag( 1 );
         const sregex spaces = *space;
         const sregex identifier = *( alnum | as_xpr( '_' ) );
-        const sregex rule = "class" >> spaces >> ( class_tag = ( identifier ) ) >> spaces >> ( ( set = ':', '{' ) | eos );
+        const sregex templates = as_xpr( '<' ) >> *_ >> as_xpr( '>' );
+        const sregex rule = "class" >> spaces >> *templates >> spaces >> ( class_tag = ( identifier ) ) >> spaces >> ( ( set = ':', '{' ) | eos );
         sregex_iterator it( line.begin(), line.end(), rule );
         sregex_iterator end;
         if( it != end )
