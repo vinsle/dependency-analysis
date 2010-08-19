@@ -216,6 +216,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\DependencyMetricTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\FileVisitorTest.cpp"
 				>
 			</File>
@@ -248,6 +252,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockClassObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockDependencyMetricVisitor.h"
 					>
 				</File>
 				<File

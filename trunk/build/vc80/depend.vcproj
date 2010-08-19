@@ -293,6 +293,18 @@
 					RelativePath="..\..\src\libraries\depend\ClassMetricVisitor_ABC.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\DependencyMetric.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\DependencyMetric.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\DependencyMetricVisitor_ABC.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>
