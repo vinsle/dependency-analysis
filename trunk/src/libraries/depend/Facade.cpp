@@ -14,6 +14,7 @@
 #include "UncommentedLineVisitor.h"
 #include "IncludeVisitor.h"
 #include "ClassVisitor.h"
+#include "ClassMetric.h"
 #include "ModuleObserver_ABC.h"
 #include "FileObserver_ABC.h"
 #include "LineObserver_ABC.h"
@@ -42,6 +43,7 @@ Facade::Facade()
     , uncommentedLineVisitor_( new UncommentedLineVisitor( *lineVisitor_ ) )
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
+    , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
 {
     // NOTHING
 }

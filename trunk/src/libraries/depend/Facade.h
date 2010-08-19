@@ -24,6 +24,7 @@ namespace depend
     class UncommentedLineVisitor;
     class IncludeVisitor;
     class ClassVisitor;
+    class ClassMetric;
 
 // =============================================================================
 /** @class  Facade
@@ -72,6 +73,7 @@ private:
     std::auto_ptr< UncommentedLineVisitor > uncommentedLineVisitor_;
     std::auto_ptr< IncludeVisitor > includeVisitor_;
     std::auto_ptr< ClassVisitor > classVisitor_;
+    std::auto_ptr< ClassMetric > classMetric_;
     //@}
 };
 
