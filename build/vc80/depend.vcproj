@@ -278,6 +278,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="metrics"
+				>
+				<File
+					RelativePath="..\..\src\libraries\depend\ClassMetric.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ClassMetric.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ClassMetricVisitor_ABC.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
