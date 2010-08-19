@@ -43,12 +43,12 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( class_metric_computes_abstractness_on_module, MetricFixture )
+BOOST_FIXTURE_TEST_CASE( class_metric_count_classes_and_abstract_classes_on_module, MetricFixture )
 {
-    moduleObserver->NotifyModule( "test" );
+    moduleObserver->NotifyModule( "module" );
     classObserver->NotifyClass( "class" );
     classObserver->NotifyAbstractness();
     MockClassMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyClassMetric ).once().with( "test", 1u, 1u );
+    MOCK_EXPECT( visitor, NotifyClassMetric ).once().with( "module", 1u, 1u );
     metric.Apply( visitor );
 }
