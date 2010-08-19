@@ -10,6 +10,7 @@
 #define depend_IncludeObserver_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <string>
 
 namespace depend
 {
