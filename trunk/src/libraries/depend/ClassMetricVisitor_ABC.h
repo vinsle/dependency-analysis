@@ -9,6 +9,9 @@
 #ifndef depend_ClassMetricVisitor_ABC_h
 #define depend_ClassMetricVisitor_ABC_h
 
+#include <boost/noncopyable.hpp>
+#include <string>
+
 namespace depend
 {
 // =============================================================================
@@ -17,7 +20,7 @@ namespace depend
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class ClassMetricVisitor_ABC
+class ClassMetricVisitor_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
