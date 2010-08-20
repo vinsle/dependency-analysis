@@ -16,13 +16,9 @@
 #include "ClassVisitor.h"
 #include "ClassMetric.h"
 #include "DependencyMetric.h"
-#include "ModuleObserver_ABC.h"
-#include "FileObserver_ABC.h"
-#include "LineObserver_ABC.h"
-#include "IncludeObserver_ABC.h"
-#include "ClassObserver_ABC.h"
+#include "MetricSerializer.h"
 #include <boost/assign.hpp>
-#include <boost/foreach.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace depend;
 
@@ -121,4 +117,13 @@ void Facade::Visit( const std::string& path )
 {
     ModuleObserver observer( *moduleVisitor_, *fileVisitor_, *lineVisitor_, path );
     moduleVisitor_->Visit( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::Serialize
+// Created: SLI 2010-08-20
+// -----------------------------------------------------------------------------
+void Facade::Serialize( xml::xostream& xos )
+{
+    MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos );
 }

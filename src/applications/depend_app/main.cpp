@@ -11,9 +11,8 @@
 #pragma warning( disable: 4512 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <boost/foreach.hpp>
 #include <iostream>
-#include <vector>
+#include <xeumeuleu/xml.hpp>
 
 namespace bpo = boost::program_options;
 
@@ -23,8 +22,9 @@ namespace
     {
         bpo::options_description desc( "Allowed options" );
         desc.add_options()
-            ( "help"                             , "produce help message" )
-            ( "path", bpo::value< std::string >(), "set path directory" );
+            ( "help"                               , "produce help message" )
+            ( "path"  , bpo::value< std::string >(), "set path directory" )
+            ( "output", bpo::value< std::string >(), "set output file" );
         bpo::positional_options_description p;
         p.add( "path", 1 );
         bpo::variables_map vm;
@@ -48,6 +48,17 @@ int main( int argc, char* argv[] )
         const std::string path = vm[ "path" ].as< std::string >();
         depend::Facade facade;
         facade.Visit( path );
+        if( !vm.count( "output" ) )
+        {
+            xml::xostringstream xos;
+            facade.Serialize( xos );
+            std::cout << xos.str();
+        }
+        else
+        {
+            xml::xofstream xos( vm[ "output" ].as< std::string >() );
+            facade.Serialize( xos );
+        }
         return EXIT_SUCCESS;
     }
     catch( std::exception& e )
