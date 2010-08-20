@@ -19,6 +19,7 @@ namespace
     {
     public:
         Fixture()
+            : lineObserver( 0 )
         {
             MOCK_EXPECT( mockVisitor, Register ).once().with( mock::retrieve( lineObserver ) );
             MOCK_EXPECT( mockVisitor, Unregister ).once();

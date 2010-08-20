@@ -20,6 +20,9 @@ namespace
     {
     public:
         Fixture()
+            : moduleObserver ( 0 )
+            , fileObserver   ( 0 )
+            , includeObserver( 0 )
         {
             MOCK_EXPECT( mockModuleVisitor, Register ).once().with( mock::retrieve( moduleObserver ) );
             MOCK_EXPECT( mockModuleVisitor, Unregister ).once();
