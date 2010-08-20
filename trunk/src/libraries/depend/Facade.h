@@ -12,6 +12,11 @@
 #include <string>
 #include <memory>
 
+namespace xml
+{
+    class xostream;
+}
+
 namespace depend
 {
     class ModuleVisitor;
@@ -41,6 +46,7 @@ public:
     //! @name Operations
     //@{
     void Visit( const std::string& path );
+    void Serialize( xml::xostream& xos );
     //@}
 
 private:
