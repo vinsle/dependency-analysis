@@ -290,6 +290,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\ClassMetric_ABC.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\ClassMetricVisitor_ABC.h"
 					>
 				</File>
@@ -299,6 +303,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\DependencyMetric.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\DependencyMetric_ABC.h"
 					>
 				</File>
 				<File
