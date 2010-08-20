@@ -38,11 +38,11 @@ MetricSerializer::~MetricSerializer()
 // Name: MetricSerializer::FindClass
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-const MetricSerializer::ClassMetrics& MetricSerializer::FindClass( const std::string& module ) const
+const MetricSerializer::ClassMetrics MetricSerializer::FindClass( const std::string& module ) const
 {
     CIT_ClassMetrics it = classMetrics_.find( module );
     if( it == classMetrics_.end() )
-        throw std::runtime_error( "unknown module '" + module + "' for class metrics" );
+        return ClassMetrics();
     return it->second;
 }
 
@@ -74,9 +74,9 @@ namespace
     }
     void SerializeMetrics( xml::xostream& xos, unsigned int classes, unsigned int abstractClasses, unsigned int ce, unsigned int ca )
     {
-        const unsigned int abstractness = classes == 0u ? 0u : ( 100u * abstractClasses ) / classes;
-        const unsigned int instability = ce + ca == 0u ? 0u : ( 100u * ce ) / ( ce + ca );
-        const unsigned int distance = std::max( 0u, abstractness + instability - 100u );
+        const int abstractness = classes == 0u ? 0u : ( 100u * abstractClasses ) / classes;
+        const int instability = ce + ca == 0u ? 0u : ( 100u * ce ) / ( ce + ca );
+        const int distance = std::abs( abstractness + instability - 100 );
         xos << xml::start( "metrics" )
                 << xml::content( "number-of-classes", classes )
                 << xml::content( "number-of-abstract-classes", abstractClasses )

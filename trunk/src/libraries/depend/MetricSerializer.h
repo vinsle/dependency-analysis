@@ -75,7 +75,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    const MetricSerializer::ClassMetrics& FindClass( const std::string& module ) const;
+    const MetricSerializer::ClassMetrics FindClass( const std::string& module ) const;
     //@}
 
 private:
