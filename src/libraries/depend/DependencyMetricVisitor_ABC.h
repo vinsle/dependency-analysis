@@ -22,12 +22,6 @@ namespace depend
 class DependencyMetricVisitor_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Dependencies;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              DependencyMetricVisitor_ABC() {}
@@ -36,7 +30,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyDependencyMetric( const std::string& module, const T_Dependencies& internalDependencies, const T_Dependencies& externalDependencies ) = 0;
+    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& include ) = 0;
+    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& include ) = 0;
     //@}
 };
 

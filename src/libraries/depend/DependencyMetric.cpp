@@ -10,7 +10,6 @@
 #include "DependencyMetric.h"
 #include "DependencyMetricVisitor_ABC.h"
 #include <boost/foreach.hpp>
-#include <boost/algorithm/string.hpp>
 
 using namespace depend;
 
@@ -48,10 +47,17 @@ void DependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const Metric& metric, metrics_ )
     {
-        DependencyMetricVisitor_ABC::T_Dependencies cleaned;
-        std::set_difference( metric.internal_.begin(), metric.internal_.end(), metric.files_.begin(), metric.files_.end(), std::back_insert_iterator< DependencyMetricVisitor_ABC::T_Dependencies >( cleaned ) );
-        const DependencyMetricVisitor_ABC::T_Dependencies transformed( metric.external_.begin(), metric.external_.end() );
-        visitor.NotifyDependencyMetric( metric.module_, cleaned, transformed );
+        std::vector< std::string > cleaned;
+        std::set_difference( metric.internal_.begin(), metric.internal_.end(), metric.files_.begin(), metric.files_.end(), std::back_insert_iterator< std::vector< std::string > >( cleaned ) );
+        BOOST_FOREACH( const std::string& include, cleaned )
+        {
+            const size_t position = include.find_first_of( '/' );
+            const std::string module = include.substr( 0, position );
+            if( position != std::string::npos && module != metric.module_ && modules_.find( module ) != modules_.end() )  // $$$$ _RC_ SLI 2010-08-20: warn user if one of these case occurs
+                visitor.NotifyInternalDependency( metric.module_, module , include );
+        }
+        BOOST_FOREACH( const std::string& include, metric.external_ )
+            visitor.NotifyExternalDependency( metric.module_, include.substr( 0, include.find_first_of( '/' ) ), include );
     }
 }
 
@@ -64,6 +70,7 @@ void DependencyMetric::NotifyModule( const std::string& module )
     Metric metric;
     metric.module_ = module;
     metrics_.push_back( metric );
+    modules_.insert( module );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,8 +92,7 @@ void DependencyMetric::NotifyInternalInclude( const std::string& file )
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid include '" + file + "' out of a module" );
-    if( !boost::algorithm::starts_with( file, metrics_.back().module_ ) )
-        metrics_.back().internal_.insert( file );
+    metrics_.back().internal_.insert( file );
 }
 
 // -----------------------------------------------------------------------------
