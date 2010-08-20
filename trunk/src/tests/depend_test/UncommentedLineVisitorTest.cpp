@@ -66,3 +66,5 @@ BOOST_FIXTURE_TEST_CASE( partially_commented_line_is_forwarded_but_cleaned, Unco
     MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test " );
     lineObserver->NotifyLine( "test /* comment" );
 }
+
+// $$$$ _RC_ SLI 2010-08-19: add tests on nested comments removing
