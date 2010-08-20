@@ -55,7 +55,7 @@ void IncludeVisitor::NotifyUncommentedLine( const std::string& line )
     if( it != end )
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
             if( !std::string( (*it)[ internal_tag ] ).empty() )
-                observer->NotifyInternalInclude( (*it)[ internal_tag ] );
+                observer->NotifyInternalInclude( (*it)[ internal_tag ] ); // $$$$ _RC_ SLI 2010-08-19: seperate in two different visitors
             else
                 observer->NotifyExternalInclude( (*it)[ external_tag ] );
 }
