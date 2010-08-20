@@ -77,3 +77,42 @@ BOOST_AUTO_TEST_CASE( serialize_metrics_in_xml )
         "</report>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
+
+BOOST_AUTO_TEST_CASE( simple_metric_serialization )
+{
+    MockClassMetric classMetric;
+    MockDependencyMetric dependencyMetric;
+    ClassMetricVisitor_ABC* classVisitor = 0;
+    DependencyMetricVisitor_ABC* dependencyVisitor = 0;
+    MOCK_EXPECT( classMetric, Apply ).once().with( mock::retrieve( classVisitor ) );
+    MOCK_EXPECT( dependencyMetric, Apply ).once().with( mock::retrieve( dependencyVisitor ) );
+    MetricSerializer serializer( dependencyMetric, classMetric );
+    BOOST_REQUIRE( classVisitor );
+    BOOST_REQUIRE( dependencyVisitor );
+    dependencyVisitor->NotifyExternalDependency( "module1", "boost", "boost/assign.hpp" );
+    xml::xostringstream xos;
+    serializer.Serialize( xos );
+    const std::string expected =
+        "<report>"
+        "    <dependencies>"
+        "        <dependency name='module1'/>"
+        "    </dependencies>"
+        "    <categories>"
+        "        <category name='module1'>"
+        "            <efferent-dependencies Ce='0'/>"
+        "            <afferent-dependencies Ca='0'/>"
+        "            <external-dependencies Ce='1'>"
+        "                <dependency name='boost' number='1'/>"
+        "            </external-dependencies>"
+        "            <metrics>"
+        "                <number-of-classes>0</number-of-classes>"
+        "                <number-of-abstract-classes>0</number-of-abstract-classes>"
+        "                <abstractness>0</abstractness>"
+        "                <instability>0</instability>"
+        "                <distance>100</distance>"
+        "            </metrics>"
+        "        </category>"
+        "    </categories>"
+        "</report>";
+    BOOST_CHECK_XML_EQUAL( expected, xos.str() );
+}
