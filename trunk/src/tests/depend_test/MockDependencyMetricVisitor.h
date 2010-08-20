@@ -21,7 +21,8 @@ namespace depend
 // =============================================================================
 MOCK_BASE_CLASS( MockDependencyMetricVisitor, DependencyMetricVisitor_ABC )
 {
-    MOCK_METHOD( NotifyDependencyMetric, 3 )
+    MOCK_METHOD( NotifyInternalDependency, 3 )
+    MOCK_METHOD( NotifyExternalDependency, 3 )
 };
 
 }

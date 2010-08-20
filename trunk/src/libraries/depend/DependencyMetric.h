@@ -72,6 +72,7 @@ private:
     Subject< FileObserver_ABC >& fileObserver_;
     Subject< IncludeObserver_ABC >& includeObserver_;
     T_Metrics metrics_;
+    T_Dependencies modules_;
     //@}
 };
 
