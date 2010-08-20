@@ -9,15 +9,11 @@
 #ifndef depend_Facade_h
 #define depend_Facade_h
 
-#include "Subject.h"
+#include <string>
+#include <memory>
 
 namespace depend
 {
-    class ModuleObserver_ABC;
-    class FileObserver_ABC;
-    class LineObserver_ABC;
-    class IncludeObserver_ABC;
-    class ClassObserver_ABC;
     class ModuleVisitor;
     class FileVisitor;
     class LineVisitor;
@@ -33,11 +29,7 @@ namespace depend
 */
 // Created: SLI 2010-08-18
 // =============================================================================
-class Facade : public Subject< ModuleObserver_ABC >
-             , public Subject< FileObserver_ABC >
-             , public Subject< LineObserver_ABC >
-             , public Subject< IncludeObserver_ABC >
-             , public Subject< ClassObserver_ABC >
+class Facade 
 {
 public:
     //! @name Constructors/Destructor
@@ -49,20 +41,6 @@ public:
     //! @name Operations
     //@{
     void Visit( const std::string& path );
-    //@}
-
-    //! @name Register
-    //@{
-    virtual void Register( ModuleObserver_ABC& observer );
-    virtual void Register( FileObserver_ABC& observer );
-    virtual void Register( LineObserver_ABC& observer );
-    virtual void Register( IncludeObserver_ABC& observer );
-    virtual void Register( ClassObserver_ABC& observer );
-    virtual void Unregister( ModuleObserver_ABC& observer );
-    virtual void Unregister( FileObserver_ABC& observer );
-    virtual void Unregister( LineObserver_ABC& observer );
-    virtual void Unregister( IncludeObserver_ABC& observer );
-    virtual void Unregister( ClassObserver_ABC& observer );
     //@}
 
 private:
