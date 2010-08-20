@@ -9,6 +9,7 @@
 #ifndef depend_DependencyMetric_h
 #define depend_DependencyMetric_h
 
+#include "DependencyMetric_ABC.h"
 #include "ModuleObserver_ABC.h"
 #include "FileObserver_ABC.h"
 #include "IncludeObserver_ABC.h"
@@ -25,7 +26,8 @@ namespace depend
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class DependencyMetric : private ModuleObserver_ABC
+class DependencyMetric : public DependencyMetric_ABC
+                       , private ModuleObserver_ABC
                        , private FileObserver_ABC
                        , private IncludeObserver_ABC
 {
@@ -39,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    void Apply( DependencyMetricVisitor_ABC& visitor ) const;
+    virtual void Apply( DependencyMetricVisitor_ABC& visitor ) const;
     //@}
 
 private:
