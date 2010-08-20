@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="xerces-c_2D.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;../../lib/vc80"
 				GenerateDebugInformation="true"
@@ -140,6 +141,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="xerces-c_2.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;../../lib/vc80"
@@ -232,6 +234,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\MetricSerializerTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\ModuleVisitorTest.cpp"
 				>
 			</File>
@@ -247,11 +253,19 @@
 				Name="mock"
 				>
 				<File
+					RelativePath="..\..\src\tests\depend_test\MockClassMetric.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\tests\depend_test\MockClassMetricVisitor.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockClassObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockDependencyMetric.h"
 					>
 				</File>
 				<File
