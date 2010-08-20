@@ -313,6 +313,14 @@
 					RelativePath="..\..\src\libraries\depend\DependencyMetricVisitor_ABC.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\MetricSerializer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\MetricSerializer.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>
