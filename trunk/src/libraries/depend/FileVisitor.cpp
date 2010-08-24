@@ -61,6 +61,8 @@ namespace
                     if( CheckExtension( *it, extensions ) )
                     {
                         std::ifstream ifs( it->string().c_str() );
+                        if( !ifs )
+                            throw std::runtime_error( "could not open file '" + it->string() + "'" );
                         BOOST_FOREACH( T::value_type& observer, observers )
                         {
                             istream_guard guard( ifs );
