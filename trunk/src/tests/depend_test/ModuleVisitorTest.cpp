@@ -22,3 +22,9 @@ BOOST_AUTO_TEST_CASE( module_visitor_lists_all_first_level_directories_and_notif
     visitor.Visit( BOOST_RESOLVE( "module_visitor_lists_all_first_level_directories_and_notifies_listeners" ) );
     visitor.Unregister( observer );
 }
+
+BOOST_AUTO_TEST_CASE( module_visitor_throws_with_invalid_path )
+{
+    ModuleVisitor visitor;
+    BOOST_CHECK_THROW( visitor.Visit( "invalid_directory" ), std::runtime_error );
+}

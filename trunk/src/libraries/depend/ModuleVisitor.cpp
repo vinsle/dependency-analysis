@@ -48,8 +48,15 @@ namespace
 void ModuleVisitor::Visit( const std::string& filename )
 {
     const boost::filesystem::path path( filename + "/" );
-    for( boost::filesystem::directory_iterator it( path ); it != boost::filesystem::directory_iterator(); ++it )
-        if( IsDirectory( *it ) )
-            BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
-                observer->NotifyModule( it->filename() );
+    try
+    {
+        for( boost::filesystem::directory_iterator it( path ); it != boost::filesystem::directory_iterator(); ++it )
+            if( IsDirectory( *it ) )
+                BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
+                    observer->NotifyModule( it->filename() );
+    }
+    catch( boost::filesystem::basic_filesystem_error< boost::filesystem::path > e )
+    {
+        throw std::runtime_error( "Cannot visit module '" + filename + "'" );
+    }
 }
