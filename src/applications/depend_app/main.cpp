@@ -32,7 +32,7 @@ namespace
         bpo::store( bpo::command_line_parser( argc, argv ).options( desc ).positional( p ).run(), vm );
         bpo::notify( vm );
         if( vm.count( "help" ) )
-            std::cout << "Usage: depend_app [options] path..." << std::endl
+            std::cout << "Usage: depend_app [options] path1 path2..." << std::endl
                       << desc << std::endl;
         else if( ! vm.count( "path" ) )
             throw std::invalid_argument( "Invalid application option argument: missing path file" );
