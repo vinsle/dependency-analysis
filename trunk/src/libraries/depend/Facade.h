@@ -27,6 +27,7 @@ namespace depend
     class ClassVisitor;
     class ClassMetric;
     class DependencyMetric;
+    class ModuleSerializer;
 
 // =============================================================================
 /** @class  Facade
@@ -60,6 +61,7 @@ private:
     std::auto_ptr< ClassVisitor > classVisitor_;
     std::auto_ptr< ClassMetric > classMetric_;
     std::auto_ptr< DependencyMetric > dependencyMetric_;
+    std::auto_ptr< ModuleSerializer > moduleSerializer_;
     //@}
 };
 

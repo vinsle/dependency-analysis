@@ -238,11 +238,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\ModuleSerializerTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\ModuleVisitorTest.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\tests\depend_test\StreamGuardTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\depend_test\StronglyConnectedComponentsTest.cpp"
 				>
 			</File>
 			<File
