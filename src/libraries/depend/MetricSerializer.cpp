@@ -93,35 +93,27 @@ namespace
 // -----------------------------------------------------------------------------
 void MetricSerializer::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::start( "report" )
-            << xml::start( "dependencies" );
-    BOOST_FOREACH( const std::string& module, modules_ )
-        xos     << xml::start( "dependency" )
-                    << xml::attribute( "name", module )
-                << xml::end;
-    xos     << xml::end
-            << xml::start( "categories" );
+    xos << xml::start( "categories" );
     BOOST_FOREACH( const std::string& module, modules_ )
     {
-        xos     << xml::start( "category" )
-                    << xml::attribute( "name", module )
-                    << xml::start( "efferent-dependencies" )
-                        << xml::attribute( "Ce", Sum( module, efferent_ ) );
+        xos << xml::start( "category" )
+                << xml::attribute( "name", module )
+                << xml::start( "efferent-dependencies" )
+                    << xml::attribute( "Ce", Sum( module, efferent_ ) );
         SerializeDependency( xos, module, efferent_ );
-        xos         << xml::end
-                    << xml::start( "afferent-dependencies" )
-                        << xml::attribute( "Ca", Sum( module, afferent_ ) );
+        xos     << xml::end
+                << xml::start( "afferent-dependencies" )
+                    << xml::attribute( "Ca", Sum( module, afferent_ ) );
         SerializeDependency( xos, module, afferent_ );
-        xos         << xml::end
-                    << xml::start( "external-dependencies" )
-                        << xml::attribute( "Ce", Sum( module, external_ ) );
+        xos     << xml::end
+                << xml::start( "external-dependencies" )
+                    << xml::attribute( "Ce", Sum( module, external_ ) );
         SerializeDependency( xos, module, external_ );
-        xos         << xml::end;
-        SerializeMetrics( xos, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ) );
         xos     << xml::end;
+        SerializeMetrics( xos, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ) );
+        xos << xml::end;
     }
-    xos     << xml::end
-        << xml::end;
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

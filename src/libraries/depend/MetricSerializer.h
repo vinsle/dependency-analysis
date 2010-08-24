@@ -60,7 +60,7 @@ private:
     {
     public:
         ClassMetrics()
-            : classes_( 0u )
+            : classes_ ( 0u )
             , abstract_( 0u )
         {}
         unsigned int classes_;

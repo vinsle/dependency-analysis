@@ -314,11 +314,31 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponents.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponents.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="serialization"
+				>
+				<File
 					RelativePath="..\..\src\libraries\depend\MetricSerializer.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\MetricSerializer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleSerializer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleSerializer.h"
 					>
 				</File>
 			</Filter>
