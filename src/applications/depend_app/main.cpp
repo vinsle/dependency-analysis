@@ -24,8 +24,8 @@ namespace
         bpo::options_description desc( "Allowed options" );
         desc.add_options()
             ( "help,h"                                            , "produce help message" )
-            ( "path"  , bpo::value< std::vector< std::string > >(), "add a path directory" )
-            ( "output", bpo::value< std::string >()               , "set output file" );
+            ( "path"  , bpo::value< std::vector< std::string > >(), "add a directory for analysis" )
+            ( "xml", bpo::value< std::string >()                  , "set output xml file" )
         bpo::positional_options_description p;
         p.add( "path", -1 );
         bpo::variables_map vm;
@@ -35,7 +35,7 @@ namespace
             std::cout << "Usage: depend_app [options] path1 path2..." << std::endl
                       << desc << std::endl;
         else if( ! vm.count( "path" ) )
-            throw std::invalid_argument( "Invalid application option argument: missing path file" );
+            throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
         return vm;
     }
 }
