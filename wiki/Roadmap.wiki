@@ -1,2 +1,41 @@
 #summary Todo list for current version and future features for next releases
+#labels Phase-Requirements
 
+= Current version (V1) =
+
+ # Packaging
+ * Add an ant build.xml for automatic compilation and packaging on build server
+  * Add [http://sourceforge.net/projects/cppncss/ CppNcss] metrics on post build
+  * Add self dependency-analysis metrics on post build
+  * Add [http://www.stack.nl/~dimitri/doxygen/ doxygen] documentation generation on post build
+  * Add an ant target for packaging (zip)
+ * Automatize graph generation
+  * With shell script or ant macro definition
+  * Add a command line parameter to generate a sub graph with a set of modules and their efferents modules
+  * Embed stylesheets to transform xml output into [http://www.graphviz.org/doc/info/lang.html Dot language] and apply them with [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Patterns#XSL XeuSeuLeu]
+  * Add a command line parameter to specify desired output format: xml or dot
+ * Delete xerces dll versionning
+ * Add the project on build server
+  * Build on cygwin, vc80 and linux platforms
+  * Add binaries on download page
+ * Add a version number (major version . svn revision) + a command line parameter to retrieve it
+ * Add wiki documentation
+  * How to use the tool
+  * How to compile (vc80, ant)
+  * Dependencies
+
+= Next version (V2) =
+
+ * Add png/jpeg output format
+  * Use [http://www.graphviz.org/pdf/libguide.pdf Graphviz] as a library
+  * Add some command line parameters to tweak the output (color, layout, size, labels, ...)
+ * Resolve external includes
+  * Internal and external includes are not detected with double quotes or angle brackets anymore
+  * Print a warning if an include cannot be resolved (file name, line number), must be case sensitive
+  * Add a command line parameter to specify system include directories (which are ignored for external dependencies)
+  * Add a command line parameter to specify external include directories (resolved in order of submission)
+ * Add a command line parameter to make only cyclic dependencies detection between modules and print a warning (in this case no serialization)
+ * Add the same features and graph for internal class dependencies in a module
+  * Detect cycles in includes at class level
+ * Add a command line parameter to disable warnings
+ * Add a command line parameter to mutate warnings into execution errors
