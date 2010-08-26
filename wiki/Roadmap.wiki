@@ -9,7 +9,7 @@
   * Add self dependency-analysis metrics on post build
   * Add [http://www.stack.nl/~dimitri/doxygen/ doxygen] documentation generation on post build
   * Add an ant target for packaging (zip)
- * Automatize graph generation
+ * Automate graph generation
   * With shell script or ant macro definition
   * Add a command line parameter to generate a sub graph with a set of modules and their efferents modules
   * Embed stylesheets to transform xml output into [http://www.graphviz.org/doc/info/lang.html Dot language] and apply them with [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Patterns#XSL XeuSeuLeu]
