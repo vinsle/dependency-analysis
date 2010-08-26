@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="mch" default="all">
+<project name="depend" default="all">
 
     <property environment="env"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
