@@ -5,7 +5,7 @@
 
  # Packaging
  * ~~Add an ant build.xml for automatic compilation and packaging on build server~~
-  * Add [http://sourceforge.net/projects/cppncss/ CppNcss] metrics on post build
+  * ~~Add [http://sourceforge.net/projects/cppncss/ CppNcss] metrics on post build~~
   * Add self dependency-analysis metrics on post build
   * Add [http://www.stack.nl/~dimitri/doxygen/ doxygen] documentation generation on post build
   * Add an ant target for packaging (zip)
