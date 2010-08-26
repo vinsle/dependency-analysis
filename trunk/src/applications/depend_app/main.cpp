@@ -49,7 +49,7 @@ namespace
             std::cout << "Usage: depend_app [options] path1 path2..." << std::endl
                       << desc << std::endl;
         else if( vm.count( "version" ) )
-            std::cout << "depend " << version << " (built at " << time << ")" << std::endl << std::endl
+            std::cout << "depend " << version << " (built " << time << ")" << std::endl << std::endl
                       << "Copyright Silvin Lubecki 2010" << std::endl
                       << "Distributed under the Boost Software License, Version 1.0. (See" << std::endl
                       << "accompanying file LICENSE_1_0.txt or copy at" << std::endl
