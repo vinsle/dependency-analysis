@@ -4,7 +4,7 @@
     <property environment="env"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="depend.version" value="V1"/>
+    <property name="depend.version" value="v0.0"/>
 
     <!--
     ============================================================================
@@ -31,7 +31,18 @@
     -->
 
     <target name="depend_app" depends="depend" description="build application">
-        <build-app name="depend_app" depends="boost,xerces" libs="depend" subsystem="console"/>
+        <svn>
+            <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>
+        </svn>
+        <tstamp>
+            <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
+        </tstamp>
+        <build-app name="depend_app" depends="boost,xerces" libs="depend" subsystem="console">
+            <defineset>
+                <define name="BUILD_VERSION" value="${depend.version}.${svn.version}"/>
+                <define name="BUILD_TIME" value="${now}"/>
+            </defineset>
+        </build-app> 
     </target>
 
     <!--
