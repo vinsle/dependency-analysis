@@ -35,7 +35,7 @@ namespace depend
 */
 // Created: SLI 2010-08-18
 // =============================================================================
-class Facade 
+class Facade
 {
 public:
     //! @name Constructors/Destructor
