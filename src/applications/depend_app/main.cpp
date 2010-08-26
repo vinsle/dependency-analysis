@@ -24,7 +24,7 @@ namespace
         bpo::options_description desc( "Allowed options" );
         desc.add_options()
             ( "help,h"                                           , "produce help message" )
-            ( "path" , bpo::value< std::vector< std::string > >(), "add a directory for analysis" )
+            ( "path" , bpo::value< std::vector< std::string > >(), "add a directory containing modules for analysis" )
             ( "xml", bpo::value< std::string >()                 , "set output xml file" );
         bpo::positional_options_description p;
         p.add( "path", -1 );
