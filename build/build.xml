@@ -39,6 +39,22 @@
       main
     ============================================================================
     -->
+    
+    <target name="reports" description="generate reports">
+        <cppncss-report>
+            <macro name="BOOST_FOREACH" value="for(;;)"/>
+            <macro name="MOCK_METHOD"/>
+            <macro name="MOCK_METHOD_EXT_TPL"/>
+            <macro name="MOCK_METHOD_EXT"/>
+            <macro name="MOCK_BASE_CLASS" value="class mock"/>
+            <macro name="BOOST_CHECK_THROW"/>
+            <macro name="BOOST_CHECK_NO_THROW"/>
+            <define name="TRY" value="try {"/>
+            <define name="CATCH" value="} catch( ... ) {}"/>
+        </cppncss-report>
+        <cppcheck-report/>
+    </target>
+    
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
     </target>
@@ -54,6 +70,6 @@
         <update name="xeumeuleu"/>
     </target>
 
-    <target name="all" depends="configure,test,build" description="build, run tests and package distribution"/>
+    <target name="all" depends="configure,test,build,reports" description="build, run tests and package distribution"/>
 
 </project>
