@@ -40,8 +40,24 @@
     ============================================================================
     -->
     
+    <target name="documentation" description="generate depend documentation">
+        <doxygen-report name="depend" input="${libraries.dir}/depend">
+            <property name="FILE_PATTERNS"          value="*.h"/>
+            <property name="PROJECT_NAME"           value="DEPEND - Reference"/>
+            <property name="EXTRACT_PRIVATE"        value="NO"/>
+            <property name="SHOW_USED_FILES"        value="NO"/>
+            <property name="COLLABORATION_GRAPH"    value="YES"/>
+            <property name="DISABLE_INDEX"          value="NO"/>
+            <property name="INLINE_SOURCES"         value="NO"/>
+            <property name="REFERENCES_RELATION"    value="NO"/>
+            <property name="REFERENCED_BY_RELATION" value="NO"/>
+            <property name="SOURCE_BROWSER"         value="NO"/>
+            <property name="GENERATE_TREEVIEW"      value="YES"/>
+        </doxygen-report>
+    </target>
+
     <target name="reports" description="generate reports">
-        <cppncss-report>
+        <cppncss-report includes="libraries/*/*.cpp">
             <macro name="BOOST_FOREACH" value="for(;;)"/>
             <macro name="MOCK_METHOD"/>
             <macro name="MOCK_METHOD_EXT_TPL"/>
@@ -70,6 +86,6 @@
         <update name="xeumeuleu"/>
     </target>
 
-    <target name="all" depends="configure,test,build,reports" description="build, run tests and package distribution"/>
+    <target name="all" depends="configure,test,build,reports,documentation" description="build, run tests and package distribution"/>
 
 </project>
