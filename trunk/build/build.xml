@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<project name="mch" default="all">
+
+    <property environment="env"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
+
+    <property name="depend.version" value="V1"/>
+
+    <!--
+    ============================================================================
+      libraries
+    ============================================================================
+    -->
+    <target name="depend" description="build library">
+        <build-lib name="depend"/>
+    </target>
+
+    <!--
+    ============================================================================
+      tests
+    ============================================================================
+    -->
+    <target name="depend_test" depends="depend" description="build and run unit tests">
+        <build-test name="depend" depends="boost,xerces" libs="depend"/>
+    </target>
+
+    <!--
+    ============================================================================
+      applications
+    ============================================================================
+    -->
+
+    <target name="depend_app" depends="depend" description="build application">
+        <build-app name="depend_app" depends="boost,xerces" libs="depend" subsystem="console"/>
+    </target>
+
+    <!--
+    ============================================================================
+      main
+    ============================================================================
+    -->
+    <target name="clean" description="clean intermediate build artifacts">
+        <delete dir="${out.dir}"/>
+    </target>
+
+    <target name="test" depends="depend_test" description="run all tests"/>
+
+    <target name="build" depends="depend_app" description="build all"/>
+
+    <target name="configure" description="initialize local project structure with libraries">
+        <update name="boost"/>
+        <update name="turtle"/>
+        <update name="xerces-c"/>
+        <update name="xeumeuleu"/>
+    </target>
+
+    <target name="all" depends="configure,test,build" description="build, run tests and package distribution"/>
+
+</project>
