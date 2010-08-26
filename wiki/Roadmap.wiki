@@ -16,7 +16,7 @@
   * Add a command line parameter to specify desired output format: xml or dot
  * ~~Delete xerces dll versionning~~
  * Add the project on build server
-  * Build on cygwin, vc80 and linux platforms
+  * Build on cygwin, ~~vc80~~ and linux platforms
   * Add binaries on download page
   * Add documentation on download page
  * ~~Add a version number (major version . svn revision) + a command line parameter to retrieve it~~
