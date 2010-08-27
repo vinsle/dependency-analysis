@@ -12,8 +12,8 @@
  * Automate graph generation
   * With shell script or ant macro definition
   * Add a command line parameter to generate a sub graph with a set of modules and their efferents modules
-  * Embed stylesheets to transform xml output into [http://www.graphviz.org/doc/info/lang.html Dot language] and apply them with [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Patterns#XSL XeuSeuLeu]
-  * Add a command line parameter to specify desired output format: xml or dot
+  * ~~Embed stylesheets to transform xml output into [http://www.graphviz.org/doc/info/lang.html Dot language] and apply them with [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Patterns#XSL XeuSeuLeu]~~
+  * ~~Add a command line parameter to specify desired output format: xml or dot~~
  * ~~Delete xerces dll versionning~~
  * ~~Add the project on build server~~
   * Build on cygwin, ~~vc80~~ and linux platforms
