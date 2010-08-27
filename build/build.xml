@@ -47,10 +47,9 @@
 
     <!--
     ============================================================================
-      main
+      package
     ============================================================================
     -->
-    
     <target name="documentation" description="generate depend documentation">
         <doxygen-report name="depend" input="${libraries.dir}/depend">
             <property name="FILE_PATTERNS"          value="*.h"/>
@@ -65,7 +64,24 @@
             <property name="SOURCE_BROWSER"         value="NO"/>
             <property name="GENERATE_TREEVIEW"      value="YES"/>
         </doxygen-report>
+    </target>    
+
+    <target name="package" depends="build,test,documentation" description="package the distribution">
+        <mkdir dir="${dist.dir}/>
+        <zip destfile="${dist.dir}/depend_app_${depend.version}.zip">
+            <fileset dir="${run.dir}" includes="Xalan*.dll,xerces*.dll"/>
+            <fileset file="${out.dir}/release/applications/depend_app/depend_app.exe"/>
+        </zip>
+        <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
+            <fileset dir="${doc.dir}"/>
+        </zip>
     </target>
+
+    <!--
+    ============================================================================
+      main
+    ============================================================================
+    -->
 
     <macrodef name="dependency-analysis">
         <sequential>
@@ -111,6 +127,6 @@
         <update name="graphviz"/>
     </target>
 
-    <target name="all" depends="configure,test,build,reports,documentation" description="build, run tests and package distribution"/>
+    <target name="all" depends="configure,test,build,reports,documentation,package" description="build, run tests and package distribution"/>
 
 </project>
