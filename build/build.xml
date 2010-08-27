@@ -67,6 +67,17 @@
         </doxygen-report>
     </target>
 
+    <macrodef name="dependency-analysis">
+        <sequential>
+            <exec taskname="depend_app" executable="${out.dir}/release/applications/depend_app/depend_app.exe" dir="${run.dir}" failonerror="true">
+                <arg value="--output=${reports.dir}/depend.png"/>
+                <arg value="--format=png"/>
+                <arg value="${libraries.dir}"/>
+                <arg value="${applications.dir}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <target name="reports" description="generate reports">
         <cppncss-report includes="libraries/*/*.cpp">
             <macro name="BOOST_FOREACH" value="for(;;)"/>
@@ -80,6 +91,7 @@
             <define name="CATCH" value="} catch( ... ) {}"/>
         </cppncss-report>
         <cppcheck-report/>
+        <dependency-analysis/>
     </target>
     
     <target name="clean" description="clean intermediate build artifacts">
