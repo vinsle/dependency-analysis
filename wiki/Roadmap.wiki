@@ -15,6 +15,9 @@
   * ~~Embed stylesheets to transform xml output into [http://www.graphviz.org/doc/info/lang.html Dot language] and apply them with [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Patterns#XSL XeuSeuLeu]~~
   * ~~Add a command line parameter to specify desired output format: xml or dot~~
  * ~~Delete xerces dll versionning~~
+ * ~~Add png output format~~
+  * ~~Use [http://www.graphviz.org/pdf/libguide.pdf Graphviz] as a library~~
+  * Add some command line parameters to tweak the output (color, layout, size, labels, ...)
  * ~~Add the project on build server~~
   * Build on cygwin, ~~vc80~~ and linux platforms
   * Add binaries on download page
@@ -28,9 +31,6 @@
 
 = Next version (V2) =
 
- * Add png/jpeg output format
-  * Use [http://www.graphviz.org/pdf/libguide.pdf Graphviz] as a library
-  * Add some command line parameters to tweak the output (color, layout, size, labels, ...)
  * Resolve external includes
   * Internal and external includes are not detected with double quotes or angle brackets anymore
   * Print a warning if an include cannot be resolved (file name, line number), must be case sensitive
