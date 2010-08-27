@@ -349,6 +349,14 @@
 					RelativePath="..\..\src\libraries\depend\ModuleSerializer.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\PngSerializer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\PngSerializer.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

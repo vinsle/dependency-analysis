@@ -39,7 +39,7 @@ namespace
             ( "help,h"                                           , "produce help message" )
             ( "path" , bpo::value< std::vector< std::string > >(), "add a directory containing modules for analysis" )
             ( "output", bpo::value< std::string >()              , "set output file" )
-            ( "format", bpo::value< std::string >()              , "set output format (xml|dot)" )
+            ( "format", bpo::value< std::string >()              , "set output format (xml|dot|png)" )
             ( "version,v"                                        , "produce version message" );
         bpo::positional_options_description p;
         p.add( "path", -1 );
@@ -58,7 +58,7 @@ namespace
                       << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
         else if( ! vm.count( "path" ) )
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
-        else if( vm.count( "format" ) && vm[ "format" ].as< std::string >() != "xml" && vm[ "format" ].as< std::string >() != "dot" )
+        else if( vm.count( "format" ) && vm[ "format" ].as< std::string >() != "xml" && vm[ "format" ].as< std::string >() != "dot" && vm[ "format" ].as< std::string >() != "png" )
             throw std::invalid_argument( "Invalid application option argument: format '" + vm[ "format" ].as< std::string >() + "' is not supported" );
         return vm;
     }
@@ -74,6 +74,13 @@ int main( int argc, char* argv[] )
         depend::Facade facade;
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
+        if( vm.count( "format" ) && vm[ "format" ].as< std::string >() == "png" )
+        {
+            if( !vm.count( "output" ) )
+                throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'png' format" );
+            facade.Serialize( vm[ "output" ].as< std::string >() );
+            return EXIT_SUCCESS;
+        }
         const bool isDotFormat = vm.count( "format" ) && vm[ "format" ].as< std::string >() == "dot";
         std::ostream* out = &std::cout;
         if( vm.count( "output" ) )

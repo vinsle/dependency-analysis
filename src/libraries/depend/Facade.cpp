@@ -20,6 +20,7 @@
 #include "ModuleSerializer.h"
 #include "StronglyConnectedComponents.h"
 #include "DotSerializer.h"
+#include "PngSerializer.h"
 #include <boost/assign.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -145,4 +146,15 @@ void Facade::Serialize( std::ostream& os )
     xml::xobufferstream xos;
     Serialize( xos );
     const DotSerializer().Serialize( xos, os );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::SerializePng
+// Created: SLI 2010-08-27
+// -----------------------------------------------------------------------------
+void Facade::Serialize( const std::string& filename )
+{
+    std::ostringstream buffer;
+    Serialize( buffer );
+    const PngSerializer().Serialize( buffer.str(), filename );
 }

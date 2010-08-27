@@ -49,6 +49,7 @@ public:
     void Visit( const std::string& path );
     void Serialize( xml::xostream& xos );
     void Serialize( std::ostream& os );
+    void Serialize( const std::string& filename );
     //@}
 
 private:
