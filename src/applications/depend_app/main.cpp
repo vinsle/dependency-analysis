@@ -38,7 +38,8 @@ namespace
         desc.add_options()
             ( "help,h"                                           , "produce help message" )
             ( "path" , bpo::value< std::vector< std::string > >(), "add a directory containing modules for analysis" )
-            ( "xml", bpo::value< std::string >()                 , "set output xml file" )
+            ( "output", bpo::value< std::string >()              , "set output file" )
+            ( "format", bpo::value< std::string >()              , "set output format (xml|dot)" )
             ( "version,v"                                        , "produce version message" );
         bpo::positional_options_description p;
         p.add( "path", -1 );
@@ -57,6 +58,8 @@ namespace
                       << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
         else if( ! vm.count( "path" ) )
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
+        else if( vm.count( "format" ) && vm[ "format" ].as< std::string >() != "xml" && vm[ "format" ].as< std::string >() != "dot" )
+            throw std::invalid_argument( "Invalid application option argument: format '" + vm[ "format" ].as< std::string >() + "' is not supported" );
         return vm;
     }
 }
@@ -71,17 +74,20 @@ int main( int argc, char* argv[] )
         depend::Facade facade;
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
-        if( !vm.count( "xml" ) )
+        const bool isDotFormat = vm.count( "format" ) && vm[ "format" ].as< std::string >() == "dot";
+        std::ostream* out = &std::cout;
+        if( vm.count( "output" ) )
+            out = new std::ofstream( vm[ "output" ].as< std::string >().c_str() );
+        if( isDotFormat )
+            facade.Serialize( *out );
+        else
         {
             xml::xostringstream xos;
             facade.Serialize( xos );
-            std::cout << xos.str();
+            *out << xos.str();
         }
-        else
-        {
-            xml::xofstream xos( vm[ "xml" ].as< std::string >() );
-            facade.Serialize( xos );
-        }
+        if( vm.count( "output" ) )
+            delete out;
         return EXIT_SUCCESS;
     }
     catch( std::exception& e )
