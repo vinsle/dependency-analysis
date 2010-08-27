@@ -28,6 +28,7 @@
   * How to compile (vc80, ant)
   * Dependencies
   * Fill doxygen fields
+ * User can specify multiple outputs (xml and png)
 
 = Next version (V2) =
 
