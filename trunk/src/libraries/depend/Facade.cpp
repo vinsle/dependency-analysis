@@ -19,6 +19,7 @@
 #include "MetricSerializer.h"
 #include "ModuleSerializer.h"
 #include "StronglyConnectedComponents.h"
+#include "DotSerializer.h"
 #include <boost/assign.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -133,4 +134,15 @@ void Facade::Serialize( xml::xostream& xos )
     MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos );
     StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos );
     xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::Serialize
+// Created: SLI 2010-08-27
+// -----------------------------------------------------------------------------
+void Facade::Serialize( std::ostream& os )
+{
+    xml::xobufferstream xos;
+    Serialize( xos );
+    const DotSerializer().Serialize( xos, os );
 }

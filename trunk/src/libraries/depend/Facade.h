@@ -48,6 +48,7 @@ public:
     //@{
     void Visit( const std::string& path );
     void Serialize( xml::xostream& xos );
+    void Serialize( std::ostream& os );
     //@}
 
 private:

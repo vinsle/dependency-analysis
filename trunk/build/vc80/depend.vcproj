@@ -326,6 +326,14 @@
 				Name="serialization"
 				>
 				<File
+					RelativePath="..\..\src\libraries\depend\DotSerializer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\DotSerializer.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\MetricSerializer.cpp"
 					>
 				</File>
