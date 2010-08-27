@@ -21,7 +21,7 @@
     ============================================================================
     -->
     <target name="depend_test" depends="depend" description="build and run unit tests">
-        <build-test name="depend" depends="boost,xerces,xalan" libs="depend"/>
+        <build-test name="depend" depends="boost,xerces,xalan" libs="depend,gvc,graph"/>
     </target>
 
     <!--
@@ -37,7 +37,7 @@
         <tstamp>
             <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
         </tstamp>
-        <build-app name="depend_app" depends="boost,xerces,xalan" libs="depend" subsystem="console">
+        <build-app name="depend_app" depends="boost,xerces,xalan" libs="depend,gvc,graph" subsystem="console">
             <defineset>
                 <define name="BUILD_VERSION" value="${depend.version}.${svn.version}"/>
                 <define name="BUILD_TIME" value="${now}"/>
@@ -96,6 +96,7 @@
         <update name="xerces-c"/>
         <update name="xalan-c"/>
         <update name="xeumeuleu"/>
+        <update name="graphviz"/>
     </target>
 
     <target name="all" depends="configure,test,build,reports,documentation" description="build, run tests and package distribution"/>
