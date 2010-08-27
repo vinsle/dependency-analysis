@@ -29,6 +29,8 @@
   * Dependencies
   * Fill doxygen fields
  * User can specify multiple outputs (xml and png)
+ * Add licence files and readme.txt
+ * Clean graphviz warnings ("GLib-WARNING **: Passing a non-NULL package to g_win32_get_package_installation_directory() is deprecated and it is ignored.")
 
 = Next version (V2) =
 
