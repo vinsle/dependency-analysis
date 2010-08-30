@@ -145,7 +145,7 @@ void Facade::Serialize( std::ostream& os )
 {
     xml::xobufferstream xos;
     Serialize( xos );
-    const DotSerializer().Serialize( xos, os );
+    DotSerializer().Serialize( xos, os );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,5 +156,5 @@ void Facade::Serialize( const std::string& filename )
 {
     std::ostringstream buffer;
     Serialize( buffer );
-    const PngSerializer().Serialize( buffer.str(), filename );
+    PngSerializer().Serialize( buffer.str(), filename );
 }
