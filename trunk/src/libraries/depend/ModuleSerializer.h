@@ -20,6 +20,8 @@ namespace xml
 
 namespace depend
 {
+    class Filter_ABC;
+
 // =============================================================================
 /** @class  ModuleSerializer
     @brief  Module serializer
@@ -29,12 +31,6 @@ namespace depend
 class ModuleSerializer : private ModuleObserver_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Filter;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
     explicit ModuleSerializer( Subject< ModuleObserver_ABC >& subject );
@@ -43,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos, const T_Filter& filter ) const;
+    void Serialize( xml::xostream& xos, const Filter_ABC& filter ) const;
     //@}
 
 private:

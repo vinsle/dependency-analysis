@@ -24,6 +24,7 @@ namespace xml
 namespace depend
 {
     class DependencyMetric_ABC;
+    class Filter_ABC;
 
 // =============================================================================
 /** @class  StronglyConnectedComponents
@@ -34,12 +35,6 @@ namespace depend
 class StronglyConnectedComponents : private DependencyMetricVisitor_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Filter;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
     explicit StronglyConnectedComponents( const DependencyMetric_ABC& metric );
@@ -48,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos, const T_Filter& filter ) const;
+    void Serialize( xml::xostream& xos, const Filter_ABC& filter ) const;
     //@}
 
 private:

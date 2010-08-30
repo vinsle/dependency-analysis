@@ -21,6 +21,7 @@ namespace xml
 
 namespace depend
 {
+    class Filter_ABC;
     class ModuleVisitor;
     class FileVisitor;
     class LineVisitor;
@@ -63,7 +64,7 @@ public:
 private:
     //! @name Member data
     //@{
-    T_Filter filter_;
+    std::auto_ptr< Filter_ABC > filter_;
     std::auto_ptr< ModuleVisitor > moduleVisitor_;
     std::auto_ptr< FileVisitor > fileVisitor_;
     std::auto_ptr< LineVisitor > lineVisitor_;

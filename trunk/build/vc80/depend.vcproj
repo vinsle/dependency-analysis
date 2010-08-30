@@ -218,6 +218,18 @@
 				Name="tools"
 				>
 				<File
+					RelativePath="..\..\src\libraries\depend\Filter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\Filter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\Filter_ABC.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\istream_guard.h"
 					>
 				</File>
