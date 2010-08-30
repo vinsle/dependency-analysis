@@ -8,8 +8,9 @@
   * ~~Add [http://sourceforge.net/projects/cppncss/ CppNcss] metrics on post build~~
   * ~~Add self dependency-analysis metrics on post build~~
   * ~~Add [http://www.stack.nl/~dimitri/doxygen/ doxygen] documentation generation on post build~~
-  * Add an ant target for packaging (zip)
- * Automate graph generation
+  * ~~Add an ant target for packaging (zip)~~
+  * Compile with static versions of Xalan and Xerces
+ * ~~Automate graph generation~~
   * Add a command line parameter to generate a sub graph with a set of modules and their afferent and efferents modules
   * ~~Embed stylesheets to transform xml output into [http://www.graphviz.org/doc/info/lang.html Dot language] and apply them with [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Patterns#XSL XeuSeuLeu]~~
   * ~~Add a command line parameter to specify desired output format: xml or dot~~
@@ -29,6 +30,7 @@
   * Fill doxygen fields
  * User can specify multiple outputs (xml and png)
  * Add licence files and readme.txt
+ * Add a verbose command line parameter 
  * Clean graphviz warnings ("GLib-WARNING **: Passing a non-NULL package to g_win32_get_package_installation_directory() is deprecated and it is ignored.")
 
 = Next version (V2) =
