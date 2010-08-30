@@ -48,6 +48,13 @@ const MetricSerializer::ClassMetrics MetricSerializer::FindClass( const std::str
 
 namespace
 {
+    template< typename T >
+    bool Check( const T& filter, const std::string& module )
+    {
+        if( filter.empty() )
+            return true;
+        return std::find( filter.begin(), filter.end(), module ) != filter.end();
+    }
     typedef std::pair< std::string, unsigned int > T_Number;
     template< typename T >
     unsigned int Sum( const std::string& module, const T& dependencies )
@@ -60,17 +67,18 @@ namespace
             result += number.second;
         return result;
     }
-    template< typename T >
-    void SerializeDependency( xml::xostream& xos, const std::string& module, const T& dependencies )
+    template< typename T, typename U >
+    void SerializeDependency( xml::xostream& xos, const std::string& module, const T& dependencies, const U& filter )
     {
         T::const_iterator it = dependencies.find( module );
         if( it == dependencies.end() )
             return;
         BOOST_FOREACH( const T_Number& number, it->second )
-            xos << xml::start( "dependency" )
-                    << xml::attribute( "name", number.first )
-                    << xml::attribute( "number", number.second )
-                << xml::end;
+            if( Check( filter, number.first ) )
+                xos << xml::start( "dependency" )
+                        << xml::attribute( "name", number.first )
+                        << xml::attribute( "number", number.second )
+                    << xml::end;
     }
     void SerializeMetrics( xml::xostream& xos, unsigned int classes, unsigned int abstractClasses, unsigned int ce, unsigned int ca )
     {
@@ -91,27 +99,30 @@ namespace
 // Name: MetricSerializer::Serialize
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-void MetricSerializer::Serialize( xml::xostream& xos ) const
+void MetricSerializer::Serialize( xml::xostream& xos, const T_Filter& filter ) const
 {
     xos << xml::start( "categories" );
     BOOST_FOREACH( const std::string& module, modules_ )
     {
-        xos << xml::start( "category" )
-                << xml::attribute( "name", module )
-                << xml::start( "efferent-dependencies" )
-                    << xml::attribute( "Ce", Sum( module, efferent_ ) );
-        SerializeDependency( xos, module, efferent_ );
-        xos     << xml::end
-                << xml::start( "afferent-dependencies" )
-                    << xml::attribute( "Ca", Sum( module, afferent_ ) );
-        SerializeDependency( xos, module, afferent_ );
-        xos     << xml::end
-                << xml::start( "external-dependencies" )
-                    << xml::attribute( "Ce", Sum( module, external_ ) );
-        SerializeDependency( xos, module, external_ );
-        xos     << xml::end;
-        SerializeMetrics( xos, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ) );
-        xos << xml::end;
+        if( Check( filter, module ) )
+        {
+            xos << xml::start( "category" )
+                    << xml::attribute( "name", module )
+                    << xml::start( "efferent-dependencies" )
+                        << xml::attribute( "Ce", Sum( module, efferent_ ) );
+            SerializeDependency( xos, module, efferent_, filter );
+            xos     << xml::end
+                    << xml::start( "afferent-dependencies" )
+                        << xml::attribute( "Ca", Sum( module, afferent_ ) );
+            SerializeDependency( xos, module, afferent_, filter );
+            xos     << xml::end
+                    << xml::start( "external-dependencies" )
+                        << xml::attribute( "Ce", Sum( module, external_ ) );
+            SerializeDependency( xos, module, external_, T_Filter() );
+            xos     << xml::end;
+            SerializeMetrics( xos, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ) );
+            xos << xml::end;
+        }
     }
     xos << xml::end;
 }

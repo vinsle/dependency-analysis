@@ -11,6 +11,7 @@
 #include "MockClassMetric.h"
 #include "MockDependencyMetric.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/assign.hpp>
 
 using namespace depend;
 
@@ -52,7 +53,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_metrics_in_xml, SerializeFixture )
     dependencyVisitor->NotifyInternalDependency( "module2", "module1", "module1/include" );
     dependencyVisitor->NotifyExternalDependency( "module1", "boost", "boost/assign.hpp" );
     xml::xostringstream xos;
-    serializer.Serialize( xos );
+    serializer.Serialize( xos, MetricSerializer::T_Filter() );
     const std::string expected =
         "<categories>"
         "    <category name='module1'>"
@@ -87,6 +88,70 @@ BOOST_FIXTURE_TEST_CASE( serialize_metrics_in_xml, SerializeFixture )
         "            <abstractness>50</abstractness>"
         "            <instability>50</instability>"
         "            <distance>0</distance>"
+        "        </metrics>"
+        "    </category>"
+        "</categories>";
+    BOOST_CHECK_XML_EQUAL( expected, xos.str() );
+}
+
+BOOST_FIXTURE_TEST_CASE( serialize_metrics_with_module_filter, SerializeFixture )
+{
+    classVisitor->NotifyClassMetric( "module1", 4u, 2u );
+    classVisitor->NotifyClassMetric( "module2", 4u, 2u );
+    classVisitor->NotifyClassMetric( "module3", 4u, 2u );
+    classVisitor->NotifyClassMetric( "module4", 4u, 2u );
+    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "module2/include" );
+    dependencyVisitor->NotifyInternalDependency( "module2", "module4", "module4/include" );
+    dependencyVisitor->NotifyInternalDependency( "module3", "module1", "module1/include" );
+    dependencyVisitor->NotifyInternalDependency( "module3", "module2", "module2/include" );
+    xml::xostringstream xos;
+    serializer.Serialize( xos, boost::assign::list_of( "module1" )( "module2" )( "module3" )  );
+    const std::string expected =
+        "<categories>"
+        "    <category name='module1'>"
+        "        <efferent-dependencies Ce='1'>"
+        "            <dependency name='module2' number='1'/>"
+        "        </efferent-dependencies>"
+        "        <afferent-dependencies Ca='1'>"
+        "            <dependency name='module3' number='1'/>"
+        "        </afferent-dependencies>"
+        "        <external-dependencies Ce='0'/>"
+        "        <metrics>"
+        "            <number-of-classes>4</number-of-classes>"
+        "            <number-of-abstract-classes>2</number-of-abstract-classes>"
+        "            <abstractness>50</abstractness>"
+        "            <instability>50</instability>"
+        "            <distance>0</distance>"
+        "        </metrics>"
+        "    </category>"
+        "    <category name='module2'>"
+        "        <efferent-dependencies Ce='1'/>"
+        "        <afferent-dependencies Ca='2'>"
+        "            <dependency name='module1' number='1'/>"
+        "            <dependency name='module3' number='1'/>"
+        "        </afferent-dependencies>"
+        "        <external-dependencies Ce='0'/>"
+        "        <metrics>"
+        "            <number-of-classes>4</number-of-classes>"
+        "            <number-of-abstract-classes>2</number-of-abstract-classes>"
+        "            <abstractness>50</abstractness>"
+        "            <instability>33</instability>"
+        "            <distance>17</distance>"
+        "        </metrics>"
+        "    </category>"
+        "    <category name='module3'>"
+        "        <efferent-dependencies Ce='2'>"
+        "            <dependency name='module1' number='1'/>"
+        "            <dependency name='module2' number='1'/>"
+        "        </efferent-dependencies>"
+        "        <afferent-dependencies Ca='0'/>"
+        "        <external-dependencies Ce='0'/>"
+        "        <metrics>"
+        "            <number-of-classes>4</number-of-classes>"
+        "            <number-of-abstract-classes>2</number-of-abstract-classes>"
+        "            <abstractness>50</abstractness>"
+        "            <instability>100</instability>"
+        "            <distance>50</distance>"
         "        </metrics>"
         "    </category>"
         "</categories>";

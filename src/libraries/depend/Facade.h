@@ -9,8 +9,10 @@
 #ifndef depend_Facade_h
 #define depend_Facade_h
 
+#include <boost/noncopyable.hpp>
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace xml
 {
@@ -35,12 +37,18 @@ namespace depend
 */
 // Created: SLI 2010-08-18
 // =============================================================================
-class Facade
+class Facade : private boost::noncopyable
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::vector< std::string > T_Filter;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
-             Facade();
+    explicit Facade( const T_Filter& filter );
     virtual ~Facade();
     //@}
 
@@ -55,6 +63,7 @@ public:
 private:
     //! @name Member data
     //@{
+    T_Filter filter_;
     std::auto_ptr< ModuleVisitor > moduleVisitor_;
     std::auto_ptr< FileVisitor > fileVisitor_;
     std::auto_ptr< LineVisitor > lineVisitor_;

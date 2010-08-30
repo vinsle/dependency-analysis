@@ -36,11 +36,12 @@ namespace
     {
         bpo::options_description desc( "Allowed options" );
         desc.add_options()
-            ( "help,h"                                           , "produce help message" )
-            ( "path" , bpo::value< std::vector< std::string > >(), "add a directory containing modules for analysis" )
-            ( "output", bpo::value< std::string >()              , "set output file" )
-            ( "format", bpo::value< std::string >()              , "set output format (xml|dot|png)" )
-            ( "version,v"                                        , "produce version message" );
+            ( "help,h"                                            , "produce help message" )
+            ( "path" , bpo::value< std::vector< std::string > >() , "add a directory containing modules for analysis" )
+            ( "output", bpo::value< std::string >()               , "set output file" )
+            ( "filter", bpo::value< std::vector< std::string > >(), "select only modules in filter and their afferent and efferent modules" )
+            ( "format", bpo::value< std::string >()               , "set output format (xml|dot|png)" )
+            ( "version,v"                                         , "produce version message" );
         bpo::positional_options_description p;
         p.add( "path", -1 );
         bpo::variables_map vm;
@@ -71,7 +72,10 @@ int main( int argc, char* argv[] )
         const bpo::variables_map vm = ParseCommandLine( argc, argv );
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
-        depend::Facade facade;
+        depend::Facade::T_Filter filter;
+        if( vm.count( "filter" ) )
+            filter = vm[ "filter" ].as< std::vector< std::string > >();
+        depend::Facade facade( filter );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
         if( vm.count( "format" ) && vm[ "format" ].as< std::string >() == "png" )

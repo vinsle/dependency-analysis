@@ -32,17 +32,29 @@ ModuleSerializer::~ModuleSerializer()
     subject_.Unregister( *this );
 }
 
+namespace
+{
+    template< typename T >
+    bool Check( const T& filter, const std::string& module )
+    {
+        if( filter.empty() )
+            return true;
+        return std::find( filter.begin(), filter.end(), module ) != filter.end();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModuleSerializer::Serialize
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-void ModuleSerializer::Serialize( xml::xostream& xos ) const
+void ModuleSerializer::Serialize( xml::xostream& xos, const T_Filter& filter ) const
 {
     xos << xml::start( "dependencies" );
     BOOST_FOREACH( const std::string& module, modules_ )
-        xos << xml::start( "dependency" )
-                << xml::attribute( "name", module )
-            << xml::end;
+        if( Check( filter, module ) )
+            xos << xml::start( "dependency" )
+                    << xml::attribute( "name", module )
+                << xml::end;
     xos << xml::end;
 }
 

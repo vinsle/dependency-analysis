@@ -23,6 +23,7 @@
 #include "PngSerializer.h"
 #include <boost/assign.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <set>
 
 using namespace depend;
 
@@ -37,8 +38,9 @@ namespace
 // Name: Facade constructor
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
-Facade::Facade()
-    : moduleVisitor_         ( new ModuleVisitor() )
+Facade::Facade( const T_Filter& filter )
+    : filter_                ( filter.begin(), filter.end() )
+    , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( extensions ) )
     , lineVisitor_           ( new LineVisitor() )
     , uncommentedLineVisitor_( new UncommentedLineVisitor( *lineVisitor_ ) )
@@ -124,6 +126,43 @@ void Facade::Visit( const std::string& path )
     moduleVisitor_->Visit( path );
 }
 
+namespace
+{
+    template< typename T >
+    bool Check( const T& filter, const std::string& module )
+    {
+        if( filter.empty() )
+            return true;
+        return std::find( filter.begin(), filter.end(), module ) != filter.end();
+    }
+    class FilterExtender : private DependencyMetricVisitor_ABC
+    {
+    public:
+        FilterExtender( const DependencyMetric_ABC& metric, Facade::T_Filter& filter )
+            : filter_( filter )
+        {
+            metric.Apply( *this );
+            filter.insert( filter.end(), extended_.begin(), extended_.end() );
+        }
+
+    private:
+        virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*include*/ )
+        {
+            if( Check( filter_, fromModule ) )
+                extended_.insert( toModule );
+            else if( Check( filter_, toModule ) )
+                extended_.insert( fromModule );
+        }
+        virtual void NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/, const std::string& /*include*/ )
+        {
+            // NOTHING
+        }
+
+        Facade::T_Filter& filter_;
+        std::set< std::string > extended_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Facade::Serialize
 // Created: SLI 2010-08-20
@@ -131,8 +170,9 @@ void Facade::Visit( const std::string& path )
 void Facade::Serialize( xml::xostream& xos )
 {
     xos << xml::start( "report" );
-    moduleSerializer_->Serialize( xos );
-    MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos );
+    FilterExtender( *dependencyMetric_, filter_ );
+    moduleSerializer_->Serialize( xos, filter_ );
+    MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter_ );
     StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos );
     xos << xml::end;
 }

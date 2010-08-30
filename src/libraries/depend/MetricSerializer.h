@@ -13,6 +13,7 @@
 #include "ClassMetricVisitor_ABC.h"
 #include <set>
 #include <map>
+#include <vector>
 
 namespace xml
 {
@@ -33,6 +34,12 @@ namespace depend
 class MetricSerializer : private DependencyMetricVisitor_ABC, private ClassMetricVisitor_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< std::string > T_Filter;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              MetricSerializer( const DependencyMetric_ABC& dependencies, const ClassMetric_ABC& classes );
@@ -41,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos ) const;
+    void Serialize( xml::xostream& xos, const T_Filter& filter ) const;
     //@}
 
 private:
