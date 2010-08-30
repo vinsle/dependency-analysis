@@ -24,6 +24,7 @@ namespace depend
 {
     class DependencyMetric_ABC;
     class ClassMetric_ABC;
+    class Filter_ABC;
 
 // =============================================================================
 /** @class  MetricSerializer
@@ -34,12 +35,6 @@ namespace depend
 class MetricSerializer : private DependencyMetricVisitor_ABC, private ClassMetricVisitor_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Filter;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              MetricSerializer( const DependencyMetric_ABC& dependencies, const ClassMetric_ABC& classes );
@@ -48,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos, const T_Filter& filter ) const;
+    void Serialize( xml::xostream& xos, const Filter_ABC& filter ) const;
     //@}
 
 private:

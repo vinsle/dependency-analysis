@@ -10,8 +10,8 @@
 #include "depend/MetricSerializer.h"
 #include "MockClassMetric.h"
 #include "MockDependencyMetric.h"
+#include "MockFilter.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/assign.hpp>
 
 using namespace depend;
 
@@ -31,6 +31,7 @@ namespace
         MockDependencyMetric dependencyMetric;
         ClassMetricVisitor_ABC* classVisitor;
         DependencyMetricVisitor_ABC* dependencyVisitor;
+        MockFilter filter;
     };
     class SerializeFixture : public Fixture
     {
@@ -53,7 +54,8 @@ BOOST_FIXTURE_TEST_CASE( serialize_metrics_in_xml, SerializeFixture )
     dependencyVisitor->NotifyInternalDependency( "module2", "module1", "module1/include" );
     dependencyVisitor->NotifyExternalDependency( "module1", "boost", "boost/assign.hpp" );
     xml::xostringstream xos;
-    serializer.Serialize( xos, MetricSerializer::T_Filter() );
+    MOCK_EXPECT( filter, Check ).returns( true );
+    serializer.Serialize( xos, filter );
     const std::string expected =
         "<categories>"
         "    <category name='module1'>"
@@ -105,7 +107,11 @@ BOOST_FIXTURE_TEST_CASE( serialize_metrics_with_module_filter, SerializeFixture 
     dependencyVisitor->NotifyInternalDependency( "module3", "module1", "module1/include" );
     dependencyVisitor->NotifyInternalDependency( "module3", "module2", "module2/include" );
     xml::xostringstream xos;
-    serializer.Serialize( xos, boost::assign::list_of( "module1" )( "module2" )( "module3" )  );
+    MOCK_EXPECT( filter, Check ).with( "module1" ).returns( true );
+    MOCK_EXPECT( filter, Check ).with( "module2" ).returns( true );
+    MOCK_EXPECT( filter, Check ).with( "module3" ).returns( true );
+    MOCK_EXPECT( filter, Check ).returns( false );
+    serializer.Serialize( xos, filter );
     const std::string expected =
         "<categories>"
         "    <category name='module1'>"

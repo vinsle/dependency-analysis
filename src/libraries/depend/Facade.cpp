@@ -21,6 +21,7 @@
 #include "StronglyConnectedComponents.h"
 #include "DotSerializer.h"
 #include "PngSerializer.h"
+#include "Filter.h"
 #include <boost/assign.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <set>
@@ -39,7 +40,7 @@ namespace
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
 Facade::Facade( const T_Filter& filter )
-    : filter_                ( filter.begin(), filter.end() )
+    : filter_                ( new Filter( filter ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( extensions ) )
     , lineVisitor_           ( new LineVisitor() )
@@ -128,37 +129,31 @@ void Facade::Visit( const std::string& path )
 
 namespace
 {
-    template< typename T >
-    bool Check( const T& filter, const std::string& module )
-    {
-        if( filter.empty() )
-            return true;
-        return std::find( filter.begin(), filter.end(), module ) != filter.end();
-    }
-    class FilterExtender : private DependencyMetricVisitor_ABC
+    class FilterExtender : public Filter_ABC, private DependencyMetricVisitor_ABC
     {
     public:
-        FilterExtender( const DependencyMetric_ABC& metric, Facade::T_Filter& filter )
+        FilterExtender( const DependencyMetric_ABC& metric, const Filter_ABC& filter )
             : filter_( filter )
         {
             metric.Apply( *this );
-            filter.insert( filter.end(), extended_.begin(), extended_.end() );
         }
-
+        virtual bool Check( const std::string& module ) const
+        {
+            return filter_.Check( module ) || extended_.find( module ) != extended_.end();
+        }
     private:
         virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*include*/ )
         {
-            if( Check( filter_, fromModule ) )
+            if( filter_.Check( fromModule ) )
                 extended_.insert( toModule );
-            else if( Check( filter_, toModule ) )
+            else if( filter_.Check( toModule ) )
                 extended_.insert( fromModule );
         }
         virtual void NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/, const std::string& /*include*/ )
         {
             // NOTHING
         }
-
-        Facade::T_Filter& filter_;
+        const Filter_ABC& filter_;
         std::set< std::string > extended_;
     };
 }
@@ -170,10 +165,10 @@ namespace
 void Facade::Serialize( xml::xostream& xos )
 {
     xos << xml::start( "report" );
-    FilterExtender( *dependencyMetric_, filter_ );
-    moduleSerializer_->Serialize( xos, filter_ );
-    MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter_ );
-    StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, filter_ );
+    FilterExtender filter( *dependencyMetric_, *filter_ );
+    moduleSerializer_->Serialize( xos, filter );
+    MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter );
+    StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, filter );
     xos << xml::end;
 }
 
