@@ -29,15 +29,21 @@ namespace depend
 class ModuleSerializer : private ModuleObserver_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< std::string > T_Filter;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
-             ModuleSerializer( Subject< ModuleObserver_ABC >& subject );
+    explicit ModuleSerializer( Subject< ModuleObserver_ABC >& subject );
     virtual ~ModuleSerializer();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos ) const;
+    void Serialize( xml::xostream& xos, const T_Filter& filter ) const;
     //@}
 
 private:
