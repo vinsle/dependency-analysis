@@ -14,17 +14,38 @@
 
 using namespace depend;
 
-BOOST_AUTO_TEST_CASE( serialize_metrics_in_xml )
+namespace
 {
-    MockClassMetric classMetric;
-    MockDependencyMetric dependencyMetric;
-    ClassMetricVisitor_ABC* classVisitor = 0;
-    DependencyMetricVisitor_ABC* dependencyVisitor = 0;
-    MOCK_EXPECT( classMetric, Apply ).once().with( mock::retrieve( classVisitor ) );
-    MOCK_EXPECT( dependencyMetric, Apply ).once().with( mock::retrieve( dependencyVisitor ) );
-    MetricSerializer serializer( dependencyMetric, classMetric );
-    BOOST_REQUIRE( classVisitor );
-    BOOST_REQUIRE( dependencyVisitor );
+    class Fixture
+    {
+    public:
+        Fixture()
+            : classVisitor( 0 )
+            , dependencyVisitor( 0 )
+        {
+            MOCK_EXPECT( classMetric, Apply ).once().with( mock::retrieve( classVisitor ) );
+            MOCK_EXPECT( dependencyMetric, Apply ).once().with( mock::retrieve( dependencyVisitor ) );
+        }
+        MockClassMetric classMetric;
+        MockDependencyMetric dependencyMetric;
+        ClassMetricVisitor_ABC* classVisitor;
+        DependencyMetricVisitor_ABC* dependencyVisitor;
+    };
+    class SerializeFixture : public Fixture
+    {
+    public:
+        SerializeFixture()
+            : serializer( dependencyMetric, classMetric )
+        {
+            BOOST_REQUIRE( classVisitor );
+            BOOST_REQUIRE( dependencyVisitor );
+        }
+        MetricSerializer serializer;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( serialize_metrics_in_xml, SerializeFixture )
+{
     classVisitor->NotifyClassMetric( "module1", 4u, 2u );
     classVisitor->NotifyClassMetric( "module2", 4u, 2u );
     dependencyVisitor->NotifyInternalDependency( "module1", "module2", "module2/include" );
@@ -66,40 +87,6 @@ BOOST_AUTO_TEST_CASE( serialize_metrics_in_xml )
         "            <abstractness>50</abstractness>"
         "            <instability>50</instability>"
         "            <distance>0</distance>"
-        "        </metrics>"
-        "    </category>"
-        "</categories>";
-    BOOST_CHECK_XML_EQUAL( expected, xos.str() );
-}
-
-BOOST_AUTO_TEST_CASE( simple_metric_serialization )
-{
-    MockClassMetric classMetric;
-    MockDependencyMetric dependencyMetric;
-    ClassMetricVisitor_ABC* classVisitor = 0;
-    DependencyMetricVisitor_ABC* dependencyVisitor = 0;
-    MOCK_EXPECT( classMetric, Apply ).once().with( mock::retrieve( classVisitor ) );
-    MOCK_EXPECT( dependencyMetric, Apply ).once().with( mock::retrieve( dependencyVisitor ) );
-    MetricSerializer serializer( dependencyMetric, classMetric );
-    BOOST_REQUIRE( classVisitor );
-    BOOST_REQUIRE( dependencyVisitor );
-    dependencyVisitor->NotifyExternalDependency( "module1", "boost", "boost/assign.hpp" );
-    xml::xostringstream xos;
-    serializer.Serialize( xos );
-    const std::string expected =
-        "<categories>"
-        "    <category name='module1'>"
-        "        <efferent-dependencies Ce='0'/>"
-        "        <afferent-dependencies Ca='0'/>"
-        "        <external-dependencies Ce='1'>"
-        "            <dependency name='boost' number='1'/>"
-        "        </external-dependencies>"
-        "        <metrics>"
-        "            <number-of-classes>0</number-of-classes>"
-        "            <number-of-abstract-classes>0</number-of-abstract-classes>"
-        "            <abstractness>0</abstractness>"
-        "            <instability>0</instability>"
-        "            <distance>100</distance>"
         "        </metrics>"
         "    </category>"
         "</categories>";
