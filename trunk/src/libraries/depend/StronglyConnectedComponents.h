@@ -14,6 +14,7 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/labeled_graph.hpp>
 #pragma warning( pop )
+#include <vector>
 
 namespace xml
 {
@@ -33,6 +34,12 @@ namespace depend
 class StronglyConnectedComponents : private DependencyMetricVisitor_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< std::string > T_Filter;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
     explicit StronglyConnectedComponents( const DependencyMetric_ABC& metric );
@@ -41,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos ) const;
+    void Serialize( xml::xostream& xos, const T_Filter& filter ) const;
     //@}
 
 private:
