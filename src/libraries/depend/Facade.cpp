@@ -173,7 +173,7 @@ void Facade::Serialize( xml::xostream& xos )
     FilterExtender( *dependencyMetric_, filter_ );
     moduleSerializer_->Serialize( xos, filter_ );
     MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter_ );
-    StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos );
+    StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, filter_ );
     xos << xml::end;
 }
 

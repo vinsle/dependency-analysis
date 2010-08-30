@@ -38,8 +38,8 @@ StronglyConnectedComponents::~StronglyConnectedComponents()
 
 namespace
 {
-    template< typename T, typename U >
-    void Serialize( T& components, const U& labels, xml::xostream& xos )
+    template< typename T, typename U, typename V >
+    void Serialize( T& components, const U& labels, const V& filter, xml::xostream& xos )
     {
         typedef std::vector< std::string > T_Dependencies;
         typedef std::map< T::key_type, T_Dependencies > T_Components;
@@ -51,10 +51,15 @@ namespace
         }
         BOOST_FOREACH( const T_Components::value_type& component, sorted_components )
         {
-            if( component.second.size() > 1 )
+            V filtered;
+            if( filter.empty() )
+                filtered.insert( filtered.end(), component.second.begin(), component.second.end() );
+            else
+                std::set_intersection( component.second.begin(), component.second.end(), filter.begin(), filter.end(), std::back_inserter( filtered ) );
+            if( filtered.size() > 1 )
             {
                 xos << xml::start( "component" );
-                BOOST_FOREACH( const std::string& module, component.second )
+                BOOST_FOREACH( const std::string& module, filtered )
                     xos << xml::content( "module", module );
                 xos << xml::end;
             }
@@ -66,7 +71,7 @@ namespace
 // Name: StronglyConnectedComponents::Serialize
 // Created: SLI 2010-08-23
 // -----------------------------------------------------------------------------
-void StronglyConnectedComponents::Serialize( xml::xostream& xos ) const
+void StronglyConnectedComponents::Serialize( xml::xostream& xos, const T_Filter& filter ) const
 {
     xos << xml::start( "strongly-connected-components" );
     typedef std::map< T_Graph::vertex_descriptor, T_Graph::vertices_size_type > T_Map;
@@ -74,7 +79,7 @@ void StronglyConnectedComponents::Serialize( xml::xostream& xos ) const
     T_Map mymap;
     T_PropertyMap pmap( mymap );
     boost::strong_components( graph_.graph(), pmap );
-    ::Serialize( mymap, labels_, xos );
+    ::Serialize( mymap, labels_, filter, xos );
     xos << xml::end;
 }
 
