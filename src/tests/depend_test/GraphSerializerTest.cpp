@@ -7,7 +7,7 @@
 //
 
 #include "depend_test_pch.h"
-#include "depend/PngSerializer.h"
+#include "depend/GraphSerializer.h"
 #include <boost/filesystem.hpp>
 
 using namespace depend;
@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_CASE( simple_png_serialization, Fixture )
           "\"module2\"->\"module1\"[label=\"1\",color=\"1 1.0 1.0\"];"
           "\"module3\"->\"module1\"[label=\"1\"];"
           "}";
-    PngSerializer serializer( "dot", "png", PngSerializer::T_Options(), PngSerializer::T_Options(), PngSerializer::T_Options() );
+    GraphSerializer serializer( "dot", "png", GraphSerializer::T_Options(), GraphSerializer::T_Options(), GraphSerializer::T_Options() );
     serializer.Serialize( dot, filename );
     BOOST_CHECK( boost::filesystem::exists( filename ) );
 }

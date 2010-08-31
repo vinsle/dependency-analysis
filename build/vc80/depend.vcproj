@@ -346,6 +346,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\GraphSerializer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\GraphSerializer.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\MetricSerializer.cpp"
 					>
 				</File>
@@ -359,14 +367,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\ModuleSerializer.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\PngSerializer.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\PngSerializer.h"
 					>
 				</File>
 			</Filter>
