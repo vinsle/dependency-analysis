@@ -7,7 +7,7 @@
 //
 
 #include "depend_pch.h"
-#include "PngSerializer.h"
+#include "GraphSerializer.h"
 #include <graphviz/gvc.h>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
@@ -15,10 +15,10 @@
 using namespace depend;
 
 // -----------------------------------------------------------------------------
-// Name: PngSerializer constructor
+// Name: GraphSerializer constructor
 // Created: SLI 2010-08-27
 // -----------------------------------------------------------------------------
-PngSerializer::PngSerializer( const std::string& layout, const std::string& format,
+GraphSerializer::GraphSerializer( const std::string& layout, const std::string& format,
                               const T_Options& graph, const T_Options& node, const T_Options& edge )
     : layout_( layout )
     , format_( format )
@@ -30,10 +30,10 @@ PngSerializer::PngSerializer( const std::string& layout, const std::string& form
 }
 
 // -----------------------------------------------------------------------------
-// Name: PngSerializer destructor
+// Name: GraphSerializer destructor
 // Created: SLI 2010-08-27
 // -----------------------------------------------------------------------------
-PngSerializer::~PngSerializer()
+GraphSerializer::~GraphSerializer()
 {
     // NOTHING
 }
@@ -52,10 +52,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: PngSerializer::Serialize
+// Name: GraphSerializer::Serialize
 // Created: SLI 2010-08-27
 // -----------------------------------------------------------------------------
-void PngSerializer::Serialize( const std::string& dot, const std::string& filename ) const
+void GraphSerializer::Serialize( const std::string& dot, const std::string& filename ) const
 {
     std::string buffer = dot;
     GVC_t* context = gvContext();

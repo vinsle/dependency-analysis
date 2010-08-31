@@ -20,7 +20,7 @@
 #include "ModuleSerializer.h"
 #include "StronglyConnectedComponents.h"
 #include "DotSerializer.h"
-#include "PngSerializer.h"
+#include "GraphSerializer.h"
 #include "Filter.h"
 #include <boost/assign.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -184,7 +184,7 @@ void Facade::Serialize( std::ostream& os )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade::SerializePng
+// Name: Facade::SerializeGraph
 // Created: SLI 2010-08-27
 // -----------------------------------------------------------------------------
 void Facade::Serialize( const std::string& filename, const std::string& layout, const std::string& format,
@@ -192,6 +192,6 @@ void Facade::Serialize( const std::string& filename, const std::string& layout, 
 {
     std::ostringstream buffer;
     Serialize( buffer );
-    const PngSerializer serializer( layout, format, graph, node, edge );
+    const GraphSerializer serializer( layout, format, graph, node, edge );
     serializer.Serialize( buffer.str(), filename );
 }
