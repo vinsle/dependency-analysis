@@ -12,6 +12,7 @@
 #include <boost/noncopyable.hpp>
 #include <string>
 #include <memory>
+#include <map>
 #include <vector>
 
 namespace xml
@@ -44,6 +45,7 @@ public:
     //! @name Types
     //@{
     typedef std::vector< std::string > T_Filter;
+    typedef std::map< std::string, std::string > T_Options;
     //@}
 
 public:
@@ -58,7 +60,8 @@ public:
     void Visit( const std::string& path );
     void Serialize( xml::xostream& xos );
     void Serialize( std::ostream& os );
-    void Serialize( const std::string& filename );
+    void Serialize( const std::string& filename, const std::string& layout, const std::string& format,
+                    const T_Options& graph, const T_Options& node, const T_Options& edge );
     //@}
 
 private:
