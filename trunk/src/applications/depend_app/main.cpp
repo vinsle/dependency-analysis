@@ -8,8 +8,9 @@
 
 #include "depend/Facade.h"
 #pragma warning( push, 0 )
-#pragma warning( disable: 4512 )
+#pragma warning( disable: 4512 4996 )
 #include <boost/program_options.hpp>
+#include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <iostream>
 #include <xeumeuleu/xml.hpp>
@@ -36,12 +37,17 @@ namespace
     {
         bpo::options_description desc( "Allowed options" );
         desc.add_options()
-            ( "help,h"                                            , "produce help message" )
-            ( "path" , bpo::value< std::vector< std::string > >() , "add a directory containing modules for analysis" )
-            ( "output", bpo::value< std::string >()               , "set output file" )
-            ( "filter", bpo::value< std::vector< std::string > >(), "select only modules in filter and their afferent and efferent modules" )
-            ( "format", bpo::value< std::string >()               , "set output format (xml|dot|png)" )
-            ( "version,v"                                         , "produce version message" );
+            ( "help,h"                                                   , "produce help message" )
+            ( "path" , bpo::value< std::vector< std::string > >()        , "add a directory containing modules for analysis" )
+            ( "output", bpo::value< std::string >()                      , "set output file" )
+            ( "filter", bpo::value< std::vector< std::string > >()       , "select only modules in filter and their afferent and efferent modules" )
+            ( "render", bpo::value< std::string >()                      , "set render format (xml|dot|graph)" )
+            ( "layout", bpo::value< std::string >()->default_value("dot"), "set layout algorithm (dot|neato)" )
+            ( "format", bpo::value< std::string >()->default_value("png"), "set graph format (png|jpeg|svg|pdf)" )
+            ( "graph,g", bpo::value< std::vector< std::string > >()      , "set graph options (see http://www.graphviz.org/doc/info/attrs.html)" )
+            ( "node,n", bpo::value< std::vector< std::string > >()       , "set node options (see http://www.graphviz.org/doc/info/attrs.html)" )
+            ( "edge,e", bpo::value< std::vector< std::string > >()       , "set edge options (see http://www.graphviz.org/doc/info/attrs.html)" )
+            ( "version,v"                                                , "produce version message" );
         bpo::positional_options_description p;
         p.add( "path", -1 );
         bpo::variables_map vm;
@@ -59,9 +65,22 @@ namespace
                       << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
         else if( ! vm.count( "path" ) )
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
-        else if( vm.count( "format" ) && vm[ "format" ].as< std::string >() != "xml" && vm[ "format" ].as< std::string >() != "dot" && vm[ "format" ].as< std::string >() != "png" )
+        else if( vm.count( "render" ) && vm[ "render" ].as< std::string >() != "xml" && vm[ "render" ].as< std::string >() != "dot" && vm[ "render" ].as< std::string >() != "graph" )
             throw std::invalid_argument( "Invalid application option argument: format '" + vm[ "format" ].as< std::string >() + "' is not supported" );
         return vm;
+    }
+    depend::Facade::T_Options ParseGraphOptions( const std::vector< std::string >& options )
+    {
+        depend::Facade::T_Options result;
+        BOOST_FOREACH( const std::string& option, options )
+        {
+            std::vector< std::string > buffer;
+            boost::algorithm::split( buffer, option, boost::is_any_of( "=" ) );
+            if( buffer.size() != 2 )
+                throw std::invalid_argument( "Invalid application graph argument: '" + option + "' is malformed" );
+            result[ buffer.at( 0 ) ] = buffer.at( 1 );
+        }
+        return result;
     }
 }
 
@@ -78,14 +97,18 @@ int main( int argc, char* argv[] )
         depend::Facade facade( filter );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
-        if( vm.count( "format" ) && vm[ "format" ].as< std::string >() == "png" )
+        if( vm.count( "render" ) && vm[ "render" ].as< std::string >() == "graph" )
         {
             if( !vm.count( "output" ) )
-                throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'png' format" );
-            facade.Serialize( vm[ "output" ].as< std::string >() );
+                throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
+            const std::vector< std::string > empty;
+            facade.Serialize( vm[ "output" ].as< std::string >(), vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
+                              ParseGraphOptions( vm.count( "graph" ) ? vm[ "graph" ].as< std::vector< std::string > >() : empty ),
+                              ParseGraphOptions( vm.count( "node" ) ? vm[ "node" ].as< std::vector< std::string > >(): empty ),
+                              ParseGraphOptions( vm.count( "edge" ) ? vm[ "edge" ].as< std::vector< std::string > >(): empty ) );
             return EXIT_SUCCESS;
         }
-        const bool isDotFormat = vm.count( "format" ) && vm[ "format" ].as< std::string >() == "dot";
+        const bool isDotFormat = vm.count( "render" ) && vm[ "render" ].as< std::string >() == "dot";
         std::ostream* out = &std::cout;
         if( vm.count( "output" ) )
             out = new std::ofstream( vm[ "output" ].as< std::string >().c_str() );

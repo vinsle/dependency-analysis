@@ -187,9 +187,11 @@ void Facade::Serialize( std::ostream& os )
 // Name: Facade::SerializePng
 // Created: SLI 2010-08-27
 // -----------------------------------------------------------------------------
-void Facade::Serialize( const std::string& filename )
+void Facade::Serialize( const std::string& filename, const std::string& layout, const std::string& format,
+                        const T_Options& graph, const T_Options& node, const T_Options& edge )
 {
     std::ostringstream buffer;
     Serialize( buffer );
-    PngSerializer().Serialize( buffer.str(), filename );
+    const PngSerializer serializer( layout, format, graph, node, edge );
+    serializer.Serialize( buffer.str(), filename );
 }
