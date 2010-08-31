@@ -17,7 +17,7 @@
  * ~~Delete xerces dll versionning~~
  * ~~Add png output format~~
   * ~~Use [http://www.graphviz.org/pdf/libguide.pdf Graphviz] as a library~~
-  * Add some command line parameters to tweak the output (color, layout, size, labels, ...)
+  * ~~Add some command line parameters to tweak the output (color, layout, size, labels, ...)~~
  * ~~Add the project on build server~~
   * Build on cygwin, ~~vc80~~ and linux platforms
   * Add binaries on download page
