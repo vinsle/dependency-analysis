@@ -22,6 +22,7 @@
 #include "DotSerializer.h"
 #include "GraphSerializer.h"
 #include "Filter.h"
+#include <boost/foreach.hpp>
 #include <boost/assign.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <set>
@@ -91,11 +92,12 @@ namespace
     class ModuleObserver : private ModuleObserver_ABC
     {
     public:
-        ModuleObserver( ModuleVisitor& moduleVisitor, FileVisitor& fileVisitor, LineVisitor& lineVisitor, const std::string& path )
+        ModuleObserver( ModuleVisitor& moduleVisitor, FileVisitor& fileVisitor, LineVisitor& lineVisitor, const std::string& path, std::vector< std::string >& modules )
             : moduleVisitor_( moduleVisitor )
             , fileVisitor_  ( fileVisitor )
             , lineVisitor_  ( lineVisitor )
             , path_         ( path )
+            , modules_      ( modules )
         {
             moduleVisitor_.Register( *this );
         }
@@ -108,12 +110,14 @@ namespace
         {
             FileObserver observer( fileVisitor_, lineVisitor_ );
             fileVisitor_.Visit( path_ + "/" + module );
+            modules_.push_back( module );
         }
     private:
         ModuleVisitor& moduleVisitor_;
         FileVisitor& fileVisitor_;
         LineVisitor& lineVisitor_;
         const std::string path_;
+        std::vector< std::string >& modules_;
     };
 }
 
@@ -123,7 +127,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Facade::Visit( const std::string& path )
 {
-    ModuleObserver observer( *moduleVisitor_, *fileVisitor_, *lineVisitor_, path );
+    ModuleObserver observer( *moduleVisitor_, *fileVisitor_, *lineVisitor_, path, modules_ );
     moduleVisitor_->Visit( path );
 }
 
@@ -194,4 +198,20 @@ void Facade::Serialize( const std::string& filename, const std::string& layout, 
     Serialize( buffer );
     const GraphSerializer serializer( layout, format, graph, node, edge );
     serializer.Serialize( buffer.str(), filename );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::SerializeAllModules
+// Created: SLI 2010-08-31
+// -----------------------------------------------------------------------------
+void Facade::SerializeAllModules( const std::string& filename, const std::string& layout, const std::string& format,
+                                  const T_Options& graph, const T_Options& node, const T_Options& edge )
+{
+    const std::string name = filename.substr( 0, filename.find_last_of( '.' ) );
+    BOOST_FOREACH( const std::string& module, modules_ )
+    {
+        const std::vector< std::string > filter = boost::assign::list_of( module );
+        filter_.reset( new Filter( filter ) );
+        Serialize( name + "-" + module + "." + format, layout, format, graph, node, edge );
+    }
 }
