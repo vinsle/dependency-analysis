@@ -62,6 +62,8 @@ public:
     void Serialize( std::ostream& os );
     void Serialize( const std::string& filename, const std::string& layout, const std::string& format,
                     const T_Options& graph, const T_Options& node, const T_Options& edge );
+    void SerializeAllModules( const std::string& filename, const std::string& layout, const std::string& format,
+                              const T_Options& graph, const T_Options& node, const T_Options& edge );
     //@}
 
 private:
@@ -77,6 +79,7 @@ private:
     std::auto_ptr< ClassMetric_ABC > classMetric_;
     std::auto_ptr< DependencyMetric_ABC > dependencyMetric_;
     std::auto_ptr< ModuleSerializer > moduleSerializer_;
+    std::vector< std::string > modules_;
     //@}
 };
 
