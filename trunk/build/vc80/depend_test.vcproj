@@ -218,10 +218,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\depend_test\DependencyMetricTest.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\tests\depend_test\DotSerializerTest.cpp"
 				>
 			</File>
@@ -247,6 +243,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\tests\depend_test\MetricSerializerTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\depend_test\ModuleDependencyMetricTest.cpp"
 				>
 			</File>
 			<File
@@ -285,14 +285,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\tests\depend_test\MockDependencyMetric.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\tests\depend_test\MockDependencyMetricVisitor.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\tests\depend_test\MockFileObserver.h"
 					>
 				</File>
@@ -306,6 +298,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockLineObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockModuleDependencyMetric.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockModuleDependencyMetricVisitor.h"
 					>
 				</File>
 				<File

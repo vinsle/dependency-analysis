@@ -8,7 +8,7 @@
 
 #include "depend_pch.h"
 #include "StronglyConnectedComponents.h"
-#include "DependencyMetric_ABC.h"
+#include "ModuleDependencyMetric_ABC.h"
 #include "Filter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -23,7 +23,7 @@ using namespace depend;
 // Name: StronglyConnectedComponents constructor
 // Created: SLI 2010-08-23
 // -----------------------------------------------------------------------------
-StronglyConnectedComponents::StronglyConnectedComponents( const DependencyMetric_ABC& metric )
+StronglyConnectedComponents::StronglyConnectedComponents( const ModuleDependencyMetric_ABC& metric )
 {
     metric.Apply( *this );
 }

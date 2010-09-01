@@ -7,17 +7,17 @@
 //
 
 #include "depend_pch.h"
-#include "DependencyMetric.h"
-#include "DependencyMetricVisitor_ABC.h"
+#include "ModuleDependencyMetric.h"
+#include "ModuleDependencyMetricVisitor_ABC.h"
 #include <boost/foreach.hpp>
 
 using namespace depend;
 
 // -----------------------------------------------------------------------------
-// Name: DependencyMetric constructor
+// Name: ModuleDependencyMetric constructor
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-DependencyMetric::DependencyMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< FileObserver_ABC >& fileObserver,
+ModuleDependencyMetric::ModuleDependencyMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< FileObserver_ABC >& fileObserver,
                                     Subject< IncludeObserver_ABC >& includeObserver )
     : Observer< ModuleObserver_ABC > ( moduleObserver )
     , Observer< FileObserver_ABC >   ( fileObserver )
@@ -27,19 +27,19 @@ DependencyMetric::DependencyMetric( Subject< ModuleObserver_ABC >& moduleObserve
 }
 
 // -----------------------------------------------------------------------------
-// Name: DependencyMetric destructor
+// Name: ModuleDependencyMetric destructor
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-DependencyMetric::~DependencyMetric()
+ModuleDependencyMetric::~ModuleDependencyMetric()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DependencyMetric::Apply
+// Name: ModuleDependencyMetric::Apply
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void DependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
+void ModuleDependencyMetric::Apply( ModuleDependencyMetricVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const Metric& metric, metrics_ )
     {
@@ -58,10 +58,10 @@ void DependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DependencyMetric::NotifyModule
+// Name: ModuleDependencyMetric::NotifyModule
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void DependencyMetric::NotifyModule( const std::string& module )
+void ModuleDependencyMetric::NotifyModule( const std::string& module )
 {
     Metric metric;
     metric.module_ = module;
@@ -70,10 +70,10 @@ void DependencyMetric::NotifyModule( const std::string& module )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DependencyMetric::NotifyFile
+// Name: ModuleDependencyMetric::NotifyFile
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void DependencyMetric::NotifyFile( const std::string& path, std::istream& /*stream*/ )
+void ModuleDependencyMetric::NotifyFile( const std::string& path, std::istream& /*stream*/ )
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid file '" + path + "' out of a module" );
@@ -81,10 +81,10 @@ void DependencyMetric::NotifyFile( const std::string& path, std::istream& /*stre
 }
 
 // -----------------------------------------------------------------------------
-// Name: DependencyMetric::NotifyInternalInclude
+// Name: ModuleDependencyMetric::NotifyInternalInclude
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void DependencyMetric::NotifyInternalInclude( const std::string& file )
+void ModuleDependencyMetric::NotifyInternalInclude( const std::string& file )
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid include '" + file + "' out of a module" );
@@ -92,10 +92,10 @@ void DependencyMetric::NotifyInternalInclude( const std::string& file )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DependencyMetric::NotifyExternalInclude
+// Name: ModuleDependencyMetric::NotifyExternalInclude
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void DependencyMetric::NotifyExternalInclude( const std::string& file )
+void ModuleDependencyMetric::NotifyExternalInclude( const std::string& file )
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid include '" + file + "' out of a module" );

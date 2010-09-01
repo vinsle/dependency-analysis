@@ -9,7 +9,7 @@
 #include "depend_test_pch.h"
 #include "depend/MetricSerializer.h"
 #include "MockClassMetric.h"
-#include "MockDependencyMetric.h"
+#include "MockModuleDependencyMetric.h"
 #include "MockFilter.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -28,9 +28,9 @@ namespace
             MOCK_EXPECT( dependencyMetric, Apply ).once().with( mock::retrieve( dependencyVisitor ) );
         }
         MockClassMetric classMetric;
-        MockDependencyMetric dependencyMetric;
+        MockModuleDependencyMetric dependencyMetric;
         ClassMetricVisitor_ABC* classVisitor;
-        DependencyMetricVisitor_ABC* dependencyVisitor;
+        ModuleDependencyMetricVisitor_ABC* dependencyVisitor;
         MockFilter filter;
     };
     class SerializeFixture : public Fixture
