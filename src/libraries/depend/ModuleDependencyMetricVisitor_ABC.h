@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_DependencyMetricVisitor_ABC_h
-#define depend_DependencyMetricVisitor_ABC_h
+#ifndef depend_ModuleDependencyMetricVisitor_ABC_h
+#define depend_ModuleDependencyMetricVisitor_ABC_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -15,18 +15,18 @@
 namespace depend
 {
 // =============================================================================
-/** @class  DependencyMetricVisitor_ABC
+/** @class  ModuleDependencyMetricVisitor_ABC
     @brief  Dependency metric visitor definition
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class DependencyMetricVisitor_ABC : private boost::noncopyable
+class ModuleDependencyMetricVisitor_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DependencyMetricVisitor_ABC() {}
-    virtual ~DependencyMetricVisitor_ABC() {}
+             ModuleDependencyMetricVisitor_ABC() {}
+    virtual ~ModuleDependencyMetricVisitor_ABC() {}
     //@}
 
     //! @name Operations
@@ -38,4 +38,4 @@ public:
 
 }
 
-#endif // depend_DependencyMetricVisitor_ABC_h
+#endif // depend_ModuleDependencyMetricVisitor_ABC_h

@@ -314,19 +314,19 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\DependencyMetric.cpp"
+					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetric.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\DependencyMetric.h"
+					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetric.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\DependencyMetric_ABC.h"
+					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetric_ABC.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\DependencyMetricVisitor_ABC.h"
+					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetricVisitor_ABC.h"
 					>
 				</File>
 				<File
