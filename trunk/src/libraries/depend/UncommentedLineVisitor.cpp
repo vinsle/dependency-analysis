@@ -23,9 +23,9 @@ using namespace boost::xpressive;
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
 UncommentedLineVisitor::UncommentedLineVisitor( Subject< LineObserver_ABC >& visitor )
-    : visitor_( visitor )
+    : Observer< LineObserver_ABC >( visitor )
 {
-    visitor_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ UncommentedLineVisitor::UncommentedLineVisitor( Subject< LineObserver_ABC >& vis
 // -----------------------------------------------------------------------------
 UncommentedLineVisitor::~UncommentedLineVisitor()
 {
-    visitor_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

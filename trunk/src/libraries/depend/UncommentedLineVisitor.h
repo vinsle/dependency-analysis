@@ -9,7 +9,7 @@
 #ifndef depend_UncommentedLineVisitor_h
 #define depend_UncommentedLineVisitor_h
 
-#include "Subject.h"
+#include "Observer.h"
 #include "LineObserver_ABC.h"
 
 namespace depend
@@ -22,7 +22,7 @@ namespace depend
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class UncommentedLineVisitor : public Subject< UncommentedLineObserver_ABC >, private LineObserver_ABC
+class UncommentedLineVisitor : public Subject< UncommentedLineObserver_ABC >, private Observer< LineObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -35,12 +35,6 @@ private:
     //! @name Operations
     //@{
     virtual void NotifyLine( const std::string& line );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    Subject< LineObserver_ABC >& visitor_;
     //@}
 };
 

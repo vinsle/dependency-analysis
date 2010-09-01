@@ -23,11 +23,11 @@ using namespace boost::xpressive;
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
 ClassVisitor::ClassVisitor( Subject< UncommentedLineObserver_ABC >& visitor )
-    : visitor_    ( visitor )
+    : Observer< UncommentedLineObserver_ABC >( visitor )
     , insideClass_( false )
     , abstract_   ( false )
 {
-    visitor_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ ClassVisitor::ClassVisitor( Subject< UncommentedLineObserver_ABC >& visitor )
 // -----------------------------------------------------------------------------
 ClassVisitor::~ClassVisitor()
 {
-    visitor_.Unregister( *this );
+    // NOTHING
 }
 
 namespace

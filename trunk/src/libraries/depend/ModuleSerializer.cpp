@@ -19,9 +19,9 @@ using namespace depend;
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
 ModuleSerializer::ModuleSerializer( Subject< ModuleObserver_ABC >& subject )
-    : subject_( subject )
+    : Observer< ModuleObserver_ABC >( subject )
 {
-    subject_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ ModuleSerializer::ModuleSerializer( Subject< ModuleObserver_ABC >& subject )
 // -----------------------------------------------------------------------------
 ModuleSerializer::~ModuleSerializer()
 {
-    subject_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

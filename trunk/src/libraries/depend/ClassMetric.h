@@ -12,7 +12,7 @@
 #include "ClassMetric_ABC.h"
 #include "ClassObserver_ABC.h"
 #include "ModuleObserver_ABC.h"
-#include "Subject.h"
+#include "Observer.h"
 #include <vector>
 
 namespace depend
@@ -23,7 +23,7 @@ namespace depend
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class ClassMetric : public ClassMetric_ABC, private ModuleObserver_ABC, private ClassObserver_ABC
+class ClassMetric : public ClassMetric_ABC, private Observer< ModuleObserver_ABC >, private Observer< ClassObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -65,8 +65,6 @@ private:
 private:
     //! @name Member data
     //@{
-    Subject< ModuleObserver_ABC >& moduleObserver_;
-    Subject< ClassObserver_ABC >& classObserver_;
     T_Metrics metrics_;
     //@}
 };
