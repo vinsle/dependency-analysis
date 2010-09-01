@@ -9,17 +9,17 @@
 #ifndef depend_test_MockFileObserver_h
 #define depend_test_MockFileObserver_h
 
-#include "depend/ModuleDependencyMetricVisitor_ABC.h"
+#include "depend/DependencyMetricVisitor_ABC.h"
 
 namespace depend
 {
 // =============================================================================
-/** @class  MockModuleDependencyMetricVisitor
+/** @class  MockDependencyMetricVisitor
     @brief  Mock class metric visitor
 */
 // Created: SLI 2010-08-16
 // =============================================================================
-MOCK_BASE_CLASS( MockModuleDependencyMetricVisitor, ModuleDependencyMetricVisitor_ABC )
+MOCK_BASE_CLASS( MockDependencyMetricVisitor, DependencyMetricVisitor_ABC )
 {
     MOCK_METHOD( NotifyInternalDependency, 3 )
     MOCK_METHOD( NotifyExternalDependency, 3 )

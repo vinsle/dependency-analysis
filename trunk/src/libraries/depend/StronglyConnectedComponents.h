@@ -9,7 +9,7 @@
 #ifndef depend_StronglyConnectedComponents_h
 #define depend_StronglyConnectedComponents_h
 
-#include "ModuleDependencyMetricVisitor_ABC.h"
+#include "DependencyMetricVisitor_ABC.h"
 #pragma warning( push, 0 )
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/labeled_graph.hpp>
@@ -23,7 +23,7 @@ namespace xml
 
 namespace depend
 {
-    class ModuleDependencyMetric_ABC;
+    class DependencyMetric_ABC;
     class Filter_ABC;
 
 // =============================================================================
@@ -32,12 +32,12 @@ namespace depend
 */
 // Created: SLI 2010-08-23
 // =============================================================================
-class StronglyConnectedComponents : private ModuleDependencyMetricVisitor_ABC
+class StronglyConnectedComponents : private DependencyMetricVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StronglyConnectedComponents( const ModuleDependencyMetric_ABC& metric );
+    explicit StronglyConnectedComponents( const DependencyMetric_ABC& metric );
     virtual ~StronglyConnectedComponents();
     //@}
 

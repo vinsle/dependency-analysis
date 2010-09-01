@@ -8,7 +8,7 @@
 
 #include "depend_test_pch.h"
 #include "depend/StronglyConnectedComponents.h"
-#include "MockModuleDependencyMetric.h"
+#include "MockDependencyMetric.h"
 #include "MockFilter.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -24,8 +24,8 @@ namespace
         {
             MOCK_EXPECT( dependencies, Apply ).once().with( mock::retrieve( visitor ) );
         }
-        MockModuleDependencyMetric dependencies;
-        ModuleDependencyMetricVisitor_ABC* visitor;
+        MockDependencyMetric dependencies;
+        DependencyMetricVisitor_ABC* visitor;
         MockFilter filter;
     };
     class ComponentFixture : public Fixture

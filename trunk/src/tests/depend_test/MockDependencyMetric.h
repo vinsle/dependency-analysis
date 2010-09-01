@@ -6,24 +6,24 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_test_MockModuleDependencyMetric_h
-#define depend_test_MockModuleDependencyMetric_h
+#ifndef depend_test_MockDependencyMetric_h
+#define depend_test_MockDependencyMetric_h
 
-#include "depend/ModuleDependencyMetric_ABC.h"
+#include "depend/DependencyMetric_ABC.h"
 
 namespace depend
 {
 // =============================================================================
-/** @class  MockModuleDependencyMetric
-    @brief  Mock module dependency metric
+/** @class  MockDependencyMetric
+    @brief  Mock dependency metric
 */
 // Created: SLI 2010-08-20
 // =============================================================================
-MOCK_BASE_CLASS( MockModuleDependencyMetric, ModuleDependencyMetric_ABC )
+MOCK_BASE_CLASS( MockDependencyMetric, DependencyMetric_ABC )
 {
     MOCK_METHOD( Apply, 1 )
 };
 
 }
 
-#endif // depend_test_MockModuleDependencyMetric_h
+#endif // depend_test_MockDependencyMetric_h

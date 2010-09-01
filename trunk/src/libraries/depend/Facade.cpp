@@ -15,7 +15,7 @@
 #include "IncludeVisitor.h"
 #include "ClassVisitor.h"
 #include "ClassMetric.h"
-#include "ModuleDependencyMetric.h"
+#include "DependencyMetric.h"
 #include "MetricSerializer.h"
 #include "ModuleSerializer.h"
 #include "StronglyConnectedComponents.h"
@@ -49,7 +49,7 @@ Facade::Facade( const T_Filter& filter )
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
-    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_ ) )
+    , dependencyMetric_      ( new DependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_ ) )
     , moduleSerializer_      ( new ModuleSerializer( *moduleVisitor_ ) )
 {
     // NOTHING
@@ -131,10 +131,10 @@ void Facade::Visit( const std::string& path )
 
 namespace
 {
-    class FilterExtender : public Filter_ABC, private ModuleDependencyMetricVisitor_ABC
+    class FilterExtender : public Filter_ABC, private DependencyMetricVisitor_ABC
     {
     public:
-        FilterExtender( const ModuleDependencyMetric_ABC& metric, const Filter_ABC& filter )
+        FilterExtender( const DependencyMetric_ABC& metric, const Filter_ABC& filter )
             : filter_( filter )
         {
             metric.Apply( *this );
