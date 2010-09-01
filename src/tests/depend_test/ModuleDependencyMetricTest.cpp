@@ -7,7 +7,7 @@
 //
 
 #include "depend_test_pch.h"
-#include "depend/DependencyMetric.h"
+#include "depend/ModuleDependencyMetric.h"
 #include "MockSubject.h"
 #include "MockDependencyMetricVisitor.h"
 #include <boost/assign.hpp>
@@ -48,7 +48,7 @@ namespace
             BOOST_REQUIRE( fileObserver );
             BOOST_REQUIRE( includeObserver );
         }
-        DependencyMetric metric;
+        ModuleDependencyMetric metric;
     };
 }
 
