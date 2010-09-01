@@ -66,18 +66,18 @@ Facade::~Facade()
 
 namespace
 {
-    class FileObserver : private FileObserver_ABC
+    class FileObserver : private Observer< FileObserver_ABC >
     {
     public:
         FileObserver( FileVisitor& fileVisitor, LineVisitor& lineVisitor )
-            : fileVisitor_( fileVisitor )
+            : Observer< FileObserver_ABC >( fileVisitor )
             , lineVisitor_( lineVisitor )
         {
-            fileVisitor_.Register( *this );
+            // NOTHING
         }
         virtual ~FileObserver()
         {
-            fileVisitor_.Unregister( *this );
+            // NOTHING
         }
     private:
         virtual void NotifyFile( const std::string& /*path*/, std::istream& stream )
@@ -85,25 +85,24 @@ namespace
             lineVisitor_.Visit( stream );
         }
     private:
-        FileVisitor& fileVisitor_;
         LineVisitor& lineVisitor_;
     };
 
-    class ModuleObserver : private ModuleObserver_ABC
+    class ModuleObserver : private Observer< ModuleObserver_ABC >
     {
     public:
         ModuleObserver( ModuleVisitor& moduleVisitor, FileVisitor& fileVisitor, LineVisitor& lineVisitor, const std::string& path, std::vector< std::string >& modules )
-            : moduleVisitor_( moduleVisitor )
+            : Observer< ModuleObserver_ABC >( moduleVisitor )
             , fileVisitor_  ( fileVisitor )
             , lineVisitor_  ( lineVisitor )
             , path_         ( path )
             , modules_      ( modules )
         {
-            moduleVisitor_.Register( *this );
+             // NOTHING
         }
         virtual ~ModuleObserver()
         {
-            moduleVisitor_.Unregister( *this );
+            // NOTHING
         }
     private:
         virtual void NotifyModule( const std::string& module )
@@ -113,7 +112,6 @@ namespace
             modules_.push_back( module );
         }
     private:
-        ModuleVisitor& moduleVisitor_;
         FileVisitor& fileVisitor_;
         LineVisitor& lineVisitor_;
         const std::string path_;

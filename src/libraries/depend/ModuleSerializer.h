@@ -10,7 +10,7 @@
 #define depend_ModuleSerializer_h
 
 #include "ModuleObserver_ABC.h"
-#include "Subject.h"
+#include "Observer.h"
 #include <vector>
 
 namespace xml
@@ -28,7 +28,7 @@ namespace depend
 */
 // Created: SLI 2010-08-24
 // =============================================================================
-class ModuleSerializer : private ModuleObserver_ABC
+class ModuleSerializer : private Observer< ModuleObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,7 +57,6 @@ private:
 private:
     //! @name Member data
     //@{
-    Subject< ModuleObserver_ABC >& subject_;
     T_Modules modules_;
     //@}
 };

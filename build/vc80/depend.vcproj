@@ -210,6 +210,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\Observer.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\Subject.h"
 					>
 				</File>

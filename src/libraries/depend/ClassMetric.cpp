@@ -18,11 +18,10 @@ using namespace depend;
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
 ClassMetric::ClassMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< ClassObserver_ABC >& classObserver )
-    : moduleObserver_( moduleObserver )
-    , classObserver_ ( classObserver )
+    : Observer< ModuleObserver_ABC >( moduleObserver )
+    , Observer< ClassObserver_ABC > ( classObserver )
 {
-    moduleObserver_.Register( *this );
-    classObserver_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,8 +30,7 @@ ClassMetric::ClassMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject
 // -----------------------------------------------------------------------------
 ClassMetric::~ClassMetric()
 {
-    classObserver_.Unregister( *this );
-    moduleObserver_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

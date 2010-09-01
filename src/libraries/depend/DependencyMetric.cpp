@@ -19,13 +19,11 @@ using namespace depend;
 // -----------------------------------------------------------------------------
 DependencyMetric::DependencyMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< FileObserver_ABC >& fileObserver,
                                     Subject< IncludeObserver_ABC >& includeObserver )
-    : moduleObserver_ ( moduleObserver )
-    , fileObserver_   ( fileObserver )
-    , includeObserver_( includeObserver )
+    : Observer< ModuleObserver_ABC > ( moduleObserver )
+    , Observer< FileObserver_ABC >   ( fileObserver )
+    , Observer< IncludeObserver_ABC >( includeObserver )
 {
-    moduleObserver_.Register( *this );
-    fileObserver_.Register( *this );
-    includeObserver_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,9 +32,7 @@ DependencyMetric::DependencyMetric( Subject< ModuleObserver_ABC >& moduleObserve
 // -----------------------------------------------------------------------------
 DependencyMetric::~DependencyMetric()
 {
-    includeObserver_.Unregister( *this );
-    fileObserver_.Unregister( *this );
-    moduleObserver_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
