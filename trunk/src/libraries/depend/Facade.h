@@ -62,8 +62,8 @@ public:
     void Serialize( std::ostream& os );
     void Serialize( const std::string& filename, const std::string& layout, const std::string& format,
                     const T_Options& graph, const T_Options& node, const T_Options& edge );
-    void SerializeAllModules( const std::string& filename, const std::string& layout, const std::string& format,
-                              const T_Options& graph, const T_Options& node, const T_Options& edge );
+    void SerializeAll( const std::string& filename, const std::string& layout, const std::string& format,
+                       const T_Options& graph, const T_Options& node, const T_Options& edge );
     //@}
 
 private:

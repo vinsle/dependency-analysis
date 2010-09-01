@@ -41,7 +41,7 @@ namespace
             ( "path" , bpo::value< std::vector< std::string > >()        , "add a directory containing modules for analysis" )
             ( "output", bpo::value< std::string >()                      , "set output file" )
             ( "filter", bpo::value< std::vector< std::string > >()       , "select only modules in filter and their afferent and efferent modules" )
-            ( "all-modules"                                              , "render a graph centered on each module" )
+            ( "all"                                                      , "render a graph centered on each node" )
             ( "render", bpo::value< std::string >()                      , "set render format (xml|dot|graph)" )
             ( "layout", bpo::value< std::string >()->default_value("dot"), "set layout algorithm (dot|neato)" )
             ( "format", bpo::value< std::string >()->default_value("png"), "set graph format (png|jpeg|svg|pdf)" )
@@ -107,11 +107,11 @@ int main( int argc, char* argv[] )
                               ParseGraphOptions( vm.count( "graph" ) ? vm[ "graph" ].as< std::vector< std::string > >() : empty ),
                               ParseGraphOptions( vm.count( "node" ) ? vm[ "node" ].as< std::vector< std::string > >(): empty ),
                               ParseGraphOptions( vm.count( "edge" ) ? vm[ "edge" ].as< std::vector< std::string > >(): empty ) );
-            if( vm.count( "all-modules" ) )
-                facade.SerializeAllModules( vm[ "output" ].as< std::string >(), vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
-                                            ParseGraphOptions( vm.count( "graph" ) ? vm[ "graph" ].as< std::vector< std::string > >() : empty ),
-                                            ParseGraphOptions( vm.count( "node" ) ? vm[ "node" ].as< std::vector< std::string > >(): empty ),
-                                            ParseGraphOptions( vm.count( "edge" ) ? vm[ "edge" ].as< std::vector< std::string > >(): empty ) );
+            if( vm.count( "all" ) )
+                facade.SerializeAll( vm[ "output" ].as< std::string >(), vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
+                                     ParseGraphOptions( vm.count( "graph" ) ? vm[ "graph" ].as< std::vector< std::string > >() : empty ),
+                                     ParseGraphOptions( vm.count( "node" ) ? vm[ "node" ].as< std::vector< std::string > >(): empty ),
+                                     ParseGraphOptions( vm.count( "edge" ) ? vm[ "edge" ].as< std::vector< std::string > >(): empty ) );
             return EXIT_SUCCESS;
         }
         const bool isDotFormat = vm.count( "render" ) && vm[ "render" ].as< std::string >() == "dot";

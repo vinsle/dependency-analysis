@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_DependencyMetric_h
-#define depend_DependencyMetric_h
+#ifndef depend_ModuleDependencyMetric_h
+#define depend_ModuleDependencyMetric_h
 
 #include "DependencyMetric_ABC.h"
 #include "ModuleObserver_ABC.h"
@@ -21,12 +21,12 @@ namespace depend
     class DependencyMetricVisitor_ABC;
 
 // =============================================================================
-/** @class  DependencyMetric
+/** @class  ModuleDependencyMetric
     @brief  Class metric
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class DependencyMetric : public DependencyMetric_ABC
+class ModuleDependencyMetric : public DependencyMetric_ABC
                        , private Observer< ModuleObserver_ABC >
                        , private Observer< FileObserver_ABC >
                        , private Observer< IncludeObserver_ABC >
@@ -34,9 +34,9 @@ class DependencyMetric : public DependencyMetric_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DependencyMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< FileObserver_ABC >& fileObserver,
+             ModuleDependencyMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< FileObserver_ABC >& fileObserver,
                                Subject< IncludeObserver_ABC >& includeObserver_ );
-    virtual ~DependencyMetric();
+    virtual ~ModuleDependencyMetric();
     //@}
 
     //! @name Operations
@@ -77,4 +77,4 @@ private:
 
 }
 
-#endif // depend_DependencyMetric_h
+#endif // depend_ModuleDependencyMetric_h

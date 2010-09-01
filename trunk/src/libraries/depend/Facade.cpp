@@ -15,7 +15,7 @@
 #include "IncludeVisitor.h"
 #include "ClassVisitor.h"
 #include "ClassMetric.h"
-#include "DependencyMetric.h"
+#include "ModuleDependencyMetric.h"
 #include "MetricSerializer.h"
 #include "ModuleSerializer.h"
 #include "StronglyConnectedComponents.h"
@@ -49,7 +49,7 @@ Facade::Facade( const T_Filter& filter )
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
-    , dependencyMetric_      ( new DependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_ ) )
+    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_ ) )
     , moduleSerializer_      ( new ModuleSerializer( *moduleVisitor_ ) )
 {
     // NOTHING
@@ -199,10 +199,10 @@ void Facade::Serialize( const std::string& filename, const std::string& layout, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade::SerializeAllModules
+// Name: Facade::SerializeAll
 // Created: SLI 2010-08-31
 // -----------------------------------------------------------------------------
-void Facade::SerializeAllModules( const std::string& filename, const std::string& layout, const std::string& format,
+void Facade::SerializeAll( const std::string& filename, const std::string& layout, const std::string& format,
                                   const T_Options& graph, const T_Options& node, const T_Options& edge )
 {
     const std::string name = filename.substr( 0, filename.find_last_of( '.' ) );
