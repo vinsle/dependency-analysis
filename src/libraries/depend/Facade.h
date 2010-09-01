@@ -30,7 +30,7 @@ namespace depend
     class IncludeVisitor;
     class ClassVisitor;
     class ClassMetric_ABC;
-    class ModuleDependencyMetric_ABC;
+    class DependencyMetric_ABC;
     class ModuleSerializer;
 
 // =============================================================================
@@ -77,7 +77,7 @@ private:
     std::auto_ptr< IncludeVisitor > includeVisitor_;
     std::auto_ptr< ClassVisitor > classVisitor_;
     std::auto_ptr< ClassMetric_ABC > classMetric_;
-    std::auto_ptr< ModuleDependencyMetric_ABC > dependencyMetric_;
+    std::auto_ptr< DependencyMetric_ABC > dependencyMetric_;
     std::auto_ptr< ModuleSerializer > moduleSerializer_;
     std::vector< std::string > modules_;
     //@}

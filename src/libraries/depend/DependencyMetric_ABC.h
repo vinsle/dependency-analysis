@@ -6,36 +6,36 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ModuleDependencyMetric_ABC_h
-#define depend_ModuleDependencyMetric_ABC_h
+#ifndef depend_DependencyMetric_ABC_h
+#define depend_DependencyMetric_ABC_h
 
 #include <boost/noncopyable.hpp>
 
 namespace depend
 {
-    class ModuleDependencyMetricVisitor_ABC;
+    class DependencyMetricVisitor_ABC;
 
 // =============================================================================
-/** @class  ModuleDependencyMetric_ABC
+/** @class  DependencyMetric_ABC
     @brief  Dependency metric definition
 */
 // Created: SLI 2010-08-20
 // =============================================================================
-class ModuleDependencyMetric_ABC : private boost::noncopyable
+class DependencyMetric_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleDependencyMetric_ABC() {}
-    virtual ~ModuleDependencyMetric_ABC() {}
+             DependencyMetric_ABC() {}
+    virtual ~DependencyMetric_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Apply( ModuleDependencyMetricVisitor_ABC& visitor ) const = 0;
+    virtual void Apply( DependencyMetricVisitor_ABC& visitor ) const = 0;
     //@}
 };
 
 }
 
-#endif // depend_ModuleDependencyMetric_ABC_h
+#endif // depend_DependencyMetric_ABC_h

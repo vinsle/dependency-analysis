@@ -8,7 +8,7 @@
 
 #include "depend_pch.h"
 #include "MetricSerializer.h"
-#include "ModuleDependencyMetric_ABC.h"
+#include "DependencyMetric_ABC.h"
 #include "ClassMetric_ABC.h"
 #include "Filter_ABC.h"
 #include "Filter.h"
@@ -21,7 +21,7 @@ using namespace depend;
 // Name: MetricSerializer constructor
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-MetricSerializer::MetricSerializer( const ModuleDependencyMetric_ABC& dependencies, const ClassMetric_ABC& classes )
+MetricSerializer::MetricSerializer( const DependencyMetric_ABC& dependencies, const ClassMetric_ABC& classes )
 {
     dependencies.Apply( *this );
     classes.Apply( *this );
