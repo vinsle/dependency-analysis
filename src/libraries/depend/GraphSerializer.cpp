@@ -19,7 +19,7 @@ using namespace depend;
 // Created: SLI 2010-08-27
 // -----------------------------------------------------------------------------
 GraphSerializer::GraphSerializer( const std::string& layout, const std::string& format,
-                              const T_Options& graph, const T_Options& node, const T_Options& edge )
+                                  const T_Options& graph, const T_Options& node, const T_Options& edge )
     : layout_( layout )
     , format_( format )
     , graph_ ( graph )
