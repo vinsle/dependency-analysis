@@ -27,9 +27,9 @@ namespace depend
 // Created: SLI 2010-08-19
 // =============================================================================
 class ModuleDependencyMetric : public DependencyMetric_ABC
-                       , private Observer< ModuleObserver_ABC >
-                       , private Observer< FileObserver_ABC >
-                       , private Observer< IncludeObserver_ABC >
+                             , private Observer< ModuleObserver_ABC >
+                             , private Observer< FileObserver_ABC >
+                             , private Observer< IncludeObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
