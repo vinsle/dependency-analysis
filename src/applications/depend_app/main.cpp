@@ -35,28 +35,31 @@ namespace
 
     const bpo::variables_map ParseCommandLine( int argc, char* argv[] )
     {
-        bpo::options_description desc( "Allowed options" );
-        desc.add_options()
-            ( "help,h"                                                   , "produce help message" )
-            ( "path" , bpo::value< std::vector< std::string > >()        , "add a directory containing modules for analysis" )
-            ( "output", bpo::value< std::string >()                      , "set output file" )
-            ( "filter", bpo::value< std::vector< std::string > >()       , "select only modules in filter and their afferent and efferent modules" )
-            ( "all"                                                      , "render a graph centered on each node" )
-            ( "render", bpo::value< std::string >()                      , "set render format (xml|dot|graph)" )
-            ( "layout", bpo::value< std::string >()->default_value("dot"), "set layout algorithm (dot|neato)" )
-            ( "format", bpo::value< std::string >()->default_value("png"), "set graph format (png|jpeg|svg|pdf)" )
-            ( "graph,g", bpo::value< std::vector< std::string > >()      , "set graph options (see http://www.graphviz.org/doc/info/attrs.html)" )
-            ( "node,n", bpo::value< std::vector< std::string > >()       , "set node options (see http://www.graphviz.org/doc/info/attrs.html)" )
-            ( "edge,e", bpo::value< std::vector< std::string > >()       , "set edge options (see http://www.graphviz.org/doc/info/attrs.html)" )
-            ( "version,v"                                                , "produce version message" );
+        bpo::options_description cmdline( "Allowed options" );
+        bpo::options_description options( "Generic options" );
+        options.add_options()
+            ( "help,h"                                                     , "produce help message" )
+            ( "version,v"                                                  , "produce version message" )
+            ( "path" , bpo::value< std::vector< std::string > >()          , "add a directory containing modules for analysis" )
+            ( "output", bpo::value< std::string >()                        , "set output file" )
+            ( "filter", bpo::value< std::vector< std::string > >()         , "select only modules in filter and their afferent and efferent modules" )
+            ( "stage", bpo::value< std::string >()                         , "set analysis stage for output (xml => dot => graph)" );
+        bpo::options_description graph( "Graph options (only for graph stage)" );
+        graph.add_options()
+            ( "layout", bpo::value< std::string >()->default_value( "dot" ), "set layout algorithm (dot|neato)" )
+            ( "format", bpo::value< std::string >()->default_value( "png" ), "set graph format (png|jpeg|svg|pdf)" )
+            ( "graph,g", bpo::value< std::vector< std::string > >()        , "set graph options (see http://www.graphviz.org/doc/info/attrs.html)" )
+            ( "node,n", bpo::value< std::vector< std::string > >()         , "set node options (see http://www.graphviz.org/doc/info/attrs.html)" )
+            ( "edge,e", bpo::value< std::vector< std::string > >()         , "set edge options (see http://www.graphviz.org/doc/info/attrs.html)" );
+        cmdline.add( options ).add( graph );
         bpo::positional_options_description p;
         p.add( "path", -1 );
         bpo::variables_map vm;
-        bpo::store( bpo::command_line_parser( argc, argv ).options( desc ).positional( p ).run(), vm );
+        bpo::store( bpo::command_line_parser( argc, argv ).options( cmdline ).positional( p ).run(), vm );
         bpo::notify( vm );
         if( vm.count( "help" ) )
             std::cout << "Usage: depend_app [options] path1 path2..." << std::endl
-                      << desc << std::endl;
+                      << cmdline << std::endl;
         else if( vm.count( "version" ) )
             std::cout << "depend " << version << " (built " << time << ")" << std::endl << std::endl
                       << "Copyright Silvin Lubecki 2010" << std::endl
@@ -66,7 +69,7 @@ namespace
                       << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
         else if( ! vm.count( "path" ) )
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
-        else if( vm.count( "render" ) && vm[ "render" ].as< std::string >() != "xml" && vm[ "render" ].as< std::string >() != "dot" && vm[ "render" ].as< std::string >() != "graph" )
+        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() != "xml" && vm[ "stage" ].as< std::string >() != "dot" && vm[ "stage" ].as< std::string >() != "graph" )
             throw std::invalid_argument( "Invalid application option argument: format '" + vm[ "format" ].as< std::string >() + "' is not supported" );
         return vm;
     }
@@ -98,7 +101,7 @@ int main( int argc, char* argv[] )
         depend::Facade facade( filter );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
-        if( vm.count( "render" ) && vm[ "render" ].as< std::string >() == "graph" )
+        if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" )
         {
             if( !vm.count( "output" ) )
                 throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
@@ -114,7 +117,7 @@ int main( int argc, char* argv[] )
                                      ParseGraphOptions( vm.count( "edge" ) ? vm[ "edge" ].as< std::vector< std::string > >(): empty ) );
             return EXIT_SUCCESS;
         }
-        const bool isDotFormat = vm.count( "render" ) && vm[ "render" ].as< std::string >() == "dot";
+        const bool isDotFormat = vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "dot";
         std::ostream* out = &std::cout;
         if( vm.count( "output" ) )
             out = new std::ofstream( vm[ "output" ].as< std::string >().c_str() );
