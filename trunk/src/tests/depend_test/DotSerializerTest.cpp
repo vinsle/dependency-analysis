@@ -106,11 +106,11 @@ BOOST_AUTO_TEST_CASE( simple_dot_serialization )
         "\"module2\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];"
         "\"module3\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];"
         "\"module4\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];"
-        "\"module1\"->\"module2\"[label=\"1\",color=\"0.5 1.0 1.0\"];"
-        "\"module2\"->\"module1\"[label=\"1\",color=\"0.5 1.0 1.0\"];"
-        "\"module3\"->\"module1\"[label=\"1\"];"
-        "\"module3\"->\"module4\"[label=\"1\",color=\"1 1.0 1.0\"];"
-        "\"module4\"->\"module3\"[label=\"1\",color=\"1 1.0 1.0\"];"
+        "\"module1\"->\"module2\"[color=\"0.5 1.0 1.0\"];"
+        "\"module2\"->\"module1\"[color=\"0.5 1.0 1.0\"];"
+        "\"module3\"->\"module1\";"
+        "\"module3\"->\"module4\"[color=\"1 1.0 1.0\"];"
+        "\"module4\"->\"module3\"[color=\"1 1.0 1.0\"];"
         "}\n";
     BOOST_CHECK_EQUAL( expected, os.str() );
 }
