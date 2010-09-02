@@ -1,4 +1,4 @@
- # Modifying graph orientation:
+= Modifying graph orientation =
 
 By default:
 
