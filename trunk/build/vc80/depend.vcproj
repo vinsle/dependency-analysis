@@ -298,6 +298,14 @@
 				Name="metrics"
 				>
 				<File
+					RelativePath="..\..\src\libraries\depend\ClassDependencyMetric.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ClassDependencyMetric.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\ClassMetric.cpp"
 					>
 				</File>
