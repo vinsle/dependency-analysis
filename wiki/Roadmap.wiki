@@ -40,6 +40,7 @@
   * Print a warning if an include cannot be resolved (file name, line number), must be case sensitive
   * Add a command line parameter to specify system include directories (which are ignored for external dependencies)
   * Add a command line parameter to specify external include directories (resolved in order of submission)
+ * Add a means to remove the weight label on graph edges
  * Add a command line parameter to make only cyclic dependencies detection between modules and print a warning (in this case no serialization)
  * Add the same features and graph for internal class dependencies in a module
   * Detect cycles in includes at class level
