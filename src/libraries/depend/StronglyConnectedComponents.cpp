@@ -84,7 +84,7 @@ void StronglyConnectedComponents::Serialize( xml::xostream& xos, const Filter_AB
 // Name: StronglyConnectedComponents::NotifyInternalDependency
 // Created: SLI 2010-08-23
 // -----------------------------------------------------------------------------
-void StronglyConnectedComponents::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*include*/ )
+void StronglyConnectedComponents::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
 {
     labels_[ boost::add_vertex( fromModule, graph_ ) ] = fromModule;
     labels_[ boost::add_vertex( toModule, graph_ ) ] = toModule;
@@ -95,7 +95,7 @@ void StronglyConnectedComponents::NotifyInternalDependency( const std::string& f
 // Name: StronglyConnectedComponents::NotifyExternalDependency
 // Created: SLI 2010-08-23
 // -----------------------------------------------------------------------------
-void StronglyConnectedComponents::NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/, const std::string& /*include*/ )
+void StronglyConnectedComponents::NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/ )
 {
     // NOTHING
 }

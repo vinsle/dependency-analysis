@@ -31,8 +31,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& include ) = 0;
-    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& include ) = 0;
+    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule ) = 0;
+    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule ) = 0;
     //@}
 };
 

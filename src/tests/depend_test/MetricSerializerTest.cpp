@@ -50,9 +50,9 @@ BOOST_FIXTURE_TEST_CASE( serialize_metrics_in_xml, SerializeFixture )
 {
     classVisitor->NotifyClassMetric( "module1", 4u, 2u );
     classVisitor->NotifyClassMetric( "module2", 4u, 2u );
-    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "module2/include" );
-    dependencyVisitor->NotifyInternalDependency( "module2", "module1", "module1/include" );
-    dependencyVisitor->NotifyExternalDependency( "module1", "boost", "boost/assign.hpp" );
+    dependencyVisitor->NotifyInternalDependency( "module1", "module2" );
+    dependencyVisitor->NotifyInternalDependency( "module2", "module1" );
+    dependencyVisitor->NotifyExternalDependency( "module1", "boost" );
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).returns( true );
     serializer.Serialize( xos, filter );
@@ -102,10 +102,10 @@ BOOST_FIXTURE_TEST_CASE( serialize_metrics_with_module_filter, SerializeFixture 
     classVisitor->NotifyClassMetric( "module2", 4u, 2u );
     classVisitor->NotifyClassMetric( "module3", 4u, 2u );
     classVisitor->NotifyClassMetric( "module4", 4u, 2u );
-    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "module2/include" );
-    dependencyVisitor->NotifyInternalDependency( "module2", "module4", "module4/include" );
-    dependencyVisitor->NotifyInternalDependency( "module3", "module1", "module1/include" );
-    dependencyVisitor->NotifyInternalDependency( "module3", "module2", "module2/include" );
+    dependencyVisitor->NotifyInternalDependency( "module1", "module2");
+    dependencyVisitor->NotifyInternalDependency( "module2", "module4" );
+    dependencyVisitor->NotifyInternalDependency( "module3", "module1" );
+    dependencyVisitor->NotifyInternalDependency( "module3", "module2" );
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).with( "module1" ).returns( true );
     MOCK_EXPECT( filter, Check ).with( "module2" ).returns( true );

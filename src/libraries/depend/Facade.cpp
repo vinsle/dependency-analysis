@@ -144,14 +144,14 @@ namespace
             return filter_.Check( module ) || extended_.find( module ) != extended_.end();
         }
     private:
-        virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*include*/ )
+        virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
         {
             if( filter_.Check( fromModule ) )
                 extended_.insert( toModule );
             else if( filter_.Check( toModule ) )
                 extended_.insert( fromModule );
         }
-        virtual void NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/, const std::string& /*include*/ )
+        virtual void NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/ )
         {
             // NOTHING
         }

@@ -45,7 +45,7 @@ void ClassDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
         if( !file.second.name_.empty() )
             BOOST_FOREACH( const std::string& dependency, file.second.includes_ )
                 if( file.second.name_ != dependency )
-                    visitor.NotifyInternalDependency( file.second.name_, dependency, dependency );
+                    visitor.NotifyInternalDependency( file.second.name_, dependency );
 }
 
 namespace
@@ -112,7 +112,7 @@ void ClassDependencyMetric::NotifyInternalInclude( const std::string& file )
 // Name: ClassDependencyMetric::NotifyExternalInclude
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-void ClassDependencyMetric::NotifyExternalInclude( const std::string& file )
+void ClassDependencyMetric::NotifyExternalInclude( const std::string& /*file*/ )
 {
-
+    // NOTHING
 }

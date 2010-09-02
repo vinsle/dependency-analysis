@@ -50,10 +50,10 @@ void ModuleDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
             const size_t position = include.find_first_of( '/' );
             const std::string module = include.substr( 0, position );
             if( position != std::string::npos && module != metric.module_ && modules_.find( module ) != modules_.end() )  // $$$$ _RC_ SLI 2010-08-20: warn user if one of these case occurs
-                visitor.NotifyInternalDependency( metric.module_, module, include );
+                visitor.NotifyInternalDependency( metric.module_, module );
         }
         BOOST_FOREACH( const std::string& include, metric.external_ )
-            visitor.NotifyExternalDependency( metric.module_, include.substr( 0, include.find_first_of( '/' ) ), include );
+            visitor.NotifyExternalDependency( metric.module_, include.substr( 0, include.find_first_of( '/' ) ) );
     }
 }
 
