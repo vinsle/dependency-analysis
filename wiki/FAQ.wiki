@@ -2,8 +2,12 @@
 
 By default:
 
+{{{depend_app.exe depend/trunk/src/* --render=graph --output=depend.png}}}
+
 https://sites.google.com/site/foobaz/depend.png
 
-With --graph="rankdir=LR"
+With {{{--graph="rankdir=LR"}}} (see [http://www.graphviz.org/doc/info/attrs.html Graphviz documentation] for more informations):
+
+{{{depend_app.exe depend/trunk/src/* --render=graph --output=depend.png --graph="rankdir=LR"}}}
 
 https://sites.google.com/site/foobaz/depend2.png
