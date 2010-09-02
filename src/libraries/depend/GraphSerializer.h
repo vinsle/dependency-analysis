@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GraphSerializer( const std::string& layout, const std::string& format,
-                            const T_Options& graph, const T_Options& node, const T_Options& edge );
+                              const T_Options& graph, const T_Options& node, const T_Options& edge );
     virtual ~GraphSerializer();
     //@}
 
