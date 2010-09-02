@@ -132,7 +132,8 @@ int main( int argc, char* argv[] )
     }
     catch( std::exception& e )
     {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "Error: " << e.what() << std::endl
+                  << "Use -h or --help for help on allowed options" << std::endl;
     }
     catch( ... )
     {
