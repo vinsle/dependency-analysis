@@ -1,0 +1,9 @@
+ # Modifying graph orientation:
+
+By default:
+
+https://sites.google.com/site/foobaz/depend.png
+
+With --graph="rankdir=LR"
+
+https://sites.google.com/site/foobaz/depend2.png
