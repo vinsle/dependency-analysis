@@ -49,8 +49,8 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& include );
-    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& include );
+    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule );
+    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule );
     virtual void NotifyClassMetric( const std::string& module, unsigned int classes, unsigned int abstactClasses );
     //@}
 

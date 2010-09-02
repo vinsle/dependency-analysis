@@ -59,8 +59,8 @@ BOOST_FIXTURE_TEST_CASE( external_dependencies_are_always_notified, MetricFixtur
     includeObserver->NotifyExternalInclude( "include2" );
     MockDependencyMetricVisitor visitor;
     const std::vector< std::string > expected = boost::assign::list_of( "include1" )( "include2" );
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "include1", "include1" );
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "include2", "include2" );
+    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "include1" );
+    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "include2" );
     metric.Apply( visitor );
 }
 
@@ -70,7 +70,7 @@ BOOST_FIXTURE_TEST_CASE( external_dependencies_are_uniq, MetricFixture )
     includeObserver->NotifyExternalInclude( "include" );
     includeObserver->NotifyExternalInclude( "include" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "include", "include" );
+    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "include" );
     metric.Apply( visitor );
 }
 
@@ -105,6 +105,6 @@ BOOST_FIXTURE_TEST_CASE( dependency_metric_detects_module_dependencies_with_inte
     fileObserver->NotifyFile( "file2", is );
     includeObserver->NotifyInternalInclude( "file2" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "module", "module2", "module2/file2" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "module", "module2" );
     metric.Apply( visitor );
 }

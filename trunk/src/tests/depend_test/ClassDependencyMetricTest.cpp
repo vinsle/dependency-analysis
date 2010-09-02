@@ -79,7 +79,7 @@ BOOST_FIXTURE_TEST_CASE( includes_in_a_class_are_notifiyed, DependencyFixture )
     classObserver->NotifyClass( "TestClass" );
     includeObserver->NotifyInternalInclude( "TestInclude" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude", "TestInclude" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude" );
     metric.Apply( visitor );
 }
 
@@ -99,8 +99,8 @@ BOOST_FIXTURE_TEST_CASE( includes_are_merged_between_all_files_referencing_same_
     includeObserver->NotifyInternalInclude( "TestInclude2" );
     classObserver->NotifyClass( "TestClass" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude1", "TestInclude1" );
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude2", "TestInclude2" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude1" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude2" );
     metric.Apply( visitor );
 }
 
@@ -110,7 +110,7 @@ BOOST_FIXTURE_TEST_CASE( module_file_and_class_are_same, DependencyFixture )
     includeObserver->NotifyInternalInclude( "TestInclude" );
     classObserver->NotifyClass( "TestClass" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude", "TestInclude" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude" );
     metric.Apply( visitor );
 }
 
@@ -120,7 +120,7 @@ BOOST_FIXTURE_TEST_CASE( includes_are_cleaned_for_notificatoin, DependencyFixtur
     includeObserver->NotifyInternalInclude( "module/TestInclude.h" );
     classObserver->NotifyClass( "TestClass" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude", "TestInclude" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude" );
     metric.Apply( visitor );
 }
 
@@ -132,6 +132,6 @@ BOOST_FIXTURE_TEST_CASE( self_inclusion_is_not_notified, DependencyFixture )
     includeObserver->NotifyInternalInclude( "TestInclude" );
     classObserver->NotifyClass( "TestClass" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude", "TestInclude" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude" );
     metric.Apply( visitor );
 }

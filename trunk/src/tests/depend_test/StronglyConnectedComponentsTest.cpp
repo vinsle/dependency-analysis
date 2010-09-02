@@ -50,9 +50,9 @@ BOOST_FIXTURE_TEST_CASE( strongly_connected_components_serialization, ComponentF
 
 BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_detection, ComponentFixture )
 {
-    visitor->NotifyInternalDependency( "from", "to", "something" );
-    visitor->NotifyInternalDependency( "to", "from", "something" );
-    visitor->NotifyInternalDependency( "other", "to", "something" );
+    visitor->NotifyInternalDependency( "from", "to" );
+    visitor->NotifyInternalDependency( "to", "from" );
+    visitor->NotifyInternalDependency( "other", "to" );
     const std::string expected = 
         "<strongly-connected-components>"
         "    <component>"
@@ -68,9 +68,9 @@ BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_detection, Compone
 
 BOOST_FIXTURE_TEST_CASE( filtered_components_with_only_one_module_is_empty, ComponentFixture )
 {
-    visitor->NotifyInternalDependency( "from", "to", "something" );
-    visitor->NotifyInternalDependency( "to", "from", "something" );
-    visitor->NotifyInternalDependency( "other", "to", "something" );
+    visitor->NotifyInternalDependency( "from", "to" );
+    visitor->NotifyInternalDependency( "to", "from" );
+    visitor->NotifyInternalDependency( "other", "to" );
     const std::string expected = "<strongly-connected-components/>";
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).with( "from" ).returns( true );
@@ -81,10 +81,10 @@ BOOST_FIXTURE_TEST_CASE( filtered_components_with_only_one_module_is_empty, Comp
 
 BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_are_filtered, ComponentFixture )
 {
-    visitor->NotifyInternalDependency( "from", "to", "something" );
-    visitor->NotifyInternalDependency( "to", "from", "something" );
-    visitor->NotifyInternalDependency( "other", "to", "something" );
-    visitor->NotifyInternalDependency( "from", "other", "something" );
+    visitor->NotifyInternalDependency( "from", "to" );
+    visitor->NotifyInternalDependency( "to", "from" );
+    visitor->NotifyInternalDependency( "other", "to" );
+    visitor->NotifyInternalDependency( "from", "other" );
     const std::string expected = 
         "<strongly-connected-components>"
         "    <component>"

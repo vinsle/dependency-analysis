@@ -126,7 +126,7 @@ void MetricSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter )
 // Name: MetricSerializer::NotifyInternalDependency
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-void MetricSerializer::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*include*/ )
+void MetricSerializer::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
 {
     modules_.insert( fromModule );
     modules_.insert( toModule );
@@ -138,7 +138,7 @@ void MetricSerializer::NotifyInternalDependency( const std::string& fromModule, 
 // Name: MetricSerializer::NotifyExternalDependency
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-void MetricSerializer::NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*include*/ )
+void MetricSerializer::NotifyExternalDependency( const std::string& fromModule, const std::string& toModule )
 {
     modules_.insert( fromModule );
     external_[ fromModule ][ toModule ]++;
