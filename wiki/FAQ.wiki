@@ -4,10 +4,10 @@ By default:
 
 {{{depend_app.exe depend/trunk/src/* --render=graph --output=depend.png}}}
 
-http://lh4.ggpht.com/_zeWn5qPueCk/TH_GfKcMOVI/AAAAAAAADeM/uniju5AqweA/depend.png
+depend.png
 
 With {{{--graph="rankdir=LR"}}} (see [http://www.graphviz.org/doc/info/attrs.html Graphviz documentation] for more informations):
 
 {{{depend_app.exe depend/trunk/src/* --render=graph --output=depend.png --graph="rankdir=LR"}}}
 
-http://lh4.ggpht.com/_zeWn5qPueCk/TH_GfIswVeI/AAAAAAAADeQ/JyzkI9VgtUQ/depend2.png
+depend2.png
