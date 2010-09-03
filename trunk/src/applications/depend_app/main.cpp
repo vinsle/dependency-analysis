@@ -33,6 +33,26 @@ namespace
     static const std::string version = TOSTRING( BUILD_VERSION );
     static const std::string time = TOSTRING( BUILD_TIME );
 
+    void CheckOptions( const bpo::variables_map& vm, const bpo::options_description& cmdline )
+    {
+        if( vm.count( "help" ) )
+            std::cout << "Usage: depend_app [options] path1 path2..." << std::endl
+                      << cmdline << std::endl;
+        else if( vm.count( "version" ) )
+            std::cout << "depend " << version << " (built " << time << ")" << std::endl << std::endl
+                      << "Copyright Silvin Lubecki 2010" << std::endl
+                      << "Distributed under the Boost Software License, Version 1.0. (See" << std::endl
+                      << "accompanying file LICENSE_1_0.txt or copy at" << std::endl
+                      << "http://www.boost.org/LICENSE_1_0.txt)" << std::endl
+                      << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
+        else if( ! vm.count( "path" ) )
+            throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
+        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() != "xml" && vm[ "stage" ].as< std::string >() != "dot" && vm[ "stage" ].as< std::string >() != "graph" )
+            throw std::invalid_argument( "Invalid application option argument: format '" + vm[ "format" ].as< std::string >() + "' is not supported" );
+        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" && !vm.count( "output" ) )
+            throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
+    }
+
     const bpo::variables_map ParseCommandLine( int argc, char* argv[] )
     {
         bpo::options_description cmdline( "Allowed options" );
@@ -58,20 +78,7 @@ namespace
         bpo::variables_map vm;
         bpo::store( bpo::command_line_parser( argc, argv ).options( cmdline ).positional( p ).run(), vm );
         bpo::notify( vm );
-        if( vm.count( "help" ) )
-            std::cout << "Usage: depend_app [options] path1 path2..." << std::endl
-                      << cmdline << std::endl;
-        else if( vm.count( "version" ) )
-            std::cout << "depend " << version << " (built " << time << ")" << std::endl << std::endl
-                      << "Copyright Silvin Lubecki 2010" << std::endl
-                      << "Distributed under the Boost Software License, Version 1.0. (See" << std::endl
-                      << "accompanying file LICENSE_1_0.txt or copy at" << std::endl
-                      << "http://www.boost.org/LICENSE_1_0.txt)" << std::endl
-                      << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
-        else if( ! vm.count( "path" ) )
-            throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
-        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() != "xml" && vm[ "stage" ].as< std::string >() != "dot" && vm[ "stage" ].as< std::string >() != "graph" )
-            throw std::invalid_argument( "Invalid application option argument: format '" + vm[ "format" ].as< std::string >() + "' is not supported" );
+        CheckOptions( vm, cmdline );
         return vm;
     }
     depend::Facade::T_Options ParseGraphOptions( const bpo::variables_map& options, const std::string& option )
@@ -106,8 +113,6 @@ int main( int argc, char* argv[] )
             facade.Visit( path );
         if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" )
         {
-            if( !vm.count( "output" ) )
-                throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
             const std::string output = vm[ "output" ].as< std::string >();
             facade.Serialize( output );
             if( vm.count( "all" ) )
