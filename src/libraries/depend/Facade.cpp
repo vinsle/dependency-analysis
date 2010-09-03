@@ -24,6 +24,7 @@
 #include "Filter.h"
 #include <boost/foreach.hpp>
 #include <boost/assign.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <set>
 
@@ -131,15 +132,20 @@ void Facade::Visit( const std::string& path )
     moduleVisitor_->Visit( path );
 }
 
+namespace
+{
+    void Noop() {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Facade::Serialize
 // Created: SLI 2010-09-03
 // -----------------------------------------------------------------------------
 void Facade::Serialize( const std::string& stage, const std::string& output, bool all )
 {
-    std::ostream* out = &std::cout;
+    boost::shared_ptr< std::ostream > out( &std::cout, boost::bind( &Noop ) );
     if( !output.empty() )
-        out = new std::ofstream( output.c_str() );
+        out.reset( new std::ofstream( output.c_str() ) );
     if( stage == "xml" )
     {
         xml::xostringstream xos;
@@ -154,8 +160,6 @@ void Facade::Serialize( const std::string& stage, const std::string& output, boo
         if( all )
             SerializeAll( output );
     }
-    if( !output.empty() )
-        delete out;
 }
 
 namespace
