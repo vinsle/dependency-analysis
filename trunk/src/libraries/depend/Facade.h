@@ -32,6 +32,7 @@ namespace depend
     class ClassMetric_ABC;
     class DependencyMetric_ABC;
     class ModuleSerializer;
+    class GraphSerializer;
 
 // =============================================================================
 /** @class  Facade
@@ -51,7 +52,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Facade( const T_Filter& filter );
+             Facade( const T_Filter& filter, const std::string& layout, const std::string& format,
+                     const T_Options& graph, const T_Options& node, const T_Options& edge );
     virtual ~Facade();
     //@}
 
@@ -60,10 +62,8 @@ public:
     void Visit( const std::string& path );
     void Serialize( xml::xostream& xos );
     void Serialize( std::ostream& os );
-    void Serialize( const std::string& filename, const std::string& layout, const std::string& format,
-                    const T_Options& graph, const T_Options& node, const T_Options& edge );
-    void SerializeAll( const std::string& filename, const std::string& layout, const std::string& format,
-                       const T_Options& graph, const T_Options& node, const T_Options& edge );
+    void Serialize( const std::string& filename );
+    void SerializeAll( const std::string& filename );
     //@}
 
 private:
@@ -79,6 +79,7 @@ private:
     std::auto_ptr< ClassMetric_ABC > classMetric_;
     std::auto_ptr< DependencyMetric_ABC > dependencyMetric_;
     std::auto_ptr< ModuleSerializer > moduleSerializer_;
+    std::auto_ptr< GraphSerializer > graphSerializer_;
     std::vector< std::string > modules_;
     //@}
 };

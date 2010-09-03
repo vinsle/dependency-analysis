@@ -38,12 +38,13 @@ namespace
         bpo::options_description cmdline( "Allowed options" );
         bpo::options_description options( "Generic options" );
         options.add_options()
-            ( "help,h"                                                     , "produce help message" )
-            ( "version,v"                                                  , "produce version message" )
-            ( "path" , bpo::value< std::vector< std::string > >()          , "add a directory containing modules for analysis" )
-            ( "output", bpo::value< std::string >()                        , "set output file" )
-            ( "filter", bpo::value< std::vector< std::string > >()         , "select only modules in filter and their afferent and efferent modules" )
-            ( "stage", bpo::value< std::string >()                         , "set analysis stage for output (xml => dot => graph)" );
+            ( "help,h"                                            , "produce help message" )
+            ( "version,v"                                         , "produce version message" )
+            ( "path" , bpo::value< std::vector< std::string > >() , "add a directory containing modules for analysis" )
+            ( "output", bpo::value< std::string >()               , "set output file" )
+            ( "filter", bpo::value< std::vector< std::string > >(), "select only modules in filter and their afferent and efferent modules" )
+            ( "stage", bpo::value< std::string >()                , "set analysis stage for output (xml => dot => graph)" )
+            ( "all"                                               , "render a graph centered on each node" );
         bpo::options_description graph( "Graph options (only for graph stage)" );
         graph.add_options()
             ( "layout", bpo::value< std::string >()->default_value( "dot" ), "set layout algorithm (dot|neato)" )
@@ -99,18 +100,18 @@ int main( int argc, char* argv[] )
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
         depend::Facade::T_Filter filter = vm.count( "filter" ) ? vm[ "filter" ].as< std::vector< std::string > >() : depend::Facade::T_Filter();
-        depend::Facade facade( filter );
+        depend::Facade facade( filter, vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
+                               ParseGraphOptions( vm, "graph" ), ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
         if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" )
         {
             if( !vm.count( "output" ) )
                 throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
-            facade.Serialize( vm[ "output" ].as< std::string >(), vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
-                              ParseGraphOptions( vm, "graph" ), ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
+            const std::string output = vm[ "output" ].as< std::string >();
+            facade.Serialize( output );
             if( vm.count( "all" ) )
-                facade.SerializeAll( vm[ "output" ].as< std::string >(), vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
-                                     ParseGraphOptions( vm, "graph" ), ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
+                facade.SerializeAll( output );
             return EXIT_SUCCESS;
         }
         const bool isDotFormat = vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "dot";

@@ -40,7 +40,8 @@ namespace
 // Name: Facade constructor
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
-Facade::Facade( const T_Filter& filter )
+Facade::Facade( const T_Filter& filter, const std::string& layout, const std::string& format,
+                const T_Options& graph, const T_Options& node, const T_Options& edge )
     : filter_                ( new Filter( filter ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( extensions ) )
@@ -51,6 +52,7 @@ Facade::Facade( const T_Filter& filter )
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
     , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_ ) )
     , moduleSerializer_      ( new ModuleSerializer( *moduleVisitor_ ) )
+    , graphSerializer_       ( new GraphSerializer( layout, format, graph, node, edge ) )
 {
     // NOTHING
 }
@@ -189,27 +191,25 @@ void Facade::Serialize( std::ostream& os )
 // Name: Facade::SerializeGraph
 // Created: SLI 2010-08-27
 // -----------------------------------------------------------------------------
-void Facade::Serialize( const std::string& filename, const std::string& layout, const std::string& format,
-                        const T_Options& graph, const T_Options& node, const T_Options& edge )
+void Facade::Serialize( const std::string& filename )
 {
     std::ostringstream buffer;
     Serialize( buffer );
-    const GraphSerializer serializer( layout, format, graph, node, edge );
-    serializer.Serialize( buffer.str(), filename );
+    graphSerializer_->Serialize( buffer.str(), filename );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Facade::SerializeAll
 // Created: SLI 2010-08-31
 // -----------------------------------------------------------------------------
-void Facade::SerializeAll( const std::string& filename, const std::string& layout, const std::string& format,
-                                  const T_Options& graph, const T_Options& node, const T_Options& edge )
+void Facade::SerializeAll( const std::string& filename )
 {
     const std::string name = filename.substr( 0, filename.find_last_of( '.' ) );
+    const std::string extension = filename.substr( filename.find_last_of( '.' ), std::string::npos );
     BOOST_FOREACH( const std::string& module, modules_ )
     {
         const std::vector< std::string > filter = boost::assign::list_of( module );
         filter_.reset( new Filter( filter ) );
-        Serialize( name + "-" + module + "." + format, layout, format, graph, node, edge );
+        Serialize( name + "-" + module + "." + extension );
     }
 }
