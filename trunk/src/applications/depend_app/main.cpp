@@ -47,7 +47,7 @@ namespace
         bpo::options_description graph( "Graph options (only for graph stage)" );
         graph.add_options()
             ( "layout", bpo::value< std::string >()->default_value( "dot" ), "set layout algorithm (dot|neato)" )
-            ( "format", bpo::value< std::string >()->default_value( "png" ), "set graph format (png|jpeg|svg|pdf)" )
+            ( "format", bpo::value< std::string >()->default_value( "png" ), "set graph format (png|jpg|svg|pdf)" )
             ( "graph,g", bpo::value< std::vector< std::string > >()        , "set graph options (see http://www.graphviz.org/doc/info/attrs.html)" )
             ( "node,n", bpo::value< std::vector< std::string > >()         , "set node options (see http://www.graphviz.org/doc/info/attrs.html)" )
             ( "edge,e", bpo::value< std::vector< std::string > >()         , "set edge options (see http://www.graphviz.org/doc/info/attrs.html)" );
@@ -73,16 +73,19 @@ namespace
             throw std::invalid_argument( "Invalid application option argument: format '" + vm[ "format" ].as< std::string >() + "' is not supported" );
         return vm;
     }
-    depend::Facade::T_Options ParseGraphOptions( const std::vector< std::string >& options )
+    depend::Facade::T_Options ParseGraphOptions( const bpo::variables_map& options, const std::string& option )
     {
         depend::Facade::T_Options result;
-        BOOST_FOREACH( const std::string& option, options )
+        if( options.count( option ) )
         {
-            std::vector< std::string > buffer;
-            boost::algorithm::split( buffer, option, boost::is_any_of( "=" ) );
-            if( buffer.size() != 2 )
-                throw std::invalid_argument( "Invalid application graph argument: '" + option + "' is malformed" );
-            result[ buffer.at( 0 ) ] = buffer.at( 1 );
+            BOOST_FOREACH( const std::string& option, options[ option ].as< std::vector< std::string > >() )
+            {
+                std::vector< std::string > buffer;
+                boost::algorithm::split( buffer, option, boost::is_any_of( "=" ) );
+                if( buffer.size() != 2 )
+                    throw std::invalid_argument( "Invalid application graph argument: '" + option + "' is malformed" );
+                result[ buffer.at( 0 ) ] = buffer.at( 1 );
+            }
         }
         return result;
     }
@@ -105,16 +108,11 @@ int main( int argc, char* argv[] )
         {
             if( !vm.count( "output" ) )
                 throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
-            const std::vector< std::string > empty;
             facade.Serialize( vm[ "output" ].as< std::string >(), vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
-                              ParseGraphOptions( vm.count( "graph" ) ? vm[ "graph" ].as< std::vector< std::string > >() : empty ),
-                              ParseGraphOptions( vm.count( "node" ) ? vm[ "node" ].as< std::vector< std::string > >(): empty ),
-                              ParseGraphOptions( vm.count( "edge" ) ? vm[ "edge" ].as< std::vector< std::string > >(): empty ) );
+                              ParseGraphOptions( vm, "graph" ), ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
             if( vm.count( "all" ) )
                 facade.SerializeAll( vm[ "output" ].as< std::string >(), vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
-                                     ParseGraphOptions( vm.count( "graph" ) ? vm[ "graph" ].as< std::vector< std::string > >() : empty ),
-                                     ParseGraphOptions( vm.count( "node" ) ? vm[ "node" ].as< std::vector< std::string > >(): empty ),
-                                     ParseGraphOptions( vm.count( "edge" ) ? vm[ "edge" ].as< std::vector< std::string > >(): empty ) );
+                                     ParseGraphOptions( vm, "graph" ), ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
             return EXIT_SUCCESS;
         }
         const bool isDotFormat = vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "dot";
