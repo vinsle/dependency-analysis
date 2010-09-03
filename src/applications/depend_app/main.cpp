@@ -98,9 +98,7 @@ int main( int argc, char* argv[] )
         const bpo::variables_map vm = ParseCommandLine( argc, argv );
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
-        depend::Facade::T_Filter filter;
-        if( vm.count( "filter" ) )
-            filter = vm[ "filter" ].as< std::vector< std::string > >();
+        depend::Facade::T_Filter filter = vm.count( "filter" ) ? vm[ "filter" ].as< std::vector< std::string > >() : depend::Facade::T_Filter();
         depend::Facade facade( filter );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
