@@ -119,11 +119,10 @@ int main( int argc, char* argv[] )
                 facade.SerializeAll( output );
             return EXIT_SUCCESS;
         }
-        const bool isDotFormat = vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "dot";
         std::ostream* out = &std::cout;
         if( vm.count( "output" ) )
             out = new std::ofstream( vm[ "output" ].as< std::string >().c_str() );
-        if( isDotFormat )
+        if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "dot" )
             facade.Serialize( *out );
         else
         {
