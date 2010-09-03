@@ -48,8 +48,8 @@ namespace
         else if( ! vm.count( "path" ) )
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
         else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() != "xml" && vm[ "stage" ].as< std::string >() != "dot" && vm[ "stage" ].as< std::string >() != "graph" )
-            throw std::invalid_argument( "Invalid application option argument: format '" + vm[ "format" ].as< std::string >() + "' is not supported" );
-        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" && !vm.count( "output" ) )
+            throw std::invalid_argument( "Invalid application option argument: stage '" + vm[ "stage" ].as< std::string >() + "' is not supported" );
+        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" && vm[ "output" ].as< std::string >().empty() )
             throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
     }
 
@@ -58,13 +58,13 @@ namespace
         bpo::options_description cmdline( "Allowed options" );
         bpo::options_description options( "Generic options" );
         options.add_options()
-            ( "help,h"                                            , "produce help message" )
-            ( "version,v"                                         , "produce version message" )
-            ( "path" , bpo::value< std::vector< std::string > >() , "add a directory containing modules for analysis" )
-            ( "output", bpo::value< std::string >()               , "set output file" )
-            ( "filter", bpo::value< std::vector< std::string > >(), "select only modules in filter and their afferent and efferent modules" )
-            ( "stage", bpo::value< std::string >()                , "set analysis stage for output (xml => dot => graph)" )
-            ( "all"                                               , "render a graph centered on each node" );
+            ( "help,h"                                                    , "produce help message" )
+            ( "version,v"                                                 , "produce version message" )
+            ( "path" , bpo::value< std::vector< std::string > >()         , "add a directory containing modules for analysis" )
+            ( "output", bpo::value< std::string >()->default_value( "" )  , "set output file" )
+            ( "filter", bpo::value< std::vector< std::string > >()        , "select only modules in filter and their afferent and efferent modules" )
+            ( "stage", bpo::value< std::string >()->default_value( "xml" ), "set analysis stage for output (xml => dot => graph)" )
+            ( "all"                                                       , "render a graph centered on each node" );
         bpo::options_description graph( "Graph options (only for graph stage)" );
         graph.add_options()
             ( "layout", bpo::value< std::string >()->default_value( "dot" ), "set layout algorithm (dot|neato)" )
@@ -85,7 +85,6 @@ namespace
     {
         depend::Facade::T_Options result;
         if( options.count( option ) )
-        {
             BOOST_FOREACH( const std::string& option, options[ option ].as< std::vector< std::string > >() )
             {
                 std::vector< std::string > buffer;
@@ -94,7 +93,6 @@ namespace
                     throw std::invalid_argument( "Invalid application graph argument: '" + option + "' is malformed" );
                 result[ buffer.at( 0 ) ] = buffer.at( 1 );
             }
-        }
         return result;
     }
 }
@@ -111,27 +109,7 @@ int main( int argc, char* argv[] )
                                ParseGraphOptions( vm, "graph" ), ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
-        if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" )
-        {
-            const std::string output = vm[ "output" ].as< std::string >();
-            facade.Serialize( output );
-            if( vm.count( "all" ) )
-                facade.SerializeAll( output );
-            return EXIT_SUCCESS;
-        }
-        std::ostream* out = &std::cout;
-        if( vm.count( "output" ) )
-            out = new std::ofstream( vm[ "output" ].as< std::string >().c_str() );
-        if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "dot" )
-            facade.Serialize( *out );
-        else
-        {
-            xml::xostringstream xos;
-            facade.Serialize( xos );
-            *out << xos.str();
-        }
-        if( vm.count( "output" ) )
-            delete out;
+        facade.Serialize( vm[ "stage" ].as< std::string >(), vm[ "output" ].as< std::string >(), vm.count( "all" ) > 0 );
         return EXIT_SUCCESS;
     }
     catch( std::exception& e )

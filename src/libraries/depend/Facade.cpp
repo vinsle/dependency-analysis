@@ -131,6 +131,33 @@ void Facade::Visit( const std::string& path )
     moduleVisitor_->Visit( path );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Facade::Serialize
+// Created: SLI 2010-09-03
+// -----------------------------------------------------------------------------
+void Facade::Serialize( const std::string& stage, const std::string& output, bool all )
+{
+    std::ostream* out = &std::cout;
+    if( !output.empty() )
+        out = new std::ofstream( output.c_str() );
+    if( stage == "xml" )
+    {
+        xml::xostringstream xos;
+        Serialize( xos );
+        *out << xos.str();
+    }
+    else if( stage == "dot" )
+        Serialize( *out );
+    else if( stage == "graph" )
+    {
+        Serialize( output );
+        if( all )
+            SerializeAll( output );
+    }
+    if( !output.empty() )
+        delete out;
+}
+
 namespace
 {
     class FilterExtender : public Filter_ABC, private DependencyMetricVisitor_ABC

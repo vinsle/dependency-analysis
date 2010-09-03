@@ -57,9 +57,16 @@ public:
     virtual ~Facade();
     //@}
 
+public:
     //! @name Operations
     //@{
     void Visit( const std::string& path );
+    void Serialize( const std::string& stage, const std::string& output, bool all );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
     void Serialize( xml::xostream& xos );
     void Serialize( std::ostream& os );
     void Serialize( const std::string& filename );
