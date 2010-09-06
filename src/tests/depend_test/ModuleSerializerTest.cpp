@@ -28,9 +28,9 @@ BOOST_AUTO_TEST_CASE( simple_module_serialization )
     MOCK_EXPECT( filter, Check ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
-        "<dependencies>"
-        "    <dependency name='module'/>"
-        "</dependencies>";
+        "<nodes>"
+        "    <node>module</node>"
+        "</nodes>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
 
@@ -50,8 +50,8 @@ BOOST_AUTO_TEST_CASE( module_serialization_can_be_filtered )
     MOCK_EXPECT( filter, Check ).returns( false );
     serializer.Serialize( xos, filter );
     const std::string expected =
-        "<dependencies>"
-        "    <dependency name='module1'/>"
-        "</dependencies>";
+        "<nodes>"
+        "    <node>module1</node>"
+        "</nodes>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }

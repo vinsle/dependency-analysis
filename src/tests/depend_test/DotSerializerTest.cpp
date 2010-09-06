@@ -16,12 +16,12 @@ BOOST_AUTO_TEST_CASE( simple_dot_serialization )
 {
     xml::xistringstream xis(
         "<report>"
-        "  <dependencies>"
-        "    <dependency name='module1'/>"
-        "    <dependency name='module2'/>"
-        "    <dependency name='module3'/>"
-        "    <dependency name='module4'/>"
-        "  </dependencies>"
+        "  <nodes>"
+        "    <node>module1</node>"
+        "    <node>module2</node>"
+        "    <node>module3</node>"
+        "    <node>module4</node>"
+        "  </nodes>"
         "  <graph>"
         "    <node name='module1'>"
         "      <efferent-dependencies Ce='1'>"

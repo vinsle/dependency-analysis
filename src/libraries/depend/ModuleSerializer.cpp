@@ -39,12 +39,10 @@ ModuleSerializer::~ModuleSerializer()
 // -----------------------------------------------------------------------------
 void ModuleSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
 {
-    xos << xml::start( "dependencies" );
+    xos << xml::start( "nodes" );
     BOOST_FOREACH( const std::string& module, modules_ )
         if( filter.Check( module ) )
-            xos << xml::start( "dependency" )
-                    << xml::attribute( "name", module )
-                << xml::end;
+            xos << xml::content( "node", module );
     xos << xml::end;
 }
 
