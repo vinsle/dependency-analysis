@@ -56,8 +56,8 @@ BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_detection, Compone
     const std::string expected = 
         "<strongly-connected-components>"
         "    <component>"
-        "        <module>from</module>"
-        "        <module>to</module>"
+        "        <node>from</node>"
+        "        <node>to</node>"
         "    </component>"
         "</strongly-connected-components>";
     xml::xostringstream xos;
@@ -88,8 +88,8 @@ BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_are_filtered, Comp
     const std::string expected = 
         "<strongly-connected-components>"
         "    <component>"
-        "        <module>from</module>"
-        "        <module>to</module>"
+        "        <node>from</node>"
+        "        <node>to</node>"
         "    </component>"
         "</strongly-connected-components>";
     xml::xostringstream xos;
