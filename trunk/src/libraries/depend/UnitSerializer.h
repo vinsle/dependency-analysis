@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ModuleSerializer_h
-#define depend_ModuleSerializer_h
+#ifndef depend_UnitSerializer_h
+#define depend_UnitSerializer_h
 
 #include "ModuleObserver_ABC.h"
 #include "Observer.h"
@@ -23,18 +23,18 @@ namespace depend
     class Filter_ABC;
 
 // =============================================================================
-/** @class  ModuleSerializer
-    @brief  Module serializer
+/** @class  UnitSerializer
+    @brief  Unit serializer
 */
 // Created: SLI 2010-08-24
 // =============================================================================
-class ModuleSerializer : private Observer< ModuleObserver_ABC >
+class UnitSerializer : private Observer< ModuleObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModuleSerializer( Subject< ModuleObserver_ABC >& subject );
-    virtual ~ModuleSerializer();
+    explicit UnitSerializer( Subject< ModuleObserver_ABC >& subject );
+    virtual ~UnitSerializer();
     //@}
 
     //! @name Operations
@@ -51,16 +51,16 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< std::string > T_Modules;
+    typedef std::vector< std::string > T_Units;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Modules modules_;
+    T_Units units_;
     //@}
 };
 
 }
 
-#endif // depend_ModuleSerializer_h
+#endif // depend_UnitSerializer_h

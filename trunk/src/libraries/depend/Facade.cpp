@@ -17,7 +17,7 @@
 #include "ClassMetric.h"
 #include "ModuleDependencyMetric.h"
 #include "MetricSerializer.h"
-#include "ModuleSerializer.h"
+#include "UnitSerializer.h"
 #include "StronglyConnectedComponents.h"
 #include "DotSerializer.h"
 #include "GraphSerializer.h"
@@ -52,7 +52,7 @@ Facade::Facade( const T_Filter& filter, const std::string& layout, const std::st
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
     , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_ ) )
-    , moduleSerializer_      ( new ModuleSerializer( *moduleVisitor_ ) )
+    , unitSerializer_        ( new UnitSerializer( *moduleVisitor_ ) )
     , graphSerializer_       ( new GraphSerializer( layout, format, graph, node, edge ) )
 {
     // NOTHING
@@ -201,7 +201,7 @@ void Facade::Serialize( xml::xostream& xos )
 {
     xos << xml::start( "report" );
     FilterExtender filter( *dependencyMetric_, *filter_ );
-    moduleSerializer_->Serialize( xos, filter );
+    unitSerializer_->Serialize( xos, filter );
     MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter );
     StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, filter );
     xos << xml::end;
