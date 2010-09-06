@@ -28,9 +28,9 @@ BOOST_AUTO_TEST_CASE( simple_unit_serialization )
     MOCK_EXPECT( filter, Check ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
-        "<nodes>"
-        "    <node>unit</node>"
-        "</nodes>";
+        "<units>"
+        "    <unit>unit</unit>"
+        "</units>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
 
@@ -50,8 +50,8 @@ BOOST_AUTO_TEST_CASE( unit_serialization_can_be_filtered )
     MOCK_EXPECT( filter, Check ).returns( false );
     serializer.Serialize( xos, filter );
     const std::string expected =
-        "<nodes>"
-        "    <node>unit1</node>"
-        "</nodes>";
+        "<units>"
+        "    <unit>unit1</unit>"
+        "</units>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }

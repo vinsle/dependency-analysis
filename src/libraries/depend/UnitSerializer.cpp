@@ -39,10 +39,10 @@ UnitSerializer::~UnitSerializer()
 // -----------------------------------------------------------------------------
 void UnitSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
 {
-    xos << xml::start( "nodes" );
+    xos << xml::start( "units" );
     BOOST_FOREACH( const std::string& module, units_ )
         if( filter.Check( module ) )
-            xos << xml::content( "node", module );
+            xos << xml::content( "unit", module );
     xos << xml::end;
 }
 
