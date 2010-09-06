@@ -75,12 +75,13 @@ namespace
                         << xml::attribute( "number", number.second )
                     << xml::end;
     }
-    void SerializeMetrics( xml::xostream& xos, unsigned int classes, unsigned int abstractClasses, unsigned int ce, unsigned int ca )
+    void SerializeMetrics( xml::xostream& xos, const std::string& module, unsigned int classes, unsigned int abstractClasses, unsigned int ce, unsigned int ca )
     {
         const int abstractness = classes == 0u ? 0u : ( 100u * abstractClasses ) / classes;
         const int instability = ce + ca == 0u ? 0u : ( 100u * ce ) / ( ce + ca );
         const int distance = std::abs( abstractness + instability - 100 );
-        xos << xml::start( "metrics" )
+        xos << xml::start( "metric" )
+                << xml::attribute( "name", module )
                 << xml::content( "number-of-classes", classes )
                 << xml::content( "number-of-abstract-classes", abstractClasses )
                 << xml::content( "abstractness", abstractness )
@@ -96,12 +97,12 @@ namespace
 // -----------------------------------------------------------------------------
 void MetricSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
 {
-    xos << xml::start( "categories" );
+    xos << xml::start( "graph" );
     BOOST_FOREACH( const std::string& module, modules_ )
     {
         if( filter.Check( module ) )
         {
-            xos << xml::start( "category" )
+            xos << xml::start( "node" )
                     << xml::attribute( "name", module )
                     << xml::start( "efferent-dependencies" )
                         << xml::attribute( "Ce", Sum( module, efferent_ ) );
@@ -114,11 +115,15 @@ void MetricSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter )
                     << xml::start( "external-dependencies" )
                         << xml::attribute( "Ce", Sum( module, external_ ) );
             SerializeDependency( xos, module, external_, Filter() );
-            xos     << xml::end;
-            SerializeMetrics( xos, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ) );
-            xos << xml::end;
+            xos     << xml::end
+                << xml::end;
         }
     }
+    xos << xml::end
+        << xml::start( "metrics" );
+    BOOST_FOREACH( const std::string& module, modules_ )
+        if( filter.Check( module ) )
+            SerializeMetrics( xos, module, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ) );
     xos << xml::end;
 }
 
