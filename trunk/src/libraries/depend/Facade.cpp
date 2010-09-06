@@ -235,12 +235,11 @@ void Facade::Serialize( const std::string& filename )
 // -----------------------------------------------------------------------------
 void Facade::SerializeAll( const std::string& filename )
 {
-    const std::string name = filename.substr( 0, filename.find_last_of( '.' ) );
     const std::string extension = filename.substr( filename.find_last_of( '.' ) + 1, std::string::npos );
     BOOST_FOREACH( const std::string& module, modules_ )
     {
         const std::vector< std::string > filter = boost::assign::list_of( module );
         filter_.reset( new Filter( filter ) ); // $$$$ _RC_ SLI 2010-09-06: not that great
-        Serialize( name + "-" + module + "." + extension );
+        Serialize( module + "." + extension );
     }
 }
