@@ -12,7 +12,6 @@
 #include "Observer.h"
 #include "DependencyMetric_ABC.h"
 #include "FileObserver_ABC.h"
-#include "ClassObserver_ABC.h"
 #include "IncludeObserver_ABC.h"
 #include <vector>
 #include <set>
@@ -27,13 +26,12 @@ namespace depend
 // =============================================================================
 class ClassDependencyMetric : public DependencyMetric_ABC
                             , private Observer< FileObserver_ABC >
-                            , private Observer< ClassObserver_ABC >
                             , private Observer< IncludeObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ClassDependencyMetric( Subject< FileObserver_ABC >& fileVisitor, Subject< ClassObserver_ABC >& classVisitor,
+             ClassDependencyMetric( Subject< FileObserver_ABC >& fileVisitor,
                                     Subject< IncludeObserver_ABC >& includeVisitor );
     virtual ~ClassDependencyMetric();
     //@}
@@ -47,8 +45,6 @@ private:
     //! @name Operations
     //@{
     virtual void NotifyFile( const std::string& path, std::istream& stream );
-    virtual void NotifyClass( const std::string& name );
-    virtual void NotifyAbstractness();
     virtual void NotifyInternalInclude( const std::string& file );
     virtual void NotifyExternalInclude( const std::string& file );
     //@}
@@ -56,12 +52,8 @@ private:
 private:
     //! @name Types
     //@{
-    struct T_Class
-    {
-        std::string name_;
-        std::set< std::string > includes_;
-    };
-    typedef std::pair< std::string, T_Class > T_File;
+    typedef std::set< std::string > T_Includes;
+    typedef std::pair< std::string, T_Includes > T_File;
     typedef std::vector< T_File > T_Files;
     //@}
 
