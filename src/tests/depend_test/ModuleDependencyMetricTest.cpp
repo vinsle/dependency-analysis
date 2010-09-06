@@ -20,21 +20,21 @@ namespace
     {
     public:
         Fixture()
-            : moduleObserver ( 0 )
+            : unitObserver ( 0 )
             , fileObserver   ( 0 )
             , includeObserver( 0 )
         {
-            MOCK_EXPECT( mockModuleVisitor, Register ).once().with( mock::retrieve( moduleObserver ) );
-            MOCK_EXPECT( mockModuleVisitor, Unregister ).once();
+            MOCK_EXPECT( mockUnitObserver, Register ).once().with( mock::retrieve( unitObserver ) );
+            MOCK_EXPECT( mockUnitObserver, Unregister ).once();
             MOCK_EXPECT( mockFileVisitor, Register ).once().with( mock::retrieve( fileObserver ) );
             MOCK_EXPECT( mockFileVisitor, Unregister ).once();
             MOCK_EXPECT( mockIncludeVisitor, Register ).once().with( mock::retrieve( includeObserver ) );
             MOCK_EXPECT( mockIncludeVisitor, Unregister ).once();
         }
-        ModuleObserver_ABC* moduleObserver;
+        UnitObserver_ABC* unitObserver;
         FileObserver_ABC* fileObserver;
         IncludeObserver_ABC* includeObserver;
-        MockSubject< ModuleObserver_ABC > mockModuleVisitor;
+        MockSubject< UnitObserver_ABC > mockUnitObserver;
         MockSubject< FileObserver_ABC > mockFileVisitor;
         MockSubject< IncludeObserver_ABC > mockIncludeVisitor;
     };
@@ -42,9 +42,9 @@ namespace
     {
     public:
         MetricFixture()
-            : metric( mockModuleVisitor, mockFileVisitor, mockIncludeVisitor )
+            : metric( mockUnitObserver, mockFileVisitor, mockIncludeVisitor )
         {
-            BOOST_REQUIRE( moduleObserver );
+            BOOST_REQUIRE( unitObserver );
             BOOST_REQUIRE( fileObserver );
             BOOST_REQUIRE( includeObserver );
         }
@@ -54,7 +54,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( external_dependencies_are_always_notified, MetricFixture )
 {
-    moduleObserver->NotifyModule( "module" );
+    unitObserver->NotifyUnit( "module" );
     includeObserver->NotifyExternalInclude( "include1" );
     includeObserver->NotifyExternalInclude( "include2" );
     MockDependencyMetricVisitor visitor;
@@ -66,7 +66,7 @@ BOOST_FIXTURE_TEST_CASE( external_dependencies_are_always_notified, MetricFixtur
 
 BOOST_FIXTURE_TEST_CASE( external_dependencies_are_uniq, MetricFixture )
 {
-    moduleObserver->NotifyModule( "module" );
+    unitObserver->NotifyUnit( "module" );
     includeObserver->NotifyExternalInclude( "include" );
     includeObserver->NotifyExternalInclude( "include" );
     MockDependencyMetricVisitor visitor;
@@ -76,7 +76,7 @@ BOOST_FIXTURE_TEST_CASE( external_dependencies_are_uniq, MetricFixture )
 
 BOOST_FIXTURE_TEST_CASE( internal_include_begining_with_module_itself_does_not_count_as_dependency, MetricFixture )
 {
-    moduleObserver->NotifyModule( "module" );
+    unitObserver->NotifyUnit( "module" );
     includeObserver->NotifyInternalInclude( "module/internal" );
     MockDependencyMetricVisitor visitor;
     metric.Apply( visitor );
@@ -84,7 +84,7 @@ BOOST_FIXTURE_TEST_CASE( internal_include_begining_with_module_itself_does_not_c
 
 BOOST_FIXTURE_TEST_CASE( internal_include_already_added_as_file_in_module_does_not_count_as_dependency, MetricFixture )
 {
-    moduleObserver->NotifyModule( "module" );
+    unitObserver->NotifyUnit( "module" );
     std::istringstream is;
     fileObserver->NotifyFile( "file", is );
     includeObserver->NotifyInternalInclude( "file" );
@@ -97,11 +97,11 @@ BOOST_FIXTURE_TEST_CASE( internal_include_already_added_as_file_in_module_does_n
 BOOST_FIXTURE_TEST_CASE( dependency_metric_detects_module_dependencies_with_internal_include, MetricFixture )
 {
     std::istringstream is;
-    moduleObserver->NotifyModule( "module" );
+    unitObserver->NotifyUnit( "module" );
     fileObserver->NotifyFile( "file", is );
     includeObserver->NotifyInternalInclude( "file" );
     includeObserver->NotifyInternalInclude( "module2/file2" );
-    moduleObserver->NotifyModule( "module2" );
+    unitObserver->NotifyUnit( "module2" );
     fileObserver->NotifyFile( "file2", is );
     includeObserver->NotifyInternalInclude( "file2" );
     MockDependencyMetricVisitor visitor;

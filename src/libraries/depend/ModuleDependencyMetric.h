@@ -10,7 +10,7 @@
 #define depend_ModuleDependencyMetric_h
 
 #include "DependencyMetric_ABC.h"
-#include "ModuleObserver_ABC.h"
+#include "UnitObserver_ABC.h"
 #include "FileObserver_ABC.h"
 #include "IncludeObserver_ABC.h"
 #include "Observer.h"
@@ -27,14 +27,14 @@ namespace depend
 // Created: SLI 2010-08-19
 // =============================================================================
 class ModuleDependencyMetric : public DependencyMetric_ABC
-                             , private Observer< ModuleObserver_ABC >
+                             , private Observer< UnitObserver_ABC >
                              , private Observer< FileObserver_ABC >
                              , private Observer< IncludeObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleDependencyMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< FileObserver_ABC >& fileObserver,
+             ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
                                Subject< IncludeObserver_ABC >& includeObserver_ );
     virtual ~ModuleDependencyMetric();
     //@}
@@ -47,7 +47,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyModule( const std::string& module );
+    virtual void NotifyUnit( const std::string& unit );
     virtual void NotifyFile( const std::string& path, std::istream& stream );
     virtual void NotifyInternalInclude( const std::string& file );
     virtual void NotifyExternalInclude( const std::string& file );
@@ -59,7 +59,7 @@ private:
     typedef std::set< std::string > T_Dependencies;
     struct Metric
     {
-        std::string module_;
+        std::string unit_;
         T_Dependencies internal_;
         T_Dependencies external_;
         T_Dependencies files_;
@@ -71,7 +71,7 @@ private:
     //! @name Member data
     //@{
     T_Metrics metrics_;
-    T_Dependencies modules_;
+    T_Dependencies units_;
     //@}
 };
 

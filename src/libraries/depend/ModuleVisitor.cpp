@@ -8,7 +8,7 @@
 
 #include "depend_pch.h"
 #include "ModuleVisitor.h"
-#include "ModuleObserver_ABC.h"
+#include "UnitObserver_ABC.h"
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
@@ -53,7 +53,7 @@ void ModuleVisitor::Visit( const std::string& filename )
         for( boost::filesystem::directory_iterator it( path ); it != boost::filesystem::directory_iterator(); ++it )
             if( IsDirectory( *it ) )
                 BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
-                    observer->NotifyModule( it->filename() );
+                    observer->NotifyUnit( it->filename() );
     }
     catch( boost::filesystem::basic_filesystem_error< boost::filesystem::path > e )
     {

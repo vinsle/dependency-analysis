@@ -8,7 +8,7 @@
 
 #include "depend_test_pch.h"
 #include "depend/ModuleVisitor.h"
-#include "MockModuleObserver.h"
+#include "MockUnitObserver.h"
 
 using namespace depend;
 
@@ -22,10 +22,10 @@ BOOST_AUTO_TEST_CASE( visiting_invalid_directory_throws )
 BOOST_AUTO_TEST_CASE( module_visitor_lists_all_first_level_directories_and_notifies_listeners )
 {
     ModuleVisitor visitor;
-    MockModuleObserver observer;
+    MockUnitObserver observer;
     visitor.Register( observer );
-    MOCK_EXPECT( observer, NotifyModule ).once().with( "first" );
-    MOCK_EXPECT( observer, NotifyModule ).once().with( "second" );
+    MOCK_EXPECT( observer, NotifyUnit ).once().with( "first" );
+    MOCK_EXPECT( observer, NotifyUnit ).once().with( "second" );
     visitor.Visit( BOOST_RESOLVE( "module_visitor_lists_all_first_level_directories_and_notifies_listeners" ) );
     visitor.Unregister( observer );
 }

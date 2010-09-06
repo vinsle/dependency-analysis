@@ -17,9 +17,9 @@ using namespace depend;
 // Name: ModuleDependencyMetric constructor
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-ModuleDependencyMetric::ModuleDependencyMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< FileObserver_ABC >& fileObserver,
+ModuleDependencyMetric::ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
                                     Subject< IncludeObserver_ABC >& includeObserver )
-    : Observer< ModuleObserver_ABC > ( moduleObserver )
+    : Observer< UnitObserver_ABC > ( unitObserver )
     , Observer< FileObserver_ABC >   ( fileObserver )
     , Observer< IncludeObserver_ABC >( includeObserver )
 {
@@ -48,25 +48,25 @@ void ModuleDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
         BOOST_FOREACH( const std::string& include, cleaned )
         {
             const size_t position = include.find_first_of( '/' );
-            const std::string module = include.substr( 0, position );
-            if( position != std::string::npos && module != metric.module_ && modules_.find( module ) != modules_.end() )  // $$$$ _RC_ SLI 2010-08-20: warn user if one of these case occurs
-                visitor.NotifyInternalDependency( metric.module_, module );
+            const std::string unit = include.substr( 0, position );
+            if( position != std::string::npos && unit != metric.unit_ && units_.find( unit ) != units_.end() )  // $$$$ _RC_ SLI 2010-08-20: warn user if one of these case occurs
+                visitor.NotifyInternalDependency( metric.unit_, unit );
         }
         BOOST_FOREACH( const std::string& include, metric.external_ )
-            visitor.NotifyExternalDependency( metric.module_, include.substr( 0, include.find_first_of( '/' ) ) );
+            visitor.NotifyExternalDependency( metric.unit_, include.substr( 0, include.find_first_of( '/' ) ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric::NotifyModule
+// Name: ModuleDependencyMetric::NotifyUnit
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetric::NotifyModule( const std::string& module )
+void ModuleDependencyMetric::NotifyUnit( const std::string& unit )
 {
     Metric metric;
-    metric.module_ = module;
+    metric.unit_ = unit;
     metrics_.push_back( metric );
-    modules_.insert( module );
+    units_.insert( unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ void ModuleDependencyMetric::NotifyModule( const std::string& module )
 void ModuleDependencyMetric::NotifyFile( const std::string& path, std::istream& /*stream*/ )
 {
     if( metrics_.empty() )
-        throw std::runtime_error( "invalid file '" + path + "' out of a module" );
+        throw std::runtime_error( "invalid file '" + path + "' out of a unit" );
     metrics_.back().files_.insert( path );
 }
 
@@ -87,7 +87,7 @@ void ModuleDependencyMetric::NotifyFile( const std::string& path, std::istream& 
 void ModuleDependencyMetric::NotifyInternalInclude( const std::string& file )
 {
     if( metrics_.empty() )
-        throw std::runtime_error( "invalid include '" + file + "' out of a module" );
+        throw std::runtime_error( "invalid include '" + file + "' out of a unit" );
     metrics_.back().internal_.insert( file );
 }
 
@@ -98,6 +98,6 @@ void ModuleDependencyMetric::NotifyInternalInclude( const std::string& file )
 void ModuleDependencyMetric::NotifyExternalInclude( const std::string& file )
 {
     if( metrics_.empty() )
-        throw std::runtime_error( "invalid include '" + file + "' out of a module" );
+        throw std::runtime_error( "invalid include '" + file + "' out of a unit" );
     metrics_.back().external_.insert( file );
 }

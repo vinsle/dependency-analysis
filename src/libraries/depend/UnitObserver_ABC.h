@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ModuleObserver_ABC_h
-#define depend_ModuleObserver_ABC_h
+#ifndef depend_UnitObserver_ABC_h
+#define depend_UnitObserver_ABC_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -15,26 +15,26 @@
 namespace depend
 {
 // =============================================================================
-/** @class  ModuleObserver_ABC
-    @brief  Module observer definition
+/** @class  UnitObserver_ABC
+    @brief  Unit observer definition
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class ModuleObserver_ABC : private boost::noncopyable
+class UnitObserver_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleObserver_ABC() {}
-    virtual ~ModuleObserver_ABC() {}
+             UnitObserver_ABC() {}
+    virtual ~UnitObserver_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyModule( const std::string& module ) = 0;
+    virtual void NotifyUnit( const std::string& unit ) = 0;
     //@}
 };
 
 }
 
-#endif // depend_ModuleObserver_ABC_h
+#endif // depend_UnitObserver_ABC_h

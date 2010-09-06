@@ -91,15 +91,15 @@ namespace
         LineVisitor& lineVisitor_;
     };
 
-    class ModuleObserver : private Observer< ModuleObserver_ABC >
+    class ModuleObserver : private Observer< UnitObserver_ABC >
     {
     public:
-        ModuleObserver( ModuleVisitor& moduleVisitor, FileVisitor& fileVisitor, LineVisitor& lineVisitor, const std::string& path, std::vector< std::string >& modules )
-            : Observer< ModuleObserver_ABC >( moduleVisitor )
+        ModuleObserver( ModuleVisitor& unitVisitor, FileVisitor& fileVisitor, LineVisitor& lineVisitor, const std::string& path, std::vector< std::string >& units )
+            : Observer< UnitObserver_ABC >( unitVisitor )
             , fileVisitor_  ( fileVisitor )
             , lineVisitor_  ( lineVisitor )
             , path_         ( path )
-            , modules_      ( modules )
+            , units_        ( units )
         {
              // NOTHING
         }
@@ -108,17 +108,17 @@ namespace
             // NOTHING
         }
     private:
-        virtual void NotifyModule( const std::string& module )
+        virtual void NotifyUnit( const std::string& unit )
         {
             FileObserver observer( fileVisitor_, lineVisitor_ );
-            fileVisitor_.Visit( path_ + "/" + module );
-            modules_.push_back( module );
+            fileVisitor_.Visit( path_ + "/" + unit );
+            units_.push_back( unit );
         }
     private:
         FileVisitor& fileVisitor_;
         LineVisitor& lineVisitor_;
         const std::string path_;
-        std::vector< std::string >& modules_;
+        std::vector< std::string >& units_;
     };
 }
 

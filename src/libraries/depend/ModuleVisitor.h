@@ -13,7 +13,7 @@
 
 namespace depend
 {
-    class ModuleObserver_ABC;
+    class UnitObserver_ABC;
 
 // =============================================================================
 /** @class  ModuleVisitor
@@ -21,7 +21,7 @@ namespace depend
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-class ModuleVisitor : public Subject< ModuleObserver_ABC >
+class ModuleVisitor : public Subject< UnitObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
