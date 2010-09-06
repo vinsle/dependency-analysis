@@ -18,8 +18,8 @@ using namespace depend;
 // Name: UnitSerializer constructor
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-UnitSerializer::UnitSerializer( Subject< ModuleObserver_ABC >& subject )
-    : Observer< ModuleObserver_ABC >( subject )
+UnitSerializer::UnitSerializer( Subject< UnitObserver_ABC >& subject )
+    : Observer< UnitObserver_ABC >( subject )
 {
     // NOTHING
 }
@@ -47,10 +47,10 @@ void UnitSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitSerializer::NotifyModule
+// Name: UnitSerializer::NotifyUnit
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-void UnitSerializer::NotifyModule( const std::string& module )
+void UnitSerializer::NotifyUnit( const std::string& unit )
 {
-    units_.push_back( module );
+    units_.push_back( unit );
 }

@@ -16,13 +16,13 @@ using namespace depend;
 
 BOOST_AUTO_TEST_CASE( simple_unit_serialization )
 {
-    MockSubject< ModuleObserver_ABC > mockSubject;
-    ModuleObserver_ABC* observer = 0;
+    MockSubject< UnitObserver_ABC > mockSubject;
+    UnitObserver_ABC* observer = 0;
     MOCK_EXPECT( mockSubject, Register ).once().with( mock::retrieve( observer ) );
     MOCK_EXPECT( mockSubject, Unregister ).once();
     UnitSerializer serializer( mockSubject );
     BOOST_REQUIRE( observer );
-    observer->NotifyModule( "unit" );
+    observer->NotifyUnit( "unit" );
     xml::xostringstream xos;
     MockFilter filter;
     MOCK_EXPECT( filter, Check ).returns( true );
@@ -36,14 +36,14 @@ BOOST_AUTO_TEST_CASE( simple_unit_serialization )
 
 BOOST_AUTO_TEST_CASE( unit_serialization_can_be_filtered )
 {
-    MockSubject< ModuleObserver_ABC > mockSubject;
-    ModuleObserver_ABC* observer = 0;
+    MockSubject< UnitObserver_ABC > mockSubject;
+    UnitObserver_ABC* observer = 0;
     MOCK_EXPECT( mockSubject, Register ).once().with( mock::retrieve( observer ) );
     MOCK_EXPECT( mockSubject, Unregister ).once();
     UnitSerializer serializer( mockSubject );
     BOOST_REQUIRE( observer );
-    observer->NotifyModule( "unit1" );
-    observer->NotifyModule( "unit2" );
+    observer->NotifyUnit( "unit1" );
+    observer->NotifyUnit( "unit2" );
     xml::xostringstream xos;
     MockFilter filter;
     MOCK_EXPECT( filter, Check ).once().with( "unit1" ).returns( true );

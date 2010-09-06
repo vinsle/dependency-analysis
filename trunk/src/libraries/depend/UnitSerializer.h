@@ -9,7 +9,7 @@
 #ifndef depend_UnitSerializer_h
 #define depend_UnitSerializer_h
 
-#include "ModuleObserver_ABC.h"
+#include "UnitObserver_ABC.h"
 #include "Observer.h"
 #include <vector>
 
@@ -28,12 +28,12 @@ namespace depend
 */
 // Created: SLI 2010-08-24
 // =============================================================================
-class UnitSerializer : private Observer< ModuleObserver_ABC >
+class UnitSerializer : private Observer< UnitObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitSerializer( Subject< ModuleObserver_ABC >& subject );
+    explicit UnitSerializer( Subject< UnitObserver_ABC >& subject );
     virtual ~UnitSerializer();
     //@}
 
@@ -45,7 +45,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyModule( const std::string& module );
+    virtual void NotifyUnit( const std::string& unit );
     //@}
 
 private:

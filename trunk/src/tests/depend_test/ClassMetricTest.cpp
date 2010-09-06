@@ -28,8 +28,8 @@ namespace
             MOCK_EXPECT( mockClassVisitor, Unregister ).once();
         }
         ClassObserver_ABC* classObserver;
-        ModuleObserver_ABC* moduleObserver;
-        MockSubject< ModuleObserver_ABC > mockModuleVisitor;
+        UnitObserver_ABC* moduleObserver;
+        MockSubject< UnitObserver_ABC > mockModuleVisitor;
         MockSubject< ClassObserver_ABC > mockClassVisitor;
     };
     class MetricFixture : public Fixture
@@ -47,7 +47,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( class_metric_count_classes_and_abstract_classes_on_module, MetricFixture )
 {
-    moduleObserver->NotifyModule( "module" );
+    moduleObserver->NotifyUnit( "module" );
     classObserver->NotifyClass( "class" );
     classObserver->NotifyAbstractness();
     MockClassMetricVisitor visitor;

@@ -17,8 +17,8 @@ using namespace depend;
 // Name: ClassMetric constructor
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-ClassMetric::ClassMetric( Subject< ModuleObserver_ABC >& moduleObserver, Subject< ClassObserver_ABC >& classObserver )
-    : Observer< ModuleObserver_ABC >( moduleObserver )
+ClassMetric::ClassMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< ClassObserver_ABC >& classObserver )
+    : Observer< UnitObserver_ABC >( unitObserver )
     , Observer< ClassObserver_ABC > ( classObserver )
 {
     // NOTHING
@@ -40,17 +40,17 @@ ClassMetric::~ClassMetric()
 void ClassMetric::Apply( ClassMetricVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const Metric& metric, metrics_ )
-        visitor.NotifyClassMetric( metric.module_, metric.classes_, metric.abstract_ );
+        visitor.NotifyClassMetric( metric.unit_, metric.classes_, metric.abstract_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClassMetric::NotifyModule
+// Name: ClassMetric::NotifyUnit
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ClassMetric::NotifyModule( const std::string& module )
+void ClassMetric::NotifyUnit( const std::string& unit )
 {
     Metric metric;
-    metric.module_ = module;
+    metric.unit_ = unit;
     metrics_.push_back( metric );
 }
 

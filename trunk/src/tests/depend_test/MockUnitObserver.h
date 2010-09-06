@@ -6,24 +6,24 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_test_MockModuleObserver_h
-#define depend_test_MockModuleObserver_h
+#ifndef depend_test_MockUnitObserver_h
+#define depend_test_MockUnitObserver_h
 
-#include "depend/ModuleObserver_ABC.h"
+#include "depend/UnitObserver_ABC.h"
 
 namespace depend
 {
 // =============================================================================
-/** @class  MockModuleObserver
-    @brief  Mock module observer
+/** @class  MockUnitObserver
+    @brief  Mock unit observer
 */
 // Created: SLI 2010-08-17
 // =============================================================================
-MOCK_BASE_CLASS( MockModuleObserver, ModuleObserver_ABC )
+MOCK_BASE_CLASS( MockUnitObserver, UnitObserver_ABC )
 {
-    MOCK_METHOD( NotifyModule, 1 )
+    MOCK_METHOD( NotifyUnit, 1 )
 };
 
 }
 
-#endif // depend_test_MockModuleObserver_h
+#endif // depend_test_MockUnitObserver_h

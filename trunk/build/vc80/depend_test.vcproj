@@ -313,15 +313,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\tests\depend_test\MockModuleObserver.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\tests\depend_test\MockSubject.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockUncommentedLineObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockUnitObserver.h"
 					>
 				</File>
 			</Filter>
