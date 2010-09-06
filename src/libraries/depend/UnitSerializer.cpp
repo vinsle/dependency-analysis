@@ -7,7 +7,7 @@
 //
 
 #include "depend_pch.h"
-#include "ModuleSerializer.h"
+#include "UnitSerializer.h"
 #include "Filter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
@@ -15,42 +15,42 @@
 using namespace depend;
 
 // -----------------------------------------------------------------------------
-// Name: ModuleSerializer constructor
+// Name: UnitSerializer constructor
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-ModuleSerializer::ModuleSerializer( Subject< ModuleObserver_ABC >& subject )
+UnitSerializer::UnitSerializer( Subject< ModuleObserver_ABC >& subject )
     : Observer< ModuleObserver_ABC >( subject )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleSerializer destructor
+// Name: UnitSerializer destructor
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-ModuleSerializer::~ModuleSerializer()
+UnitSerializer::~UnitSerializer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleSerializer::Serialize
+// Name: UnitSerializer::Serialize
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-void ModuleSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
+void UnitSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
 {
     xos << xml::start( "nodes" );
-    BOOST_FOREACH( const std::string& module, modules_ )
+    BOOST_FOREACH( const std::string& module, units_ )
         if( filter.Check( module ) )
             xos << xml::content( "node", module );
     xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleSerializer::NotifyModule
+// Name: UnitSerializer::NotifyModule
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-void ModuleSerializer::NotifyModule( const std::string& module )
+void UnitSerializer::NotifyModule( const std::string& module )
 {
-    modules_.push_back( module );
+    units_.push_back( module );
 }

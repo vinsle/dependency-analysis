@@ -374,11 +374,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ModuleSerializer.cpp"
+					RelativePath="..\..\src\libraries\depend\UnitSerializer.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ModuleSerializer.h"
+					RelativePath="..\..\src\libraries\depend\UnitSerializer.h"
 					>
 				</File>
 			</Filter>
