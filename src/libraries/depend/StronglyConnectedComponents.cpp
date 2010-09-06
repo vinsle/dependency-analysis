@@ -57,7 +57,7 @@ namespace
             {
                 xos << xml::start( "component" );
                 BOOST_FOREACH( const std::string& module, component.second )
-                    xos << xml::content( "module", module );
+                    xos << xml::content( "node", module );
                 xos << xml::end;
             }
         }
