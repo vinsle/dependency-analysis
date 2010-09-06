@@ -58,13 +58,13 @@ namespace
         bpo::options_description cmdline( "Allowed options" );
         bpo::options_description options( "Generic options" );
         options.add_options()
-            ( "help,h"                                                    , "produce help message" )
-            ( "version,v"                                                 , "produce version message" )
-            ( "path" , bpo::value< std::vector< std::string > >()         , "add a directory containing modules for analysis" )
-            ( "output", bpo::value< std::string >()->default_value( "" )  , "set output file" )
-            ( "filter", bpo::value< std::vector< std::string > >()        , "select only modules in filter and their afferent and efferent modules" )
-            ( "stage", bpo::value< std::string >()->default_value( "xml" ), "set analysis stage for output (xml => dot => graph)" )
-            ( "all"                                                       , "render a graph centered on each node" );
+            ( "help,h"                                                      , "produce help message" )
+            ( "version,v"                                                   , "produce version message" )
+            ( "path" , bpo::value< std::vector< std::string > >()           , "add a directory containing modules for analysis" )
+            ( "output", bpo::value< std::string >()->default_value( "" )    , "set output file" )
+            ( "filter", bpo::value< std::vector< std::string > >()          , "select only modules in filter and their afferent and efferent modules" )
+            ( "stage", bpo::value< std::string >()->default_value( "graph" ), "set analysis stage for output (xml => dot => graph)" )
+            ( "all"                                                         , "render a graph centered on each node" );
         bpo::options_description graph( "Graph options (only for graph stage)" );
         graph.add_options()
             ( "layout", bpo::value< std::string >()->default_value( "dot" ), "set layout algorithm (dot|neato)" )
