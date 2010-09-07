@@ -9,7 +9,12 @@
 #include "depend_pch.h"
 #include "DotSerializer.h"
 #include <sstream>
-#include <xeuseuleu/xsl.hpp>
+#include <map>
+#include <vector>
+#include <set>
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace depend;
 
@@ -33,67 +38,73 @@ DotSerializer::~DotSerializer()
 
 namespace
 {
-    static const std::string stylesheet =
-        "<xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>"
-            "<xsl:output method='text'/>"
-            ""
-            "<xsl:template match='/report'>"
-                "digraph G {"
-                "<xsl:apply-templates select='units/unit'/>"
-                "<xsl:apply-templates select='graph/node'/>"
-                "}"
-            "</xsl:template>"
-            ""
-            "<xsl:template match='units/unit'>"
-                "<xsl:variable name='name' select='current()'/>"
-                "<xsl:variable name='instability' select='/report/metrics/metric[@name=$name]/instability'/>"
-                "<xsl:variable name='abstractness' select='/report/metrics/metric[@name=$name]/abstractness'/>"
-                "<xsl:variable name='distance' select='/report/metrics/metric[@name=$name]/distance'/>"
-                "<xsl:variable name='color' select='( 100 - $distance ) div 360'/>"
-                "&quot;<xsl:value-of select='$name'/>&quot;[label=\"\\N\\nI=<xsl:value-of select='$instability'/> A=<xsl:value-of select='$abstractness'/> D=<xsl:value-of select='$distance'/>\",shape=rectangle,style=filled,color=\"<xsl:value-of select='$color'/> 1.0 1.0\"];"
-            "</xsl:template>"
-            ""
-            "<xsl:template match='graph/node'>"
-                "<xsl:variable name='name' select='@name'/>"
-                "<xsl:apply-templates select='efferent-dependencies/dependency'>"
-                    "<xsl:with-param name='parent' select='$name'/>"
-                "</xsl:apply-templates>"
-            "</xsl:template>"
-            ""
-            "<xsl:template match='efferent-dependencies/dependency'>"
-                "<xsl:param name='parent'/>"
-                "<xsl:choose>"
-                    "<xsl:when test='(/report/strongly-connected-components/component/node=$parent) and (/report/strongly-connected-components/component/node=@name)'>"
-                        "<xsl:apply-templates select='/report/strongly-connected-components/component'>"
-                            "<xsl:with-param name='from' select='$parent'/>"
-                            "<xsl:with-param name='to' select='@name'/>"
-                            "<xsl:with-param name='number' select='@number'/>"
-                        "</xsl:apply-templates>"
-                    "</xsl:when>"
-                    "<xsl:otherwise>"
-                        "&quot;<xsl:value-of select='$parent'/>&quot;->&quot;<xsl:value-of select='@name'/>&quot;;"
-                    "</xsl:otherwise>"
-                "</xsl:choose>"
-            "</xsl:template>"
-            ""
-            "<xsl:template match='strongly-connected-components/component'>"
-                "<xsl:param name='from'/>"
-                "<xsl:param name='to'/>"
-                "<xsl:param name='number'/>"
-                "<xsl:choose>"
-                    "<xsl:when test='( node=$from ) and ( node=$to )'>"
-                        "<xsl:variable name='color' select='position() div last()'/>"
-                        "&quot;<xsl:value-of select='$from'/>&quot;->&quot;<xsl:value-of select='$to'/>&quot;[color=\"<xsl:value-of select='$color'/> 1.0 1.0\"];"
-                    "</xsl:when>"
-                    "<xsl:otherwise>"
-                        "<xsl:if test='( node=$from )'>"
-                            "&quot;<xsl:value-of select='$from'/>&quot;->&quot;<xsl:value-of select='$to'/>&quot;;"
-                        "</xsl:if>"
-                    "</xsl:otherwise>"
-                "</xsl:choose>"
-            "</xsl:template>"
-            ""
-        "</xsl:stylesheet>";
+    struct T_Metric 
+    {
+        float abstractness;
+        float instability;
+        float distance;
+    };
+    typedef std::map< std::string, T_Metric > T_Metrics;
+    void ReadMetric( xml::xistream& xis, T_Metrics& metrics )
+    {
+        std::string name;
+        T_Metric metric;
+        xis >> xml::attribute( "name", name )
+            >> xml::content( "abstractness", metric.abstractness )
+            >> xml::content( "instability", metric.instability )
+            >> xml::content( "distance", metric.distance );
+        metrics[ name ] = metric;
+    }
+    typedef std::set< std::string > T_Component;
+    typedef std::vector< T_Component > T_Components;
+
+    void ReadComponent( xml::xistream& xis, T_Component& component )
+    {
+        std::string node;
+        xis >> node;
+        component.insert( node );
+    }
+    void ReadComponents( xml::xistream& xis, T_Components& components )
+    {
+        T_Component component;
+        xis >> xml::list( "node", boost::bind( &ReadComponent, _1, boost::ref( component ) ) );
+        components.push_back( component );
+    }
+    void ReadUnit( xml::xistream& xis, const T_Metrics& metrics, std::ostream& os )
+    {
+        std::string unit;
+        xis >> unit;
+        T_Metrics::const_iterator cit = metrics.find( unit );
+        const float color = ( 100.f - cit->second.distance ) / 360.f;
+        os << "\"" << unit << "\"" << "[label=\"\\N\\nI=" <<  cit->second.instability
+                                   << " A=" << cit->second.abstractness
+                                   << " D=" << cit->second.distance
+                                   << "\",shape=rectangle,style=filled,color=\""
+                                   << color << " 1.0 1.0\"];"
+                                   << std::endl;
+    }
+    void ReadDependency( xml::xistream& xis, const T_Components& components, std::ostream& os, const std::string& from )
+    {
+        std::string to;
+        xis >> xml::attribute( "name", to );
+        boost::function< T_Component::const_iterator( const T_Component&, const std::string& ) > find = boost::bind< T_Component::const_iterator >( &T_Component::find, _1, _2 );
+        boost::function< T_Component::const_iterator( const T_Component& ) > end = boost::bind< T_Component::const_iterator >( &T_Component::end, _1 );
+        boost::function< bool( const T_Component&, const std::string& ) > predicate = boost::bind( std::not_equal_to< T_Component::const_iterator >(), boost::bind( find, _1, _2 ), boost::bind( end, _1 ) );
+        const size_t componentFrom = std::distance( components.begin(), std::find_if( components.begin(), components.end(), boost::bind( predicate, _1, boost::cref( from ) ) ) );
+        const size_t componentTo = std::distance( components.begin(), std::find_if( components.begin(), components.end(), boost::bind( predicate, _1, boost::cref( to ) ) ) );
+        os << "\"" << from << "\"->\"" << to << "\"";
+        if( componentFrom != components.size() && componentTo != components.size() && componentFrom == componentTo )
+            os << "[color=\"" << static_cast< float >( componentFrom + 1 ) / static_cast< float >( components.size() ) << " 1.0 1.0\"]";
+        os << ";" << std::endl;
+    }
+    void ReadNode( xml::xistream& xis, const T_Components& components, std::ostream& os )
+    {
+        std::string from;
+        xis >> xml::attribute( "name", from )
+            >> xml::start( "efferent-dependencies" )
+                >> xml::list( "dependency", boost::bind( &ReadDependency, _1, boost::cref( components ), boost::ref( os ), boost::cref( from ) ) )
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -102,8 +113,22 @@ namespace
 // -----------------------------------------------------------------------------
 void DotSerializer::Serialize( xml::xistream& xis, std::ostream& os ) const
 {
-    std::istringstream ss( stylesheet );
-    xsl::xstringtransform xst( ss );
-    xst << xis;
-    os << xst.str() << std::endl;
+    T_Metrics metrics;
+    T_Components components;
+    os << "digraph G {" << std::endl;
+    xis >> xml::start( "report" )
+            >> xml::start( "metrics" )
+                >> xml::list( "metric", boost::bind( &ReadMetric, _1, boost::ref( metrics ) ) )
+            >> xml::end
+            >> xml::start( "strongly-connected-components" )
+                >> xml::list( "component", boost::bind( &ReadComponents, _1, boost::ref( components ) ) )
+            >> xml::end
+            >> xml::start( "units" )
+                >> xml::list( "unit", boost::bind( &ReadUnit, _1, boost::cref( metrics ), boost::ref( os ) ) )
+            >> xml::end
+            >> xml::start( "graph" )
+                >> xml::list( "node", boost::bind( &ReadNode, _1, boost::cref( components ), boost::ref( os ) ) )
+            >> xml::end
+        >> xml::end;
+    os << "}" << std::endl;
 }
