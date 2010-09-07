@@ -62,19 +62,6 @@ namespace
             result += number.second;
         return result;
     }
-    template< typename T >
-    void SerializeDependency( xml::xostream& xos, const std::string& module, const T& dependencies, const Filter_ABC& filter )
-    {
-        T::const_iterator it = dependencies.find( module );
-        if( it == dependencies.end() )
-            return;
-        BOOST_FOREACH( const T_Number& number, it->second )
-            if( filter.Check( number.first ) )
-                xos << xml::start( "dependency" )
-                        << xml::attribute( "name", number.first )
-                        << xml::attribute( "number", number.second )
-                    << xml::end;
-    }
     void SerializeMetrics( xml::xostream& xos, const std::string& module, unsigned int classes, unsigned int abstractClasses, unsigned int ce, unsigned int ca )
     {
         const int abstractness = classes == 0u ? 0u : ( 100u * abstractClasses ) / classes;
@@ -97,30 +84,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MetricSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
 {
-    xos << xml::start( "graph" );
-    BOOST_FOREACH( const std::string& module, modules_ )
-    {
-        if( filter.Check( module ) )
-        {
-            xos << xml::start( "node" )
-                    << xml::attribute( "name", module )
-                    << xml::start( "efferent-dependencies" )
-                        << xml::attribute( "Ce", Sum( module, efferent_ ) );
-            SerializeDependency( xos, module, efferent_, filter );
-            xos     << xml::end
-                    << xml::start( "afferent-dependencies" )
-                        << xml::attribute( "Ca", Sum( module, afferent_ ) );
-            SerializeDependency( xos, module, afferent_, filter );
-            xos     << xml::end
-                    << xml::start( "external-dependencies" )
-                        << xml::attribute( "Ce", Sum( module, external_ ) );
-            SerializeDependency( xos, module, external_, Filter() );
-            xos     << xml::end
-                << xml::end;
-        }
-    }
-    xos << xml::end
-        << xml::start( "metrics" );
+    xos << xml::start( "metrics" );
     BOOST_FOREACH( const std::string& module, modules_ )
         if( filter.Check( module ) )
             SerializeMetrics( xos, module, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ) );

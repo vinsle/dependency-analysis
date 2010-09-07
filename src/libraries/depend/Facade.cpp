@@ -16,6 +16,7 @@
 #include "ClassVisitor.h"
 #include "ClassMetric.h"
 #include "ModuleDependencyMetric.h"
+#include "EdgeSerializer.h"
 #include "MetricSerializer.h"
 #include "UnitSerializer.h"
 #include "StronglyConnectedComponents.h"
@@ -202,6 +203,7 @@ void Facade::Serialize( xml::xostream& xos )
     xos << xml::start( "report" );
     FilterExtender filter( *dependencyMetric_, *filter_ );
     unitSerializer_->Serialize( xos, filter );
+    EdgeSerializer( *dependencyMetric_ ).Serialize( xos, filter );
     MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter );
     StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, filter );
     xos << xml::end;

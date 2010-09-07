@@ -226,6 +226,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\EdgeSerializerTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\FileVisitorTest.cpp"
 				>
 			</File>
