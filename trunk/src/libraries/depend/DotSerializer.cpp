@@ -86,7 +86,7 @@ namespace
     void ReadDependency( xml::xistream& xis, const T_Components& components, std::ostream& os, const std::string& from )
     {
         std::string to;
-        xis >> xml::attribute( "name", to );
+        xis >> to;
         boost::function< T_Component::const_iterator( const T_Component&, const std::string& ) > find = boost::bind< T_Component::const_iterator >( &T_Component::find, _1, _2 );
         boost::function< T_Component::const_iterator( const T_Component& ) > end = boost::bind< T_Component::const_iterator >( &T_Component::end, _1 );
         boost::function< bool( const T_Component&, const std::string& ) > predicate = boost::bind( std::not_equal_to< T_Component::const_iterator >(), boost::bind( find, _1, _2 ), boost::bind( end, _1 ) );

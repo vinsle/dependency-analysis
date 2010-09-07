@@ -358,6 +358,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\EdgeSerializer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\EdgeSerializer.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\GraphSerializer.cpp"
 					>
 				</File>
