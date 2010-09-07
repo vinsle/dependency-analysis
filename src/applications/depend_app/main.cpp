@@ -13,7 +13,6 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <iostream>
-#include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
 
 #define STRINGIFY(x) #x
