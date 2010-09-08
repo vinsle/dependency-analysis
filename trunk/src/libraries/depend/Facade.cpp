@@ -19,6 +19,7 @@
 #include "EdgeSerializer.h"
 #include "MetricSerializer.h"
 #include "UnitSerializer.h"
+#include "ExternalSerializer.h"
 #include "StronglyConnectedComponents.h"
 #include "DotSerializer.h"
 #include "GraphSerializer.h"
@@ -27,6 +28,7 @@
 #include <boost/assign.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <boost/lexical_cast.hpp>
 #include <set>
 
 using namespace depend;
@@ -42,9 +44,10 @@ namespace
 // Name: Facade constructor
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
-Facade::Facade( const T_Filter& filter, const std::string& layout, const std::string& format,
+Facade::Facade( const T_Filter& filter, const std::string& layout, const std::string& format, const std::string& option,
                 const T_Options& graph, const T_Options& node, const T_Options& edge )
-    : filter_                ( new Filter( filter ) )
+    : option_                ( option )
+    , filter_                ( new Filter( filter ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( extensions ) )
     , lineVisitor_           ( new LineVisitor() )
@@ -201,8 +204,10 @@ namespace
 void Facade::Serialize( xml::xostream& xos )
 {
     xos << xml::start( "report" );
-    FilterExtender filter( *dependencyMetric_, *filter_ );
+    FilterExtender extender( *dependencyMetric_, *filter_ );
+    Filter_ABC& filter = boost::lexical_cast< DotOption >( option_ ) == External ? *filter_ : extender;
     unitSerializer_->Serialize( xos, filter );
+    ExternalSerializer( *dependencyMetric_, filter ).Serialize( xos );
     EdgeSerializer( *dependencyMetric_ ).Serialize( xos, filter );
     MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter );
     StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, filter );
@@ -217,7 +222,7 @@ void Facade::Serialize( std::ostream& os )
 {
     xml::xobufferstream xos;
     Serialize( xos );
-    DotSerializer().Serialize( xos, os );
+    DotSerializer().Serialize( xos, os, boost::lexical_cast< DotOption >( option_ ) );
 }
 
 // -----------------------------------------------------------------------------

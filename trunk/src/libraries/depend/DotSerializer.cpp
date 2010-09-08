@@ -83,6 +83,12 @@ namespace
                                    << color << " 1.0 1.0\"];"
                                    << std::endl;
     }
+    void ReadExternal( xml::xistream& xis, std::ostream& os )
+    {
+        std::string external;
+        xis >> external;
+        os << "\"" << external << "\"" << "[label=\"\\N\",shape=rectangle,style=filled];" << std::endl;
+    }
     void ReadDependency( xml::xistream& xis, const T_Components& components, std::ostream& os, const std::string& from )
     {
         std::string to;
@@ -97,13 +103,18 @@ namespace
             os << "[color=\"" << static_cast< float >( componentFrom + 1 ) / static_cast< float >( components.size() ) << " 1.0 1.0\"]";
         os << ";" << std::endl;
     }
-    void ReadNode( xml::xistream& xis, const T_Components& components, std::ostream& os )
+    void ReadNode( xml::xistream& xis, const T_Components& components, std::ostream& os, DotOption option )
     {
         std::string from;
-        xis >> xml::attribute( "name", from )
-            >> xml::start( "efferent-dependencies" )
-                >> xml::list( "dependency", boost::bind( &ReadDependency, _1, boost::cref( components ), boost::ref( os ), boost::cref( from ) ) )
-            >> xml::end;
+        xis >> xml::attribute( "name", from );
+        if( option == Internal || option == Both )
+            xis >> xml::start( "efferent-dependencies" )
+                    >> xml::list( "dependency", boost::bind( &ReadDependency, _1, boost::cref( components ), boost::ref( os ), boost::cref( from ) ) )
+                >> xml::end;
+        if( option == External || option == Both )
+            xis >> xml::start( "external-dependencies" )
+                    >> xml::list( "dependency", boost::bind( &ReadDependency, _1, boost::cref( components ), boost::ref( os ), boost::cref( from ) ) )
+                >> xml::end;
     }
 }
 
@@ -111,7 +122,7 @@ namespace
 // Name: DotSerializer::Serialize
 // Created: SLI 2010-08-26
 // -----------------------------------------------------------------------------
-void DotSerializer::Serialize( xml::xistream& xis, std::ostream& os ) const
+void DotSerializer::Serialize( xml::xistream& xis, std::ostream& os, DotOption option ) const
 {
     T_Metrics metrics;
     T_Components components;
@@ -125,9 +136,13 @@ void DotSerializer::Serialize( xml::xistream& xis, std::ostream& os ) const
             >> xml::end
             >> xml::start( "units" )
                 >> xml::list( "unit", boost::bind( &ReadUnit, _1, boost::cref( metrics ), boost::ref( os ) ) )
-            >> xml::end
-            >> xml::start( "graph" )
-                >> xml::list( "node", boost::bind( &ReadNode, _1, boost::cref( components ), boost::ref( os ) ) )
+            >> xml::end;
+    if( option == External || option == Both )
+        xis >> xml::start( "externals" )
+                >> xml::list( "external", boost::bind( &ReadExternal, _1, boost::ref( os ) ) )
+            >> xml::end;
+    xis     >> xml::start( "graph" )
+                >> xml::list( "node", boost::bind( &ReadNode, _1, boost::cref( components ), boost::ref( os ), option ) )
             >> xml::end
         >> xml::end;
     os << "}" << std::endl;

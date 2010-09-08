@@ -66,11 +66,12 @@ namespace
             ( "all"                                                         , "render a graph centered on each node" );
         bpo::options_description graph( "Graph options (only for graph stage)" );
         graph.add_options()
-            ( "layout", bpo::value< std::string >()->default_value( "dot" ), "set layout algorithm (dot|neato)" )
-            ( "format", bpo::value< std::string >()->default_value( "png" ), "set graph format (png|jpg|svg|pdf)" )
-            ( "graph,g", bpo::value< std::vector< std::string > >()        , "set graph options (see http://www.graphviz.org/doc/info/attrs.html)" )
-            ( "node,n", bpo::value< std::vector< std::string > >()         , "set node options (see http://www.graphviz.org/doc/info/attrs.html)" )
-            ( "edge,e", bpo::value< std::vector< std::string > >()         , "set edge options (see http://www.graphviz.org/doc/info/attrs.html)" );
+            ( "layout", bpo::value< std::string >()->default_value( "dot" )           , "set layout algorithm (dot|neato)" )
+            ( "format", bpo::value< std::string >()->default_value( "png" )           , "set graph format (png|jpg|svg|pdf)" )
+            ( "graph,g", bpo::value< std::vector< std::string > >()                   , "set graph options (see http://www.graphviz.org/doc/info/attrs.html)" )
+            ( "node,n", bpo::value< std::vector< std::string > >()                    , "set node options (see http://www.graphviz.org/doc/info/attrs.html)" )
+            ( "edge,e", bpo::value< std::vector< std::string > >()                    , "set edge options (see http://www.graphviz.org/doc/info/attrs.html)" )
+            ( "dependencies", bpo::value< std::string >()->default_value( "internal" ), "set optional external dependencies drawing (internal|external|both)" );
         cmdline.add( options ).add( graph );
         bpo::positional_options_description p;
         p.add( "path", -1 );
@@ -105,7 +106,8 @@ int main( int argc, char* argv[] )
             return EXIT_SUCCESS;
         depend::Facade::T_Filter filter = vm.count( "filter" ) ? vm[ "filter" ].as< std::vector< std::string > >() : depend::Facade::T_Filter();
         depend::Facade facade( filter, vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
-                               ParseGraphOptions( vm, "graph" ), ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
+                               vm["dependencies"].as< std::string >(), ParseGraphOptions( vm, "graph" ),
+                               ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
         facade.Serialize( vm[ "stage" ].as< std::string >(), vm[ "output" ].as< std::string >(), vm.count( "all" ) > 0 );
