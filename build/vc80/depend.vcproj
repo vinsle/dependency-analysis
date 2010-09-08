@@ -217,6 +217,14 @@
 					RelativePath="..\..\src\libraries\depend\Subject.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\TransitiveReductionFilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\TransitiveReductionFilter.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="visitors"

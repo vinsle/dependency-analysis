@@ -24,6 +24,7 @@
 #include "DotSerializer.h"
 #include "GraphSerializer.h"
 #include "Filter.h"
+#include "TransitiveReductionFilter.h"
 #include <boost/foreach.hpp>
 #include <boost/assign.hpp>
 #include <boost/bind.hpp>
@@ -204,8 +205,7 @@ namespace
 void Facade::Serialize( xml::xostream& xos )
 {
     xos << xml::start( "report" );
-    FilterExtender extender( *dependencyMetric_, *filter_ );
-    Filter_ABC& filter = boost::lexical_cast< DotOption >( option_ ) == External ? *filter_ : extender;
+    TransitiveReductionFilter filter( *dependencyMetric_, *filter_ );
     unitSerializer_->Serialize( xos, filter );
     ExternalSerializer( *dependencyMetric_, filter ).Serialize( xos );
     EdgeSerializer( *dependencyMetric_ ).Serialize( xos, filter );
