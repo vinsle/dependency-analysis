@@ -10,6 +10,7 @@
 #define depend_DotSerializer_h
 
 #include <ostream>
+#include "DotOption.h"
 
 namespace xml
 {
@@ -35,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xistream& xis, std::ostream& os ) const;
+    void Serialize( xml::xistream& xis, std::ostream& os, DotOption option ) const;
     //@}
 };
 

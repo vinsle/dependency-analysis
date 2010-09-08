@@ -22,6 +22,9 @@ BOOST_AUTO_TEST_CASE( simple_dot_serialization )
         "    <unit>module3</unit>"
         "    <unit>module4</unit>"
         "  </units>"
+        "  <externals>"
+        "    <external>boost</external>"
+        "  </externals>"
         "  <graph>"
         "    <node name='module1'>"
         "      <efferent-dependencies>"
@@ -31,7 +34,9 @@ BOOST_AUTO_TEST_CASE( simple_dot_serialization )
         "        <dependency>module2</dependency>"
         "        <dependency>module3</dependency>"
         "      </afferent-dependencies>"
-        "      <external-dependencies/>"
+        "      <external-dependencies>"
+        "        <dependency>boost</dependency>"
+        "      </external-dependencies>"
         "    </node>"
         "    <node name='module2'>"
         "      <efferent-dependencies>"
@@ -101,7 +106,7 @@ BOOST_AUTO_TEST_CASE( simple_dot_serialization )
         "</report>" );
     DotSerializer serializer;
     std::ostringstream os;
-    serializer.Serialize( xis, os );
+    serializer.Serialize( xis, os, Internal );
     const std::string expected =
         "digraph G {\n"
         "\"module1\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
@@ -113,6 +118,150 @@ BOOST_AUTO_TEST_CASE( simple_dot_serialization )
         "\"module3\"->\"module1\";\n"
         "\"module3\"->\"module4\"[color=\"1 1.0 1.0\"];\n"
         "\"module4\"->\"module3\"[color=\"1 1.0 1.0\"];\n"
+        "}\n";
+    BOOST_CHECK_EQUAL( expected, os.str() );
+}
+
+BOOST_AUTO_TEST_CASE( external_dot_serialization )
+{
+    xml::xistringstream xis(
+        "<report>"
+        "  <units>"
+        "    <unit>module1</unit>"
+        "    <unit>module2</unit>"
+        "  </units>"
+        "  <externals>"
+        "    <external>boost</external>"
+        "    <external>qt</external>"
+        "  </externals>"
+        "  <graph>"
+        "    <node name='module1'>"
+        "      <efferent-dependencies>"
+        "        <dependency>module2</dependency>"
+        "      </efferent-dependencies>"
+        "      <afferent-dependencies>"
+        "        <dependency>module2</dependency>"
+        "      </afferent-dependencies>"
+        "      <external-dependencies>"
+        "        <dependency>boost</dependency>"
+        "        <dependency>qt</dependency>"
+        "      </external-dependencies>"
+        "    </node>"
+        "    <node name='module2'>"
+        "      <efferent-dependencies>"
+        "        <dependency>module1</dependency>"
+        "      </efferent-dependencies>"
+        "      <afferent-dependencies>"
+        "        <dependency>module1</dependency>"
+        "      </afferent-dependencies>"
+        "      <external-dependencies>"
+        "        <dependency>boost</dependency>"
+        "      </external-dependencies>"
+        "    </node>"
+        "  </graph>"
+        "  <metrics>"
+        "    <metric name='module1'>"
+        "      <number-of-classes>0</number-of-classes>"
+        "      <number-of-abstract-classes>0</number-of-abstract-classes>"
+        "      <abstractness>0</abstractness>"
+        "      <instability>0</instability>"
+        "      <distance>10</distance>"
+        "    </metric>"
+        "    <metric name='module2'>"
+        "      <number-of-classes>0</number-of-classes>"
+        "      <number-of-abstract-classes>0</number-of-abstract-classes>"
+        "      <abstractness>0</abstractness>"
+        "      <instability>0</instability>"
+        "      <distance>10</distance>"
+        "    </metric>"
+        "  </metrics>"
+        "  <strongly-connected-components/>"
+        "</report>" );
+    DotSerializer serializer;
+    std::ostringstream os;
+    serializer.Serialize( xis, os, External );
+    const std::string expected =
+        "digraph G {\n"
+        "\"module1\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
+        "\"module2\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
+        "\"boost\"[label=\"\\N\",shape=rectangle,style=filled];\n"
+        "\"qt\"[label=\"\\N\",shape=rectangle,style=filled];\n"
+        "\"module1\"->\"boost\";\n"
+        "\"module1\"->\"qt\";\n"
+        "\"module2\"->\"boost\";\n"
+        "}\n";
+    BOOST_CHECK_EQUAL( expected, os.str() );
+}
+
+BOOST_AUTO_TEST_CASE( both_dot_serialization )
+{
+    xml::xistringstream xis(
+        "<report>"
+        "  <units>"
+        "    <unit>module1</unit>"
+        "    <unit>module2</unit>"
+        "  </units>"
+        "  <externals>"
+        "    <external>boost</external>"
+        "    <external>qt</external>"
+        "  </externals>"
+        "  <graph>"
+        "    <node name='module1'>"
+        "      <efferent-dependencies>"
+        "        <dependency>module2</dependency>"
+        "      </efferent-dependencies>"
+        "      <afferent-dependencies>"
+        "        <dependency>module2</dependency>"
+        "      </afferent-dependencies>"
+        "      <external-dependencies>"
+        "        <dependency>boost</dependency>"
+        "        <dependency>qt</dependency>"
+        "      </external-dependencies>"
+        "    </node>"
+        "    <node name='module2'>"
+        "      <efferent-dependencies>"
+        "        <dependency>module1</dependency>"
+        "      </efferent-dependencies>"
+        "      <afferent-dependencies>"
+        "        <dependency>module1</dependency>"
+        "      </afferent-dependencies>"
+        "      <external-dependencies>"
+        "        <dependency>boost</dependency>"
+        "      </external-dependencies>"
+        "    </node>"
+        "  </graph>"
+        "  <metrics>"
+        "    <metric name='module1'>"
+        "      <number-of-classes>0</number-of-classes>"
+        "      <number-of-abstract-classes>0</number-of-abstract-classes>"
+        "      <abstractness>0</abstractness>"
+        "      <instability>0</instability>"
+        "      <distance>10</distance>"
+        "    </metric>"
+        "    <metric name='module2'>"
+        "      <number-of-classes>0</number-of-classes>"
+        "      <number-of-abstract-classes>0</number-of-abstract-classes>"
+        "      <abstractness>0</abstractness>"
+        "      <instability>0</instability>"
+        "      <distance>10</distance>"
+        "    </metric>"
+        "  </metrics>"
+        "  <strongly-connected-components/>"
+        "</report>" );
+    DotSerializer serializer;
+    std::ostringstream os;
+    serializer.Serialize( xis, os, Both );
+    const std::string expected =
+        "digraph G {\n"
+        "\"module1\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
+        "\"module2\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
+        "\"boost\"[label=\"\\N\",shape=rectangle,style=filled];\n"
+        "\"qt\"[label=\"\\N\",shape=rectangle,style=filled];\n"
+        "\"module1\"->\"module2\";\n"
+        "\"module1\"->\"boost\";\n"
+        "\"module1\"->\"qt\";\n"
+        "\"module2\"->\"module1\";\n"
+        "\"module2\"->\"boost\";\n"
         "}\n";
     BOOST_CHECK_EQUAL( expected, os.str() );
 }

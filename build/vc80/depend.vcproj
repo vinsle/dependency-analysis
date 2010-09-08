@@ -350,6 +350,10 @@
 				Name="serialization"
 				>
 				<File
+					RelativePath="..\..\src\libraries\depend\DotOption.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\DotSerializer.cpp"
 					>
 				</File>
@@ -363,6 +367,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\EdgeSerializer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ExternalSerializer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ExternalSerializer.h"
 					>
 				</File>
 				<File
