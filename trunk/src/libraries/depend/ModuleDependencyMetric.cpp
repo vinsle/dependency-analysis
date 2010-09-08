@@ -19,7 +19,7 @@ using namespace depend;
 // -----------------------------------------------------------------------------
 ModuleDependencyMetric::ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
                                     Subject< IncludeObserver_ABC >& includeObserver )
-    : Observer< UnitObserver_ABC > ( unitObserver )
+    : Observer< UnitObserver_ABC >   ( unitObserver )
     , Observer< FileObserver_ABC >   ( fileObserver )
     , Observer< IncludeObserver_ABC >( includeObserver )
 {
