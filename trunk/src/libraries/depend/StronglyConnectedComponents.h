@@ -56,7 +56,6 @@ private:
 private:
     //! @name Types
     //@{
-    typedef boost::property< boost::vertex_name_t, std::string > T_Property;
     typedef boost::adjacency_list<> T_AdjacencyGraph;
     typedef boost::labeled_graph< T_AdjacencyGraph, std::string > T_Graph;
     typedef std::map< T_Graph::vertex_descriptor, std::string > T_Labels;
