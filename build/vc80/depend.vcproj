@@ -206,6 +206,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\Finder.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\Finder.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\Finder_ABC.h"
 					>
 				</File>

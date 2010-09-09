@@ -6,35 +6,34 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_Finder_ABC_h
-#define depend_Finder_ABC_h
+#ifndef depend_Finder_h
+#define depend_Finder_h
 
-#include <boost/noncopyable.hpp>
-#include <string>
+#include "Finder_ABC.h"
 
 namespace depend
 {
 // =============================================================================
-/** @class  Finder_ABC
-    @brief  Finder definition
+/** @class  Finder
+    @brief  Finder
 */
 // Created: SLI 2010-09-09
 // =============================================================================
-class Finder_ABC : private boost::noncopyable
+class Finder : public Finder_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Finder_ABC() {}
-    virtual ~Finder_ABC() {}
+             Finder();
+    virtual ~Finder();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool Find( const std::string& filename ) const = 0;
+    virtual bool Find( const std::string& filename ) const;
     //@}
 };
 
 }
 
-#endif // depend_Finder_ABC_h
+#endif // depend_Finder_h
