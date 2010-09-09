@@ -45,15 +45,19 @@
   * Read DEPEND environment variable
  * ~~Resolve external includes~~
   * ~~Internal and external includes are not detected with double quotes or angle brackets anymore~~
-  * Print a warning if an include cannot be resolved (file name, line number), must be case sensitive
+  * ~~Print a warning if an include cannot be resolved (file name, line number), must be case sensitive~~
   * ~~Add a command line parameter to specify include directories~~
  * Add a command line parameter to make only cyclic dependencies detection between modules and print a warning (in this case no serialization)
  * Add the same features and graph for internal class dependencies in a module
   * Detect cycles in includes at class level
- * Add a command line parameter to disable warnings
+ * ~~Add a command line parameter to disable warnings~~
  * Add a command line parameter to mutate warnings into execution errors
- * Handle includes with multiple '/' or '\' (#include "test///module\\\include.h")
+
+== Issues ==
+
  * Add a unique identifier system to avoid dependency conflict between internal and external modules (ie: with the same name, #include "tools/tools.h" vs #include <tools/other-tools.h>
+ * Handle includes with multiple '/' or '\' (#include "test///module\\\include.h")
+ * Handle multiple sub directories include in same module (internal include resolution must take the file path)
 
 == Refactoring ==
  * All options are given in xml format to Facade and forwarded to all modules
