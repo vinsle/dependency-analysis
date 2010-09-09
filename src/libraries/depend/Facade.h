@@ -23,6 +23,8 @@ namespace xml
 namespace depend
 {
     class Filter_ABC;
+    class Finder_ABC;
+    class ModuleResolver_ABC;
     class ModuleVisitor;
     class FileVisitor;
     class LineVisitor;
@@ -78,6 +80,9 @@ private:
     //@{
     const std::string option_;
     std::auto_ptr< Filter_ABC > filter_;
+    std::auto_ptr< Finder_ABC > finder_;
+    std::auto_ptr< ModuleResolver_ABC > resolver_;
+    std::auto_ptr< ModuleResolver_ABC > proxy_;
     std::auto_ptr< ModuleVisitor > moduleVisitor_;
     std::auto_ptr< FileVisitor > fileVisitor_;
     std::auto_ptr< LineVisitor > lineVisitor_;

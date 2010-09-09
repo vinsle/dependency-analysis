@@ -24,6 +24,9 @@
 #include "DotSerializer.h"
 #include "GraphSerializer.h"
 #include "Filter.h"
+#include "Finder.h"
+#include "ModuleResolver.h"
+#include "ProxyModuleResolver.h"
 #include "TransitiveReductionFilter.h"
 #include <boost/foreach.hpp>
 #include <boost/assign.hpp>
@@ -49,6 +52,9 @@ Facade::Facade( const T_Filter& filter, const std::string& layout, const std::st
                 const T_Options& graph, const T_Options& node, const T_Options& edge )
     : option_                ( option )
     , filter_                ( new Filter( filter ) )
+    , finder_                ( new Finder() )
+    , resolver_              ( new ModuleResolver( ModuleResolver::T_Directories(), *finder_ ) )
+    , proxy_                 ( new ProxyModuleResolver( *resolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( extensions ) )
     , lineVisitor_           ( new LineVisitor() )
@@ -56,7 +62,7 @@ Facade::Facade( const T_Filter& filter, const std::string& layout, const std::st
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
-    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_ ) )
+    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_ ) )
     , unitSerializer_        ( new UnitSerializer( *moduleVisitor_ ) )
     , graphSerializer_       ( new GraphSerializer( layout, format, graph, node, edge ) )
 {

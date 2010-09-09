@@ -9,7 +9,10 @@
 #include "depend_pch.h"
 #include "ModuleDependencyMetric.h"
 #include "DependencyMetricVisitor_ABC.h"
+#include "ModuleResolver_ABC.h"
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 using namespace depend;
 
@@ -18,10 +21,11 @@ using namespace depend;
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
 ModuleDependencyMetric::ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                                                Subject< IncludeObserver_ABC >& includeObserver )
+                                                Subject< IncludeObserver_ABC >& includeObserver, const ModuleResolver_ABC& resolver )
     : Observer< UnitObserver_ABC >   ( unitObserver )
     , Observer< FileObserver_ABC >   ( fileObserver )
     , Observer< IncludeObserver_ABC >( includeObserver )
+    , resolver_( resolver )
 {
     // NOTHING
 }
@@ -35,6 +39,20 @@ ModuleDependencyMetric::~ModuleDependencyMetric()
     // NOTHING
 }
 
+namespace
+{
+    template< typename T>
+    bool Notify( boost::function< T > notify, const std::string& currentUnit, const std::string& unit )
+    {
+        if( !unit.empty() && unit != currentUnit )
+        {
+            notify( currentUnit, unit );
+            return true;
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModuleDependencyMetric::Apply
 // Created: SLI 2010-08-19
@@ -45,16 +63,28 @@ void ModuleDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
     {
         std::vector< std::string > cleaned;
         std::set_difference( metric.internal_.begin(), metric.internal_.end(), metric.files_.begin(), metric.files_.end(), std::back_insert_iterator< std::vector< std::string > >( cleaned ) );
+        boost::function< void( const std::string&, const std::string& ) > NotifyInternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyInternalDependency, &visitor, _1, _2 );
+        boost::function< void( const std::string&, const std::string& ) > NotifyExternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyExternalDependency, &visitor, _1, _2 );
         BOOST_FOREACH( const std::string& include, cleaned )
-        {
-            const size_t position = include.find_first_of( '/' );
-            const std::string unit = include.substr( 0, position );
-            if( position != std::string::npos && unit != metric.unit_ && units_.find( unit ) != units_.end() )  // $$$$ _RC_ SLI 2010-08-20: warn user if one of these case occurs
-                visitor.NotifyInternalDependency( metric.unit_, unit );
-        }
+            if( !Notify( NotifyInternal, metric.unit_, Resolve( include ) ) )
+                Notify( NotifyExternal, metric.unit_, resolver_.Resolve( include ) );
         BOOST_FOREACH( const std::string& include, metric.external_ )
-            visitor.NotifyExternalDependency( metric.unit_, include.substr( 0, include.find_first_of( '/' ) ) );
+            if( !Notify( NotifyExternal, metric.unit_, resolver_.Resolve( include ) ) )
+                Notify( NotifyInternal, metric.unit_, Resolve( include ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleDependencyMetric::Resolve
+// Created: SLI 2010-09-09
+// -----------------------------------------------------------------------------
+std::string ModuleDependencyMetric::Resolve( const std::string& include ) const
+{
+    const size_t position = include.find_first_of( '/' );
+    const std::string unit = include.substr( 0, position );
+    if( position == std::string::npos || units_.find( unit ) == units_.end() )
+        return "";
+    return unit;
 }
 
 // -----------------------------------------------------------------------------
