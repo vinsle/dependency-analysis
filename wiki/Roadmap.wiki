@@ -52,6 +52,7 @@
   * Detect cycles in includes at class level
  * Add a command line parameter to disable warnings
  * Add a command line parameter to mutate warnings into execution errors
+ * Handle includes with multiple '/' or '\' (#include "test///module\\\include.h")
 
 == Refactoring ==
  * All options are given in xml format to Facade and forwarded to all modules
