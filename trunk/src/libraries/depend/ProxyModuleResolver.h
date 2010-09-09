@@ -33,12 +33,15 @@ public:
     //! @name Operations
     //@{
     virtual std::string Resolve( const std::string& include ) const;
+    virtual bool IsExcluded( const std::string& include ) const;
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, std::string > T_Results;
+    typedef std::map< std::string, bool > T_Excludes;
+    typedef T_Excludes::const_iterator  CIT_Excludes;
     //@}
 
 private:
@@ -46,6 +49,7 @@ private:
     //@{
     ModuleResolver_ABC& resolver_;
     std::auto_ptr< T_Results > results_;
+    std::auto_ptr< T_Excludes > excludes_;
     //@}
 };
 

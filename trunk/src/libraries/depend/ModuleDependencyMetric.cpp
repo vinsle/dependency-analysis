@@ -10,6 +10,7 @@
 #include "ModuleDependencyMetric.h"
 #include "DependencyMetricVisitor_ABC.h"
 #include "ModuleResolver_ABC.h"
+#include "Log_ABC.h"
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -21,11 +22,13 @@ using namespace depend;
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
 ModuleDependencyMetric::ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                                                Subject< IncludeObserver_ABC >& includeObserver, const ModuleResolver_ABC& resolver )
+                                                Subject< IncludeObserver_ABC >& includeObserver, const ModuleResolver_ABC& resolver,
+                                                const Log_ABC& log )
     : Observer< UnitObserver_ABC >   ( unitObserver )
     , Observer< FileObserver_ABC >   ( fileObserver )
     , Observer< IncludeObserver_ABC >( includeObserver )
     , resolver_( resolver )
+    , log_     ( log )
 {
     // NOTHING
 }
@@ -67,10 +70,14 @@ void ModuleDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
         boost::function< void( const std::string&, const std::string& ) > NotifyExternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyExternalDependency, &visitor, _1, _2 );
         BOOST_FOREACH( const std::string& include, cleaned )
             if( !Notify( NotifyInternal, metric.unit_, Resolve( include ) ) )
-                Notify( NotifyExternal, metric.unit_, resolver_.Resolve( include ) );
+                if( !Notify( NotifyExternal, metric.unit_, resolver_.Resolve( include ) ) )
+                    if( !resolver_.IsExcluded( include ) )
+                        log_.Warn( "Warning: include \"" + include + "\" in unit '" + metric.unit_ + "' cannot be resolved" );
         BOOST_FOREACH( const std::string& include, metric.external_ )
             if( !Notify( NotifyExternal, metric.unit_, resolver_.Resolve( include ) ) )
-                Notify( NotifyInternal, metric.unit_, Resolve( include ) );
+                if( !Notify( NotifyInternal, metric.unit_, Resolve( include ) ) )
+                    if( !resolver_.IsExcluded( include ) )
+                        log_.Warn( "Warning: include <" + include + "> in unit '" + metric.unit_ + "' cannot be resolved" );
     }
 }
 

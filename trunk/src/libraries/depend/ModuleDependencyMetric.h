@@ -20,6 +20,7 @@ namespace depend
 {
     class DependencyMetricVisitor_ABC;
     class ModuleResolver_ABC;
+    class Log_ABC;
 
 // =============================================================================
 /** @class  ModuleDependencyMetric
@@ -36,7 +37,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                                     Subject< IncludeObserver_ABC >& includeObserver_, const ModuleResolver_ABC& resolver );
+                                     Subject< IncludeObserver_ABC >& includeObserver_, const ModuleResolver_ABC& resolver,
+                                     const Log_ABC& log );
     virtual ~ModuleDependencyMetric();
     //@}
 
@@ -77,6 +79,7 @@ private:
     //! @name Member data
     //@{
     const ModuleResolver_ABC& resolver_;
+    const Log_ABC& log_;
     T_Metrics metrics_;
     T_Dependencies units_;
     //@}

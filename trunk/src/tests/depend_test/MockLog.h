@@ -6,25 +6,24 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_test_MockModuleResolver_h
-#define depend_test_MockModuleResolver_h
+#ifndef depend_test_MockLog_h
+#define depend_test_MockLog_h
 
-#include "depend/ModuleResolver_ABC.h"
+#include "depend/Log_ABC.h"
 
 namespace depend
 {
 // =============================================================================
-/** @class  MockModuleResolver
-    @brief  Mock filter
+/** @class  MockLog
+    @brief  Mock log
 */
-// Created: SLI 2010-09-09
+// Created: SLI 2010-08-30
 // =============================================================================
-MOCK_BASE_CLASS( MockModuleResolver, ModuleResolver_ABC )
+MOCK_BASE_CLASS( MockLog, Log_ABC )
 {
-    MOCK_METHOD( Resolve, 1 )
-    MOCK_METHOD( IsExcluded, 1 )
+    MOCK_METHOD( Warn, 1 )
 };
 
 }
 
-#endif // depend_test_MockModuleResolver_h
+#endif // depend_test_MockLog_h

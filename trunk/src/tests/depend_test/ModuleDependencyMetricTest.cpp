@@ -11,6 +11,7 @@
 #include "MockSubject.h"
 #include "MockDependencyMetricVisitor.h"
 #include "MockModuleResolver.h"
+#include "MockLog.h"
 #include <boost/assign.hpp>
 
 using namespace depend;
@@ -43,12 +44,13 @@ namespace
     {
     public:
         MetricFixture()
-            : metric( mockUnitObserver, mockFileVisitor, mockIncludeVisitor, resolver )
+            : metric( mockUnitObserver, mockFileVisitor, mockIncludeVisitor, resolver, log )
         {
             BOOST_REQUIRE( unitObserver );
             BOOST_REQUIRE( fileObserver );
             BOOST_REQUIRE( includeObserver );
         }
+        MockLog log;
         MockModuleResolver resolver;
         ModuleDependencyMetric metric;
     };
@@ -84,6 +86,8 @@ BOOST_FIXTURE_TEST_CASE( internal_include_begining_with_module_itself_does_not_c
     includeObserver->NotifyInternalInclude( "module/internal" );
     MockDependencyMetricVisitor visitor;
     MOCK_EXPECT( resolver, Resolve ).once().with( "module/internal" ).returns( "" );
+    MOCK_EXPECT( resolver, IsExcluded ).once().with( "module/internal" ).returns( false );
+    MOCK_EXPECT( log, Warn ).once();
     metric.Apply( visitor );
 }
 

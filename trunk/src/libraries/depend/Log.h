@@ -6,36 +6,49 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ModuleResolver_ABC_h
-#define depend_ModuleResolver_ABC_h
+#ifndef depend_Log_h
+#define depend_Log_h
 
-#include <boost/noncopyable.hpp>
-#include <string>
+#include "Log_ABC.h"
+#include <set>
+#include <memory>
 
 namespace depend
 {
 // =============================================================================
-/** @class  ModuleResolver_ABC
-    @brief  Module resolver definition
+/** @class  Log
+    @brief  Log
 */
 // Created: SLI 2010-09-09
 // =============================================================================
-class ModuleResolver_ABC : private boost::noncopyable
+class Log : public Log_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleResolver_ABC() {}
-    virtual ~ModuleResolver_ABC() {}
+    explicit Log( bool enabled );
+    virtual ~Log();
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string Resolve( const std::string& include ) const = 0;
-    virtual bool IsExcluded( const std::string& include ) const = 0;
+    virtual void Warn( const std::string& message ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::set< std::string > T_Messages;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const bool enabled_;
+    std::auto_ptr< T_Messages > messages_;
     //@}
 };
 
 }
 
-#endif // depend_ModuleResolver_ABC_h
+#endif // depend_Log_h 

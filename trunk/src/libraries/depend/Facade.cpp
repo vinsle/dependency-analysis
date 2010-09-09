@@ -24,6 +24,7 @@
 #include "DotSerializer.h"
 #include "GraphSerializer.h"
 #include "Filter.h"
+#include "Log.h"
 #include "Finder.h"
 #include "ModuleResolver.h"
 #include "ProxyModuleResolver.h"
@@ -48,13 +49,14 @@ namespace
 // Name: Facade constructor
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
-Facade::Facade( const T_Filter& filter, const T_Directories& directories, const std::string& layout,
-                const std::string& format, const std::string& option,
+Facade::Facade( const T_Filter& filter, const T_Directories& directories, const T_Directories& excludes,
+                const std::string& layout, const std::string& format, const std::string& option, bool warning,
                 const T_Options& graph, const T_Options& node, const T_Options& edge )
     : option_                ( option )
+    , log_                   ( new Log( warning ) )
     , filter_                ( new Filter( filter ) )
     , finder_                ( new Finder() )
-    , resolver_              ( new ModuleResolver( directories, *finder_ ) )
+    , resolver_              ( new ModuleResolver( directories, excludes, *finder_ ) )
     , proxy_                 ( new ProxyModuleResolver( *resolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( extensions ) )
@@ -63,7 +65,7 @@ Facade::Facade( const T_Filter& filter, const T_Directories& directories, const 
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
-    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_ ) )
+    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *log_ ) )
     , unitSerializer_        ( new UnitSerializer( *moduleVisitor_ ) )
     , graphSerializer_       ( new GraphSerializer( layout, format, graph, node, edge ) )
 {

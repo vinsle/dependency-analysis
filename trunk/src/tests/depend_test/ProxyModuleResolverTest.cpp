@@ -30,3 +30,14 @@ BOOST_AUTO_TEST_CASE( other_calls_are_proxified )
     BOOST_CHECK_EQUAL( "module", resolver.Resolve( "include" ) );
     BOOST_CHECK_EQUAL( "module", resolver.Resolve( "include" ) );
 }
+
+BOOST_AUTO_TEST_CASE( excludes_are_proxified )
+{
+    MockModuleResolver mockResolver;
+    ProxyModuleResolver resolver( mockResolver );
+    MOCK_EXPECT( mockResolver, IsExcluded ).once().with( "include" ).returns( true );
+    BOOST_CHECK( resolver.IsExcluded( "include" ) );
+    mock::verify();
+    BOOST_CHECK( resolver.IsExcluded( "include" ) );
+    BOOST_CHECK( resolver.IsExcluded( "include" ) );
+}

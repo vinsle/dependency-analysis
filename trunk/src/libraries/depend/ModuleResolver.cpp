@@ -45,8 +45,9 @@ namespace
 // Name: ModuleResolver constructor
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-ModuleResolver::ModuleResolver( const T_Directories& directories, const Finder_ABC& finder )
+ModuleResolver::ModuleResolver( const T_Directories& directories, const T_Directories& excludes, const Finder_ABC& finder )
     : directories_( Parse< T_Directories, T_NamedDirectories >( directories ) )
+    , excludes_   ( excludes )
     , finder_     ( finder )
 {
     // NOTHING
@@ -79,4 +80,16 @@ std::string ModuleResolver::Resolve( const std::string& include ) const
             return pos == std::string::npos ? directory.first : directory.first.substr( pos + 1, std::string::npos );
         }
     return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleResolver::IsExcluded
+// Created: SLI 2010-09-09
+// -----------------------------------------------------------------------------
+bool ModuleResolver::IsExcluded( const std::string& include ) const
+{
+    BOOST_FOREACH( const std::string& exclude, excludes_ )
+        if( finder_.Find( exclude + "/" + include ) )
+            return true;
+    return false;
 }
