@@ -222,7 +222,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\ModuleResolver_ABC.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\Observer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ProxyModuleResolver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ProxyModuleResolver.h"
 					>
 				</File>
 				<File
