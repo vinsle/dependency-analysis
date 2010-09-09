@@ -42,6 +42,7 @@
  * Use a configuration file (--configuration=...)
   * See [http://www.boost.org/doc/libs/1_44_0/doc/html/program_options/overview.html#id2084587 Program options storage]
   * Add a --save-configuration=... to save current configuration file
+  * Read DEPEND environment variable
  * Resolve external includes
   * Internal and external includes are not detected with double quotes or angle brackets anymore
   * Print a warning if an include cannot be resolved (file name, line number), must be case sensitive
