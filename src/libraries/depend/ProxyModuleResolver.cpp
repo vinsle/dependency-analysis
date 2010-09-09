@@ -18,6 +18,7 @@ using namespace depend;
 ProxyModuleResolver::ProxyModuleResolver( ModuleResolver_ABC& resolver )
     : resolver_( resolver )
     , results_ ( new T_Results() )
+    , excludes_( new T_Excludes() )
 {
     // NOTHING
 }
@@ -41,4 +42,16 @@ std::string ProxyModuleResolver::Resolve( const std::string& include ) const
     if( result.empty() )
         result = resolver_.Resolve( include );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProxyModuleResolver::IsExcluded
+// Created: SLI 2010-09-09
+// -----------------------------------------------------------------------------
+bool ProxyModuleResolver::IsExcluded( const std::string& include ) const
+{
+    CIT_Excludes it = excludes_->find( include );
+    if( it == excludes_->end() )
+        (*excludes_)[ include ] = resolver_.IsExcluded( include );
+    return (*excludes_)[ include ];
 }

@@ -25,6 +25,7 @@ namespace depend
     class Filter_ABC;
     class Finder_ABC;
     class ModuleResolver_ABC;
+    class Log_ABC;
     class ModuleVisitor;
     class FileVisitor;
     class LineVisitor;
@@ -55,8 +56,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Facade( const T_Filter& filter, const T_Directories& directories, const std::string& layout,
-                     const std::string& format, const std::string& option,
+             Facade( const T_Filter& filter, const T_Directories& directories, const T_Directories& excludes,
+                     const std::string& layout, const std::string& format, const std::string& option, bool warning,
                      const T_Options& graph, const T_Options& node, const T_Options& edge );
     virtual ~Facade();
     //@}
@@ -81,6 +82,7 @@ private:
     //! @name Member data
     //@{
     const std::string option_;
+    std::auto_ptr< Log_ABC > log_;
     std::auto_ptr< Filter_ABC > filter_;
     std::auto_ptr< Finder_ABC > finder_;
     std::auto_ptr< ModuleResolver_ABC > resolver_;

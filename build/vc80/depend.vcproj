@@ -222,6 +222,18 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\Log.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\Log.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\Log_ABC.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\ModuleResolver.cpp"
 					>
 				</File>

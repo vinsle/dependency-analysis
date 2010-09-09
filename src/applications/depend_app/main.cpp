@@ -63,6 +63,8 @@ namespace
             ( "output", bpo::value< std::string >()->default_value( "" )    , "set output file" )
             ( "filter", bpo::value< std::vector< std::string > >()          , "select only modules in filter and their afferent and efferent modules" )
             ( "include,I", bpo::value< std::vector< std::string > >()       , "add an include directory path for external dependency (dependency name can be forced with following syntax: --include=\"directory,name\")" )
+            ( "exclude,E", bpo::value< std::vector< std::string > >()       , "add an include directory path excluded from the dependencies and warnings" )
+            ( "warning"                                                     , "enable warnings" )
             ( "stage", bpo::value< std::string >()->default_value( "graph" ), "set analysis stage for output (xml => dot => graph)" )
             ( "all"                                                         , "render a graph centered on each node" );
         bpo::options_description graph( "Graph options (only for graph stage)" );
@@ -107,8 +109,9 @@ int main( int argc, char* argv[] )
             return EXIT_SUCCESS;
         depend::Facade::T_Filter filter = vm.count( "filter" ) ? vm[ "filter" ].as< std::vector< std::string > >() : depend::Facade::T_Filter();
         depend::Facade::T_Directories directories = vm.count( "include" ) ? vm[ "include" ].as< std::vector< std::string > >() : depend::Facade::T_Directories();
-        depend::Facade facade( filter, directories, vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
-                               vm["dependencies"].as< std::string >(), ParseGraphOptions( vm, "graph" ),
+        depend::Facade::T_Directories excludes = vm.count( "exclude" ) ? vm[ "exclude" ].as< std::vector< std::string > >() : depend::Facade::T_Directories();
+        depend::Facade facade( filter, directories, excludes, vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
+                               vm["dependencies"].as< std::string >(), vm.count( "warning" ) > 0, ParseGraphOptions( vm, "graph" ),
                                ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );

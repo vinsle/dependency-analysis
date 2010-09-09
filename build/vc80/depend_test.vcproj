@@ -341,6 +341,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\tests\depend_test\MockLog.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\tests\depend_test\MockModuleResolver.h"
 					>
 				</File>

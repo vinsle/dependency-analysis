@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ModuleResolver_ABC_h
-#define depend_ModuleResolver_ABC_h
+#ifndef depend_Log_ABC_h
+#define depend_Log_ABC_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -15,27 +15,26 @@
 namespace depend
 {
 // =============================================================================
-/** @class  ModuleResolver_ABC
-    @brief  Module resolver definition
+/** @class  Log_ABC
+    @brief  Log definition
 */
 // Created: SLI 2010-09-09
 // =============================================================================
-class ModuleResolver_ABC : private boost::noncopyable
+class Log_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleResolver_ABC() {}
-    virtual ~ModuleResolver_ABC() {}
+             Log_ABC() {}
+    virtual ~Log_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string Resolve( const std::string& include ) const = 0;
-    virtual bool IsExcluded( const std::string& include ) const = 0;
+    virtual void Warn( const std::string& message ) const = 0;
     //@}
 };
 
 }
 
-#endif // depend_ModuleResolver_ABC_h
+#endif // depend_Log_ABC_h

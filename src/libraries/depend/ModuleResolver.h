@@ -34,13 +34,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleResolver( const T_Directories& roots, const Finder_ABC& finder );
+             ModuleResolver( const T_Directories& directories, const T_Directories& excludes, const Finder_ABC& finder );
     virtual ~ModuleResolver();
     //@}
 
     //! @name Operations
     //@{
     virtual std::string Resolve( const std::string& include ) const;
+    virtual bool IsExcluded( const std::string& include ) const;
     //@}
 
 private:
@@ -54,6 +55,7 @@ private:
     //! @name Member data
     //@{
     const T_NamedDirectories directories_;
+    const T_Directories excludes_;
     const Finder_ABC& finder_;
     //@}
 };
