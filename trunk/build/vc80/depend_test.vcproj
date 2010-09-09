@@ -266,6 +266,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\ProxyModuleResolverTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\StreamGuardTest.cpp"
 				>
 			</File>
@@ -330,6 +334,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockLineObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockModuleResolver.h"
 					>
 				</File>
 				<File

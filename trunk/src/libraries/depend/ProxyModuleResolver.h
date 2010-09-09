@@ -6,36 +6,28 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ModuleResolver_h
-#define depend_ModuleResolver_h
+#ifndef depend_ProxyModuleResolver_h
+#define depend_ProxyModuleResolver_h
 
 #include "ModuleResolver_ABC.h"
-#include <vector>
-#include <string>
+#include <map>
+#include <memory>
 
 namespace depend
 {
-    class Finder_ABC;
-
 // =============================================================================
-/** @class  ModuleResolver
-    @brief  Module resolver
+/** @class  ProxyModuleResolver
+    @brief  ProxyModuleResolver
 */
 // Created: SLI 2010-09-09
 // =============================================================================
-class ModuleResolver : public ModuleResolver_ABC
+class ProxyModuleResolver : public ModuleResolver_ABC
 {
-public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Directories;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleResolver( const T_Directories& roots, const Finder_ABC& finder );
-    virtual ~ModuleResolver();
+    explicit ProxyModuleResolver( ModuleResolver_ABC& resolver );
+    virtual ~ProxyModuleResolver();
     //@}
 
     //! @name Operations
@@ -46,18 +38,17 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::pair< std::string, std::string > T_NamedDirectory;
-    typedef std::vector< T_NamedDirectory > T_NamedDirectories;
+    typedef std::map< std::string, std::string > T_Results;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const T_NamedDirectories directories_;
-    const Finder_ABC& finder_;
+    ModuleResolver_ABC& resolver_;
+    std::auto_ptr< T_Results > results_;
     //@}
 };
 
 }
 
-#endif // depend_ModuleResolver_h
+#endif // depend_ProxyModuleResolver_h
