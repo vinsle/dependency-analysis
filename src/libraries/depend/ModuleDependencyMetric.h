@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                               Subject< IncludeObserver_ABC >& includeObserver_ );
+                                     Subject< IncludeObserver_ABC >& includeObserver_ );
     virtual ~ModuleDependencyMetric();
     //@}
 
