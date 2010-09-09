@@ -48,12 +48,13 @@ namespace
 // Name: Facade constructor
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
-Facade::Facade( const T_Filter& filter, const std::string& layout, const std::string& format, const std::string& option,
+Facade::Facade( const T_Filter& filter, const T_Directories& directories, const std::string& layout,
+                const std::string& format, const std::string& option,
                 const T_Options& graph, const T_Options& node, const T_Options& edge )
     : option_                ( option )
     , filter_                ( new Filter( filter ) )
     , finder_                ( new Finder() )
-    , resolver_              ( new ModuleResolver( ModuleResolver::T_Directories(), *finder_ ) )
+    , resolver_              ( new ModuleResolver( directories, *finder_ ) )
     , proxy_                 ( new ProxyModuleResolver( *resolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( extensions ) )
