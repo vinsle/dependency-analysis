@@ -12,6 +12,7 @@
   * ~~Add an ant target for packaging (zip)~~
   * Compile with static versions of Xerces
  * ~~Delete xerces dll versionning~~
+ * Rename depend_app.exe into depend.exe
  * ~~Add the project on build server~~
   * Build on cygwin, ~~vc80~~ and linux platforms
   * Add binaries on download page
