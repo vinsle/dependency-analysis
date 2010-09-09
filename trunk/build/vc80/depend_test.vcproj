@@ -184,10 +184,6 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\tests\depend_test\ClassDependencyMetricTest.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\tests\depend_test\ClassMetricTest.cpp"
 				>
 			</File>
@@ -262,6 +258,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\ModuleResolverTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\ModuleVisitorTest.cpp"
 				>
 			</File>
@@ -289,6 +289,10 @@
 				Name="mock"
 				>
 				<File
+					RelativePath="..\..\src\tests\depend_test\ClassDependencyMetricTest.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\tests\depend_test\MockClassMetric.h"
 					>
 				</File>
@@ -314,6 +318,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockFilter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockFinder.h"
 					>
 				</File>
 				<File

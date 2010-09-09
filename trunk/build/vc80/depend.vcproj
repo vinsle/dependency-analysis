@@ -206,7 +206,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\Finder_ABC.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\istream_guard.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleResolver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleResolver.h"
 					>
 				</File>
 				<File
