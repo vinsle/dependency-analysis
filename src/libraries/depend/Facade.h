@@ -48,13 +48,15 @@ public:
     //! @name Types
     //@{
     typedef std::vector< std::string > T_Filter;
+    typedef std::vector< std::string > T_Directories;
     typedef std::map< std::string, std::string > T_Options;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Facade( const T_Filter& filter, const std::string& layout, const std::string& format, const std::string& option,
+             Facade( const T_Filter& filter, const T_Directories& directories, const std::string& layout,
+                     const std::string& format, const std::string& option,
                      const T_Options& graph, const T_Options& node, const T_Options& edge );
     virtual ~Facade();
     //@}
