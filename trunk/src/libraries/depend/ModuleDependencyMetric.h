@@ -19,6 +19,7 @@
 namespace depend
 {
     class DependencyMetricVisitor_ABC;
+    class ModuleResolver_ABC;
 
 // =============================================================================
 /** @class  ModuleDependencyMetric
@@ -35,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                                     Subject< IncludeObserver_ABC >& includeObserver_ );
+                                     Subject< IncludeObserver_ABC >& includeObserver_, const ModuleResolver_ABC& resolver );
     virtual ~ModuleDependencyMetric();
     //@}
 
@@ -51,6 +52,11 @@ private:
     virtual void NotifyFile( const std::string& path, std::istream& stream );
     virtual void NotifyInternalInclude( const std::string& file );
     virtual void NotifyExternalInclude( const std::string& file );
+    //@}
+
+    //! @name Helpers
+    //@{
+    std::string Resolve( const std::string& include ) const;
     //@}
 
 private:
@@ -70,6 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const ModuleResolver_ABC& resolver_;
     T_Metrics metrics_;
     T_Dependencies units_;
     //@}
