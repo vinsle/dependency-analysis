@@ -9,7 +9,7 @@
   * ~~Add self dependency-analysis metrics on post build~~
   * ~~Add [http://www.stack.nl/~dimitri/doxygen/ doxygen] documentation generation on post build~~
   * ~~Add an ant target for packaging (zip)~~
-  * Compile with static versions of Xalan and Xerces
+  * Compile with static versions of Xerces
  * ~~Automate graph generation~~
   * ~~Add a command line parameter to generate a sub graph with a set of modules and their afferent and efferents modules~~
   * ~~Embed stylesheets to transform xml output into [http://www.graphviz.org/doc/info/lang.html Dot language] and apply them with [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Patterns#XSL XeuSeuLeu]~~
@@ -28,19 +28,16 @@
   * How to compile (vc80, ant)
   * Dependencies
   * Fill doxygen fields
- * User can specify multiple outputs (xml and png)
  * Add licence files and readme.txt
- * Add a verbose command line parameter 
  * Clean graphviz warnings ("GLib-WARNING **: Passing a non-NULL package to g_win32_get_package_installation_directory() is deprecated and it is ignored.")
-
-= Next version (V2) =
-
+# Features
+ * Add a verbose command line parameter
+ * User can specify multiple outputs (xml and png)
  * Resolve external includes
   * Internal and external includes are not detected with double quotes or angle brackets anymore
   * Print a warning if an include cannot be resolved (file name, line number), must be case sensitive
   * Add a command line parameter to specify system include directories (which are ignored for external dependencies)
   * Add a command line parameter to specify external include directories (resolved in order of submission)
- * Add a means to remove the weight label on graph edges
  * Add a command line parameter to make only cyclic dependencies detection between modules and print a warning (in this case no serialization)
  * Add the same features and graph for internal class dependencies in a module
   * Detect cycles in includes at class level
