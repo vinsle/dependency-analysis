@@ -14,6 +14,7 @@
 #pragma warning( pop )
 #include <iostream>
 #include <boost/foreach.hpp>
+#include <xeumeuleu/xml.hpp>
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
@@ -85,19 +86,74 @@ namespace
         CheckOptions( vm, cmdline );
         return vm;
     }
-    depend::Facade::T_Options ParseGraphOptions( const bpo::variables_map& options, const std::string& option )
+    void SerializeGraphOptions( xml::xostream& xos, const bpo::variables_map& vm, const std::string& option )
     {
-        depend::Facade::T_Options result;
-        if( options.count( option ) )
-            BOOST_FOREACH( const std::string& option, options[ option ].as< std::vector< std::string > >() )
+        xos << xml::start( option );
+        if( vm.count( option ) )
+            BOOST_FOREACH( const std::string& option, vm[ option ].as< std::vector< std::string > >() )
             {
                 std::vector< std::string > buffer;
                 boost::algorithm::split( buffer, option, boost::is_any_of( "=" ) );
                 if( buffer.size() != 2 )
                     throw std::invalid_argument( "Invalid application graph argument: '" + option + "' is malformed" );
-                result[ buffer.at( 0 ) ] = buffer.at( 1 );
+                xos << xml::start( "option" )
+                        << xml::attribute( "name", buffer.at( 0 ) )
+                        << xml::attribute( "value", buffer.at( 1 ) )
+                    << xml::end;
             }
-        return result;
+        xos << xml::end;
+    }
+    void MakeExtensions( xml::xostream& xos )
+    {
+        xos << xml::start( "extensions" )
+                << xml::content( "extension", ".h" )
+                << xml::content( "extension", ".hh" )
+                << xml::content( "extension", ".hpp" )
+                << xml::content( "extension", ".hxx" )
+                << xml::content( "extension", ".inl" )
+                << xml::content( "extension", ".ipp" )
+                << xml::content( "extension", ".cxx" )
+                << xml::content( "extension", ".c" )
+                << xml::content( "extension", ".cc" )
+                << xml::content( "extension", ".cpp" )
+            << xml::end;
+    }
+    void Serialize( xml::xostream& xos, const std::string& node, const std::vector< std::string >& options )
+    {
+        BOOST_FOREACH( const std::string& option, options )
+            xos << xml::content( node, option );
+    }
+    std::auto_ptr< xml::xobufferstream > Translate( const bpo::variables_map& vm )
+    {
+        std::auto_ptr< xml::xobufferstream > xobs( new xml::xobufferstream() );
+        *xobs << xml::start( "configuration" );
+        MakeExtensions( *xobs );
+        *xobs   << xml::content( "dependencies", vm[ "dependencies" ].as< std::string >() )
+                << xml::content( "warning", vm.count( "warning" ) > 0 )
+                << xml::content( "extend", vm.count( "extend" ) > 0 )
+                << xml::start( "external" )
+                    << xml::start( "includes" );
+        if( vm.count( "include" ) )
+            Serialize( *xobs, "directory", vm[ "include" ].as< std::vector< std::string > >() );
+        *xobs       << xml::end
+                    << xml::start( "excludes" );
+        if( vm.count( "exclude" ) )
+            Serialize( *xobs, "directory", vm[ "exclude" ].as< std::vector< std::string > >() );
+        *xobs       << xml::end
+                << xml::end
+                << xml::start( "filters" );
+        if( vm.count( "filter" ) )
+            Serialize( *xobs, "filter", vm[ "filter" ].as< std::vector< std::string > >() );
+        *xobs   << xml::end
+                << xml::start( "graph-options" )
+                    << xml::content( "layout", vm[ "layout" ].as< std::string >() )
+                    << xml::content( "format", vm[ "format" ].as< std::string >() );
+        SerializeGraphOptions( *xobs, vm, "graph" );
+        SerializeGraphOptions( *xobs, vm, "node" );
+        SerializeGraphOptions( *xobs, vm, "edge" );
+        *xobs   << xml::end
+             << xml::end;
+        return xobs;
     }
 }
 
@@ -108,12 +164,8 @@ int main( int argc, char* argv[] )
         const bpo::variables_map vm = ParseCommandLine( argc, argv );
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
-        depend::Facade::T_Filter filter = vm.count( "filter" ) ? vm[ "filter" ].as< std::vector< std::string > >() : depend::Facade::T_Filter();
-        depend::Facade::T_Directories directories = vm.count( "include" ) ? vm[ "include" ].as< std::vector< std::string > >() : depend::Facade::T_Directories();
-        depend::Facade::T_Directories excludes = vm.count( "exclude" ) ? vm[ "exclude" ].as< std::vector< std::string > >() : depend::Facade::T_Directories();
-        depend::Facade facade( filter, directories, excludes, vm[ "layout" ].as< std::string >(), vm[ "format" ].as< std::string >(),
-                               vm["dependencies"].as< std::string >(), vm.count( "warning" ) > 0, vm.count( "extend" ) > 0, ParseGraphOptions( vm, "graph" ),
-                               ParseGraphOptions( vm, "node" ), ParseGraphOptions( vm, "edge" ) );
+        std::auto_ptr< xml::xobufferstream > xobs = Translate( vm );
+        depend::Facade facade( *xobs );
         BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
             facade.Visit( path );
         facade.Serialize( vm[ "stage" ].as< std::string >(), vm[ "output" ].as< std::string >(), vm.count( "all" ) > 0 );

@@ -9,6 +9,7 @@
 #include "depend_pch.h"
 #include "Log.h"
 #include <iostream>
+#include <xeumeuleu/xml.hpp>
 
 using namespace depend;
 
@@ -16,8 +17,8 @@ using namespace depend;
 // Name: Log constructor
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-Log::Log( bool enabled )
-    : enabled_ ( enabled )
+Log::Log( xml::xisubstream xis )
+    : enabled_ ( xis.content< bool >( "warning" ) )
     , messages_( new T_Messages() )
 {
     // NOTHING

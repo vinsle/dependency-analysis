@@ -30,7 +30,6 @@
 #include "ProxyModuleResolver.h"
 #include "TransitiveReductionFilter.h"
 #include <boost/foreach.hpp>
-#include <boost/assign.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
@@ -38,29 +37,20 @@
 
 using namespace depend;
 
-namespace
-{
-    const std::vector< std::string > extensions = boost::assign::list_of( ".h" )( ".hh" )( ".hpp" )( ".hxx" )
-                                                                        ( ".inl" )( ".ipp" )( ".cxx" )
-                                                                        ( ".c" )( ".cc" )( ".cpp" );
-}
-
 // -----------------------------------------------------------------------------
 // Name: Facade constructor
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
-Facade::Facade( const T_Filter& filter, const T_Directories& directories, const T_Directories& excludes,
-                const std::string& layout, const std::string& format, const std::string& option, bool warning, bool extend,
-                const T_Options& graph, const T_Options& node, const T_Options& edge )
-    : option_                ( option )
-    , extend_                ( extend )
-    , log_                   ( new Log( warning ) )
-    , filter_                ( new Filter( filter ) )
+Facade::Facade( xml::xisubstream xis )
+    : option_                ( ( xis >> xml::start( "configuration" ) ).content< std::string >( "dependencies" ) )
+    , extend_                ( xis.content< bool >( "extend" ) )
+    , log_                   ( new Log( xis ) )
+    , filter_                ( new Filter( xis ) )
     , finder_                ( new Finder() )
-    , resolver_              ( new ModuleResolver( directories, excludes, *finder_ ) )
+    , resolver_              ( new ModuleResolver( xis, *finder_ ) )
     , proxy_                 ( new ProxyModuleResolver( *resolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
-    , fileVisitor_           ( new FileVisitor( extensions ) )
+    , fileVisitor_           ( new FileVisitor( xis ) )
     , lineVisitor_           ( new LineVisitor() )
     , uncommentedLineVisitor_( new UncommentedLineVisitor( *lineVisitor_ ) )
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
@@ -68,7 +58,7 @@ Facade::Facade( const T_Filter& filter, const T_Directories& directories, const 
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
     , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *log_ ) )
     , unitSerializer_        ( new UnitSerializer( *moduleVisitor_ ) )
-    , graphSerializer_       ( new GraphSerializer( layout, format, graph, node, edge ) )
+    , graphSerializer_       ( new GraphSerializer( xis ) )
 {
     // NOTHING
 }
@@ -252,6 +242,27 @@ void Facade::Serialize( const std::string& filename )
     graphSerializer_->Serialize( buffer.str(), filename );
 }
 
+namespace
+{
+    class SimpleFilter : public Filter_ABC
+    {
+    public:
+        explicit SimpleFilter( const std::string& module )
+            : module_( module )
+        {}
+        virtual bool Check( const std::string& module ) const
+        {
+            return module == module_;
+        }
+        virtual bool CheckCore( const std::string& module ) const
+        {
+            return module == module_;
+        }
+    private:
+        const std::string module_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Facade::SerializeAll
 // Created: SLI 2010-08-31
@@ -261,8 +272,7 @@ void Facade::SerializeAll( const std::string& filename )
     const std::string extension = filename.substr( filename.find_last_of( '.' ) + 1, std::string::npos );
     BOOST_FOREACH( const std::string& module, modules_ )
     {
-        const std::vector< std::string > filter = boost::assign::list_of( module );
-        filter_.reset( new Filter( filter ) ); // $$$$ _RC_ SLI 2010-09-06: not that great
+        filter_.reset( new SimpleFilter( module ) ); // $$$$ _RC_ SLI 2010-09-06: not that great
         Serialize( module + "." + extension );
     }
 }

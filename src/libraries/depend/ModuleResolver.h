@@ -13,6 +13,11 @@
 #include <vector>
 #include <string>
 
+namespace xml
+{
+    class xisubstream;
+}
+
 namespace depend
 {
     class Finder_ABC;
@@ -26,15 +31,9 @@ namespace depend
 class ModuleResolver : public ModuleResolver_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Directories;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
-             ModuleResolver( const T_Directories& directories, const T_Directories& excludes, const Finder_ABC& finder );
+             ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder );
     virtual ~ModuleResolver();
     //@}
 
@@ -47,6 +46,7 @@ public:
 private:
     //! @name Types
     //@{
+    typedef std::vector< std::string > T_Directories;
     typedef std::pair< std::string, std::string > T_NamedDirectory;
     typedef std::vector< T_NamedDirectory > T_NamedDirectories;
     //@}

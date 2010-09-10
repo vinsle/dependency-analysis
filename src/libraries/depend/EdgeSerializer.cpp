@@ -45,6 +45,19 @@ namespace
             if( filter.Check( to ) )
                 xos << xml::content( "dependency", to );
     }
+    class NullFilter : public Filter_ABC
+    {
+    public:
+        NullFilter() {}
+        virtual bool Check( const std::string& /*module*/ ) const
+        {
+            return true;
+        }
+        virtual bool CheckCore( const std::string& /*module*/ ) const
+        {
+            return true;
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +80,7 @@ void EdgeSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) c
             SerializeDependency( xos, module, afferent_, filter );
             xos     << xml::end
                     << xml::start( "external-dependencies" );
-            SerializeDependency( xos, module, external_, Filter() );
+            SerializeDependency( xos, module, external_, NullFilter() );
             xos     << xml::end
                 << xml::end;
         }

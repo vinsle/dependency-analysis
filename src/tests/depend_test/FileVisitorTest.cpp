@@ -9,7 +9,7 @@
 #include "depend_test_pch.h"
 #include "depend/FileVisitor.h"
 #include "MockFileObserver.h"
-#include <boost/assign.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace depend;
 
@@ -19,12 +19,15 @@ namespace
     {
     public:
         Fixture()
-            : extensions( boost::assign::list_of( ".h" )( ".hpp" ) )
-            , visitor   ( extensions )
+            : xis    ( "<extensions>"
+                       "    <extension>.h</extension>"
+                       "    <extension>.hpp</extension>"
+                       "</extensions>" )
+            , visitor( xis )
         {
             // NOTHING
         }
-        const std::vector< std::string > extensions;
+        xml::xistringstream xis;
         FileVisitor visitor;
         MockFileObserver observer;
     };
@@ -52,8 +55,8 @@ BOOST_FIXTURE_TEST_CASE( file_visitor_is_not_sensible_to_end_slash, Fixture )
 
 BOOST_AUTO_TEST_CASE( no_extension_makes_file_visitor_notify_every_file )
 {
-    const std::vector< std::string > extensions;
-    FileVisitor visitor( extensions );
+    xml::xistringstream xis( "<extensions/>" );
+    FileVisitor visitor( xis );
     MockFileObserver observer;
     visitor.Register( observer );
     MOCK_EXPECT( observer, NotifyFile ).once().with( "header.h", mock::any );

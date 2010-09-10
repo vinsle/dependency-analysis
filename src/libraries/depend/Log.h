@@ -13,6 +13,11 @@
 #include <set>
 #include <memory>
 
+namespace xml
+{
+    class xisubstream;
+}
+
 namespace depend
 {
 // =============================================================================
@@ -26,7 +31,7 @@ class Log : public Log_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Log( bool enabled );
+    explicit Log( xml::xisubstream xis );
     virtual ~Log();
     //@}
 

@@ -13,6 +13,11 @@
 #include <string>
 #include <map>
 
+namespace xml
+{
+    class xisubstream;
+}
+
 namespace depend
 {
 // =============================================================================
@@ -24,22 +29,21 @@ namespace depend
 class GraphSerializer : private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::string > T_Options;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
-             GraphSerializer( const std::string& layout, const std::string& format,
-                              const T_Options& graph, const T_Options& node, const T_Options& edge );
+    explicit GraphSerializer( xml::xisubstream xis );
     virtual ~GraphSerializer();
     //@}
 
     //! @name Operations
     //@{
     void Serialize( const std::string& dot, const std::string& filename ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::string > T_Options;
     //@}
 
 private:

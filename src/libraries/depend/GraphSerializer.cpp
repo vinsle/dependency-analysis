@@ -11,20 +11,40 @@
 #include <graphviz/gvc.h>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace depend;
+
+namespace
+{
+    typedef std::map< std::string, std::string > T_Options;
+    void ReadOption( xml::xistream& xis, T_Options& options )
+    {
+        std::string name;
+        std::string value;
+        xis >> xml::attribute( "name", name )
+            >> xml::attribute( "value", value );
+        options[ name ] = value;
+    }
+    T_Options ReadOptions( xml::xisubstream xis, const std::string& root )
+    {
+        T_Options result;
+        xis >> xml::start( root )
+                >> xml::list( "option", boost::bind( &ReadOption, _1, boost::ref( result ) ) );
+        return result;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: GraphSerializer constructor
 // Created: SLI 2010-08-27
 // -----------------------------------------------------------------------------
-GraphSerializer::GraphSerializer( const std::string& layout, const std::string& format,
-                                  const T_Options& graph, const T_Options& node, const T_Options& edge )
-    : layout_( layout )
-    , format_( format )
-    , graph_ ( graph )
-    , node_  ( node )
-    , edge_  ( edge )
+GraphSerializer::GraphSerializer( xml::xisubstream xis )
+    : layout_( ( xis >> xml::start( "graph-options" ) ).content< std::string >( "layout" ) )
+    , format_( xis.content< std::string >( "format" ) )
+    , graph_ ( ReadOptions( xis, "graph" ) )
+    , node_  ( ReadOptions( xis, "node" ) )
+    , edge_  ( ReadOptions( xis, "edge" ) )
 {
     // NOTHING
 }
