@@ -14,19 +14,20 @@
 #pragma warning( disable: 4512 4996 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 
 using namespace depend;
 
 namespace
 {
+    typedef std::vector< std::string > T_Directories;
     template< typename T, typename U >
     U Parse( const T& directories )
     {
         U result;
         BOOST_FOREACH( const std::string& input, directories )
         {
-            if( input.empty() )
-                throw std::invalid_argument( "empty directory definition is invalid" );
             std::vector< std::string > buffer;
             boost::algorithm::split( buffer, input, boost::algorithm::is_any_of( "," ) );
             if( buffer.size() > 2 )
@@ -39,15 +40,26 @@ namespace
         }
         return result;
     }
+    void ReadDirectory( xml::xistream& xis, T_Directories& directories )
+    {
+        directories.push_back( xis.value< std::string >() );
+    }
+    T_Directories ReadDirectories( xml::xisubstream xis, const std::string& root )
+    {
+        T_Directories result;
+        xis >> xml::start( root )
+                >> xml::list( "directory", boost::bind( &ReadDirectory, _1, boost::ref( result ) ) );
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ModuleResolver constructor
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-ModuleResolver::ModuleResolver( const T_Directories& directories, const T_Directories& excludes, const Finder_ABC& finder )
-    : directories_( Parse< T_Directories, T_NamedDirectories >( directories ) )
-    , excludes_   ( excludes )
+ModuleResolver::ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder )
+    : directories_( Parse< T_Directories, T_NamedDirectories >( ReadDirectories( xis >> xml::start( "external" ), "includes" ) ) )
+    , excludes_   ( ReadDirectories( xis, "excludes" ) )
     , finder_     ( finder )
 {
     // NOTHING

@@ -11,6 +11,11 @@
 
 #include "Subject.h"
 
+namespace xml
+{
+    class xisubstream;
+}
+
 namespace depend
 {
     class FileObserver_ABC;
@@ -24,15 +29,9 @@ namespace depend
 class FileVisitor : public Subject< FileObserver_ABC >
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Extensions;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
-    explicit FileVisitor( const T_Extensions& extensions );
+    explicit FileVisitor( xml::xisubstream xis );
     virtual ~FileVisitor();
     //@}
 
@@ -41,6 +40,11 @@ public:
     void Visit( const std::string& path );
     //@}
 
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::string > T_Extensions;
+    //@}
 private:
     //! @name Member data
     //@{

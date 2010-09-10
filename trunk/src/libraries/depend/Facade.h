@@ -18,6 +18,7 @@
 namespace xml
 {
     class xostream;
+    class xisubstream;
 }
 
 namespace depend
@@ -46,19 +47,9 @@ namespace depend
 class Facade : private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Filter;
-    typedef std::vector< std::string > T_Directories;
-    typedef std::map< std::string, std::string > T_Options;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
-             Facade( const T_Filter& filter, const T_Directories& directories, const T_Directories& excludes,
-                     const std::string& layout, const std::string& format, const std::string& option, bool warning, bool extend,
-                     const T_Options& graph, const T_Options& node, const T_Options& edge );
+    explicit Facade( xml::xisubstream xis );
     virtual ~Facade();
     //@}
 

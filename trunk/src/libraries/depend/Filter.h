@@ -10,8 +10,12 @@
 #define depend_Filter_h
 
 #include "Filter_ABC.h"
-#include <vector>
 #include <set>
+
+namespace xml
+{
+    class xisubstream;
+}
 
 namespace depend
 {
@@ -24,15 +28,9 @@ namespace depend
 class Filter : public Filter_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< std::string > T_Modules;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
-    explicit Filter( const T_Modules& modules = T_Modules() );
+    explicit Filter( xml::xisubstream xis );
     virtual ~Filter();
     //@}
 

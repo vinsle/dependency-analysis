@@ -8,15 +8,33 @@
 
 #include "depend_pch.h"
 #include "Filter.h"
+#include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 
 using namespace depend;
+
+namespace
+{
+    typedef std::set< std::string > T_Modules;
+    void ReadModule( xml::xistream& xis, T_Modules& modules )
+    {
+        modules.insert( xis.value< std::string >() );
+    }
+    T_Modules ReadModules( xml::xisubstream xis )
+    {
+        T_Modules result;
+        xis >> xml::start( "filters" )
+                >> xml::list( "filter", boost::bind( &ReadModule, _1, boost::ref( result ) ) );
+        return result;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Filter constructor
 // Created: SLI 2010-08-30
 // -----------------------------------------------------------------------------
-Filter::Filter( const T_Modules& modules /*= T_Modules()*/ )
-    : modules_( modules.begin(), modules.end() )
+Filter::Filter( xml::xisubstream xis )
+    : modules_( ReadModules( xis ) )
 {
     // NOTHING
 }

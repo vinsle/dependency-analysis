@@ -13,15 +13,33 @@
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace depend;
+
+namespace
+{
+    typedef std::vector< std::string > T_Extensions;
+    void ReadExtension( xml::xistream& xis, T_Extensions& extensions )
+    {
+        extensions.push_back( xis.value< std::string >() );
+    }
+    T_Extensions ReadExtensions( xml::xisubstream xis )
+    {
+        T_Extensions result;
+        xis >> xml::start( "extensions" )
+                >> xml::list( "extension", boost::bind( &ReadExtension, _1, boost::ref( result ) ) );
+        return result;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: FileVisitor constructor
 // Created: SLI 2010-08-16
 // -----------------------------------------------------------------------------
-FileVisitor::FileVisitor( const T_Extensions& extensions )
-    : extensions_( extensions )
+FileVisitor::FileVisitor( xml::xisubstream xis )
+    : extensions_( ReadExtensions( xis ) )
 {
     // NOTHING
 }

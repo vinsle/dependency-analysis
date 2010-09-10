@@ -9,6 +9,7 @@
 #include "depend_test_pch.h"
 #include "depend/GraphSerializer.h"
 #include <boost/filesystem.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace depend;
 
@@ -41,7 +42,15 @@ BOOST_FIXTURE_TEST_CASE( simple_png_serialization, Fixture )
           "\"module2\"->\"module1\"[label=\"1\",color=\"1 1.0 1.0\"];"
           "\"module3\"->\"module1\"[label=\"1\"];"
           "}";
-    GraphSerializer serializer( "dot", "png", GraphSerializer::T_Options(), GraphSerializer::T_Options(), GraphSerializer::T_Options() );
+    xml::xistringstream xis(
+        "<graph-options>"
+        "   <layout>dot</layout>"
+        "   <format>png</format>"
+        "   <graph/>"
+        "   <node/>"
+        "   <edge/>"
+        "</graph-options>" );
+    GraphSerializer serializer( xis );
     serializer.Serialize( dot, filename );
     BOOST_CHECK( boost::filesystem::exists( filename ) );
 }
