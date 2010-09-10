@@ -17,10 +17,10 @@ BOOST_AUTO_TEST_CASE( simple_dot_serialization )
     xml::xistringstream xis(
         "<report>"
         "  <units>"
-        "    <unit>module1</unit>"
-        "    <unit>module2</unit>"
-        "    <unit>module3</unit>"
-        "    <unit>module4</unit>"
+        "    <unit core='true'>module1</unit>"
+        "    <unit core='false'>module2</unit>"
+        "    <unit core='false'>module3</unit>"
+        "    <unit core='false'>module4</unit>"
         "  </units>"
         "  <externals>"
         "    <external>boost</external>"
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE( simple_dot_serialization )
     serializer.Serialize( xis, os, Internal );
     const std::string expected =
         "digraph G {\n"
-        "\"module1\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
+        "\"module1\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,fontcolor=\"blue\",color=\"0.25 1.0 1.0\"];\n"
         "\"module2\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
         "\"module3\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
         "\"module4\"[label=\"\\N\\nI=0 A=0 D=10\",shape=rectangle,style=filled,color=\"0.25 1.0 1.0\"];\n"
@@ -127,8 +127,8 @@ BOOST_AUTO_TEST_CASE( external_dot_serialization )
     xml::xistringstream xis(
         "<report>"
         "  <units>"
-        "    <unit>module1</unit>"
-        "    <unit>module2</unit>"
+        "    <unit core='false'>module1</unit>"
+        "    <unit core='false'>module2</unit>"
         "  </units>"
         "  <externals>"
         "    <external>boost</external>"
@@ -198,8 +198,8 @@ BOOST_AUTO_TEST_CASE( both_dot_serialization )
     xml::xistringstream xis(
         "<report>"
         "  <units>"
-        "    <unit>module1</unit>"
-        "    <unit>module2</unit>"
+        "    <unit core='false'>module1</unit>"
+        "    <unit core='false'>module2</unit>"
         "  </units>"
         "  <externals>"
         "    <external>boost</external>"

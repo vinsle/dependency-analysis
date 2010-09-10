@@ -72,15 +72,18 @@ namespace
     }
     void ReadUnit( xml::xistream& xis, const T_Metrics& metrics, std::ostream& os )
     {
+        bool core = false;
         std::string unit;
-        xis >> unit;
+        xis >> unit
+            >> xml::attribute( "core", core );
         T_Metrics::const_iterator cit = metrics.find( unit );
         const float color = ( 100.f - cit->second.distance ) / 360.f;
         os << "\"" << unit << "\"" << "[label=\"\\N\\nI=" <<  cit->second.instability
                                    << " A=" << cit->second.abstractness
                                    << " D=" << cit->second.distance
-                                   << "\",shape=rectangle,style=filled,color=\""
-                                   << color << " 1.0 1.0\"];"
+                                   << "\",shape=rectangle,style=filled,"
+                                   << ( core ? "fontcolor=\"blue\"," : "" )
+                                   << "color=\"" << color << " 1.0 1.0\"];"
                                    << std::endl;
     }
     void ReadExternal( xml::xistream& xis, std::ostream& os )

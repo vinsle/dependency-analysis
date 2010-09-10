@@ -57,7 +57,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Facade( const T_Filter& filter, const T_Directories& directories, const T_Directories& excludes,
-                     const std::string& layout, const std::string& format, const std::string& option, bool warning,
+                     const std::string& layout, const std::string& format, const std::string& option, bool warning, bool extend,
                      const T_Options& graph, const T_Options& node, const T_Options& edge );
     virtual ~Facade();
     //@}
@@ -82,6 +82,7 @@ private:
     //! @name Member data
     //@{
     const std::string option_;
+    bool extend_;
     std::auto_ptr< Log_ABC > log_;
     std::auto_ptr< Filter_ABC > filter_;
     std::auto_ptr< Finder_ABC > finder_;

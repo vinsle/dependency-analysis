@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual bool Check( const std::string& module ) const;
+    virtual bool CheckCore( const std::string& module ) const;
     //@}
 
 private:

@@ -42,7 +42,12 @@ void UnitSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) c
     xos << xml::start( "units" );
     BOOST_FOREACH( const std::string& module, units_ )
         if( filter.Check( module ) )
-            xos << xml::content( "unit", module );
+        {
+            xos << xml::start( "unit" )
+                    << module
+                    << xml::attribute( "core", filter.CheckCore( module ) )
+                << xml::end;
+        }
     xos << xml::end;
 }
 

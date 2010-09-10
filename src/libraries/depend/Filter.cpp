@@ -36,5 +36,14 @@ Filter::~Filter()
 // -----------------------------------------------------------------------------
 bool Filter::Check( const std::string& module ) const
 {
+    return CheckCore( module );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Filter::CheckCore
+// Created: SLI 2010-09-10
+// -----------------------------------------------------------------------------
+bool Filter::CheckCore( const std::string& module ) const
+{
     return modules_.empty() ? true : modules_.find( module ) != modules_.end();
 }

@@ -26,10 +26,11 @@ BOOST_AUTO_TEST_CASE( simple_unit_serialization )
     xml::xostringstream xos;
     MockFilter filter;
     MOCK_EXPECT( filter, Check ).returns( true );
+    MOCK_EXPECT( filter, CheckCore ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<units>"
-        "    <unit>unit</unit>"
+        "    <unit core='true'>unit</unit>"
         "</units>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
@@ -47,11 +48,12 @@ BOOST_AUTO_TEST_CASE( unit_serialization_can_be_filtered )
     xml::xostringstream xos;
     MockFilter filter;
     MOCK_EXPECT( filter, Check ).once().with( "unit1" ).returns( true );
+    MOCK_EXPECT( filter, CheckCore ).once().with( "unit1" ).returns( false );
     MOCK_EXPECT( filter, Check ).returns( false );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<units>"
-        "    <unit>unit1</unit>"
+        "    <unit core='false'>unit1</unit>"
         "</units>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
