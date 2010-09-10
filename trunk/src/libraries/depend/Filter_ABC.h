@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual bool Check( const std::string& module ) const = 0;
+    virtual bool CheckCore( const std::string& module ) const = 0;
     //@}
 };
 

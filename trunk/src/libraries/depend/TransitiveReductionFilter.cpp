@@ -55,7 +55,16 @@ TransitiveReductionFilter::~TransitiveReductionFilter()
 // -----------------------------------------------------------------------------
 bool TransitiveReductionFilter::Check( const std::string& module ) const
 {
-    return filter_.Check( module ) || CheckMap( module );
+    return  CheckCore( module ) || CheckMap( module );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransitiveReductionFilter::CheckCore
+// Created: SLI 2010-09-10
+// -----------------------------------------------------------------------------
+bool TransitiveReductionFilter::CheckCore( const std::string& module ) const
+{
+    return filter_.Check( module );
 }
 
 // -----------------------------------------------------------------------------

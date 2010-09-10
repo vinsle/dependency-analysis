@@ -50,9 +50,10 @@ namespace
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
 Facade::Facade( const T_Filter& filter, const T_Directories& directories, const T_Directories& excludes,
-                const std::string& layout, const std::string& format, const std::string& option, bool warning,
+                const std::string& layout, const std::string& format, const std::string& option, bool warning, bool extend,
                 const T_Options& graph, const T_Options& node, const T_Options& edge )
     : option_                ( option )
+    , extend_                ( extend )
     , log_                   ( new Log( warning ) )
     , filter_                ( new Filter( filter ) )
     , finder_                ( new Finder() )
@@ -188,7 +189,11 @@ namespace
         }
         virtual bool Check( const std::string& module ) const
         {
-            return filter_.Check( module ) || extended_.find( module ) != extended_.end();
+            return CheckCore( module ) || extended_.find( module ) != extended_.end();
+        }
+        virtual bool CheckCore( const std::string& module ) const
+        {
+            return filter_.Check( module );
         }
     private:
         virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
@@ -214,7 +219,9 @@ namespace
 void Facade::Serialize( xml::xostream& xos )
 {
     xos << xml::start( "report" );
-    TransitiveReductionFilter filter( *dependencyMetric_, *filter_ );
+    TransitiveReductionFilter transitive( *dependencyMetric_, *filter_ );
+    FilterExtender extension( *dependencyMetric_, *filter_ );
+    Filter_ABC& filter = extend_ ? static_cast< Filter_ABC& >( transitive ) : static_cast< Filter_ABC& >( extension );
     unitSerializer_->Serialize( xos, filter );
     ExternalSerializer( *dependencyMetric_, filter ).Serialize( xos );
     EdgeSerializer( *dependencyMetric_ ).Serialize( xos, filter );

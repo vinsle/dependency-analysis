@@ -22,6 +22,7 @@ namespace depend
 MOCK_BASE_CLASS( MockFilter, Filter_ABC )
 {
     MOCK_METHOD( Check, 1 )
+    MOCK_METHOD( CheckCore, 1 )
 };
 
 }
