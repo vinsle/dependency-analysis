@@ -45,11 +45,11 @@ namespace
                       << "accompanying file LICENSE_1_0.txt or copy at" << std::endl
                       << "http://www.boost.org/LICENSE_1_0.txt)" << std::endl
                       << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
-        else if( ! vm.count( "path" ) )
+        else if( ! vm.count( "path" ) && ! vm.count( "load-configuration" ) )
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
         else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() != "xml" && vm[ "stage" ].as< std::string >() != "dot" && vm[ "stage" ].as< std::string >() != "graph" )
             throw std::invalid_argument( "Invalid application option argument: stage '" + vm[ "stage" ].as< std::string >() + "' is not supported" );
-        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" && vm[ "output" ].as< std::string >().empty() )
+        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" && vm.count( "output" ) && !vm.count( "load-configuration" ) )
             throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
     }
 
@@ -61,7 +61,7 @@ namespace
             ( "help,h"                                                      , "produce help message" )
             ( "version,v"                                                   , "produce version message" )
             ( "path" , bpo::value< std::vector< std::string > >()           , "add a directory containing modules for analysis" )
-            ( "output", bpo::value< std::string >()->default_value( "" )    , "set output file" )
+            ( "output", bpo::value< std::string >()                         , "set output file" )
             ( "filter", bpo::value< std::vector< std::string > >()          , "select only modules in filter and their afferent and efferent modules" )
             ( "include,I", bpo::value< std::vector< std::string > >()       , "add an include directory path for external dependency (dependency name can be forced with following syntax: --include=\"directory,name\")" )
             ( "exclude,E", bpo::value< std::vector< std::string > >()       , "add an include directory path excluded from the dependencies and warnings" )
@@ -77,7 +77,11 @@ namespace
             ( "node,n", bpo::value< std::vector< std::string > >()                    , "set node options (see http://www.graphviz.org/doc/info/attrs.html)" )
             ( "edge,e", bpo::value< std::vector< std::string > >()                    , "set edge options (see http://www.graphviz.org/doc/info/attrs.html)" )
             ( "dependencies", bpo::value< std::string >()->default_value( "internal" ), "set optional external dependencies drawing (internal|external|both)" );
-        cmdline.add( options ).add( graph );
+        bpo::options_description configuration( "Configuration options" );
+        configuration.add_options()
+            ( "load-configuration", bpo::value< std::string >(), "load configuration file" )
+            ( "save-configuration", bpo::value< std::string >(), "save configuration file" );
+        cmdline.add( options ).add( graph ).add( configuration );
         bpo::positional_options_description p;
         p.add( "path", -1 );
         bpo::variables_map vm;
@@ -129,8 +133,14 @@ namespace
         *xobs << xml::start( "configuration" );
         MakeExtensions( *xobs );
         *xobs   << xml::content( "dependencies", vm[ "dependencies" ].as< std::string >() )
+                << xml::content( "stage", vm[ "stage" ].as< std::string >() )
+                << xml::content( "output", vm[ "output" ].as< std::string >() )
                 << xml::content( "warning", vm.count( "warning" ) > 0 )
                 << xml::content( "extend", vm.count( "extend" ) > 0 )
+                << xml::content( "all", vm.count( "all" ) > 0 )
+                << xml::start( "paths" );
+        Serialize( *xobs, "path", vm[ "path" ].as< std::vector< std::string > >() );
+        *xobs   << xml::end
                 << xml::start( "external" )
                     << xml::start( "includes" );
         if( vm.count( "include" ) )
@@ -155,6 +165,17 @@ namespace
              << xml::end;
         return xobs;
     }
+    std::auto_ptr< xml::xobufferstream > LoadConfiguration( const bpo::variables_map& vm )
+    {
+        if( vm.count( "load-configuration" ) > 0 )
+        {
+            xml::xifstream xifs( vm[ "load-configuration" ].as< std::string >() );
+            std::auto_ptr< xml::xobufferstream > result( new xml::xobufferstream() );
+            *result << xifs;
+            return result;
+        }
+        return Translate( vm );
+    }
 }
 
 int main( int argc, char* argv[] )
@@ -164,11 +185,14 @@ int main( int argc, char* argv[] )
         const bpo::variables_map vm = ParseCommandLine( argc, argv );
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
-        std::auto_ptr< xml::xobufferstream > xobs = Translate( vm );
+        std::auto_ptr< xml::xobufferstream > xobs = LoadConfiguration( vm );
         depend::Facade facade( *xobs );
-        BOOST_FOREACH( const std::string& path, vm[ "path" ].as< std::vector< std::string > >() )
-            facade.Visit( path );
-        facade.Serialize( vm[ "stage" ].as< std::string >(), vm[ "output" ].as< std::string >(), vm.count( "all" ) > 0 );
+        facade.Process( *xobs );
+        if( vm.count( "save-configuration" ) > 0 )
+        {
+            xml::xofstream xofs( vm[ "save-configuration" ].as< std::string >() );
+            xofs << *xobs;
+        }
         return EXIT_SUCCESS;
     }
     catch( std::exception& e )

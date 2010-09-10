@@ -19,6 +19,7 @@ namespace xml
 {
     class xostream;
     class xisubstream;
+    class xistream;
 }
 
 namespace depend
@@ -56,13 +57,14 @@ public:
 public:
     //! @name Operations
     //@{
-    void Visit( const std::string& path );
-    void Serialize( const std::string& stage, const std::string& output, bool all );
+    void Process( xml::xisubstream xis );
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void Visit( xml::xistream& xis );
+    void Serialize( xml::xistream& xis );
     void Serialize( xml::xostream& xos );
     void Serialize( std::ostream& os );
     void Serialize( const std::string& filename );

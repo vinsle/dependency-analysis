@@ -64,6 +64,19 @@ Facade::Facade( xml::xisubstream xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade::Process
+// Created: SLI 2010-09-10
+// -----------------------------------------------------------------------------
+void Facade::Process( xml::xisubstream xis )
+{
+    xis >> xml::start( "configuration" )
+            >> xml::start( "paths" )
+                >> xml::list( "path", *this, &Facade::Visit )
+            >> xml::end;
+    Serialize( xis );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade destructor
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
@@ -131,8 +144,9 @@ namespace
 // Name: Facade::Visit
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
-void Facade::Visit( const std::string& path )
+void Facade::Visit( xml::xistream& xis )
 {
+    const std::string path = xis.value< std::string >();
     ModuleObserver observer( *moduleVisitor_, *fileVisitor_, *lineVisitor_, path, modules_ );
     moduleVisitor_->Visit( path );
 }
@@ -146,8 +160,11 @@ namespace
 // Name: Facade::Serialize
 // Created: SLI 2010-09-03
 // -----------------------------------------------------------------------------
-void Facade::Serialize( const std::string& stage, const std::string& output, bool all )
+void Facade::Serialize( xml::xistream& xis )
 {
+    const std::string stage = xis.content< std::string >( "stage" );
+    const std::string output = xis.content< std::string >( "output" );
+    const bool all = xis.content< bool >( "all" );
     boost::shared_ptr< std::ostream > out( &std::cout, boost::bind( &Noop ) );
     if( !output.empty() )
         out.reset( new std::ofstream( output.c_str() ) );
@@ -227,7 +244,7 @@ void Facade::Serialize( xml::xostream& xos )
 void Facade::Serialize( std::ostream& os )
 {
     xml::xobufferstream xos;
-    Serialize( xos );
+    Serialize( static_cast< xml::xostream& >( xos ) );
     DotSerializer().Serialize( xos, os, boost::lexical_cast< DotOption >( option_ ) );
 }
 
