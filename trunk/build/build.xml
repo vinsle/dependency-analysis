@@ -87,7 +87,6 @@
         <sequential>
             <exec taskname="depend_app" executable="${out.dir}/release/applications/depend_app/depend_app.exe" dir="${run.dir}" failonerror="true">
                 <arg value="--output=${reports.dir}/depend.png"/>
-                <arg value="--stage=graph"/>
                 <arg value="${libraries.dir}"/>
                 <arg value="${applications.dir}"/>
             </exec>
