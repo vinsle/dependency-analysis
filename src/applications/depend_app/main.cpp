@@ -49,7 +49,7 @@ namespace
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
         else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() != "xml" && vm[ "stage" ].as< std::string >() != "dot" && vm[ "stage" ].as< std::string >() != "graph" )
             throw std::invalid_argument( "Invalid application option argument: stage '" + vm[ "stage" ].as< std::string >() + "' is not supported" );
-        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() == "graph" && vm.count( "output" ) && !vm.count( "load-configuration" ) )
+        else if( vm[ "stage" ].as< std::string >() == "graph" && !vm.count( "output" ) && !vm.count( "load-configuration" ) )
             throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
     }
 
