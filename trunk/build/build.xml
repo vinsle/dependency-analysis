@@ -76,7 +76,6 @@
     <target name="package" depends="build,test,documentation" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/depend_app_${depend.version}.zip">
-            <fileset dir="${run.dir}" includes="Xalan*.dll,xerces*.dll"/>
             <fileset file="${out.dir}/release/applications/depend_app/depend_app.exe"/>
         </zip>
         <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
