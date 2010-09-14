@@ -1,0 +1,5 @@
+= Using Jung =
+
+A futur way is to use [http://jung.sourceforge.net/doc/api/index.html API] as a front-end for "dynamic" analysis.
+
+It may replace Graphviz as well for "static" analysis ( [http://jung.sourceforge.net/doc/JUNGVisualizationGuide.html how to dump a graph in a jpg] ).
