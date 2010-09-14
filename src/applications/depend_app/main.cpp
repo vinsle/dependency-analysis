@@ -10,10 +10,12 @@
 #pragma warning( push, 0 )
 #pragma warning( disable: 4512 4996 )
 #include <boost/program_options.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <iostream>
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 #define STRINGIFY(x) #x
@@ -49,10 +51,15 @@ namespace
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
         else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() != "xml" && vm[ "stage" ].as< std::string >() != "dot" && vm[ "stage" ].as< std::string >() != "graph" )
             throw std::invalid_argument( "Invalid application option argument: stage '" + vm[ "stage" ].as< std::string >() + "' is not supported" );
-        else if( vm[ "stage" ].as< std::string >() == "graph" && !vm.count( "output" ) && !vm.count( "load-configuration" ) )
+        else if( vm[ "stage" ].as< std::string >() == "graph" && !vm.count( "output" ) )
             throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
     }
-
+    std::string Check( const std::string& variable )
+    {
+        if( variable == "DEPEND_FILE" )
+            return "load-configuration";
+        return "";
+    }
     const bpo::variables_map ParseCommandLine( int argc, char* argv[] )
     {
         bpo::options_description cmdline( "Allowed options" );
@@ -86,6 +93,10 @@ namespace
         p.add( "path", -1 );
         bpo::variables_map vm;
         bpo::store( bpo::command_line_parser( argc, argv ).options( cmdline ).positional( p ).run(), vm );
+        bpo::store( bpo::parse_environment( cmdline, boost::bind( &Check, _1 ) ), vm );
+        const std::string filename = vm.count( "load-configuration" ) ? vm[ "load-configuration" ].as< std::string >() : "config.ini";
+        if( boost::filesystem::exists( filename ) )
+            bpo::store( bpo::parse_config_file< char >( filename.c_str(), cmdline ), vm );
         bpo::notify( vm );
         CheckOptions( vm, cmdline );
         return vm;
@@ -127,6 +138,12 @@ namespace
         BOOST_FOREACH( const std::string& option, options )
             xos << xml::content( node, option );
     }
+    bool Check( const std::string& option, const bpo::variables_map& vm )
+    {
+        if( ! vm.count( option ) )
+            return false;
+        return vm[ option ].as< std::string >() == "true";
+    }
     std::auto_ptr< xml::xobufferstream > Translate( const bpo::variables_map& vm )
     {
         std::auto_ptr< xml::xobufferstream > xobs( new xml::xobufferstream() );
@@ -135,9 +152,9 @@ namespace
         *xobs   << xml::content( "dependencies", vm[ "dependencies" ].as< std::string >() )
                 << xml::content( "stage", vm[ "stage" ].as< std::string >() )
                 << xml::content( "output", vm[ "output" ].as< std::string >() )
-                << xml::content( "warning", vm.count( "warning" ) > 0 )
-                << xml::content( "extend", vm.count( "extend" ) > 0 )
-                << xml::content( "all", vm.count( "all" ) > 0 )
+                << xml::content( "warning", Check( "warning", vm ) )
+                << xml::content( "extend", Check( "extend", vm ) )
+                << xml::content( "all", Check( "all", vm ) )
                 << xml::start( "paths" );
         Serialize( *xobs, "path", vm[ "path" ].as< std::vector< std::string > >() );
         *xobs   << xml::end
@@ -165,16 +182,36 @@ namespace
              << xml::end;
         return xobs;
     }
-    std::auto_ptr< xml::xobufferstream > LoadConfiguration( const bpo::variables_map& vm )
+    void SerializeComment( std::ostream& os, const std::string& comment )
     {
-        if( vm.count( "load-configuration" ) > 0 )
+        os << "#" << comment << std::endl;
+    }
+    void SerializeLine( std::ostream& os, const std::string& option, const std::string& value )
+    {
+        os << option << "=" << value << std::endl;
+    }
+    void Serialize( std::ostream& os, const std::string& option, const std::string& value )
+    {
+        SerializeComment( os, " " + option );
+        SerializeLine( os, option, value );
+    }
+    void Serialize( std::ostream& os, const std::string& option, const std::vector< std::string >& values )
+    {
+        SerializeComment( os, " " + option );
+        BOOST_FOREACH( const std::string& value, values )
+            SerializeLine( os, option, value );
+    }
+    template< typename T >
+    void Serialize( std::ostream& os, const std::string& option, const bpo::variables_map& vm )
+    {
+        if( ! vm.count( option ) )
         {
-            xml::xifstream xifs( vm[ "load-configuration" ].as< std::string >() );
-            std::auto_ptr< xml::xobufferstream > result( new xml::xobufferstream() );
-            *result << xifs;
-            return result;
+            SerializeComment( os, " " + option );
+            SerializeComment( os, option + "=sample" );
         }
-        return Translate( vm );
+        else
+            Serialize( os, option, vm[ option ].as< T >() );
+        os << std::endl;
     }
 }
 
@@ -185,13 +222,27 @@ int main( int argc, char* argv[] )
         const bpo::variables_map vm = ParseCommandLine( argc, argv );
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
-        std::auto_ptr< xml::xobufferstream > xobs = LoadConfiguration( vm );
+        std::auto_ptr< xml::xobufferstream > xobs = Translate( vm );
         depend::Facade facade( *xobs );
         facade.Process( *xobs );
         if( vm.count( "save-configuration" ) > 0 )
         {
-            xml::xofstream xofs( vm[ "save-configuration" ].as< std::string >() );
-            xofs << *xobs;
+            std::ofstream ofs( vm[ "save-configuration" ].as< std::string >().c_str() );
+            Serialize< std::vector< std::string > >( ofs, "path", vm );
+            Serialize< std::string >( ofs, "output", vm );
+            Serialize< std::vector< std::string > >( ofs, "filter", vm );
+            Serialize< std::vector< std::string > >( ofs, "include", vm );
+            Serialize< std::vector< std::string > >( ofs, "exclude", vm );
+            Serialize< std::string >( ofs, "warning", vm );
+            Serialize< std::string >( ofs, "stage", vm );
+            Serialize< std::string >( ofs, "extend", vm );
+            Serialize< std::string >( ofs, "all", vm );
+            Serialize< std::string >( ofs, "layout", vm );
+            Serialize< std::string >( ofs, "format", vm );
+            Serialize< std::vector< std::string > >( ofs, "graph", vm );
+            Serialize< std::vector< std::string > >( ofs, "node", vm );
+            Serialize< std::vector< std::string > >( ofs, "edge", vm );
+            Serialize< std::string >( ofs, "dependencies", vm );
         }
         return EXIT_SUCCESS;
     }
