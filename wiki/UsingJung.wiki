@@ -3,3 +3,7 @@
 A futur way is to use [http://jung.sourceforge.net/doc/api/index.html API] as a front-end for "dynamic" analysis.
 
 It may replace Graphviz as well for "static" analysis ( [http://jung.sourceforge.net/doc/JUNGVisualizationGuide.html how to dump a graph in a jpg] ).
+
+Jung has a [http://graphml.graphdrawing.org/ GraphML] parser as well.
+
+Architecture may be a back-end in C++ (the same as now, without its renderer part) producing a GraphML file, sent to a front-end in java/jung.
