@@ -138,12 +138,6 @@ namespace
         BOOST_FOREACH( const std::string& option, options )
             xos << xml::content( node, option );
     }
-    bool Check( const std::string& option, const bpo::variables_map& vm )
-    {
-        if( ! vm.count( option ) )
-            return false;
-        return vm[ option ].as< std::string >() == "true";
-    }
     std::auto_ptr< xml::xobufferstream > Translate( const bpo::variables_map& vm )
     {
         std::auto_ptr< xml::xobufferstream > xobs( new xml::xobufferstream() );
@@ -152,9 +146,9 @@ namespace
         *xobs   << xml::content( "dependencies", vm[ "dependencies" ].as< std::string >() )
                 << xml::content( "stage", vm[ "stage" ].as< std::string >() )
                 << xml::content( "output", vm[ "output" ].as< std::string >() )
-                << xml::content( "warning", Check( "warning", vm ) )
-                << xml::content( "extend", Check( "extend", vm ) )
-                << xml::content( "all", Check( "all", vm ) )
+                << xml::content( "warning", vm.count( "warning" ) )
+                << xml::content( "extend", vm.count( "extend" ) )
+                << xml::content( "all", vm.count( "all" ) )
                 << xml::start( "paths" );
         Serialize( *xobs, "path", vm[ "path" ].as< std::vector< std::string > >() );
         *xobs   << xml::end
