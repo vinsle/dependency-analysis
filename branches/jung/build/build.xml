@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<project name="depend" default="all">
+
+    <property environment="env"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
+
+    <property name="depend.version" value="v0.0"/>
+
+    <!--
+    ============================================================================
+      libraries
+    ============================================================================
+    -->
+    <target name="depend" description="build library">
+        <build-lib name="depend">
+            <defineset define="XERCES_STATIC_LIBRARY"/>
+        </build-lib>
+    </target>
+
+    <!--
+    ============================================================================
+      tests
+    ============================================================================
+    -->
+    <target name="depend_test" depends="depend" description="build and run unit tests">
+        <build-test name="depend" depends="boost" libs="depend,gvc,graph,xerces-c_static_3">
+            <defineset define="XERCES_STATIC_LIBRARY"/>
+            <syslibset libs="advapi32"/>
+        </build-test>
+    </target>
+
+    <!--
+    ============================================================================
+      applications
+    ============================================================================
+    -->
+
+    <target name="depend_app" depends="depend" description="build application">
+        <svn>
+            <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>
+        </svn>
+        <tstamp>
+            <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
+        </tstamp>
+        <build-app name="depend_app" depends="boost" libs="depend,gvc,graph,xerces-c_static_3" subsystem="console">
+            <defineset>
+                <define name="BUILD_VERSION" value="${depend.version}.${svn.version}"/>
+                <define name="BUILD_TIME" value="${now}"/>
+                <define name="XERCES_STATIC_LIBRARY"/>
+            </defineset>
+            <syslibset libs="advapi32"/>
+        </build-app> 
+    </target>
+
+    <!--
+    ============================================================================
+      package
+    ============================================================================
+    -->
+    <target name="documentation" description="generate depend documentation">
+        <doxygen-report name="depend" input="${libraries.dir}/depend">
+            <property name="FILE_PATTERNS"          value="*.h"/>
+            <property name="PROJECT_NAME"           value="DEPEND - Reference"/>
+            <property name="EXTRACT_PRIVATE"        value="NO"/>
+            <property name="SHOW_USED_FILES"        value="NO"/>
+            <property name="COLLABORATION_GRAPH"    value="YES"/>
+            <property name="DISABLE_INDEX"          value="NO"/>
+            <property name="INLINE_SOURCES"         value="NO"/>
+            <property name="REFERENCES_RELATION"    value="NO"/>
+            <property name="REFERENCED_BY_RELATION" value="NO"/>
+            <property name="SOURCE_BROWSER"         value="NO"/>
+            <property name="GENERATE_TREEVIEW"      value="YES"/>
+        </doxygen-report>
+    </target>    
+
+    <target name="package" depends="build,test,documentation" description="package the distribution">
+        <mkdir dir="${dist.dir}"/>
+        <zip destfile="${dist.dir}/depend_app_${depend.version}.zip">
+            <fileset file="${out.dir}/release/applications/depend_app/depend_app.exe"/>
+        </zip>
+        <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
+            <fileset dir="${doc.dir}"/>
+        </zip>
+    </target>
+
+    <!--
+    ============================================================================
+      main
+    ============================================================================
+    -->
+
+    <macrodef name="dependency-analysis">
+        <sequential>
+            <exec taskname="depend_app" executable="${out.dir}/release/applications/depend_app/depend_app.exe" dir="${run.dir}" failonerror="true">
+                <arg value="--output=${reports.dir}/depend.png"/>
+                <arg value="${libraries.dir}"/>
+                <arg value="${applications.dir}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <target name="reports" description="generate reports">
+        <cppncss-report includes="libraries/*/*.cpp">
+            <macro name="BOOST_FOREACH" value="for(;;)"/>
+            <macro name="MOCK_METHOD"/>
+            <macro name="MOCK_METHOD_EXT_TPL"/>
+            <macro name="MOCK_METHOD_EXT"/>
+            <macro name="MOCK_BASE_CLASS" value="class mock"/>
+            <macro name="BOOST_CHECK_THROW"/>
+            <macro name="BOOST_CHECK_NO_THROW"/>
+            <define name="TRY" value="try {"/>
+            <define name="CATCH" value="} catch( ... ) {}"/>
+        </cppncss-report>
+        <cppcheck-report/>
+        <dependency-analysis/>
+    </target>
+    
+    <target name="clean" description="clean intermediate build artifacts">
+        <delete dir="${out.dir}"/>
+    </target>
+
+    <target name="test" depends="depend_test" description="run all tests"/>
+
+    <target name="build" depends="depend_app" description="build all"/>
+
+    <target name="configure" description="initialize local project structure with libraries">
+        <update name="boost"/>
+        <update name="turtle"/>
+        <update name="xerces-c"/>
+        <update name="xeumeuleu"/>
+        <update name="graphviz"/>
+    </target>
+
+    <target name="all" depends="configure,test,build,reports,documentation,package" description="build, run tests and package distribution"/>
+
+</project>
