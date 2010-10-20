@@ -1,2 +1,2 @@
- * Other [[http://java-source.net/open-source/code-analyzers code analyzers]]
- * [[http://classycle.sourceforge.net/design.html Classycle]]
+ * Other [http://java-source.net/open-source/code-analyzers code analyzers]
+ * [http://classycle.sourceforge.net/design.html Classycle]
