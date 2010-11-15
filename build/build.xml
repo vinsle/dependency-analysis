@@ -26,6 +26,7 @@
         <build-test name="depend" depends="boost" libs="depend,gvc,graph,xerces-c_static_3">
             <defineset define="XERCES_STATIC_LIBRARY"/>
             <syslibset libs="advapi32"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
         </build-test>
     </target>
 
@@ -49,7 +50,8 @@
                 <define name="XERCES_STATIC_LIBRARY"/>
             </defineset>
             <syslibset libs="advapi32"/>
-        </build-app> 
+            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+        </build-app>
     </target>
 
     <!--
@@ -71,7 +73,7 @@
             <property name="SOURCE_BROWSER"         value="NO"/>
             <property name="GENERATE_TREEVIEW"      value="YES"/>
         </doxygen-report>
-    </target>    
+    </target>
 
     <target name="package" depends="build,test,documentation" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
@@ -114,7 +116,7 @@
         <cppcheck-report/>
         <dependency-analysis/>
     </target>
-    
+
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
     </target>
