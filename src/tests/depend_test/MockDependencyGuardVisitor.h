@@ -23,6 +23,7 @@ MOCK_BASE_CLASS( MockDependencyGuardVisitor, DependencyGuardVisitor_ABC )
 {
     MOCK_METHOD( NotifyDependencyFailure, 2 )
     MOCK_METHOD( NotifyUncheckedDependency, 2 )
+    MOCK_METHOD( NotifyObsoleteDependency, 2 )
 };
 
 }
