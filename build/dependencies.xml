@@ -1,0 +1,8 @@
+<dependencies>
+    <module name='depend_app'>
+        <dependency>depend</dependency>
+    </module>
+    <module name='depend_guard_app'>
+        <dependency>depend</dependency>
+    </module>
+</dependencies>

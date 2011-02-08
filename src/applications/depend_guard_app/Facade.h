@@ -53,6 +53,7 @@ public:
     //! @name Operations
     //@{
     void Visit( const std::string& path ) const;
+    bool Process( xml::xisubstream xis ) const;
     //@}
 
 private:

@@ -382,6 +382,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\ModuleDependencyGuard.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleDependencyGuard.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetric.cpp"
 					>
 				</File>

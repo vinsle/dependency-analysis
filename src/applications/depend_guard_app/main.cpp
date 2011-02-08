@@ -77,7 +77,7 @@ int main( int argc, char* argv[] )
             return EXIT_SUCCESS;
         const std::vector< std::string > paths = vm[ "path" ].as< std::vector< std::string > >();
         const std::string dependencies = vm[ "dependencies" ].as< std::string >();
-        xml::xifstream xifs( dependencies );
+        xml::xifstream xis( dependencies );
         xml::xobufferstream xobs;
         xobs << xml::start( "configuration" )
                 << xml::start( "external" )
@@ -98,10 +98,12 @@ int main( int argc, char* argv[] )
                 << xml::end
             << xml::end;
         xobs >> xml::start( "configuration" );
-        xml::ximultistream xims( xobs, xifs );
-        const Facade facade( xims );
+        const Facade facade( xobs );
         BOOST_FOREACH( const std::string& path, paths )
             facade.Visit( path );
+        if( facade.Process( xis ) )
+            return EXIT_FAILURE;
+        return EXIT_SUCCESS;
     }
     catch( std::exception& e )
     {

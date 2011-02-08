@@ -120,6 +120,17 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="dependency-guard">
+        <attribute name="dependencies"/>
+        <sequential>
+            <exec taskname="depend_guard_app" executable="${out.dir}/release/applications/depend_guard_app/depend_guard_app.exe" failonerror="true">
+                <arg value="--dependencies=@{dependencies}"/>
+                <arg value="${libraries.dir}"/>
+                <arg value="${applications.dir}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <target name="reports" description="generate reports">
         <cppncss-report includes="libraries/*/*.cpp">
             <macro name="BOOST_FOREACH" value="for(;;)"/>
@@ -134,6 +145,7 @@
         </cppncss-report>
         <cppcheck-report/>
         <dependency-analysis/>
+        <dependency-guard dependencies='dependencies.xml'/>
     </target>
 
     <target name="clean" description="clean intermediate build artifacts">
