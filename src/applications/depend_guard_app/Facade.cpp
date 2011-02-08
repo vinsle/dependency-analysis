@@ -18,6 +18,7 @@
 #include "depend/ModuleResolver.h"
 #include "depend/ProxyModuleResolver.h"
 #include "depend/ModuleDependencyGuard.h"
+#include "depend/DependencyGuardVisitor_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <iostream>
 
@@ -115,20 +116,16 @@ void Facade::Visit( const std::string& path ) const
 
 namespace
 {
-    class FailuresChecker : public DependencyMetricVisitor_ABC
+    class FailuresChecker : public DependencyGuardVisitor_ABC
     {
     public:
         FailuresChecker()
             : failure_( false )
         {}
-        virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
+        virtual void NotifyDependencyFailure( const std::string& fromModule, const std::string& toModule )
         {
             std::cerr << "Error: dependency from module '" << fromModule << "' to module '" << toModule << "' is forbidden." << std::endl;
             failure_ = true;
-        }
-        virtual void NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/ )
-        {
-            // NOTHING
         }
         bool failure_;
     };

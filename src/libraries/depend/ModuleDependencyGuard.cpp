@@ -8,6 +8,8 @@
 
 #include "depend_pch.h"
 #include "ModuleDependencyGuard.h"
+#include "DependencyGuardVisitor_ABC.h"
+#include "DependencyMetric_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
 
@@ -37,10 +39,10 @@ ModuleDependencyGuard::~ModuleDependencyGuard()
 // Name: ModuleDependencyGuard::Apply
 // Created: SLI 2011-02-08
 // -----------------------------------------------------------------------------
-void ModuleDependencyGuard::Apply( DependencyMetricVisitor_ABC& visitor ) const
+void ModuleDependencyGuard::Apply( DependencyGuardVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const T_Failure& failure, failures_ )
-        visitor.NotifyInternalDependency( failure.first, failure.second );
+        visitor.NotifyDependencyFailure( failure.first, failure.second );
 }
 
 // -----------------------------------------------------------------------------

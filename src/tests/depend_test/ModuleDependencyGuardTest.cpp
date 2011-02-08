@@ -9,7 +9,7 @@
 #include "depend_test_pch.h"
 #include "depend/ModuleDependencyGuard.h"
 #include "MockDependencyMetric.h"
-#include "MockDependencyMetricVisitor.h"
+#include "MockDependencyGuardVisitor.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace depend;
@@ -31,9 +31,9 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unknown_dependencies_only_on
     pVisitor->NotifyInternalDependency( "from", "unknown1" );
     pVisitor->NotifyInternalDependency( "from", "unknown2" );
     pVisitor->NotifyInternalDependency( "from", "unknown1" );
-    MockDependencyMetricVisitor visitor;
+    MockDependencyGuardVisitor visitor;
     mock::sequence s;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().in( s ).with( "from", "unknown1" );
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().in( s ).with( "from", "unknown2" );
+    MOCK_EXPECT( visitor, NotifyDependencyFailure ).once().in( s ).with( "from", "unknown1" );
+    MOCK_EXPECT( visitor, NotifyDependencyFailure ).once().in( s ).with( "from", "unknown2" );
     guard.Apply( visitor );
 }

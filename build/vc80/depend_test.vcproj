@@ -319,6 +319,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\tests\depend_test\MockDependencyGuardVisitor.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\tests\depend_test\MockDependencyMetric.h"
 					>
 				</File>
