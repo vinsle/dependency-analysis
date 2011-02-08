@@ -129,7 +129,11 @@ namespace
         }
         virtual void NotifyUncheckedDependency( const std::string& from, const std::string& to )
         {
-            std::cerr << "Warning: no dependency found from module '" << from << "' to module '" << to << "', you probably should remove it." << std::endl;
+            std::cerr << "Warning: no dependency found from module '" << from << "' to module '" << to << "', you probably should remove it from your dependency file." << std::endl;
+        }
+        virtual void NotifyObsoleteDependency( const std::string& from, const std::string& to )
+        {
+            std::cerr << "Warning: obsolete dependency declared in your dependency file has been found from module '" << from << "' to module '" << to << "', you should remove it." << std::endl;
         }
         bool failure_;
     };

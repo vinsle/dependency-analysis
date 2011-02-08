@@ -47,6 +47,10 @@ void ModuleDependencyGuard::Apply( DependencyGuardVisitor_ABC& visitor ) const
         BOOST_FOREACH( const std::string& dependency, module.second )
             if( checked_.find( module.first + dependency ) == checked_.end() )
                 visitor.NotifyUncheckedDependency( module.first, dependency );
+    BOOST_FOREACH( const T_Modules::value_type& module, obsoletes_ )
+        BOOST_FOREACH( const std::string& dependency, module.second )
+            if( checked_.find( module.first + dependency ) != checked_.end() )
+                visitor.NotifyObsoleteDependency( module.first, dependency );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +89,8 @@ void ModuleDependencyGuard::ReadModule( xml::xistream& xis )
 {
     std::string name;
     xis >> xml::attribute( "name", name )
-        >> xml::list( "dependency", *this, &ModuleDependencyGuard::ReadDependency, name );
+        >> xml::list( "dependency", *this, &ModuleDependencyGuard::ReadDependency, name )
+        >> xml::list( "obsolete-dependency", *this, &ModuleDependencyGuard::ReadObsoleteDependency, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,4 +102,16 @@ void ModuleDependencyGuard::ReadDependency( xml::xistream& xis, const std::strin
     std::string dependency;
     xis >> dependency;
     modules_[ module ].insert( dependency );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleDependencyGuard::ReadObsoleteDependency
+// Created: SLI 2011-02-08
+// -----------------------------------------------------------------------------
+void ModuleDependencyGuard::ReadObsoleteDependency( xml::xistream& xis, const std::string& module )
+{
+    std::string dependency;
+    xis >> dependency;
+    modules_[ module ].insert( dependency );
+    obsoletes_[ module ].insert( dependency );
 }

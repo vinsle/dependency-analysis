@@ -57,6 +57,7 @@ private:
     //@{
     void ReadModule( xml::xistream& xis );
     void ReadDependency( xml::xistream& xis, const std::string& module );
+    void ReadObsoleteDependency( xml::xistream& xis, const std::string& module );
     //@}
 
 private:
@@ -66,16 +67,17 @@ private:
     typedef std::map< std::string, T_Module > T_Modules;
     typedef std::pair< std::string, std::string > T_Failure;
     typedef std::vector< T_Failure > T_Failures;
-    typedef std::set< std::string > T_KnownFailures;
+    typedef std::set< std::string > T_Dependencies;
     //@}
 
 private:
     //! @name Member data
     //@{
     T_Modules modules_;
+    T_Modules obsoletes_;
     T_Failures failures_;
-    T_KnownFailures knownFailures_;
-    T_KnownFailures checked_;
+    T_Dependencies knownFailures_;
+    T_Dependencies checked_;
     //@}
 };
 
