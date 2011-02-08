@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_test_MockFileObserver_h
-#define depend_test_MockFileObserver_h
+#ifndef depend_test_MockDependencyMetricVisitor_h
+#define depend_test_MockDependencyMetricVisitor_h
 
 #include "depend/DependencyMetricVisitor_ABC.h"
 
@@ -27,4 +27,4 @@ MOCK_BASE_CLASS( MockDependencyMetricVisitor, DependencyMetricVisitor_ABC )
 
 }
 
-#endif // depend_test_MockFileObserver_h
+#endif // depend_test_MockDependencyMetricVisitor_h
