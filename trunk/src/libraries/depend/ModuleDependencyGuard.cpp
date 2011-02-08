@@ -43,6 +43,10 @@ void ModuleDependencyGuard::Apply( DependencyGuardVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const T_Failure& failure, failures_ )
         visitor.NotifyDependencyFailure( failure.first, failure.second );
+    BOOST_FOREACH( const T_Modules::value_type& module, modules_ )
+        BOOST_FOREACH( const std::string& dependency, module.second )
+            if( checked_.find( module.first + dependency ) == checked_.end() )
+                visitor.NotifyUncheckedDependency( module.first, dependency );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,12 +55,17 @@ void ModuleDependencyGuard::Apply( DependencyGuardVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void ModuleDependencyGuard::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
 {
+    const std::string identifier = fromModule + toModule;
     if( modules_[ fromModule ].find( toModule ) == modules_[ fromModule ].end() )
-        if( knownFailures_.find( fromModule + toModule ) == knownFailures_.end() )
+    {
+        if( knownFailures_.find( identifier ) == knownFailures_.end() )
         {
-            knownFailures_.insert( fromModule + toModule );
+            knownFailures_.insert( identifier );
             failures_.push_back( std::make_pair( fromModule, toModule ) );
         }
+    }
+    else
+        checked_.insert( identifier );
 }
 
 // -----------------------------------------------------------------------------

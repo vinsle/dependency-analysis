@@ -75,6 +75,7 @@ private:
     T_Modules modules_;
     T_Failures failures_;
     T_KnownFailures knownFailures_;
+    T_KnownFailures checked_;
     //@}
 };
 

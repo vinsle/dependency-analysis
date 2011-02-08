@@ -37,3 +37,22 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unknown_dependencies_only_on
     MOCK_EXPECT( visitor, NotifyDependencyFailure ).once().in( s ).with( "from", "unknown2" );
     guard.Apply( visitor );
 }
+
+BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unchecked_declared_dependencies )
+{
+    xml::xistringstream xis(
+        "<dependencies>"
+        "    <module name='from'>"
+        "        <dependency>to</dependency>"
+        "    </module>"
+        "</dependencies>" );
+    MockDependencyMetric metric;
+    DependencyMetricVisitor_ABC* pVisitor = 0;
+    MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
+    ModuleDependencyGuard guard( xis, metric );
+    BOOST_REQUIRE( pVisitor );
+    MockDependencyGuardVisitor visitor;
+    mock::sequence s;
+    MOCK_EXPECT( visitor, NotifyUncheckedDependency ).once().in( s ).with( "from", "to" );
+    guard.Apply( visitor );
+}
