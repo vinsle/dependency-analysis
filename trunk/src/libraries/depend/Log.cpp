@@ -18,7 +18,7 @@ using namespace depend;
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
 Log::Log( xml::xisubstream xis )
-    : enabled_ ( xis.content< bool >( "warning" ) )
+    : enabled_ ( xis.content< bool >( "warning", false ) )
     , messages_( new T_Messages() )
 {
     // NOTHING
