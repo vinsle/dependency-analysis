@@ -9,7 +9,6 @@
 #ifndef depend_ModuleDependencyGuard_h
 #define depend_ModuleDependencyGuard_h
 
-#include "DependencyMetric_ABC.h"
 #include "DependencyMetricVisitor_ABC.h"
 #include <map>
 #include <set>
@@ -23,13 +22,16 @@ namespace xml
 
 namespace depend
 {
+    class DependencyMetric_ABC;
+    class DependencyGuardVisitor_ABC;
+
 // =============================================================================
 /** @class  ModuleDependencyGuard
     @brief  Module dependency guard
 */
 // Created: SLI 2011-02-08
 // =============================================================================
-class ModuleDependencyGuard : public DependencyMetric_ABC, private DependencyMetricVisitor_ABC
+class ModuleDependencyGuard : private DependencyMetricVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -40,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Apply( DependencyMetricVisitor_ABC& visitor ) const;
+    void Apply( DependencyGuardVisitor_ABC& visitor ) const;
     //@}
 
 private:
