@@ -31,6 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyDependencyFailure( const std::string& from, const std::string& to ) = 0;
+    virtual void NotifyUncheckedDependency( const std::string& from, const std::string& to ) = 0;
     //@}
 };
 

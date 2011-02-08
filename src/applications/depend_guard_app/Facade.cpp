@@ -127,6 +127,10 @@ namespace
             std::cerr << "Error: dependency from module '" << fromModule << "' to module '" << toModule << "' is forbidden." << std::endl;
             failure_ = true;
         }
+        virtual void NotifyUncheckedDependency( const std::string& from, const std::string& to )
+        {
+            std::cerr << "Warning: no dependency found from module '" << from << "' to module '" << to << "', you probably should remove it." << std::endl;
+        }
         bool failure_;
     };
 }
