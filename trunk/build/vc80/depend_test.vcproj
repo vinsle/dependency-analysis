@@ -37,7 +37,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../src/libraries;../../include;../../include/qt"
+				AdditionalIncludeDirectories="../../src/libraries;../../include"
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,XERCES_STATIC_LIBRARY"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
 				AdditionalDependencies="advapi32.lib xerces-c_static_3D.lib gvc.lib graph.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;../../lib/vc80"
@@ -117,7 +118,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="../../src/libraries;../../include;../../include/qt"
+				AdditionalIncludeDirectories="../../src/libraries;../../include"
 				PreprocessorDefinitions="WIN32,NDEBUG,_CONSOLE,XERCES_STATIC_LIBRARY"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
@@ -141,6 +142,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
 				AdditionalDependencies="advapi32.lib xerces-c_static_3.lib gvc.lib graph.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt.exe"
 				LinkIncremental="1"
