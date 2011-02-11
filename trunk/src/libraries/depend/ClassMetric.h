@@ -40,8 +40,8 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyUnit( const std::string& unit );
-    virtual void NotifyClass( const std::string& name );
+    virtual void NotifyUnit( const std::string& unit, const std::string& context );
+    virtual void NotifyClass( const std::string& name, const std::string& context );
     virtual void NotifyAbstractness();
     //@}
 

@@ -116,6 +116,9 @@
                 <arg value="--output=${reports.dir}/depend.png"/>
                 <arg value="${libraries.dir}"/>
                 <arg value="${applications.dir}"/>
+                <arg value="--include=${include.dir}"/>
+                <arg value="--exclude=${env.VSINSTALLDIR}/VC/include"/>
+                <arg value="--warning"/>
             </exec>
         </sequential>
     </macrodef>

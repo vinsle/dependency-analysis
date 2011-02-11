@@ -68,9 +68,9 @@ namespace
             // NOTHING
         }
     private:
-        virtual void NotifyFile( const std::string& /*path*/, std::istream& stream )
+        virtual void NotifyFile( const std::string& /*path*/, std::istream& stream, const std::string& context )
         {
-            lineVisitor_.Visit( stream );
+            lineVisitor_.Visit( stream, context );
         }
     private:
         LineVisitor& lineVisitor_;
@@ -92,10 +92,10 @@ namespace
             // NOTHING
         }
     private:
-        virtual void NotifyUnit( const std::string& unit )
+        virtual void NotifyUnit( const std::string& unit, const std::string& context )
         {
             FileObserver observer( fileVisitor_, lineVisitor_ );
-            fileVisitor_.Visit( path_ + "/" + unit );
+            fileVisitor_.Visit( path_ + "/" + unit, context );
         }
     private:
         FileVisitor& fileVisitor_;
@@ -111,7 +111,7 @@ namespace
 void Facade::Visit( const std::string& path ) const
 {
     ModuleObserver observer( *moduleVisitor_, *fileVisitor_, *lineVisitor_, path );
-    moduleVisitor_->Visit( path );
+    moduleVisitor_->Visit( path, path );
 }
 
 namespace
@@ -122,18 +122,21 @@ namespace
         FailuresChecker()
             : failure_( false )
         {}
-        virtual void NotifyDependencyFailure( const std::string& fromModule, const std::string& toModule )
+        virtual void NotifyDependencyFailure( const std::string& fromModule, const std::string& toModule, const std::string& context )
         {
-            std::cerr << "Error: dependency from module '" << fromModule << "' to module '" << toModule << "' is forbidden." << std::endl;
+            std::cerr << context
+                      << ": error : dependency from module '" << fromModule
+                      << "' to module '" << toModule << "' is forbidden." << std::endl;
             failure_ = true;
         }
         virtual void NotifyUncheckedDependency( const std::string& from, const std::string& to )
         {
             std::cerr << "Warning: no dependency found from module '" << from << "' to module '" << to << "', you probably should remove it from your dependency file." << std::endl;
         }
-        virtual void NotifyObsoleteDependency( const std::string& from, const std::string& to )
+        virtual void NotifyObsoleteDependency( const std::string& from, const std::string& to, const std::string& context )
         {
-            std::cerr << "Warning: obsolete dependency declared in your dependency file has been found from module '" << from << "' to module '" << to << "', you should remove it." << std::endl;
+            std::cerr << context
+                      << ": warning: obsolete dependency has been found from module '" << from << "' to module '" << to << "'." << std::endl;
         }
         bool failure_;
     };

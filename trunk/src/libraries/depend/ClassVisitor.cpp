@@ -42,7 +42,7 @@ ClassVisitor::~ClassVisitor()
 namespace
 {
     template< typename T >
-    bool DetectClass( const std::string& line, T& observers )
+    bool DetectClass( const std::string& line, T& observers, const std::string& context )
     {
         const mark_tag class_tag( 1 );
         const sregex spaces = *space;
@@ -54,7 +54,7 @@ namespace
         if( it != end )
         {
             BOOST_FOREACH( T::value_type& observer, observers )
-                observer->NotifyClass( (*it)[ class_tag ] );
+                observer->NotifyClass( (*it)[ class_tag ], context );
             return true;
         }
         return false;
@@ -73,9 +73,9 @@ namespace
 // Name: ClassVisitor::NotifyUncommentedLine
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void ClassVisitor::NotifyUncommentedLine( const std::string& line )
+void ClassVisitor::NotifyUncommentedLine( const std::string& line, const std::string& context )
 {
-    if( DetectClass( line, observers_ ) )
+    if( DetectClass( line, observers_, context ) )
     {
         insideClass_ = true;
         abstract_ = false;

@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyLine( const std::string& line ) = 0;
+    virtual void NotifyLine( const std::string& line, const std::string& context ) = 0;
     //@}
 };
 

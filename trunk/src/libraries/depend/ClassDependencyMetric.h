@@ -44,15 +44,15 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyFile( const std::string& path, std::istream& stream );
-    virtual void NotifyInternalInclude( const std::string& file );
-    virtual void NotifyExternalInclude( const std::string& file );
+    virtual void NotifyFile( const std::string& path, std::istream& stream, const std::string& context );
+    virtual void NotifyInternalInclude( const std::string& file, const std::string& context );
+    virtual void NotifyExternalInclude( const std::string& file, const std::string& context );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< std::string > T_Includes;
+    typedef std::set< std::pair< std::string, std::string > > T_Includes;
     typedef std::pair< std::string, T_Includes > T_File;
     typedef std::vector< T_File > T_Files;
     //@}

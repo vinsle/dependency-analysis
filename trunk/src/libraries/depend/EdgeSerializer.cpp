@@ -92,7 +92,7 @@ void EdgeSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) c
 // Name: EdgeSerializer::NotifyInternalDependency
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-void EdgeSerializer::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
+void EdgeSerializer::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*context*/ )
 {
     modules_.insert( fromModule );
     modules_.insert( toModule );
@@ -104,7 +104,7 @@ void EdgeSerializer::NotifyInternalDependency( const std::string& fromModule, co
 // Name: EdgeSerializer::NotifyExternalDependency
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-void EdgeSerializer::NotifyExternalDependency( const std::string& fromModule, const std::string& toModule )
+void EdgeSerializer::NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*context*/ )
 {
     modules_.insert( fromModule );
     external_[ fromModule ].insert( toModule );

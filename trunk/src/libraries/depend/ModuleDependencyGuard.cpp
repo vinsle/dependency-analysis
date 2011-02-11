@@ -42,7 +42,7 @@ ModuleDependencyGuard::~ModuleDependencyGuard()
 void ModuleDependencyGuard::Apply( DependencyGuardVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const T_Failure& failure, failures_ )
-        visitor.NotifyDependencyFailure( failure.first, failure.second );
+        visitor.NotifyDependencyFailure( failure.from_, failure.to_, failure.context_ );
     BOOST_FOREACH( const T_Modules::value_type& module, modules_ )
         BOOST_FOREACH( const std::string& dependency, module.second )
             if( checked_.find( module.first + dependency ) == checked_.end() )
@@ -50,33 +50,28 @@ void ModuleDependencyGuard::Apply( DependencyGuardVisitor_ABC& visitor ) const
     BOOST_FOREACH( const T_Modules::value_type& module, obsoletes_ )
         BOOST_FOREACH( const std::string& dependency, module.second )
             if( checked_.find( module.first + dependency ) != checked_.end() )
-                visitor.NotifyObsoleteDependency( module.first, dependency );
+                BOOST_FOREACH( const std::string& context, checked_.find( module.first + dependency )->second )
+                    visitor.NotifyObsoleteDependency( module.first, dependency, context );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ModuleDependencyGuard::NotifyInternalDependency
 // Created: SLI 2011-02-08
 // -----------------------------------------------------------------------------
-void ModuleDependencyGuard::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
+void ModuleDependencyGuard::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& context )
 {
     const std::string identifier = fromModule + toModule;
     if( modules_[ fromModule ].find( toModule ) == modules_[ fromModule ].end() )
-    {
-        if( knownFailures_.find( identifier ) == knownFailures_.end() )
-        {
-            knownFailures_.insert( identifier );
-            failures_.push_back( std::make_pair( fromModule, toModule ) );
-        }
-    }
+        failures_.push_back( T_Failure( fromModule, toModule, context ) );
     else
-        checked_.insert( identifier );
+        checked_[ identifier ].insert( context );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ModuleDependencyGuard::NotifyExternalDependency
 // Created: SLI 2011-02-08
 // -----------------------------------------------------------------------------
-void ModuleDependencyGuard::NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/ )
+void ModuleDependencyGuard::NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/, const std::string& /*context*/ )
 {
     // NOTHING
 }

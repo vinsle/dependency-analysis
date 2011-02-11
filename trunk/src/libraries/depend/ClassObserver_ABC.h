@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyClass( const std::string& name ) = 0;
+    virtual void NotifyClass( const std::string& name, const std::string& context ) = 0;
     virtual void NotifyAbstractness() = 0;
     //@}
 };

@@ -55,7 +55,7 @@ void UnitSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) c
 // Name: UnitSerializer::NotifyUnit
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-void UnitSerializer::NotifyUnit( const std::string& unit )
+void UnitSerializer::NotifyUnit( const std::string& unit, const std::string& /*context*/ )
 {
     units_.push_back( unit );
 }

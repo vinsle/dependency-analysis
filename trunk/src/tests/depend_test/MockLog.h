@@ -21,7 +21,7 @@ namespace depend
 // =============================================================================
 MOCK_BASE_CLASS( MockLog, Log_ABC )
 {
-    MOCK_METHOD( Warn, 1 )
+    MOCK_METHOD( Warn, 2 )
 };
 
 }

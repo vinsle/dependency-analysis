@@ -47,7 +47,7 @@ void ClassMetric::Apply( ClassMetricVisitor_ABC& visitor ) const
 // Name: ClassMetric::NotifyUnit
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ClassMetric::NotifyUnit( const std::string& unit )
+void ClassMetric::NotifyUnit( const std::string& unit, const std::string& /*context*/ )
 {
     Metric metric;
     metric.unit_ = unit;
@@ -58,7 +58,7 @@ void ClassMetric::NotifyUnit( const std::string& unit )
 // Name: ClassMetric::NotifyClass
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ClassMetric::NotifyClass( const std::string& name )
+void ClassMetric::NotifyClass( const std::string& name, const std::string& /*context*/ )
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid class '" + name + "' out of a module" );

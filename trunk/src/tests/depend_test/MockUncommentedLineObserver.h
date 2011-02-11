@@ -21,7 +21,7 @@ namespace depend
 // =============================================================================
 MOCK_BASE_CLASS( MockUncommentedLineObserver, UncommentedLineObserver_ABC )
 {
-    MOCK_METHOD( NotifyUncommentedLine, 1 )
+    MOCK_METHOD( NotifyUncommentedLine, 2 )
 };
 
 }

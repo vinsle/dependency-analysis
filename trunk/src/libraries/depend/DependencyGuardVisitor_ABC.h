@@ -10,6 +10,7 @@
 #define depend_DependencyGuardVisitor_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <string>
 
 namespace depend
 {
@@ -30,9 +31,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyDependencyFailure( const std::string& from, const std::string& to ) = 0;
+    virtual void NotifyDependencyFailure( const std::string& from, const std::string& to, const std::string& context ) = 0;
     virtual void NotifyUncheckedDependency( const std::string& from, const std::string& to ) = 0;
-    virtual void NotifyObsoleteDependency( const std::string& from, const std::string& to ) = 0;
+    virtual void NotifyObsoleteDependency( const std::string& from, const std::string& to, const std::string& context ) = 0;
     //@}
 };
 

@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyUnit( const std::string& unit ) = 0;
+    virtual void NotifyUnit( const std::string& unit, const std::string& context ) = 0;
     //@}
 };
 

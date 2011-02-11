@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE( simple_unit_serialization )
     MOCK_EXPECT( mockSubject, Unregister ).once();
     UnitSerializer serializer( mockSubject );
     BOOST_REQUIRE( observer );
-    observer->NotifyUnit( "unit" );
+    observer->NotifyUnit( "unit", "context" );
     xml::xostringstream xos;
     MockFilter filter;
     MOCK_EXPECT( filter, Check ).returns( true );
@@ -43,8 +43,8 @@ BOOST_AUTO_TEST_CASE( unit_serialization_can_be_filtered )
     MOCK_EXPECT( mockSubject, Unregister ).once();
     UnitSerializer serializer( mockSubject );
     BOOST_REQUIRE( observer );
-    observer->NotifyUnit( "unit1" );
-    observer->NotifyUnit( "unit2" );
+    observer->NotifyUnit( "unit1", "context" );
+    observer->NotifyUnit( "unit2", "context" );
     xml::xostringstream xos;
     MockFilter filter;
     MOCK_EXPECT( filter, Check ).once().with( "unit1" ).returns( true );

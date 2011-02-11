@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE( simple_external_serialization )
     ExternalSerializer serializer( dependency, filter );
     BOOST_REQUIRE( visitor );
     MOCK_EXPECT( filter, Check ).once().with( "from" ).returns( true );
-    visitor->NotifyExternalDependency( "from", "external" );
+    visitor->NotifyExternalDependency( "from", "external", "context" );
     xml::xostringstream xos;
     serializer.Serialize( xos );
     const std::string expected =
@@ -42,9 +42,9 @@ BOOST_AUTO_TEST_CASE( external_serialization_can_be_filtered )
     ExternalSerializer serializer( dependency, filter );
     BOOST_REQUIRE( visitor );
     MOCK_EXPECT( filter, Check ).once().with( "from" ).returns( true );
-    visitor->NotifyExternalDependency( "from", "external" );
+    visitor->NotifyExternalDependency( "from", "external", "context" );
     MOCK_EXPECT( filter, Check ).once().with( "filtered" ).returns( false );
-    visitor->NotifyExternalDependency( "filtered", "unused" );
+    visitor->NotifyExternalDependency( "filtered", "unused", "context" );
     xml::xostringstream xos;
     serializer.Serialize( xos );
     const std::string expected =

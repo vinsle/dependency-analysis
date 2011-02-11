@@ -47,8 +47,8 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( class_metric_count_classes_and_abstract_classes_on_module, MetricFixture )
 {
-    moduleObserver->NotifyUnit( "module" );
-    classObserver->NotifyClass( "class" );
+    moduleObserver->NotifyUnit( "module", "context" );
+    classObserver->NotifyClass( "class", "context" );
     classObserver->NotifyAbstractness();
     MockClassMetricVisitor visitor;
     MOCK_EXPECT( visitor, NotifyClassMetric ).once().with( "module", 1u, 1u );

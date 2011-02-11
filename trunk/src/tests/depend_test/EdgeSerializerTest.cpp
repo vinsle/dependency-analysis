@@ -43,9 +43,9 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
 {
-    dependencyVisitor->NotifyInternalDependency( "module1", "module2" );
-    dependencyVisitor->NotifyInternalDependency( "module2", "module1" );
-    dependencyVisitor->NotifyExternalDependency( "module1", "boost" );
+    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context" );
+    dependencyVisitor->NotifyInternalDependency( "module2", "module1", "context" );
+    dependencyVisitor->NotifyExternalDependency( "module1", "boost", "context" );
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).returns( true );
     serializer.Serialize( xos, filter );
@@ -77,10 +77,10 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
 
 BOOST_FIXTURE_TEST_CASE( serialize_edges_with_module_filter, SerializeFixture )
 {
-    dependencyVisitor->NotifyInternalDependency( "module1", "module2");
-    dependencyVisitor->NotifyInternalDependency( "module2", "module4" );
-    dependencyVisitor->NotifyInternalDependency( "module3", "module1" );
-    dependencyVisitor->NotifyInternalDependency( "module3", "module2" );
+    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context" );
+    dependencyVisitor->NotifyInternalDependency( "module2", "module4", "context" );
+    dependencyVisitor->NotifyInternalDependency( "module3", "module1", "context" );
+    dependencyVisitor->NotifyInternalDependency( "module3", "module2", "context" );
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).with( "module1" ).returns( true );
     MOCK_EXPECT( filter, Check ).with( "module2" ).returns( true );

@@ -40,9 +40,9 @@ ClassDependencyMetric::~ClassDependencyMetric()
 void ClassDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const T_File& file, files_ )
-        BOOST_FOREACH( const std::string& dependency, file.second )
-            if( file.first != dependency )
-                visitor.NotifyInternalDependency( file.first, dependency );
+        BOOST_FOREACH( const T_Includes::value_type& dependency, file.second )
+            if( file.first != dependency.first )
+                visitor.NotifyInternalDependency( file.first, dependency.first, dependency.second );
 }
 
 namespace
@@ -57,7 +57,7 @@ namespace
 // Name: ClassDependencyMetric::NotifyFile
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-void ClassDependencyMetric::NotifyFile( const std::string& path, std::istream& /*stream*/ )
+void ClassDependencyMetric::NotifyFile( const std::string& path, std::istream& /*stream*/, const std::string& /*context*/ )
 {
     const std::string cleaned = RemoveExtension( path );
     if( files_.empty() || cleaned != files_.back().first )
@@ -72,18 +72,18 @@ void ClassDependencyMetric::NotifyFile( const std::string& path, std::istream& /
 // Name: ClassDependencyMetric::NotifyInternalInclude
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-void ClassDependencyMetric::NotifyInternalInclude( const std::string& file )
+void ClassDependencyMetric::NotifyInternalInclude( const std::string& file, const std::string& context )
 {
     if( files_.empty() )
         throw std::runtime_error( "unknown include '" + file + "' out of file" );
-    files_.back().second.insert( RemoveExtension( file ) );
+    files_.back().second.insert( std::make_pair( RemoveExtension( file ), context ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ClassDependencyMetric::NotifyExternalInclude
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-void ClassDependencyMetric::NotifyExternalInclude( const std::string& /*file*/ )
+void ClassDependencyMetric::NotifyExternalInclude( const std::string& /*file*/, const std::string& /*context*/ )
 {
     // NOTHING
 }
