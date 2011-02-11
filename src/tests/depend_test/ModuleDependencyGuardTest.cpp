@@ -14,7 +14,7 @@
 
 using namespace depend;
 
-BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unknown_dependencies_only_once )
+BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unknown_dependencies )
 {
     xml::xistringstream xis(
         "<dependencies>"
@@ -27,14 +27,14 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unknown_dependencies_only_on
     MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
     ModuleDependencyGuard guard( xis, metric );
     BOOST_REQUIRE( pVisitor );
-    pVisitor->NotifyInternalDependency( "from", "to" );
-    pVisitor->NotifyInternalDependency( "from", "unknown1" );
-    pVisitor->NotifyInternalDependency( "from", "unknown2" );
-    pVisitor->NotifyInternalDependency( "from", "unknown1" );
+    pVisitor->NotifyInternalDependency( "from", "to", "context 1" );
+    pVisitor->NotifyInternalDependency( "from", "unknown1", "context 2" );
+    pVisitor->NotifyInternalDependency( "from", "unknown2", "context 3" );
+    pVisitor->NotifyInternalDependency( "from", "unknown1", "context 4" );
     MockDependencyGuardVisitor visitor;
-    mock::sequence s;
-    MOCK_EXPECT( visitor, NotifyDependencyFailure ).once().in( s ).with( "from", "unknown1" );
-    MOCK_EXPECT( visitor, NotifyDependencyFailure ).once().in( s ).with( "from", "unknown2" );
+    MOCK_EXPECT( visitor, NotifyDependencyFailure ).once().with( "from", "unknown1", "context 2" );
+    MOCK_EXPECT( visitor, NotifyDependencyFailure ).once().with( "from", "unknown1", "context 4" );
+    MOCK_EXPECT( visitor, NotifyDependencyFailure ).once().with( "from", "unknown2", "context 3" );
     guard.Apply( visitor );
 }
 
@@ -70,9 +70,11 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_checked_obsolete_dependencie
     MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
     ModuleDependencyGuard guard( xis, metric );
     BOOST_REQUIRE( pVisitor );
-    pVisitor->NotifyInternalDependency( "from", "checked" );
+    pVisitor->NotifyInternalDependency( "from", "checked", "context" );
+    pVisitor->NotifyInternalDependency( "from", "checked", "context2" );
     MockDependencyGuardVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyObsoleteDependency ).once().with( "from", "checked" );
+    MOCK_EXPECT( visitor, NotifyObsoleteDependency ).once().with( "from", "checked", "context" );
+    MOCK_EXPECT( visitor, NotifyObsoleteDependency ).once().with( "from", "checked", "context2" );
     MOCK_EXPECT( visitor, NotifyUncheckedDependency ).once().with( "from", "unchecked" );
     guard.Apply( visitor );
 }

@@ -11,6 +11,7 @@
 #include "LineObserver_ABC.h"
 #include <boost/foreach.hpp>
 #include <string>
+#include <boost/lexical_cast.hpp>
 
 using namespace depend;
 
@@ -36,10 +37,14 @@ LineVisitor::~LineVisitor()
 // Name: LineVisitor::Visit
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void LineVisitor::Visit( std::istream& stream )
+void LineVisitor::Visit( std::istream& stream, const std::string& context )
 {
     std::string line;
+    unsigned int i = 1;
     while( std::getline( stream, line ) )
+    {
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
-            observer->NotifyLine( line );
+            observer->NotifyLine( line, context + "(" + boost::lexical_cast< std::string >( i ) + ")" );
+        ++i;
+    }
 }

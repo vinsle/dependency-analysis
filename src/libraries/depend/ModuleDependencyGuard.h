@@ -11,8 +11,8 @@
 
 #include "DependencyMetricVisitor_ABC.h"
 #include <map>
-#include <set>
 #include <vector>
+#include <set>
 
 namespace xml
 {
@@ -48,8 +48,8 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule );
-    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule );
+    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& context );
+    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& context );
     //@}
 
 private:
@@ -65,9 +65,21 @@ private:
     //@{
     typedef std::set< std::string > T_Module;
     typedef std::map< std::string, T_Module > T_Modules;
-    typedef std::pair< std::string, std::string > T_Failure;
+    struct T_Failure
+    {
+    public:
+        T_Failure( const std::string& from, const std::string& to, const std::string& context )
+            : from_   ( from )
+            , to_     ( to )
+            , context_( context )
+        {}
+        std::string from_;
+        std::string to_;
+        std::string context_;
+    };
     typedef std::vector< T_Failure > T_Failures;
-    typedef std::set< std::string > T_Dependencies;
+    typedef std::set< std::string > T_Contexts;
+    typedef std::map< std::string, T_Contexts > T_Dependencies;
     //@}
 
 private:
@@ -76,7 +88,6 @@ private:
     T_Modules modules_;
     T_Modules obsoletes_;
     T_Failures failures_;
-    T_Dependencies knownFailures_;
     T_Dependencies checked_;
     //@}
 };

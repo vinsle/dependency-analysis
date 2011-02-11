@@ -37,11 +37,11 @@ Log::~Log()
 // Name: Log::Warn
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-void Log::Warn( const std::string& message ) const
+void Log::Warn( const std::string& message, const std::string& context ) const
 {
-    if( enabled_ && messages_->find( message ) == messages_->end() )
+    if( enabled_ && messages_->find( context ) == messages_->end() )
     {
-        std::cout << message << std::endl;
-        messages_->insert( message );
+        std::cout << context << ": " << message << std::endl;
+        messages_->insert( context );
     }
 }

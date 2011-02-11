@@ -101,9 +101,9 @@ namespace
             // NOTHING
         }
     private:
-        virtual void NotifyFile( const std::string& /*path*/, std::istream& stream )
+        virtual void NotifyFile( const std::string& /*path*/, std::istream& stream, const std::string& context )
         {
-            lineVisitor_.Visit( stream );
+            lineVisitor_.Visit( stream, context );
         }
     private:
         LineVisitor& lineVisitor_;
@@ -126,10 +126,10 @@ namespace
             // NOTHING
         }
     private:
-        virtual void NotifyUnit( const std::string& unit )
+        virtual void NotifyUnit( const std::string& unit, const std::string& context )
         {
             FileObserver observer( fileVisitor_, lineVisitor_ );
-            fileVisitor_.Visit( path_ + "/" + unit );
+            fileVisitor_.Visit( path_ + "/" + unit, context );
             units_.push_back( unit );
         }
     private:
@@ -148,7 +148,7 @@ void Facade::Visit( xml::xistream& xis )
 {
     const std::string path = xis.value< std::string >();
     ModuleObserver observer( *moduleVisitor_, *fileVisitor_, *lineVisitor_, path, modules_ );
-    moduleVisitor_->Visit( path );
+    moduleVisitor_->Visit( path, path );
 }
 
 namespace
@@ -203,14 +203,14 @@ namespace
             return filter_.Check( module );
         }
     private:
-        virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
+        virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*context*/ )
         {
             if( filter_.Check( fromModule ) )
                 extended_.insert( toModule );
             else if( filter_.Check( toModule ) )
                 extended_.insert( fromModule );
         }
-        virtual void NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/ )
+        virtual void NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/, const std::string& /*context*/ )
         {
             // NOTHING
         }

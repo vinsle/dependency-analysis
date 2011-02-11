@@ -31,8 +31,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyInternalInclude( const std::string& file ) = 0;
-    virtual void NotifyExternalInclude( const std::string& file ) = 0;
+    virtual void NotifyInternalInclude( const std::string& file, const std::string& context ) = 0;
+    virtual void NotifyExternalInclude( const std::string& file, const std::string& context ) = 0;
     //@}
 };
 

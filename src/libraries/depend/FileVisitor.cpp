@@ -69,22 +69,23 @@ namespace
         return extensions.empty() || std::find( extensions.begin(), extensions.end(), path.extension() ) != extensions.end();
     }
     template< typename T, typename U >
-    void Visit( const boost::filesystem::path& root, const boost::filesystem::path& current, T& observers, const U& extensions )
+    void Visit( const boost::filesystem::path& root, const boost::filesystem::path& current, T& observers, const U& extensions, const std::string& context )
     {
         for( boost::filesystem::directory_iterator it( current ); it != boost::filesystem::directory_iterator(); ++it )
             if( IsValid( *it ) )
                 if( boost::filesystem::is_directory( *it ) )
-                    Visit( root, *it, observers, extensions );
+                    Visit( root, *it, observers, extensions, context );
                 else
                     if( CheckExtension( *it, extensions ) )
                     {
                         std::ifstream ifs( it->string().c_str() );
                         if( !ifs )
                             throw std::runtime_error( "could not open file '" + it->string() + "'" );
+                        const std::string relative = Relative( root, *it );
                         BOOST_FOREACH( T::value_type& observer, observers )
                         {
                             istream_guard guard( ifs );
-                            observer->NotifyFile( Relative( root, *it ), ifs );
+                            observer->NotifyFile( relative, ifs, context + "/" + relative );
                         }
                     }
     }
@@ -94,8 +95,8 @@ namespace
 // Name: FileVisitor::Visit
 // Created: SLI 2010-08-16
 // -----------------------------------------------------------------------------
-void FileVisitor::Visit( const std::string& path )
+void FileVisitor::Visit( const std::string& path, const std::string& context )
 {
     const boost::filesystem::path root( path + "/" );
-    ::Visit( root, root, observers_, extensions_ );
+    ::Visit( root, root, observers_, extensions_, context );
 }

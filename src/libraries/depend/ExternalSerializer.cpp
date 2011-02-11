@@ -50,7 +50,7 @@ void ExternalSerializer::Serialize( xml::xostream& xos ) const
 // Name: ExternalSerializer::NotifyInternalDependency
 // Created: SLI 2010-09-07
 // -----------------------------------------------------------------------------
-void ExternalSerializer::NotifyInternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/ )
+void ExternalSerializer::NotifyInternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/, const std::string& /*context*/ )
 {
     // NOTHING
 }
@@ -59,7 +59,7 @@ void ExternalSerializer::NotifyInternalDependency( const std::string& /*fromModu
 // Name: ExternalSerializer::NotifyExternalDependency
 // Created: SLI 2010-09-07
 // -----------------------------------------------------------------------------
-void ExternalSerializer::NotifyExternalDependency( const std::string& fromModule, const std::string& toModule )
+void ExternalSerializer::NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*context*/ )
 {
     if( filter_.Check( fromModule ) )
         externals_.insert( toModule );

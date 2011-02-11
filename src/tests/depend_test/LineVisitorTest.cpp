@@ -19,8 +19,8 @@ BOOST_AUTO_TEST_CASE( line_visitor_notifies_listener_with_every_line_in_a_stream
     MockLineObserver observer;
     visitor.Register( observer );
     mock::sequence s;
-    MOCK_EXPECT( observer, NotifyLine ).once().in( s ).with( "first line" );
-    MOCK_EXPECT( observer, NotifyLine ).once().in( s ).with( "second line" );
-    visitor.Visit( ss );
+    MOCK_EXPECT( observer, NotifyLine ).once().in( s ).with( "first line", "context(1)" );
+    MOCK_EXPECT( observer, NotifyLine ).once().in( s ).with( "second line", "context(2)" );
+    visitor.Visit( ss, "context" );
     visitor.Unregister( observer );
 }

@@ -47,118 +47,118 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_listeners_on_empty_line, ClassFixture )
 {
-    lineObserver->NotifyUncommentedLine( "" );
+    lineObserver->NotifyUncommentedLine( "", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_listeners_with_class_name, ClassFixture )
 {
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyUncommentedLine( "class test" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test", "context" );
+    lineObserver->NotifyUncommentedLine( "class test", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_name_can_be_valid_c_identifier, ClassFixture )
 {
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "_test_Name_3" );
-    lineObserver->NotifyUncommentedLine( "class _test_Name_3" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "_test_Name_3", "context" );
+    lineObserver->NotifyUncommentedLine( "class _test_Name_3", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notifies_forward_declaration, ClassFixture )
 {
-    lineObserver->NotifyUncommentedLine( "class test;" );
+    lineObserver->NotifyUncommentedLine( "class test;", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notifies_forward_declaration_with_namespace_definition, ClassFixture )
 {
-    lineObserver->NotifyUncommentedLine( "namespace space { class test; }" );
+    lineObserver->NotifyUncommentedLine( "namespace space { class test; }", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_definition_on_same_line_is_not_a_forward_declaration, ClassFixture )
 {
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyUncommentedLine( "class test{};" );
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyUncommentedLine( "class test:public test_abc{ virtual void method() { 1+1; } };" );
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyUncommentedLine( "namespace space { class test{}; }" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test", "context1" );
+    lineObserver->NotifyUncommentedLine( "class test{};", "context1" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test", "context2" );
+    lineObserver->NotifyUncommentedLine( "class test:public test_abc{ virtual void method() { 1+1; } };", "context2" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test", "context3" );
+    lineObserver->NotifyUncommentedLine( "namespace space { class test{}; }", "context3" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_inheritance, ClassFixture )
 {
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyUncommentedLine( "class test:public test_abc" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test", "context" );
+    lineObserver->NotifyUncommentedLine( "class test:public test_abc", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_templates, ClassFixture )
 {
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyUncommentedLine( "class< T > test" );
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyUncommentedLine( "class< T, U > test" );
-    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test" );
-    lineObserver->NotifyUncommentedLine( "class< < T, U >, K > test" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test", "context1" );
+    lineObserver->NotifyUncommentedLine( "class< T > test", "context1" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test", "context2" );
+    lineObserver->NotifyUncommentedLine( "class< T, U > test", "context2" );
+    MOCK_EXPECT( classObserver, NotifyClass ).once().with( "test", "context3" );
+    lineObserver->NotifyUncommentedLine( "class< < T, U >, K > test", "context3" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_template_forward_declaration, ClassFixture )
 {
-    lineObserver->NotifyUncommentedLine( "template< typename Type > class test;" );
+    lineObserver->NotifyUncommentedLine( "template< typename Type > class test;", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_abstractness, ClassFixture )
 {
     mock::sequence s;
     MOCK_EXPECT( classObserver, NotifyClass ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "class test" );
+    lineObserver->NotifyUncommentedLine( "class test", "context1" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "void method() = 0" );
+    lineObserver->NotifyUncommentedLine( "void method() = 0", "context2" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_abstractness_if_statement, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once();
-    lineObserver->NotifyUncommentedLine( "class test" );
-    lineObserver->NotifyUncommentedLine( "a=0;" );
+    lineObserver->NotifyUncommentedLine( "class test", "context1" );
+    lineObserver->NotifyUncommentedLine( "a=0;", "context2" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_const_abstractness, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once();
-    lineObserver->NotifyUncommentedLine( "class test" );
+    lineObserver->NotifyUncommentedLine( "class test", "context" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once();
-    lineObserver->NotifyUncommentedLine( "void method() const = 0" );
+    lineObserver->NotifyUncommentedLine( "void method() const = 0", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_spaces, ClassFixture )
 {
     MOCK_EXPECT( classObserver, NotifyClass ).once();
-    lineObserver->NotifyUncommentedLine( "class test" );
+    lineObserver->NotifyUncommentedLine( "class test", "context" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once();
-    lineObserver->NotifyUncommentedLine( "void method() const=0" );
+    lineObserver->NotifyUncommentedLine( "void method() const=0", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_does_not_notify_abstractness_if_no_class, ClassFixture )
 {
-    lineObserver->NotifyUncommentedLine( "void method() = 0" );
+    lineObserver->NotifyUncommentedLine( "void method() = 0", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_abstractness_only_once, ClassFixture )
 {
     mock::sequence s;
     MOCK_EXPECT( classObserver, NotifyClass ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "class test" );
+    lineObserver->NotifyUncommentedLine( "class test", "context" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "void method() = 0" );
-    lineObserver->NotifyUncommentedLine( "void method() = 0" );
+    lineObserver->NotifyUncommentedLine( "void method() = 0", "context" );
+    lineObserver->NotifyUncommentedLine( "void method() = 0", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_multiple_classes_in_the_same_file, ClassFixture )
 {
     mock::sequence s;
     MOCK_EXPECT( classObserver, NotifyClass ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "class test" );
+    lineObserver->NotifyUncommentedLine( "class test", "context" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "void method() = 0" );
+    lineObserver->NotifyUncommentedLine( "void method() = 0", "context" );
     MOCK_EXPECT( classObserver, NotifyClass ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "class test2" );
+    lineObserver->NotifyUncommentedLine( "class test2", "context" );
     MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "void method() = 0" );
+    lineObserver->NotifyUncommentedLine( "void method() = 0", "context" );
 }

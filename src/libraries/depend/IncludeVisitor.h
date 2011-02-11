@@ -34,7 +34,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyUncommentedLine( const std::string& line );
+    virtual void NotifyUncommentedLine( const std::string& line, const std::string& context );
     //@}
 };
 

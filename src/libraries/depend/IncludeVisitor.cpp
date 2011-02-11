@@ -41,7 +41,7 @@ IncludeVisitor::~IncludeVisitor()
 // Name: IncludeVisitor::NotifyUncommentedLine
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-void IncludeVisitor::NotifyUncommentedLine( const std::string& line )
+void IncludeVisitor::NotifyUncommentedLine( const std::string& line, const std::string& context )
 {
     const mark_tag internal_tag( 1 );
     const mark_tag external_tag( 2 );
@@ -55,7 +55,7 @@ void IncludeVisitor::NotifyUncommentedLine( const std::string& line )
     if( it != end )
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
             if( !std::string( (*it)[ internal_tag ] ).empty() )
-                observer->NotifyInternalInclude( (*it)[ internal_tag ] ); // $$$$ _RC_ SLI 2010-08-19: seperate in two different visitors
+                observer->NotifyInternalInclude( (*it)[ internal_tag ], context ); // $$$$ _RC_ SLI 2010-08-19: seperate in two different visitors
             else
-                observer->NotifyExternalInclude( (*it)[ external_tag ] );
+                observer->NotifyExternalInclude( (*it)[ external_tag ], context );
 }

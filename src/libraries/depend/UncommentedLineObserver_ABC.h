@@ -30,7 +30,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyUncommentedLine( const std::string& line ) = 0;
+    virtual void NotifyUncommentedLine( const std::string& line, const std::string& context ) = 0;
     //@}
 };
 

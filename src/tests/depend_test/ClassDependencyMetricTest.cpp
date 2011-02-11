@@ -54,48 +54,48 @@ BOOST_FIXTURE_TEST_CASE( empty_metric_does_nothing, DependencyFixture )
 
 BOOST_FIXTURE_TEST_CASE( empty_file_does_nothing, DependencyFixture )
 {
-    fileObserver->NotifyFile( "TestClass.h", ss );
+    fileObserver->NotifyFile( "TestClass.h", ss, "file context" );
     MockDependencyMetricVisitor visitor;
     metric.Apply( visitor );
 }
 
 BOOST_FIXTURE_TEST_CASE( includes_in_a_unit_are_notifiyed_as_external_dependency, DependencyFixture )
 {
-    fileObserver->NotifyFile( "TestClass.h", ss );
-    includeObserver->NotifyInternalInclude( "TestInclude" );
+    fileObserver->NotifyFile( "TestClass.h", ss, "file context" );
+    includeObserver->NotifyInternalInclude( "TestInclude", "include context" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude", "include context" );
     metric.Apply( visitor );
 }
 
 BOOST_FIXTURE_TEST_CASE( includes_are_merged_between_all_files_referencing_same_class, DependencyFixture )
 {
-    fileObserver->NotifyFile( "TestClass.cpp", ss );
-    includeObserver->NotifyInternalInclude( "TestInclude1" );
-    fileObserver->NotifyFile( "TestClass.h", ss );
-    includeObserver->NotifyInternalInclude( "TestInclude2" );
+    fileObserver->NotifyFile( "TestClass.cpp", ss, "file context1" );
+    includeObserver->NotifyInternalInclude( "TestInclude1", "include context1" );
+    fileObserver->NotifyFile( "TestClass.h", ss, "file context2" );
+    includeObserver->NotifyInternalInclude( "TestInclude2", "include context2" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude1" );
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude2" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude1", "include context1" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude2", "include context2" );
     metric.Apply( visitor );
 }
 
 BOOST_FIXTURE_TEST_CASE( sub_directory_is_part_of_the_unit_name, DependencyFixture )
 {
-    fileObserver->NotifyFile( "directory/TestClass.h", ss );
-    includeObserver->NotifyInternalInclude( "TestInclude" );
+    fileObserver->NotifyFile( "directory/TestClass.h", ss, "file context" );
+    includeObserver->NotifyInternalInclude( "TestInclude", "include context" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "directory/TestClass", "TestInclude" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "directory/TestClass", "TestInclude", "include context" );
     metric.Apply( visitor );
 }
 
 BOOST_FIXTURE_TEST_CASE( self_inclusion_is_not_notified, DependencyFixture )
 {
-    fileObserver->NotifyFile( "TestClass.cpp", ss );
-    includeObserver->NotifyInternalInclude( "TestClass.h" );
-    fileObserver->NotifyFile( "TestClass.h", ss );
-    includeObserver->NotifyInternalInclude( "TestInclude" );
+    fileObserver->NotifyFile( "TestClass.cpp", ss, "file context1" );
+    includeObserver->NotifyInternalInclude( "TestClass.h", "include context1" );
+    fileObserver->NotifyFile( "TestClass.h", ss, "file context2" );
+    includeObserver->NotifyInternalInclude( "TestInclude", "include context2" );
     MockDependencyMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude" );
+    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "TestClass", "TestInclude", "include context2" );
     metric.Apply( visitor );
 }

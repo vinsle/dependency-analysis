@@ -41,12 +41,12 @@ UncommentedLineVisitor::~UncommentedLineVisitor()
 // Name: UncommentedLineVisitor::NotifyLine
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void UncommentedLineVisitor::NotifyLine( const std::string& line )
+void UncommentedLineVisitor::NotifyLine( const std::string& line, const std::string& context )
 {
     const sregex statement = *_;
     const sregex comment = ( as_xpr( "/*" ) | as_xpr( "//" ) ) >> statement >> eos;
     std::string output = regex_replace( line, comment, "" );
     if( !output.empty() )
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
-            observer->NotifyUncommentedLine( output );
+            observer->NotifyUncommentedLine( output, context );
 }

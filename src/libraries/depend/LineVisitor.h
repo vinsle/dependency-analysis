@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    void Visit( std::istream& stream );
+    void Visit( std::istream& stream, const std::string& context );
     //@}
 };
 

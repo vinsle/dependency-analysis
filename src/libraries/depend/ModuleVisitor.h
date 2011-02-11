@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    void Visit( const std::string& filename );
+    void Visit( const std::string& filename, const std::string& context );
     //@}
 };
 

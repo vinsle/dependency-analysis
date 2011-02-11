@@ -45,7 +45,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyUnit( const std::string& unit );
+    virtual void NotifyUnit( const std::string& unit, const std::string& context );
     //@}
 
 private:

@@ -22,7 +22,7 @@ namespace
     bool Notify( DependencyMetricVisitor_ABC& visitor, const T_Edges& edges )
     {
         BOOST_FOREACH( const T_Edge& edge, edges )
-            visitor.NotifyInternalDependency( edge.first, edge.second );
+            visitor.NotifyInternalDependency( edge.first, edge.second, "context" );
         return true;
     }
     class Fixture

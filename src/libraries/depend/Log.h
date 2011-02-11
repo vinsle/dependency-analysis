@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Warn( const std::string& message ) const;
+    virtual void Warn( const std::string& message, const std::string& context ) const;
     //@}
 
 private:

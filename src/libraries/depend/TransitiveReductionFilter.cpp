@@ -83,7 +83,7 @@ bool TransitiveReductionFilter::CheckMap( const std::string& module ) const
 // Name: TransitiveReductionFilter::NotifyInternalDependency
 // Created: SLI 2010-09-08
 // -----------------------------------------------------------------------------
-void TransitiveReductionFilter::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule )
+void TransitiveReductionFilter::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*context*/ )
 {
     labels_[ boost::add_vertex( fromModule, graph_ ) ] = fromModule;
     labels_[ boost::add_vertex( toModule, graph_ ) ] = toModule;
@@ -93,7 +93,7 @@ void TransitiveReductionFilter::NotifyInternalDependency( const std::string& fro
 // Name: TransitiveReductionFilter::NotifyExternalDependency
 // Created: SLI 2010-09-08
 // -----------------------------------------------------------------------------
-void TransitiveReductionFilter::NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/ )
+void TransitiveReductionFilter::NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/, const std::string& /*context*/ )
 {
     // NOTHING
 }

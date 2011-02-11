@@ -47,8 +47,8 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule );
-    virtual void NotifyExternalDependency( const std::string& /*fromModule*/, const std::string& /*toModule*/ );
+    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& context );
+    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& context );
     //@}
 
     //! @name Helpers

@@ -50,10 +50,10 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyUnit( const std::string& unit );
-    virtual void NotifyFile( const std::string& path, std::istream& stream );
-    virtual void NotifyInternalInclude( const std::string& file );
-    virtual void NotifyExternalInclude( const std::string& file );
+    virtual void NotifyUnit( const std::string& unit, const std::string& context );
+    virtual void NotifyFile( const std::string& path, std::istream& stream, const std::string& context );
+    virtual void NotifyInternalInclude( const std::string& file, const std::string& context );
+    virtual void NotifyExternalInclude( const std::string& file, const std::string& context );
     //@}
 
     //! @name Helpers
@@ -64,7 +64,22 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< std::string > T_Dependencies;
+    typedef std::set< std::string > T_Units;
+    struct T_Dependency
+    {
+    public:
+        T_Dependency( const std::string& include, const std::string& context )
+            : include_( include )
+            , context_( context )
+        {}
+        bool operator<( const T_Dependency& dependency ) const
+        {
+            return include_ < dependency.include_;
+        }
+        std::string include_;
+        std::string context_;
+    };
+    typedef std::set< T_Dependency > T_Dependencies;
     struct Metric
     {
         std::string unit_;
@@ -81,7 +96,7 @@ private:
     const ModuleResolver_ABC& resolver_;
     const Log_ABC& log_;
     T_Metrics metrics_;
-    T_Dependencies units_;
+    T_Units units_;
     //@}
 };
 

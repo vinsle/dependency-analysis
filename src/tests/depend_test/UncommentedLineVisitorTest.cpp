@@ -47,24 +47,24 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( uncommented_line_is_forwarded, UncommentedLineFixture )
 {
-    MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test" );
-    lineObserver->NotifyLine( "test" );
+    MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test", "context" );
+    lineObserver->NotifyLine( "test", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( commented_line_is_not_forwarded, UncommentedLineFixture )
 {
-    lineObserver->NotifyLine( "// test" );
-    lineObserver->NotifyLine( "/* test" );
+    lineObserver->NotifyLine( "// test", "context1" );
+    lineObserver->NotifyLine( "/* test", "context2" );
 }
 
 BOOST_FIXTURE_TEST_CASE( partially_commented_line_is_forwarded_but_cleaned, UncommentedLineFixture )
 {
-    MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test " );
-    lineObserver->NotifyLine( "test // comment" );
-    MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test" );
-    lineObserver->NotifyLine( "test//" );
-    MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test " );
-    lineObserver->NotifyLine( "test /* comment" );
+    MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test ", "context1" );
+    lineObserver->NotifyLine( "test // comment", "context1" );
+    MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test", "context2" );
+    lineObserver->NotifyLine( "test//", "context2" );
+    MOCK_EXPECT( observer, NotifyUncommentedLine ).once().with( "test ", "context3" );
+    lineObserver->NotifyLine( "test /* comment", "context3" );
 }
 
 // $$$$ _RC_ SLI 2010-08-19: add tests on nested comments removing
