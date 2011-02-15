@@ -21,6 +21,7 @@ namespace xml
 namespace depend
 {
     class Finder_ABC;
+    class Log_ABC;
 
 // =============================================================================
 /** @class  ModuleResolver
@@ -33,7 +34,7 @@ class ModuleResolver : public ModuleResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder );
+             ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, const Log_ABC& log );
     virtual ~ModuleResolver();
     //@}
 

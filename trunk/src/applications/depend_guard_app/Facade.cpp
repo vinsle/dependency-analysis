@@ -31,7 +31,7 @@ using namespace depend;
 Facade::Facade( xml::xisubstream xis )
     : log_                   ( new Log( xis ) )
     , finder_                ( new Finder() )
-    , resolver_              ( new ModuleResolver( xis, *finder_ ) )
+    , resolver_              ( new ModuleResolver( xis, *finder_, *log_ ) )
     , proxy_                 ( new ProxyModuleResolver( *resolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( xis ) )

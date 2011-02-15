@@ -22,3 +22,9 @@ BOOST_AUTO_TEST_CASE( existing_file_is_found )
     const Finder finder;
     BOOST_CHECK( finder.Find( BOOST_RESOLVE( "finder_test/file" ) ) );
 }
+
+BOOST_AUTO_TEST_CASE( existing_directory_is_found )
+{
+    const Finder finder;
+    BOOST_CHECK( finder.Find( BOOST_RESOLVE( "finder_test" ) ) );
+}
