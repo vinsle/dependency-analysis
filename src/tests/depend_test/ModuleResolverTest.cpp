@@ -9,42 +9,51 @@
 #include "depend_test_pch.h"
 #include "depend/ModuleResolver.h"
 #include "MockFinder.h"
+#include "MockLog.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace depend;
 
-
-BOOST_AUTO_TEST_CASE( empty_resolver_returns_empty_module )
+namespace
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    class Fixture
+    {
+    public:
+        MockFinder finder;
+        MockLog log;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( empty_resolver_returns_empty_module, Fixture )
+{
+    xml::xistringstream xis(
         "<external>"
         "   <includes/>"
         "   <excludes/>"
         "</external>" );
-    ModuleResolver resolver( xis, finder );
+    ModuleResolver resolver( xis, finder, log );
     BOOST_CHECK_EQUAL( "", resolver.Resolve( "module/file.h" ) );
 }
 
-BOOST_AUTO_TEST_CASE( resolver_finds_include_in_its_directory )
+BOOST_FIXTURE_TEST_CASE( resolver_finds_include_in_its_directory, Fixture )
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    xml::xistringstream xis(
         "<external>"
         "   <includes>"
         "       <directory>include</directory>"
         "   </includes>"
         "   <excludes/>"
         "</external>" );
-    ModuleResolver resolver( xis, finder );
+    MOCK_EXPECT( finder, Find ).once().returns( true );
+    ModuleResolver resolver( xis, finder, log );
+    mock::verify();
     MOCK_EXPECT( finder, Find ).once().with( "include/module/file.h" ).returns( true );
     BOOST_CHECK_EQUAL( "module", resolver.Resolve( "module/file.h" ) );
 }
 
-BOOST_AUTO_TEST_CASE( resolver_checks_modules_in_all_its_directories )
+BOOST_FIXTURE_TEST_CASE( resolver_checks_modules_in_all_its_directories, Fixture )
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    xml::xistringstream xis(
         "<external>"
         "   <includes>"
         "       <directory>include</directory>"
@@ -52,33 +61,35 @@ BOOST_AUTO_TEST_CASE( resolver_checks_modules_in_all_its_directories )
         "   </includes>"
         "   <excludes/>"
         "</external>" );
-    ModuleResolver resolver( xis, finder );
+    MOCK_EXPECT( finder, Find ).exactly( 2 ).returns( true );
+    ModuleResolver resolver( xis, finder, log );
+    mock::verify();
     mock::sequence s;
     MOCK_EXPECT( finder, Find ).once().with( "include/module/file.h" ).in( s ).returns( false );
     MOCK_EXPECT( finder, Find ).once().with( "other/module/file.h" ).in( s ).returns( true );
     BOOST_CHECK_EQUAL( "module", resolver.Resolve( "module/file.h" ) );
 }
 
-BOOST_AUTO_TEST_CASE( module_can_be_the_root_directory )
+BOOST_FIXTURE_TEST_CASE( module_can_be_the_root_directory, Fixture )
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    xml::xistringstream xis(
         "<external>"
         "   <includes>"
         "       <directory>include</directory>"
         "   </includes>"
         "   <excludes/>"
         "</external>" );
-    ModuleResolver resolver( xis, finder );
+    MOCK_EXPECT( finder, Find ).once().returns( true );
+    ModuleResolver resolver( xis, finder, log );
+    mock::verify();
     mock::sequence s;
     MOCK_EXPECT( finder, Find ).once().with( "include/file.h" ).in( s ).returns( true );
     BOOST_CHECK_EQUAL( "include", resolver.Resolve( "file.h" ) );
 }
 
-BOOST_AUTO_TEST_CASE( module_name_resolution_can_be_forced )
+BOOST_FIXTURE_TEST_CASE( module_name_resolution_can_be_forced, Fixture )
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    xml::xistringstream xis(
         "<external>"
         "   <includes>"
         "       <directory>include</directory>"
@@ -86,68 +97,87 @@ BOOST_AUTO_TEST_CASE( module_name_resolution_can_be_forced )
         "   </includes>"
         "   <excludes/>"
         "</external>" );
-    ModuleResolver resolver( xis, finder );
+    MOCK_EXPECT( finder, Find ).exactly( 2 ).returns( true );
+    ModuleResolver resolver( xis, finder, log );
+    mock::verify();
     MOCK_EXPECT( finder, Find ).once().with( "include/file.h" ).returns( false );
     MOCK_EXPECT( finder, Find ).once().with( "include/sub-directory/file.h" ).returns( true );
     BOOST_CHECK_EQUAL( "module", resolver.Resolve( "file.h" ) );
 }
 
-BOOST_AUTO_TEST_CASE( resolver_returns_empty_module_if_not_found )
+BOOST_FIXTURE_TEST_CASE( resolver_returns_empty_module_if_not_found, Fixture )
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    xml::xistringstream xis(
         "<external>"
         "   <includes>"
         "       <directory>include</directory>"
         "   </includes>"
         "   <excludes/>"
         "</external>" );
-    ModuleResolver resolver( xis, finder );
+    MOCK_EXPECT( finder, Find ).once().returns( true );
+    ModuleResolver resolver( xis, finder, log );
+    mock::verify();
     MOCK_EXPECT( finder, Find ).once().with( "include/map" ).returns( false );
     BOOST_CHECK_EQUAL( "", resolver.Resolve( "map" ) );
 }
 
-BOOST_AUTO_TEST_CASE( resolver_can_exclude_include_directories )
+BOOST_FIXTURE_TEST_CASE( resolver_can_exclude_include_directories, Fixture )
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    xml::xistringstream xis(
         "<external>"
         "   <includes/>"
         "   <excludes>"
         "       <directory>exclude</directory>"
         "   </excludes>"
         "</external>" );
-    ModuleResolver resolver( xis, finder );
+    MOCK_EXPECT( finder, Find ).once().returns( true );
+    ModuleResolver resolver( xis, finder, log );
+    mock::verify();
     MOCK_EXPECT( finder, Find ).once().with( "exclude/map" ).returns( true );
     BOOST_CHECK( resolver.IsExcluded( "map" ) );
     MOCK_EXPECT( finder, Find ).once().with( "exclude/other" ).returns( false );
     BOOST_CHECK( !resolver.IsExcluded( "other" ) );
 }
 
-BOOST_AUTO_TEST_CASE( resolver_throws_if_empty_directory_is_found )
+BOOST_FIXTURE_TEST_CASE( resolver_throws_if_empty_directory_is_found_in_xml, Fixture )
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    xml::xistringstream xis(
         "<external>"
         "   <includes>"
         "       <directory/>"
         "   </includes>"
         "   <excludes/>"
         "</external>" );
-    BOOST_CHECK_THROW( ModuleResolver( xis, finder ), std::runtime_error );
+    BOOST_CHECK_THROW( ModuleResolver( xis, finder, log ), std::runtime_error );
 }
 
-BOOST_AUTO_TEST_CASE( resolver_cleans_directories_definitions )
+BOOST_FIXTURE_TEST_CASE( resolver_cleans_directories_definitions, Fixture )
 {
-    MockFinder finder;
-    xml::xistringstream xis( 
+    xml::xistringstream xis(
         "<external>"
         "   <includes>"
         "       <directory>include/</directory>"
         "   </includes>"
         "   <excludes/>"
         "</external>" );
-    ModuleResolver resolver( xis, finder );
+    MOCK_EXPECT( finder, Find ).once().returns( true );
+    ModuleResolver resolver( xis, finder, log );
+    mock::verify();
     MOCK_EXPECT( finder, Find ).with( "include/module/file.h" ).returns( true );
     BOOST_CHECK_EQUAL( "module", resolver.Resolve( "module/file.h" ) );
 }
+
+BOOST_FIXTURE_TEST_CASE( resolver_warns_for_unresolved_directory, Fixture )
+{
+    xml::xistringstream xis(
+        "<external>"
+        "   <includes>"
+        "       <directory>unknown/</directory>"
+        "   </includes>"
+        "   <excludes/>"
+        "</external>" );
+    MOCK_EXPECT( finder, Find ).once().with( "unknown/" ).returns( false );
+    MOCK_EXPECT( log, Warn ).once();
+    ModuleResolver resolver( xis, finder, log );
+}
+

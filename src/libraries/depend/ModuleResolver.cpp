@@ -9,6 +9,7 @@
 #include "depend_pch.h"
 #include "ModuleResolver.h"
 #include "Finder_ABC.h"
+#include "Log_ABC.h"
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )
 #pragma warning( disable: 4512 4996 )
@@ -40,15 +41,18 @@ namespace
         }
         return result;
     }
-    void ReadDirectory( xml::xistream& xis, T_Directories& directories )
+    void ReadDirectory( xml::xistream& xis, T_Directories& directories, const Finder_ABC& finder, const Log_ABC& log )
     {
-        directories.push_back( xis.value< std::string >() );
+        const std::string directory = xis.value< std::string >();
+        if( !finder.Find( directory ) )
+            log.Warn( "include directory '" + directory + "' can not be found", "" );
+        directories.push_back( directory );
     }
-    T_Directories ReadDirectories( xml::xisubstream xis, const std::string& root )
+    T_Directories ReadDirectories( xml::xisubstream xis, const std::string& root, const Finder_ABC& finder, const Log_ABC& log )
     {
         T_Directories result;
         xis >> xml::start( root )
-                >> xml::list( "directory", boost::bind( &ReadDirectory, _1, boost::ref( result ) ) );
+                >> xml::list( "directory", boost::bind( &ReadDirectory, _1, boost::ref( result ), boost::cref( finder ), boost::cref( log ) ) );
         return result;
     }
 }
@@ -57,9 +61,9 @@ namespace
 // Name: ModuleResolver constructor
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-ModuleResolver::ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder )
-    : directories_( Parse< T_Directories, T_NamedDirectories >( ReadDirectories( xis >> xml::start( "external" ), "includes" ) ) )
-    , excludes_   ( ReadDirectories( xis, "excludes" ) )
+ModuleResolver::ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, const Log_ABC& log )
+    : directories_( Parse< T_Directories, T_NamedDirectories >( ReadDirectories( xis >> xml::start( "external" ), "includes", finder, log ) ) )
+    , excludes_   ( ReadDirectories( xis, "excludes", finder, log ) )
     , finder_     ( finder )
 {
     // NOTHING
