@@ -37,8 +37,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                                     Subject< IncludeObserver_ABC >& includeObserver_, const ModuleResolver_ABC& resolver,
-                                     const Log_ABC& log );
+                                     Subject< IncludeObserver_ABC >& includeObserver_, const ModuleResolver_ABC& externalResolver,
+                                     const ModuleResolver_ABC& internalResolver, const Log_ABC& log );
     virtual ~ModuleDependencyMetric();
     //@}
 
@@ -54,11 +54,6 @@ private:
     virtual void NotifyFile( const std::string& path, std::istream& stream, const std::string& context );
     virtual void NotifyInternalInclude( const std::string& file, const std::string& context );
     virtual void NotifyExternalInclude( const std::string& file, const std::string& context );
-    //@}
-
-    //! @name Helpers
-    //@{
-    std::string Resolve( const std::string& include ) const;
     //@}
 
 private:
@@ -93,7 +88,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const ModuleResolver_ABC& resolver_;
+    const ModuleResolver_ABC& externalResolver_;
+    const ModuleResolver_ABC& internalResolver_;
     const Log_ABC& log_;
     T_Metrics metrics_;
     T_Units units_;
