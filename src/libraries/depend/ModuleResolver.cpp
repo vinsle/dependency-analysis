@@ -41,18 +41,15 @@ namespace
         }
         return result;
     }
-    void ReadDirectory( xml::xistream& xis, T_Directories& directories, const Finder_ABC& finder, const Log_ABC& log )
+    void ReadDirectory( xml::xistream& xis, T_Directories& directories )
     {
-        const std::string directory = xis.value< std::string >();
-        if( !finder.Find( directory ) )
-            log.Warn( "include directory '" + directory + "' can not be found", "" );
-        directories.push_back( directory );
+        directories.push_back( xis.value< std::string >() );
     }
-    T_Directories ReadDirectories( xml::xisubstream xis, const std::string& root, const Finder_ABC& finder, const Log_ABC& log )
+    T_Directories ReadDirectories( xml::xisubstream xis, const std::string& root )
     {
         T_Directories result;
         xis >> xml::start( root )
-                >> xml::list( "directory", boost::bind( &ReadDirectory, _1, boost::ref( result ), boost::cref( finder ), boost::cref( log ) ) );
+                >> xml::list( "directory", boost::bind( &ReadDirectory, _1, boost::ref( result ) ) );
         return result;
     }
 }
@@ -62,11 +59,16 @@ namespace
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
 ModuleResolver::ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, const Log_ABC& log )
-    : directories_( Parse< T_Directories, T_NamedDirectories >( ReadDirectories( xis >> xml::start( "external" ), "includes", finder, log ) ) )
-    , excludes_   ( ReadDirectories( xis, "excludes", finder, log ) )
+    : directories_( Parse< T_Directories, T_NamedDirectories >( ReadDirectories( xis >> xml::start( "external" ), "includes" ) ) )
+    , excludes_   ( ReadDirectories( xis, "excludes" ) )
     , finder_     ( finder )
 {
-    // NOTHING
+    BOOST_FOREACH( const T_NamedDirectory& directory, directories_ )
+        if( !finder.Find( directory.first ) )
+            log.Warn( "include directory '" + directory.first + "' cannot be found", "" );
+    BOOST_FOREACH( const std::string& directory, excludes_ )
+        if( !finder.Find( directory ) )
+            log.Warn( "exclude directory '" + directory + "' cannot be found", "" );
 }
 
 // -----------------------------------------------------------------------------
