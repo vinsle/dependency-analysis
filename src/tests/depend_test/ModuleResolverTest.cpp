@@ -180,4 +180,3 @@ BOOST_FIXTURE_TEST_CASE( resolver_warns_for_unresolved_directory, Fixture )
     MOCK_EXPECT( log, Warn ).once();
     ModuleResolver resolver( xis, finder, log );
 }
-
