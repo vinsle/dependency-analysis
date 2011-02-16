@@ -24,18 +24,18 @@ namespace depend
     class Log_ABC;
 
 // =============================================================================
-/** @class  ModuleResolver
+/** @class  ExternalModuleResolver
     @brief  Module resolver
 */
 // Created: SLI 2010-09-09
 // =============================================================================
-class ModuleResolver : public ModuleResolver_ABC
+class ExternalModuleResolver : public ModuleResolver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, const Log_ABC& log );
-    virtual ~ModuleResolver();
+             ExternalModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, const Log_ABC& log );
+    virtual ~ExternalModuleResolver();
     //@}
 
     //! @name Operations

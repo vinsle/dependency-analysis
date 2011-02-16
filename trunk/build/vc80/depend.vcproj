@@ -194,6 +194,14 @@
 				Name="tools"
 				>
 				<File
+					RelativePath="..\..\src\libraries\depend\ExternalModuleResolver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ExternalModuleResolver.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\Filter.cpp"
 					>
 				</File>
@@ -231,14 +239,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\Log_ABC.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\ModuleResolver.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\ModuleResolver.h"
 					>
 				</File>
 				<File

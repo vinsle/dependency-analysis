@@ -26,7 +26,7 @@
 #include "Filter.h"
 #include "Log.h"
 #include "Finder.h"
-#include "ModuleResolver.h"
+#include "ExternalModuleResolver.h"
 #include "ProxyModuleResolver.h"
 #include "TransitiveReductionFilter.h"
 #include <boost/foreach.hpp>
@@ -47,7 +47,7 @@ Facade::Facade( xml::xisubstream xis )
     , log_                   ( new Log( xis ) )
     , filter_                ( new Filter( xis ) )
     , finder_                ( new Finder() )
-    , resolver_              ( new ModuleResolver( xis, *finder_, *log_ ) )
+    , resolver_              ( new ExternalModuleResolver( xis, *finder_, *log_ ) )
     , proxy_                 ( new ProxyModuleResolver( *resolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( xis ) )

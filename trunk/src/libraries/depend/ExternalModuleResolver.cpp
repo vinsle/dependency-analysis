@@ -7,7 +7,7 @@
 //
 
 #include "depend_pch.h"
-#include "ModuleResolver.h"
+#include "ExternalModuleResolver.h"
 #include "Finder_ABC.h"
 #include "Log_ABC.h"
 #include <boost/foreach.hpp>
@@ -55,10 +55,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleResolver constructor
+// Name: ExternalModuleResolver constructor
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-ModuleResolver::ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, const Log_ABC& log )
+ExternalModuleResolver::ExternalModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, const Log_ABC& log )
     : directories_( Parse< T_Directories, T_NamedDirectories >( ReadDirectories( xis >> xml::start( "external" ), "includes" ) ) )
     , excludes_   ( ReadDirectories( xis, "excludes" ) )
     , finder_     ( finder )
@@ -72,19 +72,19 @@ ModuleResolver::ModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleResolver destructor
+// Name: ExternalModuleResolver destructor
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-ModuleResolver::~ModuleResolver()
+ExternalModuleResolver::~ExternalModuleResolver()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleResolver::Resolve
+// Name: ExternalModuleResolver::Resolve
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-std::string ModuleResolver::Resolve( const std::string& include ) const
+std::string ExternalModuleResolver::Resolve( const std::string& include ) const
 {
     BOOST_FOREACH( const T_NamedDirectory& directory, directories_ )
         if( finder_.Find( directory.first + "/" + include ) )
@@ -101,10 +101,10 @@ std::string ModuleResolver::Resolve( const std::string& include ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleResolver::IsExcluded
+// Name: ExternalModuleResolver::IsExcluded
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-bool ModuleResolver::IsExcluded( const std::string& include ) const
+bool ExternalModuleResolver::IsExcluded( const std::string& include ) const
 {
     BOOST_FOREACH( const std::string& exclude, excludes_ )
         if( finder_.Find( exclude + "/" + include ) )
