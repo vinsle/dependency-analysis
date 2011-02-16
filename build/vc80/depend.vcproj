@@ -194,14 +194,6 @@
 				Name="tools"
 				>
 				<File
-					RelativePath="..\..\src\libraries\depend\ExternalModuleResolver.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\ExternalModuleResolver.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\depend\Filter.cpp"
 					>
 				</File>
@@ -242,19 +234,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ModuleResolver_ABC.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\depend\Observer.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\ProxyModuleResolver.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\ProxyModuleResolver.h"
 					>
 				</File>
 				<File
@@ -463,6 +443,38 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\UnitSerializer.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="resolvers"
+				>
+				<File
+					RelativePath="..\..\src\libraries\depend\ExternalModuleResolver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ExternalModuleResolver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\InternalModuleResolver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\InternalModuleResolver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleResolver_ABC.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ProxyModuleResolver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ProxyModuleResolver.h"
 					>
 				</File>
 			</Filter>

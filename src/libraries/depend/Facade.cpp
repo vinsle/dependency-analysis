@@ -27,6 +27,7 @@
 #include "Log.h"
 #include "Finder.h"
 #include "ExternalModuleResolver.h"
+#include "InternalModuleResolver.h"
 #include "ProxyModuleResolver.h"
 #include "TransitiveReductionFilter.h"
 #include <boost/foreach.hpp>
@@ -47,8 +48,8 @@ Facade::Facade( xml::xisubstream xis )
     , log_                   ( new Log( xis ) )
     , filter_                ( new Filter( xis ) )
     , finder_                ( new Finder() )
-    , resolver_              ( new ExternalModuleResolver( xis, *finder_, *log_ ) )
-    , proxy_                 ( new ProxyModuleResolver( *resolver_ ) )
+    , externalResolver_      ( new ExternalModuleResolver( xis, *finder_, *log_ ) )
+    , proxy_                 ( new ProxyModuleResolver( *externalResolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( xis ) )
     , lineVisitor_           ( new LineVisitor() )
@@ -56,7 +57,8 @@ Facade::Facade( xml::xisubstream xis )
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
-    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *log_ ) )
+    , internalResolver_      ( new InternalModuleResolver( *moduleVisitor_ ) )
+    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *internalResolver_, *log_ ) )
     , unitSerializer_        ( new UnitSerializer( *moduleVisitor_ ) )
     , graphSerializer_       ( new GraphSerializer( xis ) )
 {

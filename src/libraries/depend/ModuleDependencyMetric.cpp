@@ -22,13 +22,14 @@ using namespace depend;
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
 ModuleDependencyMetric::ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                                                Subject< IncludeObserver_ABC >& includeObserver, const ModuleResolver_ABC& resolver,
-                                                const Log_ABC& log )
+                                                Subject< IncludeObserver_ABC >& includeObserver, const ModuleResolver_ABC& externalResolver,
+                                                const ModuleResolver_ABC& internalResolver, const Log_ABC& log )
     : Observer< UnitObserver_ABC >   ( unitObserver )
     , Observer< FileObserver_ABC >   ( fileObserver )
     , Observer< IncludeObserver_ABC >( includeObserver )
-    , resolver_( resolver )
-    , log_     ( log )
+    , externalResolver_( externalResolver )
+    , internalResolver_( internalResolver )
+    , log_             ( log )
 {
     // NOTHING
 }
@@ -69,29 +70,16 @@ void ModuleDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
         boost::function< void( const std::string&, const std::string&, const std::string& ) > NotifyInternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyInternalDependency, &visitor, _1, _2, _3 );
         boost::function< void( const std::string&, const std::string&, const std::string& ) > NotifyExternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyExternalDependency, &visitor, _1, _2, _3 );
         BOOST_FOREACH( const T_Dependency& include, cleaned )
-            if( !Notify( NotifyInternal, metric.unit_, Resolve( include.include_ ), include.context_ ) )
-                if( !Notify( NotifyExternal, metric.unit_, resolver_.Resolve( include.include_ ), include.context_ ) )
-                    if( !resolver_.IsExcluded( include.include_ ) )
+            if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( include.include_ ), include.context_ ) )
+                if( !Notify( NotifyExternal, metric.unit_, externalResolver_.Resolve( include.include_ ), include.context_ ) )
+                    if( !externalResolver_.IsExcluded( include.include_ ) )
                         log_.Warn( "Warning: include \"" + include.include_ + "\" in unit '" + metric.unit_ + "' cannot be resolved", include.context_ );
         BOOST_FOREACH( const T_Dependency& include, metric.external_ )
-            if( !Notify( NotifyExternal, metric.unit_, resolver_.Resolve( include.include_ ), include.context_ ) )
-                if( !Notify( NotifyInternal, metric.unit_, Resolve( include.include_ ), include.context_ ) )
-                    if( !resolver_.IsExcluded( include.include_ ) )
+            if( !Notify( NotifyExternal, metric.unit_, externalResolver_.Resolve( include.include_ ), include.context_ ) )
+                if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( include.include_ ), include.context_ ) )
+                    if( !externalResolver_.IsExcluded( include.include_ ) )
                         log_.Warn( "Warning: include <" + include.include_ + "> in unit '" + metric.unit_ + "' cannot be resolved", include.context_ );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric::Resolve
-// Created: SLI 2010-09-09
-// -----------------------------------------------------------------------------
-std::string ModuleDependencyMetric::Resolve( const std::string& include ) const
-{
-    const size_t position = include.find_first_of( '/' );
-    const std::string unit = include.substr( 0, position );
-    if( position == std::string::npos || units_.find( unit ) == units_.end() )
-        return "";
-    return unit;
 }
 
 // -----------------------------------------------------------------------------

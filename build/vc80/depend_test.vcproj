@@ -260,6 +260,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\InternalModuleResolverTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\LineVisitorTest.cpp"
 				>
 			</File>
