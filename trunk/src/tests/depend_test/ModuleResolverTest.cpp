@@ -105,6 +105,19 @@ BOOST_FIXTURE_TEST_CASE( module_name_resolution_can_be_forced, Fixture )
     BOOST_CHECK_EQUAL( "module", resolver.Resolve( "file.h" ) );
 }
 
+BOOST_FIXTURE_TEST_CASE( name_is_not_resolved, Fixture )
+{
+    xml::xistringstream xis(
+        "<external>"
+        "   <includes>"
+        "       <directory>module,name</directory>"
+        "   </includes>"
+        "   <excludes/>"
+        "</external>" );
+    MOCK_EXPECT( finder, Find ).once().with( "module" ).returns( true );
+    ModuleResolver resolver( xis, finder, log );
+}
+
 BOOST_FIXTURE_TEST_CASE( resolver_returns_empty_module_if_not_found, Fixture )
 {
     xml::xistringstream xis(
@@ -176,7 +189,7 @@ BOOST_FIXTURE_TEST_CASE( resolver_warns_for_unresolved_directory, Fixture )
         "   </includes>"
         "   <excludes/>"
         "</external>" );
-    MOCK_EXPECT( finder, Find ).once().with( "unknown/" ).returns( false );
+    MOCK_EXPECT( finder, Find ).once().with( "unknown" ).returns( false );
     MOCK_EXPECT( log, Warn ).once();
     ModuleResolver resolver( xis, finder, log );
 }
