@@ -232,6 +232,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\ExternalModuleResolverTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\ExternalSerializerTest.cpp"
 				>
 			</File>
@@ -269,10 +273,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\tests\depend_test\ModuleDependencyMetricTest.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\tests\depend_test\ModuleResolverTest.cpp"
 				>
 			</File>
 			<File

@@ -15,7 +15,7 @@
 #include "depend/ModuleDependencyMetric.h"
 #include "depend/Log.h"
 #include "depend/Finder.h"
-#include "depend/ModuleResolver.h"
+#include "depend/ExternalModuleResolver.h"
 #include "depend/ProxyModuleResolver.h"
 #include "depend/ModuleDependencyGuard.h"
 #include "depend/DependencyGuardVisitor_ABC.h"
@@ -31,7 +31,7 @@ using namespace depend;
 Facade::Facade( xml::xisubstream xis )
     : log_                   ( new Log( xis ) )
     , finder_                ( new Finder() )
-    , resolver_              ( new ModuleResolver( xis, *finder_, *log_ ) )
+    , resolver_              ( new ExternalModuleResolver( xis, *finder_, *log_ ) )
     , proxy_                 ( new ProxyModuleResolver( *resolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
     , fileVisitor_           ( new FileVisitor( xis ) )
