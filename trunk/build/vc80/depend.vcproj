@@ -458,6 +458,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\ExternalModuleResolver_ABC.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\InternalModuleResolver.cpp"
 					>
 				</File>
@@ -466,7 +470,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ModuleResolver_ABC.h"
+					RelativePath="..\..\src\libraries\depend\InternalModuleResolver_ABC.h"
 					>
 				</File>
 				<File

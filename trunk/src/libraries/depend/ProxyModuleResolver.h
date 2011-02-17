@@ -9,7 +9,7 @@
 #ifndef depend_ProxyModuleResolver_h
 #define depend_ProxyModuleResolver_h
 
-#include "ModuleResolver_ABC.h"
+#include "ExternalModuleResolver_ABC.h"
 #include <map>
 #include <memory>
 
@@ -17,16 +17,16 @@ namespace depend
 {
 // =============================================================================
 /** @class  ProxyModuleResolver
-    @brief  ProxyModuleResolver
+    @brief  Proxy module resolver
 */
 // Created: SLI 2010-09-09
 // =============================================================================
-class ProxyModuleResolver : public ModuleResolver_ABC
+class ProxyModuleResolver : public ExternalModuleResolver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ProxyModuleResolver( ModuleResolver_ABC& resolver );
+    explicit ProxyModuleResolver( ExternalModuleResolver_ABC& resolver );
     virtual ~ProxyModuleResolver();
     //@}
 
@@ -47,7 +47,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ModuleResolver_ABC& resolver_;
+    ExternalModuleResolver_ABC& resolver_;
     std::auto_ptr< T_Results > results_;
     std::auto_ptr< T_Excludes > excludes_;
     //@}

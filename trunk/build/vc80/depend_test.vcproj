@@ -335,6 +335,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\tests\depend_test\MockExternalModuleResolver.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\tests\depend_test\MockFileObserver.h"
 					>
 				</File>
@@ -351,15 +355,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\tests\depend_test\MockInternalModuleResolver.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\tests\depend_test\MockLineObserver.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockLog.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\tests\depend_test\MockModuleResolver.h"
 					>
 				</File>
 				<File

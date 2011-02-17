@@ -9,7 +9,8 @@
 #include "depend_pch.h"
 #include "ModuleDependencyMetric.h"
 #include "DependencyMetricVisitor_ABC.h"
-#include "ModuleResolver_ABC.h"
+#include "ExternalModuleResolver_ABC.h"
+#include "InternalModuleResolver_ABC.h"
 #include "Log_ABC.h"
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
@@ -22,8 +23,8 @@ using namespace depend;
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
 ModuleDependencyMetric::ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                                                Subject< IncludeObserver_ABC >& includeObserver, const ModuleResolver_ABC& externalResolver,
-                                                const ModuleResolver_ABC& internalResolver, const Log_ABC& log )
+                                                Subject< IncludeObserver_ABC >& includeObserver, const ExternalModuleResolver_ABC& externalResolver,
+                                                const InternalModuleResolver_ABC& internalResolver, const Log_ABC& log )
     : Observer< UnitObserver_ABC >   ( unitObserver )
     , Observer< FileObserver_ABC >   ( fileObserver )
     , Observer< IncludeObserver_ABC >( includeObserver )
@@ -48,12 +49,11 @@ namespace
     template< typename T>
     bool Notify( boost::function< T > notify, const std::string& currentUnit, const std::string& unit, const std::string& context )
     {
-        if( !unit.empty() && unit != currentUnit )
-        {
+        if( unit.empty() )
+            return false;
+        if( currentUnit != unit )
             notify( currentUnit, unit, context );
-            return true;
-        }
-        return false;
+        return true;
     }
 }
 
@@ -70,13 +70,13 @@ void ModuleDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
         boost::function< void( const std::string&, const std::string&, const std::string& ) > NotifyInternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyInternalDependency, &visitor, _1, _2, _3 );
         boost::function< void( const std::string&, const std::string&, const std::string& ) > NotifyExternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyExternalDependency, &visitor, _1, _2, _3 );
         BOOST_FOREACH( const T_Dependency& include, cleaned )
-            if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( include.include_ ), include.context_ ) )
+            if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( metric.unit_, include.file_, include.include_ ), include.context_ ) )
                 if( !Notify( NotifyExternal, metric.unit_, externalResolver_.Resolve( include.include_ ), include.context_ ) )
                     if( !externalResolver_.IsExcluded( include.include_ ) )
                         log_.Warn( "Warning: include \"" + include.include_ + "\" in unit '" + metric.unit_ + "' cannot be resolved", include.context_ );
         BOOST_FOREACH( const T_Dependency& include, metric.external_ )
             if( !Notify( NotifyExternal, metric.unit_, externalResolver_.Resolve( include.include_ ), include.context_ ) )
-                if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( include.include_ ), include.context_ ) )
+                if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( metric.unit_, include.file_, include.include_ ), include.context_ ) )
                     if( !externalResolver_.IsExcluded( include.include_ ) )
                         log_.Warn( "Warning: include <" + include.include_ + "> in unit '" + metric.unit_ + "' cannot be resolved", include.context_ );
     }
@@ -102,27 +102,28 @@ void ModuleDependencyMetric::NotifyFile( const std::string& path, std::istream& 
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid file '" + path + "' out of a unit" );
-    metrics_.back().files_.insert( T_Dependency( path, context ) );
+    metrics_.back().files_.insert( T_Dependency( path, path, context ) );
+    lastFile_ = path;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ModuleDependencyMetric::NotifyInternalInclude
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetric::NotifyInternalInclude( const std::string& file, const std::string& context )
+void ModuleDependencyMetric::NotifyInternalInclude( const std::string& include, const std::string& context )
 {
     if( metrics_.empty() )
-        throw std::runtime_error( "invalid include '" + file + "' out of a unit" );
-    metrics_.back().internal_.insert( T_Dependency( file, context ) );
+        throw std::runtime_error( "invalid include '" + include + "' out of a unit" );
+    metrics_.back().internal_.insert( T_Dependency( include, lastFile_, context ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ModuleDependencyMetric::NotifyExternalInclude
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetric::NotifyExternalInclude( const std::string& file, const std::string& context )
+void ModuleDependencyMetric::NotifyExternalInclude( const std::string& include, const std::string& context )
 {
     if( metrics_.empty() )
-        throw std::runtime_error( "invalid include '" + file + "' out of a unit" );
-    metrics_.back().external_.insert( T_Dependency( file, context ) );
+        throw std::runtime_error( "invalid include '" + include + "' out of a unit" );
+    metrics_.back().external_.insert( T_Dependency( include, lastFile_, context ) );
 }

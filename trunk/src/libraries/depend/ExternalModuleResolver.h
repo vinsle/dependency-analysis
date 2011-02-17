@@ -9,7 +9,7 @@
 #ifndef depend_ModuleResolver_h
 #define depend_ModuleResolver_h
 
-#include "ModuleResolver_ABC.h"
+#include "ExternalModuleResolver_ABC.h"
 #include <vector>
 #include <string>
 
@@ -25,11 +25,11 @@ namespace depend
 
 // =============================================================================
 /** @class  ExternalModuleResolver
-    @brief  Module resolver
+    @brief  External module resolver
 */
 // Created: SLI 2010-09-09
 // =============================================================================
-class ExternalModuleResolver : public ModuleResolver_ABC
+class ExternalModuleResolver : public ExternalModuleResolver_ABC
 {
 public:
     //! @name Constructors/Destructor

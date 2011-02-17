@@ -25,7 +25,8 @@ namespace xml
 namespace depend
 {
     class Finder_ABC;
-    class ModuleResolver_ABC;
+    class ExternalModuleResolver_ABC;
+    class InternalModuleResolver_ABC;
     class Log_ABC;
     class ModuleVisitor;
     class FileVisitor;
@@ -61,14 +62,14 @@ private:
     //@{
     std::auto_ptr< depend::Log_ABC > log_;
     std::auto_ptr< depend::Finder_ABC > finder_;
-    std::auto_ptr< depend::ModuleResolver_ABC > externalResolver_;
-    std::auto_ptr< depend::ModuleResolver_ABC > proxy_;
+    std::auto_ptr< depend::ExternalModuleResolver_ABC > externalResolver_;
+    std::auto_ptr< depend::ExternalModuleResolver_ABC > proxy_;
     std::auto_ptr< depend::ModuleVisitor > moduleVisitor_;
     std::auto_ptr< depend::FileVisitor > fileVisitor_;
     std::auto_ptr< depend::LineVisitor > lineVisitor_;
     std::auto_ptr< depend::UncommentedLineVisitor > uncommentedLineVisitor_;
     std::auto_ptr< depend::IncludeVisitor > includeVisitor_;
-    std::auto_ptr< depend::ModuleResolver_ABC > internalResolver_;
+    std::auto_ptr< depend::InternalModuleResolver_ABC > internalResolver_;
     std::auto_ptr< depend::DependencyMetric_ABC > dependencyMetric_;
     //@}
 };

@@ -80,6 +80,10 @@ int main( int argc, char* argv[] )
         xml::xifstream xis( dependencies );
         xml::xobufferstream xobs;
         xobs << xml::start( "configuration" )
+                << xml::start( "paths" );
+        BOOST_FOREACH( const std::string& path, paths )
+            xobs << xml::content( "path", path );
+        xobs    << xml::end
                 << xml::start( "external" )
                     << xml::content( "includes", "" )
                     << xml::content( "excludes", "" )
