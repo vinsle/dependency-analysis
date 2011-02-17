@@ -43,7 +43,7 @@
         <tstamp>
             <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
         </tstamp>
-        <build-app name="depend_app" depends="boost" libs="depend,gvc,graph,xerces-c_static_3" subsystem="console">
+        <build-app name="depend_app" pattern="depend" depends="boost" libs="depend,gvc,graph,xerces-c_static_3" subsystem="console">
             <defineset>
                 <define name="BUILD_VERSION" value="${depend.version}.${svn.version}"/>
                 <define name="BUILD_TIME" value="${now}"/>
@@ -61,7 +61,7 @@
         <tstamp>
             <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
         </tstamp>
-        <build-app name="depend_guard_app" depends="boost" libs="depend,xerces-c_static_3" subsystem="console">
+        <build-app name="depend_guard_app" pattern="depend_guard" depends="boost" libs="depend,xerces-c_static_3" subsystem="console">
             <defineset>
                 <define name="BUILD_VERSION" value="${depend.version}.${svn.version}"/>
                 <define name="BUILD_TIME" value="${now}"/>
@@ -95,9 +95,9 @@
 
     <target name="package" depends="build,test,documentation" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/depend_app_${depend.version}.zip">
-            <fileset file="${out.dir}/release/applications/depend_app/depend_app.exe"/>
-            <fileset file="${out.dir}/release/applications/depend_guard_app/depend_guard_app.exe"/>
+        <zip destfile="${dist.dir}/depend_${depend.version}.zip">
+            <fileset file="${out.dir}/release/applications/depend_app/depend.exe"/>
+            <fileset file="${out.dir}/release/applications/depend_guard_app/depend_guard.exe"/>
         </zip>
         <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
             <fileset dir="${doc.dir}"/>
