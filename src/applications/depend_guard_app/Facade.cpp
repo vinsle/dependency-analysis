@@ -39,7 +39,7 @@ Facade::Facade( xml::xisubstream xis )
     , lineVisitor_           ( new LineVisitor() )
     , uncommentedLineVisitor_( new UncommentedLineVisitor( *lineVisitor_ ) )
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
-    , internalResolver_      ( new InternalModuleResolver( *moduleVisitor_ ) )
+    , internalResolver_      ( new InternalModuleResolver( xis, *finder_, *moduleVisitor_ ) )
     , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *internalResolver_, *log_ ) )
 {
     // NOTHING

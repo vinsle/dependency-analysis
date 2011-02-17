@@ -9,33 +9,40 @@
 #ifndef depend_InternalModuleResolver_h
 #define depend_InternalModuleResolver_h
 
-#include "ModuleResolver_ABC.h"
-#include "UnitObserver_ABC.h"
+#include "InternalModuleResolver_ABC.h"
 #include "Observer.h"
+#include "UnitObserver_ABC.h"
+#include <vector>
 #include <set>
+
+namespace xml
+{
+    class xisubstream;
+}
 
 namespace depend
 {
+    class Finder_ABC;
+
 // =============================================================================
 /** @class  InternalModuleResolver
     @brief  Internal module resolver
 */
 // Created: SLI 2011-02-16
 // =============================================================================
-class InternalModuleResolver : public ModuleResolver_ABC
+class InternalModuleResolver : public InternalModuleResolver_ABC
                              , private Observer< UnitObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InternalModuleResolver( Subject< UnitObserver_ABC >& unitObserver );
+             InternalModuleResolver( xml::xisubstream xis, const Finder_ABC& finder, Subject< UnitObserver_ABC >& unitObserver );
     virtual ~InternalModuleResolver();
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string Resolve( const std::string& include ) const;
-    virtual bool IsExcluded( const std::string& include ) const;
+    virtual std::string Resolve( const std::string& module, const std::string& file, const std::string& include ) const;
     //@}
 
 private:
@@ -47,12 +54,15 @@ private:
 private:
     //! @name Types
     //@{
+    typedef std::vector< std::string > T_Paths;
     typedef std::set< std::string > T_Units;
     //@}
 
 private:
     //! @name Member data
     //@{
+    const Finder_ABC& finder_;
+    T_Paths paths_;
     T_Units units_;
     //@}
 };

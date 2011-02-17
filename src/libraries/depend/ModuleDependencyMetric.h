@@ -19,7 +19,8 @@
 namespace depend
 {
     class DependencyMetricVisitor_ABC;
-    class ModuleResolver_ABC;
+    class ExternalModuleResolver_ABC;
+    class InternalModuleResolver_ABC;
     class Log_ABC;
 
 // =============================================================================
@@ -37,8 +38,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
-                                     Subject< IncludeObserver_ABC >& includeObserver_, const ModuleResolver_ABC& externalResolver,
-                                     const ModuleResolver_ABC& internalResolver, const Log_ABC& log );
+                                     Subject< IncludeObserver_ABC >& includeObserver_, const ExternalModuleResolver_ABC& externalResolver,
+                                     const InternalModuleResolver_ABC& internalResolver, const Log_ABC& log );
     virtual ~ModuleDependencyMetric();
     //@}
 
@@ -52,8 +53,8 @@ private:
     //@{
     virtual void NotifyUnit( const std::string& unit, const std::string& context );
     virtual void NotifyFile( const std::string& path, std::istream& stream, const std::string& context );
-    virtual void NotifyInternalInclude( const std::string& file, const std::string& context );
-    virtual void NotifyExternalInclude( const std::string& file, const std::string& context );
+    virtual void NotifyInternalInclude( const std::string& include, const std::string& context );
+    virtual void NotifyExternalInclude( const std::string& include, const std::string& context );
     //@}
 
 private:
@@ -63,8 +64,9 @@ private:
     struct T_Dependency
     {
     public:
-        T_Dependency( const std::string& include, const std::string& context )
+        T_Dependency( const std::string& include, const std::string& file, const std::string& context )
             : include_( include )
+            , file_   ( file )
             , context_( context )
         {}
         bool operator<( const T_Dependency& dependency ) const
@@ -72,6 +74,7 @@ private:
             return include_ < dependency.include_;
         }
         std::string include_;
+        std::string file_;
         std::string context_;
     };
     typedef std::set< T_Dependency > T_Dependencies;
@@ -88,11 +91,12 @@ private:
 private:
     //! @name Member data
     //@{
-    const ModuleResolver_ABC& externalResolver_;
-    const ModuleResolver_ABC& internalResolver_;
+    const ExternalModuleResolver_ABC& externalResolver_;
+    const InternalModuleResolver_ABC& internalResolver_;
     const Log_ABC& log_;
     T_Metrics metrics_;
     T_Units units_;
+    std::string lastFile_;
     //@}
 };
 

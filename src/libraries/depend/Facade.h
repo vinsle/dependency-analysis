@@ -26,7 +26,8 @@ namespace depend
 {
     class Filter_ABC;
     class Finder_ABC;
-    class ModuleResolver_ABC;
+    class ExternalModuleResolver_ABC;
+    class InternalModuleResolver_ABC;
     class Log_ABC;
     class ModuleVisitor;
     class FileVisitor;
@@ -79,8 +80,8 @@ private:
     std::auto_ptr< Log_ABC > log_;
     std::auto_ptr< Filter_ABC > filter_;
     std::auto_ptr< Finder_ABC > finder_;
-    std::auto_ptr< ModuleResolver_ABC > externalResolver_;
-    std::auto_ptr< ModuleResolver_ABC > proxy_;
+    std::auto_ptr< ExternalModuleResolver_ABC > externalResolver_;
+    std::auto_ptr< ExternalModuleResolver_ABC > proxy_;
     std::auto_ptr< ModuleVisitor > moduleVisitor_;
     std::auto_ptr< FileVisitor > fileVisitor_;
     std::auto_ptr< LineVisitor > lineVisitor_;
@@ -88,7 +89,7 @@ private:
     std::auto_ptr< IncludeVisitor > includeVisitor_;
     std::auto_ptr< ClassVisitor > classVisitor_;
     std::auto_ptr< ClassMetric_ABC > classMetric_;
-    std::auto_ptr< ModuleResolver_ABC > internalResolver_;
+    std::auto_ptr< InternalModuleResolver_ABC > internalResolver_;
     std::auto_ptr< DependencyMetric_ABC > dependencyMetric_;
     std::auto_ptr< UnitSerializer > unitSerializer_;
     std::auto_ptr< GraphSerializer > graphSerializer_;

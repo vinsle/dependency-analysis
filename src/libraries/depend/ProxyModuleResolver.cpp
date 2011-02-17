@@ -15,7 +15,7 @@ using namespace depend;
 // Name: ProxyModuleResolver constructor
 // Created: SLI 2010-09-09
 // -----------------------------------------------------------------------------
-ProxyModuleResolver::ProxyModuleResolver( ModuleResolver_ABC& resolver )
+ProxyModuleResolver::ProxyModuleResolver( ExternalModuleResolver_ABC& resolver )
     : resolver_( resolver )
     , results_ ( new T_Results() )
     , excludes_( new T_Excludes() )

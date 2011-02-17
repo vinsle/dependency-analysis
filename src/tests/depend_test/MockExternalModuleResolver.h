@@ -6,20 +6,20 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_test_MockModuleResolver_h
-#define depend_test_MockModuleResolver_h
+#ifndef depend_test_MockExternalModuleResolver_h
+#define depend_test_MockExternalModuleResolver_h
 
-#include "depend/ModuleResolver_ABC.h"
+#include "depend/ExternalModuleResolver_ABC.h"
 
 namespace depend
 {
 // =============================================================================
-/** @class  MockModuleResolver
-    @brief  Mock filter
+/** @class  MockExternalModuleResolver
+    @brief  Mock external module resolver
 */
 // Created: SLI 2010-09-09
 // =============================================================================
-MOCK_BASE_CLASS( MockModuleResolver, ModuleResolver_ABC )
+MOCK_BASE_CLASS( MockExternalModuleResolver, ExternalModuleResolver_ABC )
 {
     MOCK_METHOD( Resolve, 1 )
     MOCK_METHOD( IsExcluded, 1 )
@@ -27,4 +27,4 @@ MOCK_BASE_CLASS( MockModuleResolver, ModuleResolver_ABC )
 
 }
 
-#endif // depend_test_MockModuleResolver_h
+#endif // depend_test_MockExternalModuleResolver_h
