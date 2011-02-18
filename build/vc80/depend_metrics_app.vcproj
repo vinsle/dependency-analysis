@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="depend_app"
-	ProjectGUID="{D9BE8B23-C5F5-4C87-A950-E5E039837627}"
-	RootNamespace="depend_app"
+	Name="depend_metrics_app"
+	ProjectGUID="{052071D8-F228-42B2-A047-4688947AEEDE}"
+	RootNamespace="depend_metrics_app"
 	>
 	<Platforms>
 		<Platform
@@ -43,7 +43,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough="depend_app_pch.h"
+				PrecompiledHeaderThrough="depend_metrics_app_pch.h"
 				AssemblerListingLocation="$(IntDir)/"
 				ObjectFile="$(IntDir)/"
 				ProgramDataBaseFileName="$(IntDir)/$(ProjectName).pdb"
@@ -63,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="advapi32.lib xerces-c_static_3D.lib"
+				AdditionalDependencies="advapi32.lib xerces-c_static_3D.lib graph.lib gvc.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;../../lib/vc80"
 				GenerateDebugInformation="true"
@@ -123,7 +123,7 @@
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough="depend_app_pch.h"
+				PrecompiledHeaderThrough="depend_metrics_app_pch.h"
 				AssemblerListingLocation="$(IntDir)/"
 				ObjectFile="$(IntDir)/"
 				ProgramDataBaseFileName="$(IntDir)/$(ProjectName).pdb"
@@ -143,7 +143,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="advapi32.lib xerces-c_static_3.lib"
+				AdditionalDependencies="advapi32.lib xerces-c_static_3.lib graph.lib gvc.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;../../lib/vc80"
@@ -185,15 +185,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\applications\depend_app\Facade.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\applications\depend_app\Facade.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\applications\depend_app\main.cpp"
+				RelativePath="..\..\src\applications\depend_metrics_app\main.cpp"
 				>
 			</File>
 		</Filter>
