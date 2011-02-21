@@ -382,6 +382,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetricLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetricLoader.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponents.cpp"
 					>
 				</File>
