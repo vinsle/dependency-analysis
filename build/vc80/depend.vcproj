@@ -182,14 +182,6 @@
 				RelativePath="..\..\src\libraries\depend\depend_pch.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\Facade.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\depend\Facade.h"
-				>
-			</File>
 			<Filter
 				Name="tools"
 				>

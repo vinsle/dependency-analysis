@@ -6,7 +6,7 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include "depend/Facade.h"
+#include "Facade.h"
 #pragma warning( push, 0 )
 #pragma warning( disable: 4512 4996 )
 #include <boost/program_options.hpp>
@@ -217,7 +217,7 @@ int main( int argc, char* argv[] )
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
         std::auto_ptr< xml::xobufferstream > xobs = Translate( vm );
-        depend::Facade facade( *xobs );
+        Facade facade( *xobs );
         facade.Process( *xobs );
         if( vm.count( "save-configuration" ) > 0 )
         {

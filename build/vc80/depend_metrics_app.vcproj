@@ -185,6 +185,14 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
+				RelativePath="..\..\src\applications\depend_metrics_app\Facade.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\applications\depend_metrics_app\Facade.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\applications\depend_metrics_app\main.cpp"
 				>
 			</File>

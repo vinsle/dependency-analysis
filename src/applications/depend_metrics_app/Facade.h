@@ -39,6 +39,7 @@ namespace depend
     class DependencyMetric_ABC;
     class UnitSerializer;
     class GraphSerializer;
+}
 
 // =============================================================================
 /** @class  Facade
@@ -77,26 +78,24 @@ private:
     //@{
     const std::string option_;
     bool extend_;
-    std::auto_ptr< Log_ABC > log_;
-    std::auto_ptr< Filter_ABC > filter_;
-    std::auto_ptr< Finder_ABC > finder_;
-    std::auto_ptr< ExternalModuleResolver_ABC > externalResolver_;
-    std::auto_ptr< ExternalModuleResolver_ABC > proxy_;
-    std::auto_ptr< ModuleVisitor > moduleVisitor_;
-    std::auto_ptr< FileVisitor > fileVisitor_;
-    std::auto_ptr< LineVisitor > lineVisitor_;
-    std::auto_ptr< UncommentedLineVisitor > uncommentedLineVisitor_;
-    std::auto_ptr< IncludeVisitor > includeVisitor_;
-    std::auto_ptr< ClassVisitor > classVisitor_;
-    std::auto_ptr< ClassMetric_ABC > classMetric_;
-    std::auto_ptr< InternalModuleResolver_ABC > internalResolver_;
-    std::auto_ptr< DependencyMetric_ABC > dependencyMetric_;
-    std::auto_ptr< UnitSerializer > unitSerializer_;
-    std::auto_ptr< GraphSerializer > graphSerializer_;
+    std::auto_ptr< depend::Log_ABC > log_;
+    std::auto_ptr< depend::Filter_ABC > filter_;
+    std::auto_ptr< depend::Finder_ABC > finder_;
+    std::auto_ptr< depend::ExternalModuleResolver_ABC > externalResolver_;
+    std::auto_ptr< depend::ExternalModuleResolver_ABC > proxy_;
+    std::auto_ptr< depend::ModuleVisitor > moduleVisitor_;
+    std::auto_ptr< depend::FileVisitor > fileVisitor_;
+    std::auto_ptr< depend::LineVisitor > lineVisitor_;
+    std::auto_ptr< depend::UncommentedLineVisitor > uncommentedLineVisitor_;
+    std::auto_ptr< depend::IncludeVisitor > includeVisitor_;
+    std::auto_ptr< depend::ClassVisitor > classVisitor_;
+    std::auto_ptr< depend::ClassMetric_ABC > classMetric_;
+    std::auto_ptr< depend::InternalModuleResolver_ABC > internalResolver_;
+    std::auto_ptr< depend::DependencyMetric_ABC > dependencyMetric_;
+    std::auto_ptr< depend::UnitSerializer > unitSerializer_;
+    std::auto_ptr< depend::GraphSerializer > graphSerializer_;
     std::vector< std::string > modules_;
     //@}
 };
-
-}
 
 #endif // depend_Facade_h
