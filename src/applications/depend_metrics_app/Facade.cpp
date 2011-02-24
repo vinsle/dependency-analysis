@@ -7,6 +7,7 @@
 //
 
 #include "Facade.h"
+#include "GraphSerializer.h"
 #include "depend/ModuleVisitor.h"
 #include "depend/FileVisitor.h"
 #include "depend/LineVisitor.h"
@@ -21,7 +22,6 @@
 #include "depend/ExternalSerializer.h"
 #include "depend/StronglyConnectedComponents.h"
 #include "depend/DotSerializer.h"
-#include "depend/GraphSerializer.h"
 #include "depend/Filter.h"
 #include "depend/Log.h"
 #include "depend/Finder.h"

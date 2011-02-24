@@ -6,14 +6,11 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include "depend_pch.h"
 #include "GraphSerializer.h"
 #include <graphviz/gvc.h>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
-
-using namespace depend;
 
 namespace
 {

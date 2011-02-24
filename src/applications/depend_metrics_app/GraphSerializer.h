@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_GraphSerializer_h
-#define depend_GraphSerializer_h
+#ifndef depend_metrics_app_GraphSerializer_h
+#define depend_metrics_app_GraphSerializer_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -18,8 +18,6 @@ namespace xml
     class xisubstream;
 }
 
-namespace depend
-{
 // =============================================================================
 /** @class  GraphSerializer
     @brief  Graph serializer
@@ -57,6 +55,4 @@ private:
     //@}
 };
 
-}
-
-#endif // depend_GraphSerializer_h
+#endif // depend_metrics_app_GraphSerializer_h
