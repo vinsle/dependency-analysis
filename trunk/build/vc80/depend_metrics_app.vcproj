@@ -193,6 +193,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\applications\depend_metrics_app\GraphSerializer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\applications\depend_metrics_app\GraphSerializer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\applications\depend_metrics_app\main.cpp"
 				>
 			</File>

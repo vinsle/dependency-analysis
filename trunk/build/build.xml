@@ -23,7 +23,7 @@
     ============================================================================
     -->
     <target name="depend_test" depends="depend" description="build and run unit tests">
-        <build-test name="depend" depends="boost" libs="depend,gvc,graph,xerces-c_static_3">
+        <build-test name="depend" depends="boost" libs="depend,xerces-c_static_3">
             <defineset define="XERCES_STATIC_LIBRARY"/>
             <syslibset libs="advapi32"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT"/>

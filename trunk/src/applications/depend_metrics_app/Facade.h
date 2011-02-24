@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_Facade_h
-#define depend_Facade_h
+#ifndef depend_metrics_app_Facade_h
+#define depend_metrics_app_Facade_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -38,8 +38,9 @@ namespace depend
     class ClassMetric_ABC;
     class DependencyMetric_ABC;
     class UnitSerializer;
-    class GraphSerializer;
 }
+
+class GraphSerializer;
 
 // =============================================================================
 /** @class  Facade
@@ -93,9 +94,9 @@ private:
     std::auto_ptr< depend::InternalModuleResolver_ABC > internalResolver_;
     std::auto_ptr< depend::DependencyMetric_ABC > dependencyMetric_;
     std::auto_ptr< depend::UnitSerializer > unitSerializer_;
-    std::auto_ptr< depend::GraphSerializer > graphSerializer_;
+    std::auto_ptr< GraphSerializer > graphSerializer_;
     std::vector< std::string > modules_;
     //@}
 };
 
-#endif // depend_Facade_h
+#endif // depend_metrics_app_Facade_h
