@@ -1,2 +1,6 @@
  * Other [http://java-source.net/open-source/code-analyzers code analyzers]
  * [http://classycle.sourceforge.net/design.html Classycle]
+ * [http://code.google.com/p/include-what-you-use/ Include what you use] ([http://llvm.org/devmtg/2010-11/Silverstein-IncludeWhatYouUse.pdf paper])
+ * [http://www.softintegration.com/products/chstandard/download/ C embedded]
+ * [http://www.arisa.se/vizz_analyzer.php VizzAnalyzer]: Analyze java code and draw graph (see [http://lnu.diva-portal.org/smash/get/diva2:220298/FULLTEXT01 paper]
+ * [http://www.yworks.com/en/products_yed_about.html yEd]: Graph visualizer used by VizzAnalyzer
