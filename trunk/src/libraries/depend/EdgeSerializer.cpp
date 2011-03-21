@@ -94,7 +94,6 @@ void EdgeSerializer::NotifyInternalDependency( const std::string& fromModule, co
     modules_.insert( fromModule );
     modules_.insert( toModule );
     efferent_[ fromModule ].insert( toModule );
-    afferent_[ toModule ].insert( fromModule );
 }
 
 // -----------------------------------------------------------------------------

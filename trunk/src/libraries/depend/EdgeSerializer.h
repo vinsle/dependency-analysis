@@ -61,7 +61,6 @@ private:
     //! @name Member data
     //@{
     T_Modules modules_;
-    T_Dependencies afferent_;
     T_Dependencies efferent_;
     T_Dependencies external_;
     //@}
