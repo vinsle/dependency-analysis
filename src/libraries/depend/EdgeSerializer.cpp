@@ -43,7 +43,9 @@ namespace
             return;
         BOOST_FOREACH( const std::string& to, it->second )
             if( filter.Check( to ) )
-                xos << xml::content( "dependency", to );
+                xos << xml::start( "dependency" )
+                        << xml::attribute( "name", to )
+                    << xml::end;
     }
     class NullFilter : public Filter_ABC
     {
