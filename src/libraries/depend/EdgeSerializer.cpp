@@ -76,9 +76,6 @@ void EdgeSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) c
                     << xml::start( "efferent-dependencies" );
             SerializeDependency( xos, module, efferent_, filter );
             xos     << xml::end
-                    << xml::start( "afferent-dependencies" );
-            SerializeDependency( xos, module, afferent_, filter );
-            xos     << xml::end
                     << xml::start( "external-dependencies" );
             SerializeDependency( xos, module, external_, NullFilter() );
             xos     << xml::end
