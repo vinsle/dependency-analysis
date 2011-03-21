@@ -12,6 +12,7 @@
 #include "DependencyMetricVisitor_ABC.h"
 #include <set>
 #include <map>
+#include <vector>
 
 namespace xml
 {
@@ -53,8 +54,10 @@ private:
 private:
     //! @name Types
     //@{
+    typedef std::vector< std::string > T_Contexts;
+    typedef std::map< std::string, T_Contexts > T_Dependency;
+    typedef std::map< std::string, T_Dependency > T_Dependencies;
     typedef std::set< std::string > T_Modules;
-    typedef std::map< std::string, T_Modules > T_Dependencies;
     //@}
 
 private:
