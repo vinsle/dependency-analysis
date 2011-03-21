@@ -43,9 +43,9 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
 {
-    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context" );
-    dependencyVisitor->NotifyInternalDependency( "module2", "module1", "context" );
-    dependencyVisitor->NotifyExternalDependency( "module1", "boost", "context" );
+    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context1" );
+    dependencyVisitor->NotifyInternalDependency( "module2", "module1", "context2" );
+    dependencyVisitor->NotifyExternalDependency( "module1", "boost", "context3" );
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).returns( true );
     serializer.Serialize( xos, filter );
@@ -53,15 +53,21 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
         "<graph>"
         "    <node name='module1'>"
         "        <efferent-dependencies>"
-        "            <dependency name='module2'/>"
+        "            <dependency name='module2'>"
+        "                <context>context1</context>"
+        "            </dependency>"
         "        </efferent-dependencies>"
         "        <external-dependencies>"
-        "            <dependency name='boost'/>"
+        "            <dependency name='boost'>"
+        "                <context>context3</context>"
+        "            </dependency>"
         "        </external-dependencies>"
         "    </node>"
         "    <node name='module2'>"
         "        <efferent-dependencies>"
-        "            <dependency name='module1'/>"
+        "            <dependency name='module1'>"
+        "                <context>context2</context>"
+        "            </dependency>"
         "        </efferent-dependencies>"
         "        <external-dependencies/>"
         "    </node>"
@@ -71,10 +77,11 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
 
 BOOST_FIXTURE_TEST_CASE( serialize_edges_with_module_filter, SerializeFixture )
 {
-    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context" );
-    dependencyVisitor->NotifyInternalDependency( "module2", "module4", "context" );
-    dependencyVisitor->NotifyInternalDependency( "module3", "module1", "context" );
-    dependencyVisitor->NotifyInternalDependency( "module3", "module2", "context" );
+    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context1" );
+    dependencyVisitor->NotifyInternalDependency( "module2", "module4", "context2" );
+    dependencyVisitor->NotifyInternalDependency( "module3", "module1", "context3" );
+    dependencyVisitor->NotifyInternalDependency( "module3", "module2", "context4" );
+    dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context5" );
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).with( "module1" ).returns( true );
     MOCK_EXPECT( filter, Check ).with( "module2" ).returns( true );
@@ -85,7 +92,10 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_with_module_filter, SerializeFixture )
         "<graph>"
         "    <node name='module1'>"
         "        <efferent-dependencies>"
-        "            <dependency name='module2'/>"
+        "            <dependency name='module2'>"
+        "                <context>context1</context>"
+        "                <context>context5</context>"
+        "            </dependency>"
         "        </efferent-dependencies>"
         "        <external-dependencies/>"
         "    </node>"
@@ -95,8 +105,12 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_with_module_filter, SerializeFixture )
         "    </node>"
         "    <node name='module3'>"
         "        <efferent-dependencies>"
-        "            <dependency name='module1'/>"
-        "            <dependency name='module2'/>"
+        "            <dependency name='module1'>"
+        "                <context>context3</context>"
+        "            </dependency>"
+        "            <dependency name='module2'>"
+        "                <context>context4</context>"
+        "            </dependency>"
         "        </efferent-dependencies>"
         "        <external-dependencies/>"
         "    </node>"
