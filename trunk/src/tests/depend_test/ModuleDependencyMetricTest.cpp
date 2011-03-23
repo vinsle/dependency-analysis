@@ -72,7 +72,7 @@ BOOST_FIXTURE_TEST_CASE( external_dependencies_are_notified, MetricFixture )
     metric.Apply( visitor );
 }
 
-BOOST_FIXTURE_TEST_CASE( external_dependencies_are_uniq, MetricFixture )
+BOOST_FIXTURE_TEST_CASE( all_external_dependencies_contexts_are_forwarded, MetricFixture )
 {
     unitObserver->NotifyUnit( "module", "module context" );
     includeObserver->NotifyExternalInclude( "include", "include context1" );
@@ -80,6 +80,7 @@ BOOST_FIXTURE_TEST_CASE( external_dependencies_are_uniq, MetricFixture )
     MockDependencyMetricVisitor visitor;
     MOCK_EXPECT( externalResolver, Resolve ).once().with( "include" ).returns( "external" );
     MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "external", "include context1" );
+    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "external", "include context2" );
     metric.Apply( visitor );
 }
 

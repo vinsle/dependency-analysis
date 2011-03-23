@@ -61,13 +61,13 @@ private:
     //! @name Types
     //@{
     typedef std::set< std::string > T_Units;
+    typedef std::vector< std::string > T_Contexts;
     struct T_Dependency
     {
     public:
-        T_Dependency( const std::string& include, const std::string& file, const std::string& context )
+        T_Dependency( const std::string& include, const std::string& file )
             : include_( include )
             , file_   ( file )
-            , context_( context )
         {}
         bool operator<( const T_Dependency& dependency ) const
         {
@@ -75,7 +75,7 @@ private:
         }
         std::string include_;
         std::string file_;
-        std::string context_;
+        T_Contexts contexts_;
     };
     typedef std::set< T_Dependency > T_Dependencies;
     struct Metric
