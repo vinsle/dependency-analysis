@@ -15,8 +15,6 @@
 #include "depend/ClassVisitor.h"
 #include "depend/ModuleDependencyMetric.h"
 #include "depend/EdgeSerializer.h"
-#include "depend/UnitSerializer.h"
-#include "depend/ExternalSerializer.h"
 #include "depend/Log.h"
 #include "depend/Finder.h"
 #include "depend/ExternalModuleResolver.h"
@@ -47,7 +45,6 @@ Facade::Facade( xml::xisubstream xis )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , internalResolver_      ( new InternalModuleResolver( xis, *finder_, *moduleVisitor_ ) )
     , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *internalResolver_, *log_ ) )
-    , unitSerializer_        ( new UnitSerializer( *moduleVisitor_ ) )
 {
     // NOTHING
 }
@@ -165,11 +162,6 @@ void Facade::Serialize( xml::xistream& xis )
     if( !output.empty() )
         out.reset( new std::ofstream( output.c_str() ) );
     xml::xostringstream xos;
-    xos << xml::start( "report" );
-    const SimpleFilter filter;
-    unitSerializer_->Serialize( xos, filter );
-    ExternalSerializer( *dependencyMetric_, filter ).Serialize( xos );
-    EdgeSerializer( *dependencyMetric_ ).Serialize( xos, filter );
-    xos << xml::end;
+    EdgeSerializer( *dependencyMetric_ ).Serialize( xos, SimpleFilter() );
     *out << xos.str();
 }

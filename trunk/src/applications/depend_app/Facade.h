@@ -32,7 +32,6 @@ namespace depend
     class IncludeVisitor;
     class ClassVisitor;
     class ClassMetric_ABC;
-    class UnitSerializer;
     class DependencyMetric_ABC;
 }
 
@@ -79,7 +78,6 @@ private:
     std::auto_ptr< depend::ClassVisitor > classVisitor_;
     std::auto_ptr< depend::InternalModuleResolver_ABC > internalResolver_;
     std::auto_ptr< depend::DependencyMetric_ABC > dependencyMetric_;
-    std::auto_ptr< depend::UnitSerializer > unitSerializer_;
     //@}
 };
 
