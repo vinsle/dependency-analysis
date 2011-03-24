@@ -147,8 +147,7 @@
         <sequential>
             <exec taskname="depend_guard_app" executable="${out.dir}/release/applications/depend_guard_app/depend_guard.exe" failonerror="true">
                 <arg value="--dependencies=@{dependencies}"/>
-                <arg value="${libraries.dir}"/>
-                <arg value="${applications.dir}"/>
+                <arg value="--graph=${reports.dir}/depend.xml"/>
             </exec>
         </sequential>
     </macrodef>
