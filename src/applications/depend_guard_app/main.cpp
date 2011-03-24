@@ -57,7 +57,7 @@ namespace
             ( "help,h"                                           , "produce help message" )
             ( "version,v"                                        , "produce version message" )
             ( "path" , bpo::value< std::vector< std::string > >(), "add a directory containing modules for analysis" )
-            ( "dependencies", bpo::value< std::string >()        , "set input xml file for dependency check" );
+            ( "dependencies", bpo::value< std::string >()        , "set input xml file for dependency guard check" );
         bpo::positional_options_description p;
         p.add( "path", -1 );
         bpo::variables_map vm;
