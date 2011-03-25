@@ -10,6 +10,7 @@
 #include "StronglyConnectedComponents.h"
 #include "DependencyMetric_ABC.h"
 #include "Filter_ABC.h"
+#include "Visitable.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/graph/strong_components.hpp>
@@ -23,7 +24,7 @@ using namespace depend;
 // Name: StronglyConnectedComponents constructor
 // Created: SLI 2010-08-23
 // -----------------------------------------------------------------------------
-StronglyConnectedComponents::StronglyConnectedComponents( const DependencyMetric_ABC& metric )
+StronglyConnectedComponents::StronglyConnectedComponents( const Visitable< DependencyMetricVisitor_ABC >& metric )
 {
     metric.Apply( *this );
 }

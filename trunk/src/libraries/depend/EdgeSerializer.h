@@ -23,6 +23,7 @@ namespace depend
 {
     class DependencyMetric_ABC;
     class Filter_ABC;
+    template< typename T > class Visitable;
 
 // =============================================================================
 /** @class  EdgeSerializer
@@ -35,7 +36,7 @@ class EdgeSerializer : private DependencyMetricVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EdgeSerializer( const DependencyMetric_ABC& dependencies );
+    explicit EdgeSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies );
     virtual ~EdgeSerializer();
     //@}
 

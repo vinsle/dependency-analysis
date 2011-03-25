@@ -9,7 +9,7 @@
 #ifndef depend_ClassMetric_h
 #define depend_ClassMetric_h
 
-#include "ClassMetric_ABC.h"
+#include "Visitable.h"
 #include "ClassObserver_ABC.h"
 #include "UnitObserver_ABC.h"
 #include "Observer.h"
@@ -17,13 +17,17 @@
 
 namespace depend
 {
+    class ClassMetricVisitor_ABC;
+
 // =============================================================================
 /** @class  ClassMetric
     @brief  Class metric
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class ClassMetric : public ClassMetric_ABC, private Observer< UnitObserver_ABC >, private Observer< ClassObserver_ABC >
+class ClassMetric : public Visitable< ClassMetricVisitor_ABC >
+                  , private Observer< UnitObserver_ABC >
+                  , private Observer< ClassObserver_ABC >
 {
 public:
     //! @name Constructors/Destructor

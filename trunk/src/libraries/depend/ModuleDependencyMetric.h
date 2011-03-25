@@ -9,11 +9,11 @@
 #ifndef depend_ModuleDependencyMetric_h
 #define depend_ModuleDependencyMetric_h
 
-#include "DependencyMetric_ABC.h"
 #include "UnitObserver_ABC.h"
 #include "FileObserver_ABC.h"
 #include "IncludeObserver_ABC.h"
 #include "Observer.h"
+#include "Visitable.h"
 #include <set>
 
 namespace depend
@@ -29,7 +29,7 @@ namespace depend
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class ModuleDependencyMetric : public DependencyMetric_ABC
+class ModuleDependencyMetric : public Visitable< DependencyMetricVisitor_ABC >
                              , private Observer< UnitObserver_ABC >
                              , private Observer< FileObserver_ABC >
                              , private Observer< IncludeObserver_ABC >

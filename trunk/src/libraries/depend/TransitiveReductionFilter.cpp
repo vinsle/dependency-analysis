@@ -9,6 +9,7 @@
 #include "depend_pch.h"
 #include "TransitiveReductionFilter.h"
 #include "DependencyMetric_ABC.h"
+#include "Visitable.h"
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )
 #include <boost/graph/visitors.hpp>
@@ -23,7 +24,7 @@ using namespace depend;
 // Name: TransitiveReductionFilter::TransitiveReductionFilter
 // Created: SLI 2010-09-08
 // -----------------------------------------------------------------------------
-TransitiveReductionFilter::TransitiveReductionFilter( const DependencyMetric_ABC& metric, const Filter_ABC& filter )
+TransitiveReductionFilter::TransitiveReductionFilter( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter )
     : filter_( filter )
 {
     metric.Apply( *this );

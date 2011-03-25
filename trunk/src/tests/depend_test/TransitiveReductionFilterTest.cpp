@@ -8,7 +8,7 @@
 
 #include "depend_test_pch.h"
 #include "depend/TransitiveReductionFilter.h"
-#include "MockDependencyMetric.h"
+#include "MockVisitable.h"
 #include "MockFilter.h"
 #include <boost/foreach.hpp>
 #include <boost/assign.hpp>
@@ -28,7 +28,7 @@ namespace
     class Fixture
     {
     public:
-        MockDependencyMetric metric;
+        MockVisitable< DependencyMetricVisitor_ABC > metric;
         MockFilter mockFilter;
     };
 }

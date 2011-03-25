@@ -8,7 +8,7 @@
 
 #include "depend_test_pch.h"
 #include "depend/StronglyConnectedComponents.h"
-#include "MockDependencyMetric.h"
+#include "MockVisitable.h"
 #include "MockFilter.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -24,7 +24,7 @@ namespace
         {
             MOCK_EXPECT( dependencies, Apply ).once().with( mock::retrieve( visitor ) );
         }
-        MockDependencyMetric dependencies;
+        MockVisitable< DependencyMetricVisitor_ABC > dependencies;
         DependencyMetricVisitor_ABC* visitor;
         MockFilter filter;
     };

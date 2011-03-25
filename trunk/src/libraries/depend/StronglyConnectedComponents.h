@@ -25,6 +25,7 @@ namespace depend
 {
     class DependencyMetric_ABC;
     class Filter_ABC;
+    template< typename T > class Visitable;
 
 // =============================================================================
 /** @class  StronglyConnectedComponents
@@ -37,7 +38,7 @@ class StronglyConnectedComponents : private DependencyMetricVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StronglyConnectedComponents( const DependencyMetric_ABC& metric );
+    explicit StronglyConnectedComponents( const Visitable< DependencyMetricVisitor_ABC >& metric );
     virtual ~StronglyConnectedComponents();
     //@}
 

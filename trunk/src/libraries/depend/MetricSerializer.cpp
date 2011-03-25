@@ -12,6 +12,7 @@
 #include "ClassMetric_ABC.h"
 #include "Filter_ABC.h"
 #include "Filter.h"
+#include "Visitable.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
 
@@ -21,7 +22,7 @@ using namespace depend;
 // Name: MetricSerializer constructor
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-MetricSerializer::MetricSerializer( const DependencyMetric_ABC& dependencies, const ClassMetric_ABC& classes )
+MetricSerializer::MetricSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies, const Visitable< ClassMetricVisitor_ABC >& classes )
 {
     dependencies.Apply( *this );
     classes.Apply( *this );

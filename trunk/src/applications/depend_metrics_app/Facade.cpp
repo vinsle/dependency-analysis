@@ -190,7 +190,7 @@ namespace
     class FilterExtender : public Filter_ABC, private DependencyMetricVisitor_ABC
     {
     public:
-        FilterExtender( const DependencyMetric_ABC& metric, const Filter_ABC& filter )
+        FilterExtender( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter )
             : filter_( filter )
         {
             metric.Apply( *this );

@@ -21,6 +21,7 @@ namespace depend
 {
     class DependencyMetric_ABC;
     class Filter_ABC;
+    template< typename T > class Visitable;
 
 // =============================================================================
 /** @class  ExternalSerializer
@@ -33,7 +34,7 @@ class ExternalSerializer : private DependencyMetricVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ExternalSerializer( DependencyMetric_ABC& metric, const Filter_ABC& filter );
+             ExternalSerializer( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter );
     virtual ~ExternalSerializer();
     //@}
 

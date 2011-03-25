@@ -31,8 +31,8 @@ namespace depend
     class UncommentedLineVisitor;
     class IncludeVisitor;
     class ClassVisitor;
-    class ClassMetric_ABC;
-    class DependencyMetric_ABC;
+    class DependencyMetricVisitor_ABC;
+    template< typename T > class Visitable;
 }
 
 // =============================================================================
@@ -77,7 +77,7 @@ private:
     std::auto_ptr< depend::IncludeVisitor > includeVisitor_;
     std::auto_ptr< depend::ClassVisitor > classVisitor_;
     std::auto_ptr< depend::InternalModuleResolver_ABC > internalResolver_;
-    std::auto_ptr< depend::DependencyMetric_ABC > dependencyMetric_;
+    std::auto_ptr< depend::Visitable< depend::DependencyMetricVisitor_ABC > > dependencyMetric_;
     //@}
 };
 
