@@ -311,10 +311,6 @@
 				Name="mock"
 				>
 				<File
-					RelativePath="..\..\src\tests\depend_test\MockClassMetric.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\tests\depend_test\MockClassMetricVisitor.h"
 					>
 				</File>
@@ -324,10 +320,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockDependencyGuardVisitor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\tests\depend_test\MockDependencyMetric.h"
 					>
 				</File>
 				<File
@@ -376,6 +368,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockUnitObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockVisitable.h"
 					>
 				</File>
 			</Filter>

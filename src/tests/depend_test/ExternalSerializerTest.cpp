@@ -8,7 +8,7 @@
 
 #include "depend_test_pch.h"
 #include "depend/ExternalSerializer.h"
-#include "MockDependencyMetric.h"
+#include "MockVisitable.h"
 #include "MockFilter.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -16,7 +16,7 @@ using namespace depend;
 
 BOOST_AUTO_TEST_CASE( simple_external_serialization )
 {
-    MockDependencyMetric dependency;
+    MockVisitable< DependencyMetricVisitor_ABC > dependency;
     DependencyMetricVisitor_ABC* visitor = 0;
     MOCK_EXPECT( dependency, Apply ).once().with( mock::retrieve( visitor ) );
     MockFilter filter;
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE( simple_external_serialization )
 
 BOOST_AUTO_TEST_CASE( external_serialization_can_be_filtered )
 {
-    MockDependencyMetric dependency;
+    MockVisitable< DependencyMetricVisitor_ABC > dependency;
     DependencyMetricVisitor_ABC* visitor = 0;
     MOCK_EXPECT( dependency, Apply ).once().with( mock::retrieve( visitor ) );
     MockFilter filter;

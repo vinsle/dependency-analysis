@@ -10,6 +10,7 @@
 #include "EdgeSerializer.h"
 #include "DependencyMetric_ABC.h"
 #include "Filter.h"
+#include "Visitable.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
 
@@ -19,7 +20,7 @@ using namespace depend;
 // Name: EdgeSerializer constructor
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-EdgeSerializer::EdgeSerializer( const DependencyMetric_ABC& dependencies )
+EdgeSerializer::EdgeSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies )
 {
     dependencies.Apply( *this );
 }

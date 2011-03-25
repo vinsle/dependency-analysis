@@ -22,6 +22,7 @@
 namespace depend
 {
     class DependencyMetric_ABC;
+    template< typename T > class Visitable;
 
 // =============================================================================
 /** @class  TransitiveReductionFilter
@@ -34,7 +35,7 @@ class TransitiveReductionFilter : public Filter_ABC, private DependencyMetricVis
 public:
     //! @name Constructors/Destructor
     //@{
-             TransitiveReductionFilter( const DependencyMetric_ABC& metric, const Filter_ABC& filter );
+             TransitiveReductionFilter( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter );
     virtual ~TransitiveReductionFilter();
     //@}
     

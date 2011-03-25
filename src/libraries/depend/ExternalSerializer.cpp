@@ -10,6 +10,7 @@
 #include "ExternalSerializer.h"
 #include "DependencyMetric_ABC.h"
 #include "Filter_ABC.h"
+#include "Visitable.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -19,7 +20,7 @@ using namespace depend;
 // Name: ExternalSerializer constructor
 // Created: SLI 2010-09-07
 // -----------------------------------------------------------------------------
-ExternalSerializer::ExternalSerializer( DependencyMetric_ABC& metric, const Filter_ABC& filter )
+ExternalSerializer::ExternalSerializer( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter )
     : filter_( filter )
 {
     metric.Apply( *this );

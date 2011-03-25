@@ -1,41 +1,40 @@
 //
-//  Copyright Silvin Lubecki 2010
+//  Copyright Silvin Lubecki 2011
 //
 //  Distributed under the Boost Software License, Version 1.0. (See
 //  accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ClassMetric_ABC_h
-#define depend_ClassMetric_ABC_h
+#ifndef depend_Visitable_h
+#define depend_Visitable_h
 
 #include <boost/noncopyable.hpp>
 
 namespace depend
 {
-    class ClassMetricVisitor_ABC;
-
 // =============================================================================
-/** @class  ClassMetric_ABC
-    @brief  Class metric definition
+/** @class  Visitable
+    @brief  Visitable
 */
-// Created: SLI 2010-08-20
+// Created: SLI 2011-03-25
 // =============================================================================
-class ClassMetric_ABC : private boost::noncopyable
+template< typename T >
+class Visitable : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ClassMetric_ABC() {}
-    virtual ~ClassMetric_ABC() {}
+             Visitable() {}
+    virtual ~Visitable() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Apply( ClassMetricVisitor_ABC& visitor ) const = 0;
+    virtual void Apply( T& visitor ) const = 0;
     //@}
 };
 
 }
 
-#endif // depend_ClassMetric_ABC_h
+#endif // depend_Visitable_h
