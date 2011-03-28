@@ -304,6 +304,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\UnitCacheTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\UnitSerializerTest.cpp"
 				>
 			</File>

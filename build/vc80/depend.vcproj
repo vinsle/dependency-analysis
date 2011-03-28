@@ -318,6 +318,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\UnitCache.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\UnitCache.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\UnitObserver_ABC.h"
 					>
 				</File>
