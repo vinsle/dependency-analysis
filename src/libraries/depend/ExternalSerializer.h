@@ -19,7 +19,6 @@ namespace xml
 
 namespace depend
 {
-    class DependencyMetric_ABC;
     class Filter_ABC;
     template< typename T > class Visitable;
 
