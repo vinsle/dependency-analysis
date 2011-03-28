@@ -8,8 +8,8 @@
 
 #include "depend_test_pch.h"
 #include "depend/ModuleDependencyGuard.h"
-#include "MockDependencyMetric.h"
 #include "MockDependencyGuardVisitor.h"
+#include "MockVisitable.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace depend;
@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unknown_dependencies )
         "        <dependency>to</dependency>"
         "    </module>"
         "</dependencies>" );
-    MockDependencyMetric metric;
+    MockVisitable< DependencyMetricVisitor_ABC > metric;
     DependencyMetricVisitor_ABC* pVisitor = 0;
     MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
     ModuleDependencyGuard guard( xis, metric );
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unchecked_declared_dependenc
         "        <dependency>to</dependency>"
         "    </module>"
         "</dependencies>" );
-    MockDependencyMetric metric;
+    MockVisitable< DependencyMetricVisitor_ABC > metric;
     DependencyMetricVisitor_ABC* pVisitor = 0;
     MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
     ModuleDependencyGuard guard( xis, metric );
@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_checked_obsolete_dependencie
         "        <obsolete-dependency>unchecked</obsolete-dependency>"
         "    </module>"
         "</dependencies>" );
-    MockDependencyMetric metric;
+    MockVisitable< DependencyMetricVisitor_ABC > metric;
     DependencyMetricVisitor_ABC* pVisitor = 0;
     MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
     ModuleDependencyGuard guard( xis, metric );
