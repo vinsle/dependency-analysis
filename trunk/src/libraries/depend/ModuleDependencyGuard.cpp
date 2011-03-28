@@ -9,7 +9,7 @@
 #include "depend_pch.h"
 #include "ModuleDependencyGuard.h"
 #include "DependencyGuardVisitor_ABC.h"
-#include "DependencyMetric_ABC.h"
+#include "Visitable.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
 
@@ -19,7 +19,7 @@ using namespace depend;
 // Name: ModuleDependencyGuard constructor
 // Created: SLI 2011-02-08
 // -----------------------------------------------------------------------------
-ModuleDependencyGuard::ModuleDependencyGuard( xml::xisubstream xis, const DependencyMetric_ABC& dependencies )
+ModuleDependencyGuard::ModuleDependencyGuard( xml::xisubstream xis, const Visitable< DependencyMetricVisitor_ABC >& dependencies )
 {
     xis >> xml::start( "dependencies" )
             >> xml::list( "module", *this, &ModuleDependencyGuard::ReadModule );

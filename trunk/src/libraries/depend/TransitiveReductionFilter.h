@@ -21,7 +21,6 @@
 
 namespace depend
 {
-    class DependencyMetric_ABC;
     template< typename T > class Visitable;
 
 // =============================================================================

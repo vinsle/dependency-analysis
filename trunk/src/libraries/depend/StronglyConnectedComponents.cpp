@@ -8,7 +8,6 @@
 
 #include "depend_pch.h"
 #include "StronglyConnectedComponents.h"
-#include "DependencyMetric_ABC.h"
 #include "Filter_ABC.h"
 #include "Visitable.h"
 #include <xeumeuleu/xml.hpp>

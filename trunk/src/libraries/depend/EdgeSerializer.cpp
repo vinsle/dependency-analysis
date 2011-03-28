@@ -8,7 +8,6 @@
 
 #include "depend_pch.h"
 #include "EdgeSerializer.h"
-#include "DependencyMetric_ABC.h"
 #include "Filter.h"
 #include "Visitable.h"
 #include <xeumeuleu/xml.hpp>

@@ -8,7 +8,6 @@
 
 #include "depend_pch.h"
 #include "TransitiveReductionFilter.h"
-#include "DependencyMetric_ABC.h"
 #include "Visitable.h"
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )

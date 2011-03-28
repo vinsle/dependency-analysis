@@ -8,7 +8,6 @@
 
 #include "depend_pch.h"
 #include "ExternalSerializer.h"
-#include "DependencyMetric_ABC.h"
 #include "Filter_ABC.h"
 #include "Visitable.h"
 #include <boost/foreach.hpp>

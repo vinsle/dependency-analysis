@@ -9,7 +9,7 @@
 #ifndef depend_ModuleDependencyMetricLoader_h
 #define depend_ModuleDependencyMetricLoader_h
 
-#include "DependencyMetric_ABC.h"
+#include "Visitable.h"
 #include <vector>
 #include <string>
 
@@ -21,13 +21,15 @@ namespace xml
 
 namespace depend
 {
+    class DependencyMetricVisitor_ABC;
+
 // =============================================================================
 /** @class  ModuleDependencyMetricLoader
     @brief  Module dependency metric loader
 */
 // Created: SLI 2011-02-18
 // =============================================================================
-class ModuleDependencyMetricLoader : public DependencyMetric_ABC
+class ModuleDependencyMetricLoader : public Visitable< DependencyMetricVisitor_ABC >
 {
 public:
     //! @name Constructors/Destructor

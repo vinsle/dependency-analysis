@@ -8,8 +8,6 @@
 
 #include "depend_pch.h"
 #include "MetricSerializer.h"
-#include "DependencyMetric_ABC.h"
-#include "ClassMetric_ABC.h"
 #include "Filter_ABC.h"
 #include "Filter.h"
 #include "Visitable.h"

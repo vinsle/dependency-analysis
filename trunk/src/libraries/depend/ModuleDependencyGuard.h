@@ -22,7 +22,7 @@ namespace xml
 
 namespace depend
 {
-    class DependencyMetric_ABC;
+    template< typename T > class Visitable;
     class DependencyGuardVisitor_ABC;
 
 // =============================================================================
@@ -36,7 +36,7 @@ class ModuleDependencyGuard : private DependencyMetricVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleDependencyGuard( xml::xisubstream xis, const DependencyMetric_ABC& dependencies );
+             ModuleDependencyGuard( xml::xisubstream xis, const Visitable< DependencyMetricVisitor_ABC >& dependencies );
     virtual ~ModuleDependencyGuard();
     //@}
 
