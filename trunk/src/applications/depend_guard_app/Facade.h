@@ -20,7 +20,8 @@ namespace xml
 namespace depend
 {
     class Log_ABC;
-    class DependencyMetric_ABC;
+    template< typename T > class Visitable;
+    class DependencyMetricVisitor_ABC;
 }
 
 // =============================================================================
@@ -47,7 +48,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< depend::Log_ABC > log_;
-    std::auto_ptr< depend::DependencyMetric_ABC > dependencyMetric_;
+    std::auto_ptr< depend::Visitable< depend::DependencyMetricVisitor_ABC > > dependencyMetric_;
     //@}
 };
 

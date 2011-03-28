@@ -35,8 +35,6 @@ namespace depend
     class UncommentedLineVisitor;
     class IncludeVisitor;
     class ClassVisitor;
-    class ClassMetric_ABC;
-    class DependencyMetric_ABC;
     class UnitSerializer;
     class ClassMetricVisitor_ABC;
     class DependencyMetricVisitor_ABC;
