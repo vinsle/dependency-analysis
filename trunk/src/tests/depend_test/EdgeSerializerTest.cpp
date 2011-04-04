@@ -20,10 +20,15 @@ namespace
     {
     public:
         Fixture()
-            : dependencyVisitor( 0 )
+            : unitsVisitor     ( 0 )
+            , dependencyVisitor( 0 )
         {
-            MOCK_EXPECT( dependencyMetric, Apply ).once().with( mock::retrieve( dependencyVisitor ) );
+            MOCK_EXPECT( units, Apply ).once().in( s ).with( mock::retrieve( unitsVisitor ) );
+            MOCK_EXPECT( dependencyMetric, Apply ).once().in( s ).with( mock::retrieve( dependencyVisitor ) );
         }
+        mock::sequence s;
+        MockVisitable< UnitObserver_ABC > units;
+        UnitObserver_ABC* unitsVisitor;
         MockVisitable< DependencyMetricVisitor_ABC > dependencyMetric;
         DependencyMetricVisitor_ABC* dependencyVisitor;
         MockFilter filter;
@@ -32,8 +37,9 @@ namespace
     {
     public:
         SerializeFixture()
-            : serializer( dependencyMetric )
+            : serializer( dependencyMetric, units )
         {
+            BOOST_REQUIRE( unitsVisitor );
             BOOST_REQUIRE( dependencyVisitor );
         }
         EdgeSerializer serializer;
@@ -42,6 +48,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
 {
+    unitsVisitor->NotifyUnit( "module1", "context" );
     dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context1" );
     dependencyVisitor->NotifyInternalDependency( "module2", "module1", "context2" );
     dependencyVisitor->NotifyExternalDependency( "module1", "boost", "context3" );
@@ -68,6 +75,22 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
         "                <context>context2</context>"
         "            </dependency>"
         "        </efferent-dependencies>"
+        "        <external-dependencies/>"
+        "    </node>"
+        "</graph>";
+    BOOST_CHECK_XML_EQUAL( expected, xos.str() );
+}
+
+BOOST_FIXTURE_TEST_CASE( serialize_units_without_dependency_in_xml, SerializeFixture )
+{
+    unitsVisitor->NotifyUnit( "module", "context" );
+    xml::xostringstream xos;
+    MOCK_EXPECT( filter, Check ).returns( true );
+    serializer.Serialize( xos, filter );
+    const std::string expected =
+        "<graph>"
+        "    <node name='module'>"
+        "        <efferent-dependencies/>"
         "        <external-dependencies/>"
         "    </node>"
         "</graph>";

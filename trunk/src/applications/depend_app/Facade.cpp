@@ -21,6 +21,7 @@
 #include "depend/InternalModuleResolver.h"
 #include "depend/ProxyModuleResolver.h"
 #include "depend/Filter_ABC.h"
+#include "depend/UnitCache.h"
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -38,6 +39,7 @@ Facade::Facade( xml::xisubstream xis )
     , externalResolver_      ( new ExternalModuleResolver( xis, *finder_, *log_ ) )
     , proxy_                 ( new ProxyModuleResolver( *externalResolver_ ) )
     , moduleVisitor_         ( new ModuleVisitor() )
+    , unitCache_             ( new UnitCache( *moduleVisitor_ ) )
     , fileVisitor_           ( new FileVisitor( xis ) )
     , lineVisitor_           ( new LineVisitor() )
     , uncommentedLineVisitor_( new UncommentedLineVisitor( *lineVisitor_ ) )
@@ -162,6 +164,6 @@ void Facade::Serialize( xml::xistream& xis )
     if( !output.empty() )
         out.reset( new std::ofstream( output.c_str() ) );
     xml::xostringstream xos;
-    EdgeSerializer( *dependencyMetric_ ).Serialize( xos, SimpleFilter() );
+    EdgeSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos, SimpleFilter() );
     *out << xos.str();
 }

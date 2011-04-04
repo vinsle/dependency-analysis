@@ -19,8 +19,9 @@ using namespace depend;
 // Name: EdgeSerializer constructor
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-EdgeSerializer::EdgeSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies )
+EdgeSerializer::EdgeSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies, const Visitable< UnitObserver_ABC >& units )
 {
+    units.Apply( *this );
     dependencies.Apply( *this );
 }
 
@@ -110,4 +111,13 @@ void EdgeSerializer::NotifyExternalDependency( const std::string& fromModule, co
 {
     modules_.insert( fromModule );
     external_[ fromModule ][ toModule ].push_back( context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EdgeSerializer::NotifyUnit
+// Created: SLI 2011-04-04
+// -----------------------------------------------------------------------------
+void EdgeSerializer::NotifyUnit( const std::string& unit, const std::string& /*context*/ )
+{
+    modules_.insert( unit );
 }
