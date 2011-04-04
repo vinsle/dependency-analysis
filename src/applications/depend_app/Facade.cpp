@@ -164,6 +164,8 @@ void Facade::Serialize( xml::xistream& xis )
     if( !output.empty() )
         out.reset( new std::ofstream( output.c_str() ) );
     xml::xostringstream xos;
+    xos << xml::start( "graph" );
     EdgeSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos, SimpleFilter() );
+    xos << xml::end;
     *out << xos.str();
 }

@@ -73,7 +73,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EdgeSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
 {
-    xos << xml::start( "graph" );
+    xos << xml::start( "nodes" );
     BOOST_FOREACH( const std::string& module, modules_ )
     {
         if( filter.Check( module ) )

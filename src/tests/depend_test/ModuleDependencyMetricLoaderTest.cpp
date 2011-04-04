@@ -17,6 +17,7 @@ BOOST_AUTO_TEST_CASE( loader_parse_dependency_xml_and_notifies_visitor )
 {
     xml::xistringstream xis(
         "<graph>"
+        "  <nodes>"
         "    <node name='from'>"
         "        <efferent-dependencies>"
         "            <dependency name='to'>"
@@ -38,6 +39,7 @@ BOOST_AUTO_TEST_CASE( loader_parse_dependency_xml_and_notifies_visitor )
         "        </efferent-dependencies>"
         "        <external-dependencies/>"
         "    </node>"
+        "  </nodes>"
         "</graph>" );
     ModuleDependencyMetricLoader loader( xis );
     MockDependencyMetricVisitor visitor;

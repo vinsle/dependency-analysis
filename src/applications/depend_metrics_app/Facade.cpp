@@ -234,7 +234,9 @@ void Facade::Serialize( xml::xostream& xos )
     Filter_ABC& filter = extend_ ? static_cast< Filter_ABC& >( transitive ) : static_cast< Filter_ABC& >( extension );
     unitSerializer_->Serialize( xos, filter );
     ExternalSerializer( *dependencyMetric_, filter ).Serialize( xos );
+    xos << xml::start( "graph" );
     EdgeSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos, filter );
+    xos << xml::end;
     MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter );
     StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, filter );
     xos << xml::end;
