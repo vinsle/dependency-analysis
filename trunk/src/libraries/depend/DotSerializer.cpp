@@ -145,7 +145,9 @@ void DotSerializer::Serialize( xml::xistream& xis, std::ostream& os, DotOption o
                 >> xml::list( "external", boost::bind( &ReadExternal, _1, boost::ref( os ) ) )
             >> xml::end;
     xis     >> xml::start( "graph" )
-                >> xml::list( "node", boost::bind( &ReadNode, _1, boost::cref( components ), boost::ref( os ), option ) )
+                >> xml::start( "nodes" )
+                    >> xml::list( "node", boost::bind( &ReadNode, _1, boost::cref( components ), boost::ref( os ), option ) )
+                >> xml::end
             >> xml::end
         >> xml::end;
     os << "}" << std::endl;

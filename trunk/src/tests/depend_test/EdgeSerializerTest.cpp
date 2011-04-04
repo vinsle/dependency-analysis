@@ -56,7 +56,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
     MOCK_EXPECT( filter, Check ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
-        "<graph>"
+        "<nodes>"
         "    <node name='module1'>"
         "        <efferent-dependencies>"
         "            <dependency name='module2'>"
@@ -77,7 +77,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
         "        </efferent-dependencies>"
         "        <external-dependencies/>"
         "    </node>"
-        "</graph>";
+        "</nodes>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
 
@@ -88,12 +88,12 @@ BOOST_FIXTURE_TEST_CASE( serialize_units_without_dependency_in_xml, SerializeFix
     MOCK_EXPECT( filter, Check ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
-        "<graph>"
+        "<nodes>"
         "    <node name='module'>"
         "        <efferent-dependencies/>"
         "        <external-dependencies/>"
         "    </node>"
-        "</graph>";
+        "</nodes>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
 
@@ -111,7 +111,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_with_module_filter, SerializeFixture )
     MOCK_EXPECT( filter, Check ).returns( false );
     serializer.Serialize( xos, filter );
     const std::string expected =
-        "<graph>"
+        "<nodes>"
         "    <node name='module1'>"
         "        <efferent-dependencies>"
         "            <dependency name='module2'>"
@@ -136,6 +136,6 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_with_module_filter, SerializeFixture )
         "        </efferent-dependencies>"
         "        <external-dependencies/>"
         "    </node>"
-        "</graph>";
+        "</nodes>";
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }

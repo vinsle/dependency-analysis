@@ -21,7 +21,8 @@ using namespace depend;
 ModuleDependencyMetricLoader::ModuleDependencyMetricLoader( xml::xisubstream xis )
 {
     xis >> xml::start( "graph" )
-            >> xml::list( "node", *this, &ModuleDependencyMetricLoader::ReadNode );
+            >> xml::start( "nodes" )
+                >> xml::list( "node", *this, &ModuleDependencyMetricLoader::ReadNode );
 }
 
 // -----------------------------------------------------------------------------
