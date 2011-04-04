@@ -342,6 +342,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\ClassLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\ClassLoader.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\ClassMetric.cpp"
 					>
 				</File>
