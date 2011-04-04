@@ -34,6 +34,7 @@ namespace depend
     class DependencyMetricVisitor_ABC;
     template< typename T > class Visitable;
     class UnitObserver_ABC;
+    class ClassSerializer;
 }
 
 // =============================================================================
@@ -80,6 +81,7 @@ private:
     std::auto_ptr< depend::ClassVisitor > classVisitor_;
     std::auto_ptr< depend::InternalModuleResolver_ABC > internalResolver_;
     std::auto_ptr< depend::Visitable< depend::DependencyMetricVisitor_ABC > > dependencyMetric_;
+    std::auto_ptr< depend::ClassSerializer > classSerializer_;
     //@}
 };
 

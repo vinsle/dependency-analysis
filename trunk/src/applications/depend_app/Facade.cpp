@@ -22,6 +22,7 @@
 #include "depend/ProxyModuleResolver.h"
 #include "depend/Filter_ABC.h"
 #include "depend/UnitCache.h"
+#include "depend/ClassSerializer.h"
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -47,6 +48,7 @@ Facade::Facade( xml::xisubstream xis )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , internalResolver_      ( new InternalModuleResolver( xis, *finder_, *moduleVisitor_ ) )
     , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *internalResolver_, *log_ ) )
+    , classSerializer_       ( new ClassSerializer( *moduleVisitor_, *classVisitor_ ) )
 {
     // NOTHING
 }
@@ -166,6 +168,7 @@ void Facade::Serialize( xml::xistream& xis )
     xml::xostringstream xos;
     xos << xml::start( "graph" );
     EdgeSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos, SimpleFilter() );
+    classSerializer_->Serialize( xos );
     xos << xml::end;
     *out << xos.str();
 }

@@ -194,6 +194,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\ClassSerializerTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\ClassVisitorTest.cpp"
 				>
 			</File>
