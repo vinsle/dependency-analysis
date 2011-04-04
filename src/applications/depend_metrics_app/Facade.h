@@ -39,6 +39,7 @@ namespace depend
     class ClassMetricVisitor_ABC;
     class DependencyMetricVisitor_ABC;
     template< typename T > class Visitable;
+    class UnitObserver_ABC;
 }
 
 class GraphSerializer;
@@ -86,6 +87,7 @@ private:
     std::auto_ptr< depend::ExternalModuleResolver_ABC > externalResolver_;
     std::auto_ptr< depend::ExternalModuleResolver_ABC > proxy_;
     std::auto_ptr< depend::ModuleVisitor > moduleVisitor_;
+    std::auto_ptr< depend::Visitable< depend::UnitObserver_ABC > > unitCache_;
     std::auto_ptr< depend::FileVisitor > fileVisitor_;
     std::auto_ptr< depend::LineVisitor > lineVisitor_;
     std::auto_ptr< depend::UncommentedLineVisitor > uncommentedLineVisitor_;
