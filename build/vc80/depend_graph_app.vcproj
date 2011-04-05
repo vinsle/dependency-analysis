@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="depend_metrics_app"
+	Name="depend_graph_app"
 	ProjectGUID="{052071D8-F228-42B2-A047-4688947AEEDE}"
-	RootNamespace="depend_metrics_app"
+	RootNamespace="depend_graph_app"
 	>
 	<Platforms>
 		<Platform
@@ -43,7 +43,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough="depend_metrics_app_pch.h"
+				PrecompiledHeaderThrough="depend_graph_app_pch.h"
 				AssemblerListingLocation="$(IntDir)/"
 				ObjectFile="$(IntDir)/"
 				ProgramDataBaseFileName="$(IntDir)/$(ProjectName).pdb"
@@ -123,7 +123,7 @@
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough="depend_metrics_app_pch.h"
+				PrecompiledHeaderThrough="depend_graph_app_pch.h"
 				AssemblerListingLocation="$(IntDir)/"
 				ObjectFile="$(IntDir)/"
 				ProgramDataBaseFileName="$(IntDir)/$(ProjectName).pdb"
@@ -185,23 +185,23 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\applications\depend_metrics_app\Facade.cpp"
+				RelativePath="..\..\src\applications\depend_graph_app\Facade.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\applications\depend_metrics_app\Facade.h"
+				RelativePath="..\..\src\applications\depend_graph_app\Facade.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\applications\depend_metrics_app\GraphSerializer.cpp"
+				RelativePath="..\..\src\applications\depend_graph_app\GraphSerializer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\applications\depend_metrics_app\GraphSerializer.h"
+				RelativePath="..\..\src\applications\depend_graph_app\GraphSerializer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\applications\depend_metrics_app\main.cpp"
+				RelativePath="..\..\src\applications\depend_graph_app\main.cpp"
 				>
 			</File>
 		</Filter>
