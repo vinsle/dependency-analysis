@@ -81,6 +81,21 @@
         </build-app>
     </target>
 
+    <target name="depend_components_app" depends="depend" description="build application">
+        <tstamp>
+            <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
+        </tstamp>
+        <build-app name="depend_components_app" pattern="depend_components" depends="boost" libs="depend,xerces-c_static_3" subsystem="console">
+            <defineset>
+                <define name="BUILD_VERSION" value="${depend.version}.${svn.version}"/>
+                <define name="BUILD_TIME" value="${now}"/>
+                <define name="XERCES_STATIC_LIBRARY"/>
+            </defineset>
+            <syslibset libs="advapi32"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+        </build-app>
+    </target>
+
     <target name="depend_graph_app" depends="depend" description="build application">
         <tstamp>
             <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
@@ -123,6 +138,7 @@
             <fileset file="${out.dir}/release/applications/depend_app/depend.exe"/>
             <fileset file="${out.dir}/release/applications/depend_guard_app/depend_guard.exe"/>
             <fileset file="${out.dir}/release/applications/depend_metrics_app/depend_metrics.exe"/>
+            <fileset file="${out.dir}/release/applications/depend_components_app/depend_components.exe"/>
             <fileset file="${out.dir}/release/applications/depend_graph_app/depend_graph.exe"/>            
         </zip>
         <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
@@ -168,6 +184,16 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="dependency-components">
+        <sequential>
+            <exec taskname="depend_components_app" executable="${out.dir}/release/applications/depend_components_app/depend_components.exe" failonerror="true">
+                <arg value="--graph=${reports.dir}/depend.xml"/>
+                <arg value="--output=${reports.dir}/depend-components.xml"/>
+                <arg value="--fail-on-error"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <macrodef name="dependency-graph">
         <sequential>
             <exec taskname="depend_app" executable="${out.dir}/release/applications/depend_graph_app/depend_graph.exe" dir="${run.dir}" failonerror="true">
@@ -196,6 +222,7 @@
         <cppcheck-report/>
         <dependency-analysis/>
         <dependency-metrics/>
+        <dependency-components/>
         <dependency-guard dependencies='dependencies.xml'/>
         <dependency-graph/>
     </target>
@@ -206,7 +233,7 @@
 
     <target name="test" depends="depend_test" description="run all tests"/>
 
-    <target name="build" depends="depend_app,depend_guard_app,depend_metrics_app,depend_graph_app" description="build all"/>
+    <target name="build" depends="depend_app,depend_guard_app,depend_metrics_app,depend_components_app,depend_graph_app" description="build all"/>
 
     <target name="configure" description="initialize local project structure with libraries">
         <update name="boost"/>

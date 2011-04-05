@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_CASE( strongly_connected_components_serialization, ComponentF
 {
     const std::string expected = "<strongly-connected-components/>";
     xml::xostringstream xos;
-    components.Serialize( xos, filter );
+    BOOST_CHECK( components.Serialize( xos, filter ) );
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
 
@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_detection, Compone
         "</strongly-connected-components>";
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).returns( true );
-    components.Serialize( xos, filter );
+    BOOST_CHECK( !components.Serialize( xos, filter ) );
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
 
@@ -75,7 +75,7 @@ BOOST_FIXTURE_TEST_CASE( filtered_components_with_only_one_module_is_empty, Comp
     xml::xostringstream xos;
     MOCK_EXPECT( filter, Check ).with( "from" ).returns( true );
     MOCK_EXPECT( filter, Check ).returns( false );
-    components.Serialize( xos, filter );
+    BOOST_CHECK( components.Serialize( xos, filter ) );
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }
 
@@ -96,6 +96,6 @@ BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_are_filtered, Comp
     MOCK_EXPECT( filter, Check ).with( "from" ).returns( true );
     MOCK_EXPECT( filter, Check ).with( "to" ).returns( true );
     MOCK_EXPECT( filter, Check ).returns( false );
-    components.Serialize( xos, filter );
+    BOOST_CHECK( !components.Serialize( xos, filter ) );
     BOOST_CHECK_XML_EQUAL( expected, xos.str() );
 }

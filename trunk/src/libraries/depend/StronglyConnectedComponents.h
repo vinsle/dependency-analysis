@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos, const Filter_ABC& filter ) const;
+    bool Serialize( xml::xostream& xos, const Filter_ABC& filter ) const;
     //@}
 
 private:

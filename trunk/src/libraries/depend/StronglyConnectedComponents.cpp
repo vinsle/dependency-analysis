@@ -40,8 +40,9 @@ StronglyConnectedComponents::~StronglyConnectedComponents()
 namespace
 {
     template< typename T, typename U >
-    void Serialize( T& components, const U& labels, const Filter_ABC& filter, xml::xostream& xos )
+    bool Serialize( T& components, const U& labels, const Filter_ABC& filter, xml::xostream& xos )
     {
+        bool result = true;
         typedef std::vector< std::string > T_Dependencies;
         typedef std::map< T::key_type, T_Dependencies > T_Components;
         T_Components sorted_components;
@@ -55,12 +56,14 @@ namespace
         {
             if( component.second.size() > 1 )
             {
+                result = false;
                 xos << xml::start( "component" );
                 BOOST_FOREACH( const std::string& module, component.second )
                     xos << xml::content( "node", module );
                 xos << xml::end;
             }
         }
+        return result;
     }
 }
 
@@ -68,7 +71,7 @@ namespace
 // Name: StronglyConnectedComponents::Serialize
 // Created: SLI 2010-08-23
 // -----------------------------------------------------------------------------
-void StronglyConnectedComponents::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
+bool StronglyConnectedComponents::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
 {
     xos << xml::start( "strongly-connected-components" );
     typedef std::map< T_Graph::vertex_descriptor, T_Graph::vertices_size_type > T_Map;
@@ -76,8 +79,9 @@ void StronglyConnectedComponents::Serialize( xml::xostream& xos, const Filter_AB
     T_Map mymap;
     T_PropertyMap pmap( mymap );
     boost::strong_components( graph_.graph(), pmap );
-    ::Serialize( mymap, labels_, filter, xos );
+    const bool result = ::Serialize( mymap, labels_, filter, xos );
     xos << xml::end;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
