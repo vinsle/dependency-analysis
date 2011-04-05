@@ -20,12 +20,14 @@ BOOST_AUTO_TEST_CASE( class_loads_from_xml_and_notifies_listeners )
     MockUnitObserver unitObserver;
     MockClassObserver classObserver;
     xml::xistringstream xis(
-        "<classes>"
-        "    <node name='module1'>"
-        "        <class abstract='true' context='context1' name='class1'/>"
-        "        <class abstract='false' context='context2' name='class2'/>"
-        "    </node>"
-        "</classes>" );
+        "<graph>"
+        "    <classes>"
+        "        <node name='module1'>"
+        "            <class abstract='true' context='context1' name='class1'/>"
+        "            <class abstract='false' context='context2' name='class2'/>"
+        "        </node>"
+        "    </classes>"
+        "</graph>" );
     loader.Subject< UnitObserver_ABC >::Register( unitObserver );
     loader.Subject< ClassObserver_ABC >::Register( classObserver );
     mock::sequence s;
