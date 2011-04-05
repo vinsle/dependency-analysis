@@ -73,10 +73,8 @@ int main( int argc, char* argv[] )
         const bpo::variables_map vm = ParseCommandLine( argc, argv );
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
-        const std::string graph = vm[ "graph" ].as< std::string >();
-        const std::string dependencies = vm[ "dependencies" ].as< std::string >();
-        xml::xifstream xisGraph( graph );
-        xml::xifstream xisDependencies( dependencies );
+        xml::xifstream xisGraph( vm[ "graph" ].as< std::string >() );
+        xml::xifstream xisDependencies( vm[ "dependencies" ].as< std::string >() );
         const Facade facade( xisGraph );
         if( facade.Process( xisDependencies ) )
             return EXIT_FAILURE;
