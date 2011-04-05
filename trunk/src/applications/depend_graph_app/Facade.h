@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_metrics_app_Facade_h
-#define depend_metrics_app_Facade_h
+#ifndef depend_graph_app_Facade_h
+#define depend_graph_app_Facade_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -102,4 +102,4 @@ private:
     //@}
 };
 
-#endif // depend_metrics_app_Facade_h
+#endif // depend_graph_app_Facade_h
