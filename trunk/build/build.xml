@@ -37,9 +37,6 @@
     -->
 
     <target name="depend_app" depends="depend" description="build application">
-        <svn>
-            <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>
-        </svn>
         <tstamp>
             <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
         </tstamp>
@@ -55,9 +52,6 @@
     </target>
 
     <target name="depend_guard_app" depends="depend" description="build application">
-        <svn>
-            <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>
-        </svn>
         <tstamp>
             <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
         </tstamp>
@@ -72,10 +66,22 @@
         </build-app>
     </target>
 
+    <target name="depend_metrics_app" depends="depend" description="build application">
+        <tstamp>
+            <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
+        </tstamp>
+        <build-app name="depend_metrics_app" pattern="depend_metrics" depends="boost" libs="depend,xerces-c_static_3" subsystem="console">
+            <defineset>
+                <define name="BUILD_VERSION" value="${depend.version}.${svn.version}"/>
+                <define name="BUILD_TIME" value="${now}"/>
+                <define name="XERCES_STATIC_LIBRARY"/>
+            </defineset>
+            <syslibset libs="advapi32"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+        </build-app>
+    </target>
+
     <target name="depend_graph_app" depends="depend" description="build application">
-        <svn>
-            <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>
-        </svn>
         <tstamp>
             <format property="now" pattern="HH:mm:ss dd/MM/yyyy"/>
         </tstamp>
@@ -116,6 +122,7 @@
         <zip destfile="${dist.dir}/depend_${depend.version}.zip">
             <fileset file="${out.dir}/release/applications/depend_app/depend.exe"/>
             <fileset file="${out.dir}/release/applications/depend_guard_app/depend_guard.exe"/>
+            <fileset file="${out.dir}/release/applications/depend_metrics_app/depend_metrics.exe"/>
             <fileset file="${out.dir}/release/applications/depend_graph_app/depend_graph.exe"/>            
         </zip>
         <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
@@ -152,6 +159,15 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="dependency-metrics">
+        <sequential>
+            <exec taskname="depend_metrics_app" executable="${out.dir}/release/applications/depend_metrics_app/depend_metrics.exe" failonerror="true">
+                <arg value="--graph=${reports.dir}/depend.xml"/>
+                <arg value="--output=${reports.dir}/depend-metrics.xml"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <macrodef name="dependency-graph">
         <sequential>
             <exec taskname="depend_app" executable="${out.dir}/release/applications/depend_graph_app/depend_graph.exe" dir="${run.dir}" failonerror="true">
@@ -179,6 +195,7 @@
         </cppncss-report>
         <cppcheck-report/>
         <dependency-analysis/>
+        <dependency-metrics/>
         <dependency-guard dependencies='dependencies.xml'/>
         <dependency-graph/>
     </target>
@@ -189,7 +206,7 @@
 
     <target name="test" depends="depend_test" description="run all tests"/>
 
-    <target name="build" depends="depend_app,depend_guard_app,depend_graph_app" description="build all"/>
+    <target name="build" depends="depend_app,depend_guard_app,depend_metrics_app,depend_graph_app" description="build all"/>
 
     <target name="configure" description="initialize local project structure with libraries">
         <update name="boost"/>

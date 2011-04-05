@@ -39,8 +39,9 @@ ClassLoader::~ClassLoader()
 // -----------------------------------------------------------------------------
 void ClassLoader::Process( xml::xisubstream xis )
 {
-    xis >> xml::start( "classes" )
-            >> xml::list( "node", *this, &ClassLoader::ReadNode );
+    xis >> xml::start( "graph" )
+            >> xml::start( "classes" )
+                >> xml::list( "node", *this, &ClassLoader::ReadNode );
 }
 
 // -----------------------------------------------------------------------------
