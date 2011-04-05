@@ -18,7 +18,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_guard_app", "depend_
 		{02EED1A3-A91E-40CD-ADB3-F69394CF8C84} = {02EED1A3-A91E-40CD-ADB3-F69394CF8C84}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_metrics_app", "depend_metrics_app.vcproj", "{052071D8-F228-42B2-A047-4688947AEEDE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_graph_app", "depend_graph_app.vcproj", "{052071D8-F228-42B2-A047-4688947AEEDE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{02EED1A3-A91E-40CD-ADB3-F69394CF8C84} = {02EED1A3-A91E-40CD-ADB3-F69394CF8C84}
 	EndProjectSection
