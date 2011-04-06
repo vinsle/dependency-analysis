@@ -61,7 +61,7 @@ namespace
 // Name: Facade::Process
 // Created: SLI 2010-09-10
 // -----------------------------------------------------------------------------
-void Facade::Process( const std::string& output )
+bool Facade::Process( const std::string& output )
 {
     boost::shared_ptr< std::ostream > out( &std::cout, boost::bind( &Noop ) );
     if( !output.empty() )
@@ -69,6 +69,5 @@ void Facade::Process( const std::string& output )
     xml::xostringstream xos;
     const bool result = StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, SimpleFilter() );
     *out << xos.str();
-    if( !result )
-        throw std::runtime_error( "strongly connected component detected" );
+    return result;
 }
