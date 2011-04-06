@@ -42,7 +42,7 @@ public:
 public:
     //! @name Operations
     //@{
-    void Process( const std::string& output );
+    bool Process( const std::string& output );
     //@}
 
 private:
