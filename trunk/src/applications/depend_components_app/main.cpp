@@ -56,8 +56,7 @@ namespace
             ( "help,h"                             , "produce help message" )
             ( "version,v"                          , "produce version message" )
             ( "graph", bpo::value< std::string >() , "set graph input file for analysis" )
-            ( "output", bpo::value< std::string >(), "set output components file" )
-            ( "fail-on-error"                      , "fails if any strongly connected component has been identified" );
+            ( "output", bpo::value< std::string >(), "set output components file" );
         bpo::variables_map vm;
         bpo::positional_options_description p;
         p.add( "graph", -1 );
@@ -78,7 +77,8 @@ int main( int argc, char* argv[] )
         xml::xifstream xis( vm[ "graph" ].as< std::string >() );
         Facade facade( xis );
         const std::string output = vm.count( "output" ) ? vm[ "output" ].as< std::string >() : "";
-        facade.Process( output );
+        if( !facade.Process( output ) )
+            return EXIT_FAILURE;
         return EXIT_SUCCESS;
     }
     catch( std::exception& e )

@@ -189,7 +189,6 @@
             <exec taskname="depend_components_app" executable="${out.dir}/release/applications/depend_components_app/depend_components.exe" failonerror="true">
                 <arg value="--graph=${reports.dir}/depend.xml"/>
                 <arg value="--output=${reports.dir}/depend-components.xml"/>
-                <arg value="--fail-on-error"/>
             </exec>
         </sequential>
     </macrodef>
