@@ -21,6 +21,7 @@
 #include "depend/UnitSerializer.h"
 #include "depend/ExternalSerializer.h"
 #include "depend/StronglyConnectedComponents.h"
+#include "depend/StronglyConnectedComponentsSerializer.h"
 #include "depend/DotSerializer.h"
 #include "depend/Filter.h"
 #include "depend/Log.h"
@@ -238,7 +239,8 @@ void Facade::Serialize( xml::xostream& xos )
     EdgeSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos, filter );
     xos << xml::end;
     MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter );
-    StronglyConnectedComponents( *dependencyMetric_ ).Serialize( xos, filter );
+    StronglyConnectedComponents components( *dependencyMetric_, filter );
+    StronglyConnectedComponentsSerializer( components ).Serialize( xos );
     xos << xml::end;
 }
 

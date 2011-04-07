@@ -56,7 +56,8 @@ namespace
             ( "help,h"                             , "produce help message" )
             ( "version,v"                          , "produce version message" )
             ( "graph", bpo::value< std::string >() , "set graph input file for analysis" )
-            ( "output", bpo::value< std::string >(), "set output components file" );
+            ( "output", bpo::value< std::string >(), "set output components file" )
+            ( "disable-warnings"                   , "disable warnings" );
         bpo::variables_map vm;
         bpo::positional_options_description p;
         p.add( "graph", -1 );
@@ -75,7 +76,7 @@ int main( int argc, char* argv[] )
         if( vm.count( "help" ) || vm.count( "version" ) )
             return EXIT_SUCCESS;
         xml::xifstream xis( vm[ "graph" ].as< std::string >() );
-        Facade facade( xis );
+        Facade facade( xis, vm.count( "disable-warnings" ) == 0u );
         const std::string output = vm.count( "output" ) ? vm[ "output" ].as< std::string >() : "";
         if( !facade.Process( output ) )
             return EXIT_FAILURE;
