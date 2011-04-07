@@ -20,6 +20,8 @@ namespace xml
 
 namespace depend
 {
+    class Filter_ABC;
+    class StronglyConnectedComponentsVisitor_ABC;
     class DependencyMetricVisitor_ABC;
     template< typename T > class Visitable;
 }
@@ -35,7 +37,7 @@ class Facade : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Facade( xml::xisubstream xis );
+             Facade( xml::xisubstream xis, bool warning );
     virtual ~Facade();
     //@}
 
@@ -48,7 +50,10 @@ public:
 private:
     //! @name Member data
     //@{
+    const bool warning_;
     std::auto_ptr< depend::Visitable< depend::DependencyMetricVisitor_ABC > > dependencyMetric_;
+    std::auto_ptr< depend::Filter_ABC > filter_;
+    std::auto_ptr< depend::Visitable< depend::StronglyConnectedComponentsVisitor_ABC > > components_;
     //@}
 };
 

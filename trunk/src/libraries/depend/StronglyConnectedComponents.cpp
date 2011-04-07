@@ -9,8 +9,8 @@
 #include "depend_pch.h"
 #include "StronglyConnectedComponents.h"
 #include "Filter_ABC.h"
-#include "Visitable.h"
-#include <xeumeuleu/xml.hpp>
+#include "StronglyConnectedComponentsVisitor_ABC.h"
+#include "ComponentVisitor_ABC.h"
 #pragma warning( push, 0 )
 #include <boost/graph/strong_components.hpp>
 #pragma warning( pop )
@@ -23,7 +23,8 @@ using namespace depend;
 // Name: StronglyConnectedComponents constructor
 // Created: SLI 2010-08-23
 // -----------------------------------------------------------------------------
-StronglyConnectedComponents::StronglyConnectedComponents( const Visitable< DependencyMetricVisitor_ABC >& metric )
+StronglyConnectedComponents::StronglyConnectedComponents( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter )
+    : filter_( filter )
 {
     metric.Apply( *this );
 }
@@ -39,10 +40,23 @@ StronglyConnectedComponents::~StronglyConnectedComponents()
 
 namespace
 {
-    template< typename T, typename U >
-    bool Serialize( T& components, const U& labels, const Filter_ABC& filter, xml::xostream& xos )
+    class Component : public Visitable< ComponentVisitor_ABC >
     {
-        bool result = true;
+    public:
+        Component( const std::vector< std::string >& units )
+            : units_( units )
+        {}
+        virtual void Apply( ComponentVisitor_ABC& visitor ) const
+        {
+            BOOST_FOREACH( const std::string& unit, units_ )
+                visitor.NotifyUnit( unit );
+        }
+    private:
+        const std::vector< std::string >& units_;
+    };
+    template< typename T, typename U >
+    void Visit( T& components, const U& labels, const Filter_ABC& filter, StronglyConnectedComponentsVisitor_ABC& visitor )
+    {
         typedef std::vector< std::string > T_Dependencies;
         typedef std::map< T::key_type, T_Dependencies > T_Components;
         T_Components sorted_components;
@@ -53,35 +67,23 @@ namespace
                 sorted_components[ component.second ].push_back( it->second );
         }
         BOOST_FOREACH( const T_Components::value_type& component, sorted_components )
-        {
             if( component.second.size() > 1 )
-            {
-                result = false;
-                xos << xml::start( "component" );
-                BOOST_FOREACH( const std::string& module, component.second )
-                    xos << xml::content( "node", module );
-                xos << xml::end;
-            }
-        }
-        return result;
+                visitor.NotifyComponent( Component( component.second ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: StronglyConnectedComponents::Serialize
-// Created: SLI 2010-08-23
+// Name: StronglyConnectedComponents::Apply
+// Created: SLI 2011-04-06
 // -----------------------------------------------------------------------------
-bool StronglyConnectedComponents::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
+void StronglyConnectedComponents::Apply( StronglyConnectedComponentsVisitor_ABC& visitor ) const
 {
-    xos << xml::start( "strongly-connected-components" );
     typedef std::map< T_Graph::vertex_descriptor, T_Graph::vertices_size_type > T_Map;
     typedef boost::associative_property_map< T_Map > T_PropertyMap;
     T_Map mymap;
     T_PropertyMap pmap( mymap );
     boost::strong_components( graph_.graph(), pmap );
-    const bool result = ::Serialize( mymap, labels_, filter, xos );
-    xos << xml::end;
-    return result;
+    ::Visit( mymap, labels_, filter_, visitor );
 }
 
 // -----------------------------------------------------------------------------

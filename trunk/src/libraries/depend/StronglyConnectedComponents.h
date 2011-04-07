@@ -10,20 +10,17 @@
 #define depend_StronglyConnectedComponents_h
 
 #include "DependencyMetricVisitor_ABC.h"
+#include "Visitable.h"
 #pragma warning( push, 0 )
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/labeled_graph.hpp>
 #pragma warning( pop )
 #include <vector>
 
-namespace xml
-{
-    class xostream;
-}
-
 namespace depend
 {
     class Filter_ABC;
+    class StronglyConnectedComponentsVisitor_ABC;
     template< typename T > class Visitable;
 
 // =============================================================================
@@ -32,18 +29,19 @@ namespace depend
 */
 // Created: SLI 2010-08-23
 // =============================================================================
-class StronglyConnectedComponents : private DependencyMetricVisitor_ABC
+class StronglyConnectedComponents : public Visitable< StronglyConnectedComponentsVisitor_ABC >
+                                  , private DependencyMetricVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StronglyConnectedComponents( const Visitable< DependencyMetricVisitor_ABC >& metric );
+             StronglyConnectedComponents( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter );
     virtual ~StronglyConnectedComponents();
     //@}
 
     //! @name Operations
     //@{
-    bool Serialize( xml::xostream& xos, const Filter_ABC& filter ) const;
+    virtual void Apply( StronglyConnectedComponentsVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -66,6 +64,7 @@ private:
     //@{
     T_Graph graph_;
     T_Labels labels_;
+    const Filter_ABC& filter_;
     //@}
 };
 

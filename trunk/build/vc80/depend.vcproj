@@ -393,14 +393,6 @@
 					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetricLoader.h"
 					>
 				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponents.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponents.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="serialization"
@@ -491,6 +483,34 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\ProxyModuleResolver.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="components"
+				>
+				<File
+					RelativePath="..\..\src\libraries\depend\ComponentVisitor_ABC.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponents.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponents.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponentsSerializer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponentsSerializer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\StronglyConnectedComponentsVisitor_ABC.h"
 					>
 				</File>
 			</Filter>

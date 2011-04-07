@@ -300,6 +300,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\StronglyConnectedComponentsSerializerTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\StronglyConnectedComponentsTest.cpp"
 				>
 			</File>
@@ -328,6 +332,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockClassObserver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockComponentVisitor.h"
 					>
 				</File>
 				<File
@@ -368,6 +376,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockLog.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockStronglyConnectedComponentsVisitor.h"
 					>
 				</File>
 				<File
