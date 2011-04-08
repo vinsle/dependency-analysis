@@ -10,7 +10,6 @@
 #define depend_UnitSerializer_h
 
 #include "UnitObserver_ABC.h"
-#include "Observer.h"
 #include <vector>
 
 namespace xml
@@ -21,6 +20,7 @@ namespace xml
 namespace depend
 {
     class Filter_ABC;
+    template< typename T > class Visitable;
 
 // =============================================================================
 /** @class  UnitSerializer
@@ -28,12 +28,12 @@ namespace depend
 */
 // Created: SLI 2010-08-24
 // =============================================================================
-class UnitSerializer : private Observer< UnitObserver_ABC >
+class UnitSerializer : private UnitObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitSerializer( Subject< UnitObserver_ABC >& subject );
+    explicit UnitSerializer( Visitable< UnitObserver_ABC >& units );
     virtual ~UnitSerializer();
     //@}
 

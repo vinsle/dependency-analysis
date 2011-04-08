@@ -8,7 +8,7 @@
 
 #include "depend_test_pch.h"
 #include "depend/UnitSerializer.h"
-#include "MockSubject.h"
+#include "MockVisitable.h"
 #include "MockFilter.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -16,11 +16,10 @@ using namespace depend;
 
 BOOST_AUTO_TEST_CASE( simple_unit_serialization )
 {
-    MockSubject< UnitObserver_ABC > mockSubject;
+    MockVisitable< UnitObserver_ABC > visitable;
     UnitObserver_ABC* observer = 0;
-    MOCK_EXPECT( mockSubject, Register ).once().with( mock::retrieve( observer ) );
-    MOCK_EXPECT( mockSubject, Unregister ).once();
-    UnitSerializer serializer( mockSubject );
+    MOCK_EXPECT( visitable, Apply ).once().with( mock::retrieve( observer ) );
+    UnitSerializer serializer( visitable );
     BOOST_REQUIRE( observer );
     observer->NotifyUnit( "unit", "context" );
     xml::xostringstream xos;
@@ -37,11 +36,10 @@ BOOST_AUTO_TEST_CASE( simple_unit_serialization )
 
 BOOST_AUTO_TEST_CASE( unit_serialization_can_be_filtered )
 {
-    MockSubject< UnitObserver_ABC > mockSubject;
+    MockVisitable< UnitObserver_ABC > visitable;
     UnitObserver_ABC* observer = 0;
-    MOCK_EXPECT( mockSubject, Register ).once().with( mock::retrieve( observer ) );
-    MOCK_EXPECT( mockSubject, Unregister ).once();
-    UnitSerializer serializer( mockSubject );
+    MOCK_EXPECT( visitable, Apply ).once().with( mock::retrieve( observer ) );
+    UnitSerializer serializer( visitable );
     BOOST_REQUIRE( observer );
     observer->NotifyUnit( "unit1", "context" );
     observer->NotifyUnit( "unit2", "context" );

@@ -61,7 +61,7 @@ Facade::Facade( xml::xisubstream xis )
     , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
     , internalResolver_      ( new InternalModuleResolver( xis, *finder_, *moduleVisitor_ ) )
     , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *internalResolver_, *log_ ) )
-    , unitSerializer_        ( new UnitSerializer( *moduleVisitor_ ) )
+    , unitSerializer_        ( new UnitSerializer( *unitCache_ ) )
     , graphSerializer_       ( new GraphSerializer( xis ) )
 {
     // NOTHING
