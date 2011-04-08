@@ -57,26 +57,19 @@ Facade::~Facade()
     classLoader_->Subject< UnitObserver_ABC >::Unregister( *this );
 }
 
-namespace
-{
-    void Noop() {}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Facade::Process
 // Created: SLI 2010-09-10
 // -----------------------------------------------------------------------------
 void Facade::Process( xml::xisubstream xis )
 {
-    xis >> xml::start( "configuration" );
-    const std::string output = xis.content< std::string >( "output" );
-    const bool all = xis.content< bool >( "all" );
-    boost::shared_ptr< std::ostream > out( &std::cout, boost::bind( &Noop ) );
-    if( !output.empty() )
-        out.reset( new std::ofstream( output.c_str() ) );
-    Serialize( output );
-    if( all )
+    std::string output;
+    xis >> xml::start( "configuration" )
+            >> xml::content( "output", output );
+    if( xis.content< bool >( "all" ) )
         SerializeAll( output );
+    else
+        Serialize( output );
 }
 
 namespace
@@ -185,10 +178,11 @@ namespace
 void Facade::SerializeAll( const std::string& filename )
 {
     const std::string extension = filename.substr( filename.find_last_of( '.' ) + 1, std::string::npos );
+    const std::string path = filename.substr( 0, filename.find_last_of( '.' ) );
     BOOST_FOREACH( const std::string& module, modules_ )
     {
         filter_.reset( new SimpleFilter( module ) ); // $$$$ _RC_ SLI 2010-09-06: not that great
-        Serialize( module + "." + extension );
+        Serialize( path + "_" + module + "." + extension );
     }
 }
 
