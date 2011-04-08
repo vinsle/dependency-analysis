@@ -196,8 +196,8 @@
     <macrodef name="dependency-graph">
         <sequential>
             <exec taskname="depend_graph" executable="${out.dir}/release/applications/depend_graph_app/depend_graph.exe" dir="${run.dir}" failonerror="true">
-                <arg value="--output=${reports.dir}/depend.png"/>
-                <arg value="--input=${reports.dir}/depend.xml"/>
+                <arg value="--output=${reports.dir}/graph.png"/>
+                <arg value="${reports.dir}/depend.xml"/>
             </exec>
         </sequential>
     </macrodef>
