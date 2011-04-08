@@ -36,7 +36,7 @@ namespace
     void CheckOptions( const bpo::variables_map& vm, const bpo::options_description& cmdline )
     {
         if( vm.count( "help" ) )
-            std::cout << "Usage: depend_guard_app --dependencies=input.xml path1 path2" << std::endl
+            std::cout << "Usage: depend_guard --dependencies=input.xml graph.xml" << std::endl
                       << cmdline << std::endl;
         else if( vm.count( "version" ) )
             std::cout << "depend_guard_app " << version << " (built " << time << ")" << std::endl << std::endl

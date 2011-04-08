@@ -38,7 +38,7 @@ namespace
     void CheckOptions( const bpo::variables_map& vm, const bpo::options_description& cmdline )
     {
         if( vm.count( "help" ) )
-            std::cout << "Usage: depend_app [options] path1 path2..." << std::endl
+            std::cout << "Usage: depend_graph [options] graph.xml" << std::endl
                       << cmdline << std::endl;
         else if( vm.count( "version" ) )
             std::cout << "depend " << version << " (built " << time << ")" << std::endl << std::endl
@@ -49,10 +49,6 @@ namespace
                       << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
         else if( ! vm.count( "input" ) && ! vm.count( "load-configuration" ) )
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
-        else if( vm.count( "stage" ) && vm[ "stage" ].as< std::string >() != "xml" && vm[ "stage" ].as< std::string >() != "dot" && vm[ "stage" ].as< std::string >() != "graph" )
-            throw std::invalid_argument( "Invalid application option argument: stage '" + vm[ "stage" ].as< std::string >() + "' is not supported" );
-        else if( vm[ "stage" ].as< std::string >() == "graph" && !vm.count( "output" ) )
-            throw std::invalid_argument( "Invalid application option argument: output argument must be filled with 'graph' renderer" );
     }
     std::string Check( const std::string& variable )
     {

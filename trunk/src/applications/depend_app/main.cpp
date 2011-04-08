@@ -38,7 +38,7 @@ namespace
     void CheckOptions( const bpo::variables_map& vm, const bpo::options_description& cmdline )
     {
         if( vm.count( "help" ) )
-            std::cout << "Usage: depend_app [options] path1 path2..." << std::endl
+            std::cout << "Usage: depend [options] path1 path2..." << std::endl
                       << cmdline << std::endl;
         else if( vm.count( "version" ) )
             std::cout << "depend " << version << " (built " << time << ")" << std::endl << std::endl
