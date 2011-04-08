@@ -9,11 +9,11 @@
 #ifndef depend_graph_app_Facade_h
 #define depend_graph_app_Facade_h
 
-#include <boost/noncopyable.hpp>
 #include <string>
 #include <memory>
 #include <map>
 #include <vector>
+#include "depend/UnitObserver_ABC.h"
 
 namespace xml
 {
@@ -24,22 +24,12 @@ namespace xml
 
 namespace depend
 {
+    class ClassLoader;
     class Filter_ABC;
-    class Finder_ABC;
-    class ExternalModuleResolver_ABC;
-    class InternalModuleResolver_ABC;
-    class Log_ABC;
-    class ModuleVisitor;
-    class FileVisitor;
-    class LineVisitor;
-    class UncommentedLineVisitor;
-    class IncludeVisitor;
-    class ClassVisitor;
     class UnitSerializer;
     class ClassMetricVisitor_ABC;
     class DependencyMetricVisitor_ABC;
     template< typename T > class Visitable;
-    class UnitObserver_ABC;
 }
 
 class GraphSerializer;
@@ -50,7 +40,7 @@ class GraphSerializer;
 */
 // Created: SLI 2010-08-18
 // =============================================================================
-class Facade : private boost::noncopyable
+class Facade : private depend::UnitObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -66,10 +56,14 @@ public:
     //@}
 
 private:
+    //! @name Operations
+    //@{
+    virtual void NotifyUnit( const std::string& unit, const std::string& context );
+    //@}
+
+private:
     //! @name Helpers
     //@{
-    void Visit( xml::xistream& xis );
-    void Serialize( xml::xistream& xis );
     void Serialize( xml::xostream& xos );
     void Serialize( std::ostream& os );
     void Serialize( const std::string& filename );
@@ -81,20 +75,10 @@ private:
     //@{
     const std::string option_;
     bool extend_;
-    std::auto_ptr< depend::Log_ABC > log_;
     std::auto_ptr< depend::Filter_ABC > filter_;
-    std::auto_ptr< depend::Finder_ABC > finder_;
-    std::auto_ptr< depend::ExternalModuleResolver_ABC > externalResolver_;
-    std::auto_ptr< depend::ExternalModuleResolver_ABC > proxy_;
-    std::auto_ptr< depend::ModuleVisitor > moduleVisitor_;
+    std::auto_ptr< depend::ClassLoader > classLoader_;
     std::auto_ptr< depend::Visitable< depend::UnitObserver_ABC > > unitCache_;
-    std::auto_ptr< depend::FileVisitor > fileVisitor_;
-    std::auto_ptr< depend::LineVisitor > lineVisitor_;
-    std::auto_ptr< depend::UncommentedLineVisitor > uncommentedLineVisitor_;
-    std::auto_ptr< depend::IncludeVisitor > includeVisitor_;
-    std::auto_ptr< depend::ClassVisitor > classVisitor_;
     std::auto_ptr< depend::Visitable< depend::ClassMetricVisitor_ABC > > classMetric_;
-    std::auto_ptr< depend::InternalModuleResolver_ABC > internalResolver_;
     std::auto_ptr< depend::Visitable< depend::DependencyMetricVisitor_ABC > > dependencyMetric_;
     std::auto_ptr< depend::UnitSerializer > unitSerializer_;
     std::auto_ptr< GraphSerializer > graphSerializer_;
