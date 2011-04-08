@@ -8,6 +8,7 @@
 
 #include "depend_pch.h"
 #include "UnitSerializer.h"
+#include "Visitable.h"
 #include "Filter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
@@ -18,10 +19,9 @@ using namespace depend;
 // Name: UnitSerializer constructor
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-UnitSerializer::UnitSerializer( Subject< UnitObserver_ABC >& subject )
-    : Observer< UnitObserver_ABC >( subject )
+UnitSerializer::UnitSerializer( Visitable< UnitObserver_ABC >& units )
 {
-    // NOTHING
+    units.Apply( *this );
 }
 
 // -----------------------------------------------------------------------------
