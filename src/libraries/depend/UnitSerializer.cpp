@@ -19,9 +19,10 @@ using namespace depend;
 // Name: UnitSerializer constructor
 // Created: SLI 2010-08-24
 // -----------------------------------------------------------------------------
-UnitSerializer::UnitSerializer( Visitable< UnitObserver_ABC >& units )
+UnitSerializer::UnitSerializer( Subject< UnitObserver_ABC >& units )
+    : Observer< UnitObserver_ABC >( units )
 {
-    units.Apply( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

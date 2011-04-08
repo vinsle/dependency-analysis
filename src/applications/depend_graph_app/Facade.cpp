@@ -8,29 +8,19 @@
 
 #include "Facade.h"
 #include "GraphSerializer.h"
-#include "depend/ModuleVisitor.h"
-#include "depend/FileVisitor.h"
-#include "depend/LineVisitor.h"
-#include "depend/UncommentedLineVisitor.h"
-#include "depend/IncludeVisitor.h"
-#include "depend/ClassVisitor.h"
 #include "depend/ClassMetric.h"
-#include "depend/ModuleDependencyMetric.h"
+#include "depend/ClassLoader.h"
+#include "depend/ModuleDependencyMetricLoader.h"
 #include "depend/EdgeSerializer.h"
 #include "depend/MetricSerializer.h"
 #include "depend/UnitSerializer.h"
 #include "depend/ExternalSerializer.h"
 #include "depend/StronglyConnectedComponents.h"
 #include "depend/StronglyConnectedComponentsSerializer.h"
+#include "depend/UnitCache.h"
 #include "depend/DotSerializer.h"
 #include "depend/Filter.h"
-#include "depend/Log.h"
-#include "depend/Finder.h"
-#include "depend/ExternalModuleResolver.h"
-#include "depend/InternalModuleResolver.h"
-#include "depend/ProxyModuleResolver.h"
 #include "depend/TransitiveReductionFilter.h"
-#include "depend/UnitCache.h"
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -44,40 +34,18 @@ using namespace depend;
 // Created: SLI 2010-08-18
 // -----------------------------------------------------------------------------
 Facade::Facade( xml::xisubstream xis )
-    : option_                ( ( xis >> xml::start( "configuration" ) ).content< std::string >( "dependencies" ) )
-    , extend_                ( xis.content< bool >( "extend" ) )
-    , log_                   ( new Log( xis ) )
-    , filter_                ( new Filter( xis ) )
-    , finder_                ( new Finder() )
-    , externalResolver_      ( new ExternalModuleResolver( xis, *finder_, *log_ ) )
-    , proxy_                 ( new ProxyModuleResolver( *externalResolver_ ) )
-    , moduleVisitor_         ( new ModuleVisitor() )
-    , unitCache_             ( new UnitCache( *moduleVisitor_ ) )
-    , fileVisitor_           ( new FileVisitor( xis ) )
-    , lineVisitor_           ( new LineVisitor() )
-    , uncommentedLineVisitor_( new UncommentedLineVisitor( *lineVisitor_ ) )
-    , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
-    , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
-    , classMetric_           ( new ClassMetric( *moduleVisitor_, *classVisitor_ ) )
-    , internalResolver_      ( new InternalModuleResolver( xis, *finder_, *moduleVisitor_ ) )
-    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *internalResolver_, *log_ ) )
-    , unitSerializer_        ( new UnitSerializer( *unitCache_ ) )
-    , graphSerializer_       ( new GraphSerializer( xis ) )
+    : option_          ( ( xis >> xml::start( "configuration" ) ).content< std::string >( "dependencies" ) )
+    , extend_          ( xis.content< bool >( "extend" ) )
+    , filter_          ( new Filter( xis ) )
+    , classLoader_     ( new ClassLoader() )
+    , unitCache_       ( new UnitCache( *classLoader_ ) )
+    , dependencyMetric_( new ModuleDependencyMetricLoader( xml::xifstream( xis.content< std::string >( "input" ) ) ) )
+    , classMetric_     ( new ClassMetric( *classLoader_, *classLoader_ ) )
+    , unitSerializer_  ( new UnitSerializer( *classLoader_ ) )
+    , graphSerializer_ ( new GraphSerializer( xis ) )
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Facade::Process
-// Created: SLI 2010-09-10
-// -----------------------------------------------------------------------------
-void Facade::Process( xml::xisubstream xis )
-{
-    xis >> xml::start( "configuration" )
-            >> xml::start( "paths" )
-                >> xml::list( "path", *this, &Facade::Visit )
-            >> xml::end;
-    Serialize( xis );
+    classLoader_->Subject< UnitObserver_ABC >::Register( *this );
+    classLoader_->Process( xml::xifstream( xis.content< std::string >( "input" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,73 +54,7 @@ void Facade::Process( xml::xisubstream xis )
 // -----------------------------------------------------------------------------
 Facade::~Facade()
 {
-    // NOTHING
-}
-
-namespace
-{
-    class FileObserver : private Observer< FileObserver_ABC >
-    {
-    public:
-        FileObserver( FileVisitor& fileVisitor, LineVisitor& lineVisitor )
-            : Observer< FileObserver_ABC >( fileVisitor )
-            , lineVisitor_( lineVisitor )
-        {
-            // NOTHING
-        }
-        virtual ~FileObserver()
-        {
-            // NOTHING
-        }
-    private:
-        virtual void NotifyFile( const std::string& /*path*/, std::istream& stream, const std::string& context )
-        {
-            lineVisitor_.Visit( stream, context );
-        }
-    private:
-        LineVisitor& lineVisitor_;
-    };
-
-    class ModuleObserver : private Observer< UnitObserver_ABC >
-    {
-    public:
-        ModuleObserver( ModuleVisitor& unitVisitor, FileVisitor& fileVisitor, LineVisitor& lineVisitor, const std::string& path, std::vector< std::string >& units )
-            : Observer< UnitObserver_ABC >( unitVisitor )
-            , fileVisitor_  ( fileVisitor )
-            , lineVisitor_  ( lineVisitor )
-            , path_         ( path )
-            , units_        ( units )
-        {
-             // NOTHING
-        }
-        virtual ~ModuleObserver()
-        {
-            // NOTHING
-        }
-    private:
-        virtual void NotifyUnit( const std::string& unit, const std::string& context )
-        {
-            FileObserver observer( fileVisitor_, lineVisitor_ );
-            fileVisitor_.Visit( path_ + "/" + unit, context );
-            units_.push_back( unit );
-        }
-    private:
-        FileVisitor& fileVisitor_;
-        LineVisitor& lineVisitor_;
-        const std::string path_;
-        std::vector< std::string >& units_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: Facade::Visit
-// Created: SLI 2010-08-18
-// -----------------------------------------------------------------------------
-void Facade::Visit( xml::xistream& xis )
-{
-    const std::string path = xis.value< std::string >();
-    ModuleObserver observer( *moduleVisitor_, *fileVisitor_, *lineVisitor_, path, modules_ );
-    moduleVisitor_->Visit( path, path );
+    classLoader_->Subject< UnitObserver_ABC >::Unregister( *this );
 }
 
 namespace
@@ -161,31 +63,20 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade::Serialize
-// Created: SLI 2010-09-03
+// Name: Facade::Process
+// Created: SLI 2010-09-10
 // -----------------------------------------------------------------------------
-void Facade::Serialize( xml::xistream& xis )
+void Facade::Process( xml::xisubstream xis )
 {
-    const std::string stage = xis.content< std::string >( "stage" );
+    xis >> xml::start( "configuration" );
     const std::string output = xis.content< std::string >( "output" );
     const bool all = xis.content< bool >( "all" );
     boost::shared_ptr< std::ostream > out( &std::cout, boost::bind( &Noop ) );
     if( !output.empty() )
         out.reset( new std::ofstream( output.c_str() ) );
-    if( stage == "xml" )
-    {
-        xml::xostringstream xos;
-        Serialize( xos );
-        *out << xos.str();
-    }
-    else if( stage == "dot" )
-        Serialize( *out );
-    else if( stage == "graph" )
-    {
-        Serialize( output );
-        if( all )
-            SerializeAll( output );
-    }
+    Serialize( output );
+    if( all )
+        SerializeAll( output );
 }
 
 namespace
@@ -299,4 +190,13 @@ void Facade::SerializeAll( const std::string& filename )
         filter_.reset( new SimpleFilter( module ) ); // $$$$ _RC_ SLI 2010-09-06: not that great
         Serialize( module + "." + extension );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::NotifyUnit
+// Created: SLI 2011-04-08
+// -----------------------------------------------------------------------------
+void Facade::NotifyUnit( const std::string& unit, const std::string& /*context*/ )
+{
+    modules_.push_back( unit );
 }
