@@ -10,9 +10,9 @@
   * ~~Add self dependency-analysis metrics on post build~~
   * ~~Add [http://www.stack.nl/~dimitri/doxygen/ doxygen] documentation generation on post build~~
   * ~~Add an ant target for packaging (zip)~~
-  * Compile with static versions of Xerces
+  * ~~Compile with static versions of Xerces~~
  * ~~Delete xerces dll versionning~~
- * Rename depend_app.exe into depend.exe
+ * ~~Rename depend_app.exe into depend.exe~~
  * ~~Add the project on build server~~
   * Build on cygwin, ~~vc80~~ and linux platforms
   * Add binaries on download page
@@ -24,7 +24,7 @@
   * Dependencies
   * Fill doxygen fields
  * Add licence files and readme.txt
- * Clean graphviz warnings ("GLib-WARNING **: Passing a non-NULL package to g_win32_get_package_installation_directory() is deprecated and it is ignored.")
+ * ~~Clean graphviz warnings ("GLib-WARNING **: Passing a non-NULL package to g_win32_get_package_installation_directory() is deprecated and it is ignored.")~~
 
 == Features ==
 
@@ -35,20 +35,20 @@
   * ~~Add a command line parameter to generate a sub graph with a set of modules and their afferent and efferents modules~~
   * ~~Embed stylesheets to transform xml output into [http://www.graphviz.org/doc/info/lang.html Dot language] and apply them with [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Patterns#XSL XeuSeuLeu]~~
   * ~~Add a command line parameter to specify desired output format: xml or dot~~
- * Add a verbose command line parameter
- * User can specify multiple outputs (xml and png)
- * User can specify an already computed xml (--input=already.xml) to avoid recomputation
-  * Generate any graph from this file (even with filtering)
- * Use a configuration file (--configuration=...)
+ * ~~Add a verbose command line parameter~~
+ * ~~User can specify multiple outputs (xml and png)~~
+ * ~~User can specify an already computed xml (--input=already.xml) to avoid recomputation~~
+  * ~~Generate any graph from this file (even with filtering)~~
+ * ~~Use a configuration file (--configuration=...)~~
   * See [http://www.boost.org/doc/libs/1_44_0/doc/html/program_options/overview.html#id2084587 Program options storage]
-  * Add a --save-configuration=... to save current configuration file
-  * Read DEPEND environment variable
+  * ~~Add a --save-configuration=... to save current configuration file~~
+  * ~~Read DEPEND environment variable~~
  * ~~Resolve external includes~~
   * ~~Internal and external includes are not detected with double quotes or angle brackets anymore~~
   * ~~Print a warning if an include cannot be resolved (file name, line number), must be case sensitive~~
   * ~~Add a command line parameter to specify include directories~~
- * Add a command line parameter to make only cyclic dependencies detection between modules and print a warning (in this case no serialization)
- * Add the same features and graph for internal class dependencies in a module
+ * ~~Add a command line parameter to make only cyclic dependencies detection between modules and print a warning (in this case no serialization)~~
+ * ~~Add the same features and graph for internal class dependencies in a module~~
   * Detect cycles in includes at class level
  * ~~Add a command line parameter to disable warnings~~
  * Add a command line parameter to mutate warnings into execution errors
@@ -60,4 +60,4 @@
  * Handle multiple sub directories include in same module (internal include resolution must take the file path)
 
 == Refactoring ==
- * All options are given in xml format to Facade and forwarded to all modules
+ * ~~All options are given in xml format to Facade and forwarded to all modules~~
