@@ -3,5 +3,5 @@
  * [http://sourceforge.net/apps/mediawiki/turtle/index.php?title=Turtle Turtle]
  * [http://www.boost.org/ Boost]
  * [http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Welcome XeuMeuLeu]
- * [http://xerces.apache.org/xerces-c/ Xerces]
+ * [http://xerces.apache.org/xerces-c/ Apache Xerces]
  * [http://www.graphviz.org/ GraphViz]
