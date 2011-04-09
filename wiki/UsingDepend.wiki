@@ -2,12 +2,12 @@
 
 = Introduction =
 
-Add your content here.
+Depend application is the first step in your code analysis. It parses all your code base, identifying dependencies between internal (yours) and external modules.
 
+Depend's main goal is to produce an XML file containing the code analysis result. The other tools in the suite uses this XML to compute their own analysis.
 
-= Details =
+But depend can also be used to detect include errors like case sensitive includes, "" vs <> includes, etc...
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Command line parameters =
+
+ * Usage: depend [options] path1 path2...
