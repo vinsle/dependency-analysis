@@ -139,7 +139,8 @@
             <fileset file="${out.dir}/release/applications/depend_guard_app/depend_guard.exe"/>
             <fileset file="${out.dir}/release/applications/depend_metrics_app/depend_metrics.exe"/>
             <fileset file="${out.dir}/release/applications/depend_components_app/depend_components.exe"/>
-            <fileset file="${out.dir}/release/applications/depend_graph_app/depend_graph.exe"/>            
+            <fileset file="${out.dir}/release/applications/depend_graph_app/depend_graph.exe"/>
+            <fileset file="${root.dir}/*.txt"/>
         </zip>
         <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
             <fileset dir="${doc.dir}"/>
