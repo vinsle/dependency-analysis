@@ -2,12 +2,13 @@
 
 = Introduction =
 
-Add your content here.
+*Depend Guard* is a tool made for automatic dependency check on a big project with many _new_ developpers. Architects can congeal a part of their dependency design and forbid dependencies between modules. Any unwanted dependency will produce an error with the incriminated include.
 
+= Command line parameters =
 
-= Details =
+{{{Usage: depend_guard --dependencies=input.xml --graph=graph.xml}}}
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * *help*(-h): produce help message
+ * *version*(-v): produce version message
+ * *dependencies*: set input xml file for dependency guard check
+ * *graph*: set graph input file (from [UsingDepend depend]) for guard analysis
