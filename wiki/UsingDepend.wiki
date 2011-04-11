@@ -19,3 +19,36 @@ But depend can also be used to detect include errors like case sensitive include
  * *include*(-I): add an include directory path for external dependency (dependency name can be forced with following syntax: --include="directory*,name*")
  * *exclude*(-E): add an include directory path excluded from the dependencies and warnings
  * *warning*: enable warnings
+
+= Examples =
+
+A simple invocation on dependency-analysis sources:
+
+{{{depend.exe --output=depend.xml --path=src/libraries --path=src/applications --include=include --exclude="$VSINSTALLDIR}/VC/include" --warning}}}
+
+It produces an xml like this:
+{{{
+<graph>
+  <nodes>
+    <node name="depend">
+      <efferent-dependencies/>
+      <external-dependencies>
+        <dependency name="boost">
+          <context>dependency-analysis/trunk/src/libraries/depend/ExternalModuleResolver.cpp(16)</context>
+          <context>dependency-analysis/trunk/src/libraries/depend/FileVisitor.cpp(15)</context>
+...
+        </dependency>
+        ...
+      </external-dependencies>
+    </node>
+  </nodes>
+  <classes>
+    <node name="depend">
+      <class abstract="false" context="dependency-analysis/trunk/src/libraries/depend/ClassDependencyMetric.h(29)" name="ClassDependencyMetric"/>
+      <class abstract="false" context="dependency-analysis/trunk/src/libraries/depend/ClassLoader.h(31)" name="ClassLoader"/>
+       ...
+    </node>
+    ...
+  </classes>
+</graph>
+}}}
