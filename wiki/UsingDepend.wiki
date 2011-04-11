@@ -20,7 +20,7 @@ But depend can also be used to detect include errors like case sensitive include
  * *exclude*(-E): add an include directory path excluded from the dependencies and warnings
  * *warning*: enable warnings
 
-= Examples =
+= Exemples =
 
 A simple invocation on dependency-analysis sources:
 
@@ -52,3 +52,7 @@ It produces an xml like this:
   </classes>
 </graph>
 }}}
+
+Another exemple on a project using Qt (with special include directories and Qt moc objects generated and included in code):
+
+{{{depend.exe --output=depend.xml --path=src/libraries --path=src/applications --path=out/release/applications --path=out/release/libraries --include=include --include="include/qt,Qt" --exclude="$VSINSTALLDIR}/VC/include" --exclude="$VSINSTALLDIR}/VC/PlatformSDK/Include" --warning}}}
