@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Depend application is the first step in your code analysis. It parses all your code base, identifying dependencies between internal (yours) and external modules.
+Depend application is the first step in your code analysis. It parses all your C++ code base, identifying dependencies between internal (yours) and external modules.
 
 Depend's main goal is to produce an XML file containing the code analysis result. The other tools in the suite uses this XML to compute their own analysis.
 
@@ -10,4 +10,12 @@ But depend can also be used to detect include errors like case sensitive include
 
 = Command line parameters =
 
- * Usage: depend [options] path1 path2...
+{{{Usage: depend [options] path1 path2...}}}
+
+ * *help*(-h): produce help message
+ * *version*(-v): produce version message
+ * *path*: add a directory containing modules for analysis
+ * *output*: set output file
+ * *include*(-I): add an include directory path for external dependency (dependency name can be forced with following syntax: --include="directory*,name*")
+ * *exclude*(-E): add an include directory path excluded from the dependencies and warnings
+ * *warning*: enable warnings
