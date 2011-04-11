@@ -1,4 +1,4 @@
- * Other [http://java-source.net/open-source/code-analyzers code analyzers]
+ * Other code analyzers [http://java-source.net/open-source/code-analyzers here] or [http://decomp.ulb.ac.be/roelwuyts/playground/canalysistools/ here] 
  * [http://classycle.sourceforge.net/design.html Classycle]
  * [http://code.google.com/p/include-what-you-use/ Include what you use] ([http://llvm.org/devmtg/2010-11/Silverstein-IncludeWhatYouUse.pdf paper])
  * [http://www.softintegration.com/products/chstandard/download/ C embedded]
