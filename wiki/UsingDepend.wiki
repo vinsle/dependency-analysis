@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Depend application is the first step in your code analysis. It parses all your C++ code base, identifying dependencies between internal (yours) and external modules.
+Depend application is the first step in your code analysis. It parses all your C++ code base, identifying dependencies (includes) between internal (yours) and external modules.
 
 Depend's main goal is to produce an XML file containing the code analysis result. The other tools in the suite uses this XML to compute their own analysis.
 
