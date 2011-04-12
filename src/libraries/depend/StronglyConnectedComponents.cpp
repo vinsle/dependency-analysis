@@ -23,7 +23,7 @@ using namespace depend;
 // Name: StronglyConnectedComponents constructor
 // Created: SLI 2010-08-23
 // -----------------------------------------------------------------------------
-StronglyConnectedComponents::StronglyConnectedComponents( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter )
+StronglyConnectedComponents::StronglyConnectedComponents( const Visitable< DependencyVisitor_ABC >& metric, const Filter_ABC& filter )
     : filter_( filter )
 {
     metric.Apply( *this );

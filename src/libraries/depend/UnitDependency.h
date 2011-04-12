@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ModuleDependencyMetric_h
-#define depend_ModuleDependencyMetric_h
+#ifndef depend_ModuleDependency_h
+#define depend_ModuleDependency_h
 
 #include "UnitObserver_ABC.h"
 #include "FileObserver_ABC.h"
@@ -18,18 +18,18 @@
 
 namespace depend
 {
-    class DependencyMetricVisitor_ABC;
+    class DependencyVisitor_ABC;
     class ExternalModuleResolver_ABC;
     class InternalModuleResolver_ABC;
     class Log_ABC;
 
 // =============================================================================
-/** @class  ModuleDependencyMetric
+/** @class  UnitDependency
     @brief  Class metric
 */
 // Created: SLI 2010-08-19
 // =============================================================================
-class ModuleDependencyMetric : public Visitable< DependencyMetricVisitor_ABC >
+class UnitDependency : public Visitable< DependencyVisitor_ABC >
                              , private Observer< UnitObserver_ABC >
                              , private Observer< FileObserver_ABC >
                              , private Observer< IncludeObserver_ABC >
@@ -37,15 +37,15 @@ class ModuleDependencyMetric : public Visitable< DependencyMetricVisitor_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
+             UnitDependency( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
                                      Subject< IncludeObserver_ABC >& includeObserver_, const ExternalModuleResolver_ABC& externalResolver,
                                      const InternalModuleResolver_ABC& internalResolver, const Log_ABC& log );
-    virtual ~ModuleDependencyMetric();
+    virtual ~UnitDependency();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Apply( DependencyMetricVisitor_ABC& visitor ) const;
+    virtual void Apply( DependencyVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -102,4 +102,4 @@ private:
 
 }
 
-#endif // depend_ModuleDependencyMetric_h
+#endif // depend_ModuleDependency_h

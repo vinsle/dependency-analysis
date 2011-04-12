@@ -19,7 +19,7 @@ using namespace depend;
 // Name: EdgeSerializer constructor
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-EdgeSerializer::EdgeSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies, const Visitable< UnitObserver_ABC >& units )
+EdgeSerializer::EdgeSerializer( const Visitable< DependencyVisitor_ABC >& dependencies, const Visitable< UnitObserver_ABC >& units )
 {
     units.Apply( *this );
     dependencies.Apply( *this );

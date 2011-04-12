@@ -19,7 +19,7 @@ namespace
 {
     typedef std::pair< std::string, std::string > T_Edge;
     typedef std::vector< T_Edge > T_Edges;
-    bool Notify( DependencyMetricVisitor_ABC& visitor, const T_Edges& edges )
+    bool Notify( DependencyVisitor_ABC& visitor, const T_Edges& edges )
     {
         BOOST_FOREACH( const T_Edge& edge, edges )
             visitor.NotifyInternalDependency( edge.first, edge.second, "context" );
@@ -28,7 +28,7 @@ namespace
     class Fixture
     {
     public:
-        MockVisitable< DependencyMetricVisitor_ABC > metric;
+        MockVisitable< DependencyVisitor_ABC > metric;
         MockFilter mockFilter;
     };
 }

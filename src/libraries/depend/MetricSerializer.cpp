@@ -20,7 +20,7 @@ using namespace depend;
 // Name: MetricSerializer constructor
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-MetricSerializer::MetricSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies, const Visitable< ClassMetricVisitor_ABC >& classes )
+MetricSerializer::MetricSerializer( const Visitable< DependencyVisitor_ABC >& dependencies, const Visitable< ClassMetricVisitor_ABC >& classes )
 {
     dependencies.Apply( *this );
     classes.Apply( *this );

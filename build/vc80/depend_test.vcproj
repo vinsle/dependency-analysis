@@ -186,7 +186,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\tests\depend_test\ClassDependencyMetricTest.cpp"
+				RelativePath="..\..\src\tests\depend_test\ClassDependencyTest.cpp"
 				>
 			</File>
 			<File
@@ -280,14 +280,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\depend_test\ModuleDependencyMetricLoaderTest.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\tests\depend_test\ModuleDependencyMetricTest.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\tests\depend_test\ModuleVisitorTest.cpp"
 				>
 			</File>
@@ -320,6 +312,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\UnitDependencyLoaderTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\depend_test\UnitDependencyTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\UnitSerializerTest.cpp"
 				>
 			</File>
@@ -343,7 +343,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\tests\depend_test\MockDependencyMetricVisitor.h"
+					RelativePath="..\..\src\tests\depend_test\MockDependencyVisitor.h"
 					>
 				</File>
 				<File

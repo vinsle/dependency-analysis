@@ -9,7 +9,7 @@
 #include "Facade.h"
 #include "depend/ClassLoader.h"
 #include "depend/ClassMetric.h"
-#include "depend/ModuleDependencyMetricLoader.h"
+#include "depend/UnitDependencyLoader.h"
 #include "depend/MetricSerializer.h"
 #include "depend/Filter.h"
 #include "depend/TransitiveReductionFilter.h"
@@ -26,7 +26,7 @@ using namespace depend;
 Facade::Facade( xml::xisubstream xis )
     : classLoader_     ( new ClassLoader() )
     , classMetric_     ( new ClassMetric( *classLoader_, *classLoader_ ) )
-    , dependencyMetric_( new ModuleDependencyMetricLoader( xis ) )
+    , dependencyMetric_( new UnitDependencyLoader( xis ) )
 {
     classLoader_->Process( xis );
 }
@@ -43,10 +43,10 @@ Facade::~Facade()
 namespace
 {
     void Noop() {}
-    class FilterExtender : public Filter_ABC, private DependencyMetricVisitor_ABC
+    class FilterExtender : public Filter_ABC, private DependencyVisitor_ABC
     {
     public:
-        FilterExtender( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter )
+        FilterExtender( const Visitable< DependencyVisitor_ABC >& metric, const Filter_ABC& filter )
             : filter_( filter )
         {
             metric.Apply( *this );

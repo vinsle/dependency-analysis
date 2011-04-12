@@ -9,7 +9,7 @@
 #ifndef depend_ExternalSerializer_h
 #define depend_ExternalSerializer_h
 
-#include "DependencyMetricVisitor_ABC.h"
+#include "DependencyVisitor_ABC.h"
 #include <set>
 
 namespace xml
@@ -28,12 +28,12 @@ namespace depend
 */
 // Created: SLI 2010-09-07
 // =============================================================================
-class ExternalSerializer : private DependencyMetricVisitor_ABC
+class ExternalSerializer : private DependencyVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ExternalSerializer( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter );
+             ExternalSerializer( const Visitable< DependencyVisitor_ABC >& metric, const Filter_ABC& filter );
     virtual ~ExternalSerializer();
     //@}
 

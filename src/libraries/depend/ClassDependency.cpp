@@ -7,17 +7,17 @@
 //
 
 #include "depend_pch.h"
-#include "ClassDependencyMetric.h"
-#include "DependencyMetricVisitor_ABC.h"
+#include "ClassDependency.h"
+#include "DependencyVisitor_ABC.h"
 #include <boost/foreach.hpp>
 
 using namespace depend;
 
 // -----------------------------------------------------------------------------
-// Name: ClassDependencyMetric constructor
+// Name: ClassDependency constructor
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-ClassDependencyMetric::ClassDependencyMetric( Subject< FileObserver_ABC >& fileVisitor, Subject< IncludeObserver_ABC >& includeVisitor )
+ClassDependency::ClassDependency( Subject< FileObserver_ABC >& fileVisitor, Subject< IncludeObserver_ABC >& includeVisitor )
     : Observer< FileObserver_ABC >( fileVisitor )
     , Observer< IncludeObserver_ABC >( includeVisitor )
 {
@@ -25,19 +25,19 @@ ClassDependencyMetric::ClassDependencyMetric( Subject< FileObserver_ABC >& fileV
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClassDependencyMetric destructor
+// Name: ClassDependency destructor
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-ClassDependencyMetric::~ClassDependencyMetric()
+ClassDependency::~ClassDependency()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClassDependencyMetric::Apply
+// Name: ClassDependency::Apply
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-void ClassDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
+void ClassDependency::Apply( DependencyVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const T_File& file, files_ )
         BOOST_FOREACH( const T_Includes::value_type& dependency, file.second )
@@ -54,10 +54,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClassDependencyMetric::NotifyFile
+// Name: ClassDependency::NotifyFile
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-void ClassDependencyMetric::NotifyFile( const std::string& path, std::istream& /*stream*/, const std::string& /*context*/ )
+void ClassDependency::NotifyFile( const std::string& path, std::istream& /*stream*/, const std::string& /*context*/ )
 {
     const std::string cleaned = RemoveExtension( path );
     if( files_.empty() || cleaned != files_.back().first )
@@ -69,10 +69,10 @@ void ClassDependencyMetric::NotifyFile( const std::string& path, std::istream& /
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClassDependencyMetric::NotifyInternalInclude
+// Name: ClassDependency::NotifyInternalInclude
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-void ClassDependencyMetric::NotifyInternalInclude( const std::string& file, const std::string& context )
+void ClassDependency::NotifyInternalInclude( const std::string& file, const std::string& context )
 {
     if( files_.empty() )
         throw std::runtime_error( "unknown include '" + file + "' out of file" );
@@ -80,10 +80,10 @@ void ClassDependencyMetric::NotifyInternalInclude( const std::string& file, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClassDependencyMetric::NotifyExternalInclude
+// Name: ClassDependency::NotifyExternalInclude
 // Created: SLI 2010-09-01
 // -----------------------------------------------------------------------------
-void ClassDependencyMetric::NotifyExternalInclude( const std::string& /*file*/, const std::string& /*context*/ )
+void ClassDependency::NotifyExternalInclude( const std::string& /*file*/, const std::string& /*context*/ )
 {
     // NOTHING
 }

@@ -6,20 +6,20 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_test_MockDependencyMetricVisitor_h
-#define depend_test_MockDependencyMetricVisitor_h
+#ifndef depend_test_MockDependencyVisitor_h
+#define depend_test_MockDependencyVisitor_h
 
-#include "depend/DependencyMetricVisitor_ABC.h"
+#include "depend/DependencyVisitor_ABC.h"
 
 namespace depend
 {
 // =============================================================================
-/** @class  MockDependencyMetricVisitor
+/** @class  MockDependencyVisitor
     @brief  Mock class metric visitor
 */
 // Created: SLI 2010-08-16
 // =============================================================================
-MOCK_BASE_CLASS( MockDependencyMetricVisitor, DependencyMetricVisitor_ABC )
+MOCK_BASE_CLASS( MockDependencyVisitor, DependencyVisitor_ABC )
 {
     MOCK_METHOD( NotifyInternalDependency, 3 )
     MOCK_METHOD( NotifyExternalDependency, 3 )
@@ -27,4 +27,4 @@ MOCK_BASE_CLASS( MockDependencyMetricVisitor, DependencyMetricVisitor_ABC )
 
 }
 
-#endif // depend_test_MockDependencyMetricVisitor_h
+#endif // depend_test_MockDependencyVisitor_h

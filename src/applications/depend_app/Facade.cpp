@@ -13,7 +13,7 @@
 #include "depend/UncommentedLineVisitor.h"
 #include "depend/IncludeVisitor.h"
 #include "depend/ClassVisitor.h"
-#include "depend/ModuleDependencyMetric.h"
+#include "depend/UnitDependency.h"
 #include "depend/EdgeSerializer.h"
 #include "depend/Log.h"
 #include "depend/Finder.h"
@@ -47,7 +47,7 @@ Facade::Facade( xml::xisubstream xis )
     , includeVisitor_        ( new IncludeVisitor( *uncommentedLineVisitor_ ) )
     , classVisitor_          ( new ClassVisitor( *uncommentedLineVisitor_ ) )
     , internalResolver_      ( new InternalModuleResolver( xis, *finder_, *moduleVisitor_ ) )
-    , dependencyMetric_      ( new ModuleDependencyMetric( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *internalResolver_, *log_ ) )
+    , dependencyMetric_      ( new UnitDependency( *moduleVisitor_, *fileVisitor_, *includeVisitor_, *proxy_, *internalResolver_, *log_ ) )
     , classSerializer_       ( new ClassSerializer( *moduleVisitor_, *classVisitor_ ) )
 {
     // NOTHING

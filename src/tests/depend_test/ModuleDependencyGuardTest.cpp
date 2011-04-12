@@ -22,8 +22,8 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unknown_dependencies )
         "        <dependency>to</dependency>"
         "    </module>"
         "</dependencies>" );
-    MockVisitable< DependencyMetricVisitor_ABC > metric;
-    DependencyMetricVisitor_ABC* pVisitor = 0;
+    MockVisitable< DependencyVisitor_ABC > metric;
+    DependencyVisitor_ABC* pVisitor = 0;
     MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
     ModuleDependencyGuard guard( xis, metric );
     BOOST_REQUIRE( pVisitor );
@@ -46,8 +46,8 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_unchecked_declared_dependenc
         "        <dependency>to</dependency>"
         "    </module>"
         "</dependencies>" );
-    MockVisitable< DependencyMetricVisitor_ABC > metric;
-    DependencyMetricVisitor_ABC* pVisitor = 0;
+    MockVisitable< DependencyVisitor_ABC > metric;
+    DependencyVisitor_ABC* pVisitor = 0;
     MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
     ModuleDependencyGuard guard( xis, metric );
     BOOST_REQUIRE( pVisitor );
@@ -65,8 +65,8 @@ BOOST_AUTO_TEST_CASE( dependency_guard_notifies_all_checked_obsolete_dependencie
         "        <obsolete-dependency>unchecked</obsolete-dependency>"
         "    </module>"
         "</dependencies>" );
-    MockVisitable< DependencyMetricVisitor_ABC > metric;
-    DependencyMetricVisitor_ABC* pVisitor = 0;
+    MockVisitable< DependencyVisitor_ABC > metric;
+    DependencyVisitor_ABC* pVisitor = 0;
     MOCK_EXPECT( metric, Apply ).once().with( mock::retrieve( pVisitor ) );
     ModuleDependencyGuard guard( xis, metric );
     BOOST_REQUIRE( pVisitor );

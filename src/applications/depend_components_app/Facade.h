@@ -22,7 +22,7 @@ namespace depend
 {
     class Filter_ABC;
     class StronglyConnectedComponentsVisitor_ABC;
-    class DependencyMetricVisitor_ABC;
+    class DependencyVisitor_ABC;
     template< typename T > class Visitable;
 }
 
@@ -51,7 +51,7 @@ private:
     //! @name Member data
     //@{
     const bool warning_;
-    std::auto_ptr< depend::Visitable< depend::DependencyMetricVisitor_ABC > > dependencyMetric_;
+    std::auto_ptr< depend::Visitable< depend::DependencyVisitor_ABC > > dependencyMetric_;
     std::auto_ptr< depend::Filter_ABC > filter_;
     std::auto_ptr< depend::Visitable< depend::StronglyConnectedComponentsVisitor_ABC > > components_;
     //@}

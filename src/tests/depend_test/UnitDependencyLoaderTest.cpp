@@ -7,8 +7,8 @@
 //
 
 #include "depend_test_pch.h"
-#include "depend/ModuleDependencyMetricLoader.h"
-#include "MockDependencyMetricVisitor.h"
+#include "depend/UnitDependencyLoader.h"
+#include "MockDependencyVisitor.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace depend;
@@ -41,8 +41,8 @@ BOOST_AUTO_TEST_CASE( loader_parse_dependency_xml_and_notifies_visitor )
         "    </node>"
         "  </nodes>"
         "</graph>" );
-    ModuleDependencyMetricLoader loader( xis );
-    MockDependencyMetricVisitor visitor;
+    UnitDependencyLoader loader( xis );
+    MockDependencyVisitor visitor;
     mock::sequence s;
     MOCK_EXPECT( visitor, NotifyInternalDependency ).once().in( s ).with( "from", "to", "context1" );
     MOCK_EXPECT( visitor, NotifyInternalDependency ).once().in( s ).with( "from", "to", "context2" );

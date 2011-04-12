@@ -16,8 +16,8 @@ using namespace depend;
 
 BOOST_AUTO_TEST_CASE( simple_external_serialization )
 {
-    MockVisitable< DependencyMetricVisitor_ABC > dependency;
-    DependencyMetricVisitor_ABC* visitor = 0;
+    MockVisitable< DependencyVisitor_ABC > dependency;
+    DependencyVisitor_ABC* visitor = 0;
     MOCK_EXPECT( dependency, Apply ).once().with( mock::retrieve( visitor ) );
     MockFilter filter;
     ExternalSerializer serializer( dependency, filter );
@@ -35,8 +35,8 @@ BOOST_AUTO_TEST_CASE( simple_external_serialization )
 
 BOOST_AUTO_TEST_CASE( external_serialization_can_be_filtered )
 {
-    MockVisitable< DependencyMetricVisitor_ABC > dependency;
-    DependencyMetricVisitor_ABC* visitor = 0;
+    MockVisitable< DependencyVisitor_ABC > dependency;
+    DependencyVisitor_ABC* visitor = 0;
     MOCK_EXPECT( dependency, Apply ).once().with( mock::retrieve( visitor ) );
     MockFilter filter;
     ExternalSerializer serializer( dependency, filter );

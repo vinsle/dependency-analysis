@@ -28,8 +28,8 @@ namespace
         {
             MOCK_EXPECT( dependencies, Apply ).once().with( mock::retrieve( visitor ) );
         }
-        MockVisitable< DependencyMetricVisitor_ABC > dependencies;
-        DependencyMetricVisitor_ABC* visitor;
+        MockVisitable< DependencyVisitor_ABC > dependencies;
+        DependencyVisitor_ABC* visitor;
         MockFilter filter;
     };
     class ComponentFixture : public Fixture

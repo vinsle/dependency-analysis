@@ -9,7 +9,7 @@
 #ifndef depend_EdgeSerializer_h
 #define depend_EdgeSerializer_h
 
-#include "DependencyMetricVisitor_ABC.h"
+#include "DependencyVisitor_ABC.h"
 #include "UnitObserver_ABC.h"
 #include <set>
 #include <map>
@@ -31,13 +31,13 @@ namespace depend
 */
 // Created: SLI 2010-09-07
 // =============================================================================
-class EdgeSerializer : private DependencyMetricVisitor_ABC
+class EdgeSerializer : private DependencyVisitor_ABC
                      , private UnitObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EdgeSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies, const Visitable< UnitObserver_ABC >& units );
+             EdgeSerializer( const Visitable< DependencyVisitor_ABC >& dependencies, const Visitable< UnitObserver_ABC >& units );
     virtual ~EdgeSerializer();
     //@}
 
