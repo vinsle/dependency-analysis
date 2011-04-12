@@ -12,3 +12,24 @@
  * *version*(-v): produce version message
  * *dependencies*: set input xml file for dependency guard check
  * *graph*: set graph input file (from [UsingDepend depend]) for guard analysis
+
+Example of dependency XML input:
+{{{
+<dependencies>
+    <module name='depend_app'>
+        <dependency>depend</dependency>
+    </module>
+    <module name='depend_guard_app'>
+        <dependency>depend</dependency>
+    </module>
+    <module name='depend_metrics_app'>
+        <dependency>depend</dependency>
+    </module>
+    <module name='depend_components_app'>
+        <dependency>depend</dependency>
+    </module>
+    <module name='depend_graph_app'>
+        <dependency>depend</dependency>
+    </module>
+</dependencies>
+}}} 
