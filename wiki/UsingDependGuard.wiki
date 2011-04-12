@@ -50,7 +50,7 @@ There are four cases when checking dependencies:
  * *Unexisting dependency*: A dependency declared in the XML but not checked during code analysis. A warning is produced to prevent that there is no dependency any more.
 {{{Warning: no dependency found from module 'source' to module 'target', you probably should remove it from your dependency file.}}}
 
- * *Obsolete dependency*: A dependency is declared but labelled as *obsolete-dependency* and checked during code analysis. A warning is produced with the incriming include: 
+ * *Obsolete dependency*: A dependency declared but labelled as *obsolete-dependency* and checked during code analysis. A warning is produced with the incriming include: 
 `root/src/path/source/Class.cpp(23): warning: obsolete dependency has been found from module 'source' to module 'target'.`
 
 The idea is to let the architech defines *goals* for dependency cleaning. The warning will be produced until the dependency removal. When the dependency is effectively removed, the warning is replaced by:
@@ -65,7 +65,7 @@ The obsolete dependency can then be cleaned from dependency file.
 </dependencies>
 }}}
 
- * *Forbidden dependency*: A dependency between two modules is discovered during code analysis but is not declared as an authorized dependency in the XML. An error is produced with the incrimining include:
+ * *Forbidden dependency*: A dependency between two modules discovered during code analysis but not declared as an authorized dependency in the XML. An error is produced with the incrimining include:
 `root/src/path/source/Class.cpp(23): error : dependency from module 'source' to module 'target' is forbidden.`
 
 All undeclared dependencies are *implicitly* forbidden dependencies.
