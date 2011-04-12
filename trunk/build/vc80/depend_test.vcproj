@@ -320,6 +320,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\depend_test\UnitMetricsTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\depend_test\UnitSerializerTest.cpp"
 				>
 			</File>
@@ -376,6 +380,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\tests\depend_test\MockLog.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\tests\depend_test\MockMetricsVisitor.h"
 					>
 				</File>
 				<File

@@ -9,11 +9,8 @@
 #ifndef depend_MetricSerializer_h
 #define depend_MetricSerializer_h
 
-#include "DependencyVisitor_ABC.h"
-#include "ClassMetricVisitor_ABC.h"
-#include <set>
+#include "MetricsVisitor_ABC.h"
 #include <map>
-#include <vector>
 
 namespace xml
 {
@@ -31,12 +28,12 @@ namespace depend
 */
 // Created: SLI 2010-08-20
 // =============================================================================
-class MetricSerializer : private DependencyVisitor_ABC, private ClassMetricVisitor_ABC
+class MetricSerializer : private MetricsVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MetricSerializer( const Visitable< DependencyVisitor_ABC >& dependencies, const Visitable< ClassMetricVisitor_ABC >& classes );
+    explicit MetricSerializer( const Visitable< MetricsVisitor_ABC >& metrics );
     virtual ~MetricSerializer();
     //@}
 
@@ -48,45 +45,35 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& context );
-    virtual void NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& context );
-    virtual void NotifyClassMetric( const std::string& module, unsigned int classes, unsigned int abstactClasses );
+    virtual void NotifyMetrics( const std::string& module, unsigned int afferent, unsigned int efferent,
+                                unsigned int external, unsigned int classes, unsigned int abstractClasses,
+                                unsigned int abstractness, unsigned int instability, unsigned int distance );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< std::string > T_Modules;
-    struct ClassMetrics
+    struct T_Metric
     {
     public:
-        ClassMetrics()
-            : classes_ ( 0u )
-            , abstract_( 0u )
+        T_Metric()
         {}
+        unsigned int afferent_;
+        unsigned int efferent_;
+        unsigned int external_;
         unsigned int classes_;
         unsigned int abstract_;
+        unsigned int abstractness_;
+        unsigned int instability_;
+        unsigned int distance_;
     };
-    typedef std::map< std::string, ClassMetrics > T_ClassMetrics;
-    typedef T_ClassMetrics::const_iterator      CIT_ClassMetrics;
-    typedef std::map< std::string, unsigned int > T_Dependency;
-    typedef std::map< std::string, T_Dependency > T_Dependencies;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    const MetricSerializer::ClassMetrics FindClass( const std::string& module ) const;
+    typedef std::map< std::string, T_Metric > T_UnitMetrics;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Modules modules_;
-    T_ClassMetrics classMetrics_;
-    T_Dependencies afferent_;
-    T_Dependencies efferent_;
-    T_Dependencies external_;
+    T_UnitMetrics metrics_;
     //@}
 };
 

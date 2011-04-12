@@ -370,6 +370,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\depend\MetricsVisitor_ABC.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\depend\ModuleDependencyGuard.cpp"
 					>
 				</File>
@@ -391,6 +395,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\depend\UnitDependencyLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\UnitMetrics.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\depend\UnitMetrics.h"
 					>
 				</File>
 			</Filter>

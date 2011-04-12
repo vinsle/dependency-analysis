@@ -10,7 +10,9 @@
 #include "depend/ClassLoader.h"
 #include "depend/ClassMetric.h"
 #include "depend/UnitDependencyLoader.h"
+#include "depend/UnitMetrics.h"
 #include "depend/MetricSerializer.h"
+#include "depend/UnitCache.h"
 #include "depend/Filter.h"
 #include "depend/TransitiveReductionFilter.h"
 #include <boost/bind.hpp>
@@ -27,6 +29,7 @@ Facade::Facade( xml::xisubstream xis )
     : classLoader_     ( new ClassLoader() )
     , classMetric_     ( new ClassMetric( *classLoader_, *classLoader_ ) )
     , dependencyMetric_( new UnitDependencyLoader( xis ) )
+    , units_           ( new UnitCache( *classLoader_ ) )
 {
     classLoader_->Process( xis );
 }
@@ -92,6 +95,7 @@ void Facade::Process( xml::xisubstream xis )
     FilterExtender extension( *dependencyMetric_, filter );
     Filter_ABC& finalFilter = xis.content< bool >( "extend" ) ? static_cast< Filter_ABC& >( transitive ) : static_cast< Filter_ABC& >( extension );
     xml::xostringstream xos;
-    MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, finalFilter );
+    const UnitMetrics metrics( *units_, *dependencyMetric_, *classMetric_ );
+    MetricSerializer( metrics ).Serialize( xos, finalFilter );
     *out << xos.str();
 }

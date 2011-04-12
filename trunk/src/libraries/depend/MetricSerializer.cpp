@@ -9,7 +9,6 @@
 #include "depend_pch.h"
 #include "MetricSerializer.h"
 #include "Filter_ABC.h"
-#include "Filter.h"
 #include "Visitable.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
@@ -20,10 +19,9 @@ using namespace depend;
 // Name: MetricSerializer constructor
 // Created: SLI 2010-08-20
 // -----------------------------------------------------------------------------
-MetricSerializer::MetricSerializer( const Visitable< DependencyVisitor_ABC >& dependencies, const Visitable< ClassMetricVisitor_ABC >& classes )
+MetricSerializer::MetricSerializer( const Visitable< MetricsVisitor_ABC >& metrics )
 {
-    dependencies.Apply( *this );
-    classes.Apply( *this );
+    metrics.Apply( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,47 +33,21 @@ MetricSerializer::~MetricSerializer()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: MetricSerializer::FindClass
-// Created: SLI 2010-08-20
-// -----------------------------------------------------------------------------
-const MetricSerializer::ClassMetrics MetricSerializer::FindClass( const std::string& module ) const
-{
-    CIT_ClassMetrics it = classMetrics_.find( module );
-    if( it == classMetrics_.end() )
-        return ClassMetrics();
-    return it->second;
-}
-
 namespace
 {
-    typedef std::pair< std::string, unsigned int > T_Number;
     template< typename T >
-    unsigned int Sum( const std::string& module, const T& dependencies )
+    void SerializeMetric( xml::xostream& xos, const std::string& module, const T& metric )
     {
-        T::const_iterator it = dependencies.find( module );
-        if( it == dependencies.end() )
-            return 0u;
-        unsigned int result = 0u;
-        BOOST_FOREACH( const T_Number& number, it->second )
-            result += number.second;
-        return result;
-    }
-    void SerializeMetrics( xml::xostream& xos, const std::string& module, unsigned int classes, unsigned int abstractClasses, unsigned int efferent, unsigned int afferent, unsigned int external )
-    {
-        const int abstractness = classes == 0u ? 0u : ( 100u * abstractClasses ) / classes;
-        const int instability = efferent + afferent == 0u ? 0u : ( 100u * efferent ) / ( efferent + afferent );
-        const int distance = std::abs( abstractness + instability - 100 );
         xos << xml::start( "metric" )
                 << xml::attribute( "name", module )
-                << xml::content( "afferent", afferent )
-                << xml::content( "efferent", efferent )
-                << xml::content( "external", external )
-                << xml::content( "classes", classes )
-                << xml::content( "abstract-classes", abstractClasses )
-                << xml::content( "abstractness", abstractness )
-                << xml::content( "instability", instability )
-                << xml::content( "distance", distance )
+                << xml::content( "afferent", metric.afferent_ )
+                << xml::content( "efferent", metric.efferent_ )
+                << xml::content( "external", metric.external_ )
+                << xml::content( "classes", metric.classes_ )
+                << xml::content( "abstract-classes", metric.abstract_ )
+                << xml::content( "abstractness", metric.abstractness_ )
+                << xml::content( "instability", metric.instability_ )
+                << xml::content( "distance", metric.distance_ )
             << xml::end;
     }
 }
@@ -87,42 +59,27 @@ namespace
 void MetricSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter ) const
 {
     xos << xml::start( "metrics" );
-    BOOST_FOREACH( const std::string& module, modules_ )
-        if( filter.Check( module ) )
-            SerializeMetrics( xos, module, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ), Sum( module, external_ ) );
+    BOOST_FOREACH( const T_UnitMetrics::value_type& metric, metrics_ )
+        if( filter.Check( metric.first ) )
+            SerializeMetric( xos, metric.first, metric.second );
     xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MetricSerializer::NotifyInternalDependency
-// Created: SLI 2010-08-20
+// Name: MetricSerializer::NotifyMetrics
+// Created: SLI 2011-04-12
 // -----------------------------------------------------------------------------
-void MetricSerializer::NotifyInternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*context*/ )
+void MetricSerializer::NotifyMetrics( const std::string& module, unsigned int afferent, unsigned int efferent,
+                                      unsigned int external, unsigned int classes, unsigned int abstractClasses,
+                                      unsigned int abstractness, unsigned int instability, unsigned int distance )
 {
-    modules_.insert( fromModule );
-    modules_.insert( toModule );
-    efferent_[ fromModule ][ toModule ]++;
-    afferent_[ toModule ][ fromModule ]++;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MetricSerializer::NotifyExternalDependency
-// Created: SLI 2010-08-20
-// -----------------------------------------------------------------------------
-void MetricSerializer::NotifyExternalDependency( const std::string& fromModule, const std::string& toModule, const std::string& /*context*/ )
-{
-    modules_.insert( fromModule );
-    external_[ fromModule ][ toModule ]++;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MetricSerializer::NotifyClassMetric
-// Created: SLI 2010-08-20
-// -----------------------------------------------------------------------------
-void MetricSerializer::NotifyClassMetric( const std::string& module, unsigned int classes, unsigned int abstactClasses )
-{
-    modules_.insert( module );
-    ClassMetrics& metrics = classMetrics_[ module ];
-    metrics.classes_ = classes;
-    metrics.abstract_ = abstactClasses;
+    T_Metric& metric = metrics_[ module ];
+    metric.afferent_ = afferent;
+    metric.efferent_ = efferent;
+    metric.external_ = external;
+    metric.classes_ = classes;
+    metric.abstract_ = abstractClasses;
+    metric.abstractness_ = abstractness;
+    metric.instability_ = instability;
+    metric.distance_ = distance;
 }
