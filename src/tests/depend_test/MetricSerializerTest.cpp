@@ -20,7 +20,7 @@ namespace
     {
     public:
         Fixture()
-            : classVisitor( 0 )
+            : classVisitor     ( 0 )
             , dependencyVisitor( 0 )
         {
             MOCK_EXPECT( classMetric, Apply ).once().with( mock::retrieve( classVisitor ) );
