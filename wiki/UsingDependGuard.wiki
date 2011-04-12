@@ -46,4 +46,5 @@ There are four cases when checking dependencies:
     </module>
 </dependencies>
 }}}
- # A dependency is declared in the XML but not checked during code analysis. A warning is produced.
+ # A dependency is declared in the XML but not checked during code analysis. A warning is produced to prevent that there is no dependency any more.
+`Warning: no dependency found from module 'source' to module 'target', you probably should remove it from your dependency file.`
