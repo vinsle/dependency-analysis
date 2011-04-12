@@ -7,38 +7,38 @@
 //
 
 #include "depend_pch.h"
-#include "ModuleDependencyMetricLoader.h"
-#include "DependencyMetricVisitor_ABC.h"
+#include "UnitDependencyLoader.h"
+#include "DependencyVisitor_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
 
 using namespace depend;
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetricLoader constructor
+// Name: UnitDependencyLoader constructor
 // Created: SLI 2011-02-18
 // -----------------------------------------------------------------------------
-ModuleDependencyMetricLoader::ModuleDependencyMetricLoader( xml::xisubstream xis )
+UnitDependencyLoader::UnitDependencyLoader( xml::xisubstream xis )
 {
     xis >> xml::start( "graph" )
             >> xml::start( "nodes" )
-                >> xml::list( "node", *this, &ModuleDependencyMetricLoader::ReadNode );
+                >> xml::list( "node", *this, &UnitDependencyLoader::ReadNode );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetricLoader destructor
+// Name: UnitDependencyLoader destructor
 // Created: SLI 2011-02-18
 // -----------------------------------------------------------------------------
-ModuleDependencyMetricLoader::~ModuleDependencyMetricLoader()
+UnitDependencyLoader::~UnitDependencyLoader()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetricLoader::Apply
+// Name: UnitDependencyLoader::Apply
 // Created: SLI 2011-02-18
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetricLoader::Apply( DependencyMetricVisitor_ABC& visitor ) const
+void UnitDependencyLoader::Apply( DependencyVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const T_Node& node, nodes_ )
     {
@@ -52,39 +52,39 @@ void ModuleDependencyMetricLoader::Apply( DependencyMetricVisitor_ABC& visitor )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetricLoader::ReadNode
+// Name: UnitDependencyLoader::ReadNode
 // Created: SLI 2011-02-18
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetricLoader::ReadNode( xml::xistream& xis )
+void UnitDependencyLoader::ReadNode( xml::xistream& xis )
 {
     T_Node node;
     xis >> xml::attribute( "name", node.from_ )
         >> xml::start( "efferent-dependencies" )
-            >> xml::list( "dependency", *this, &ModuleDependencyMetricLoader::ReadDependency, node.internals_ )
+            >> xml::list( "dependency", *this, &UnitDependencyLoader::ReadDependency, node.internals_ )
         >> xml::end
         >> xml::start( "external-dependencies" )
-            >> xml::list( "dependency", *this, &ModuleDependencyMetricLoader::ReadDependency, node.externals_ );
+            >> xml::list( "dependency", *this, &UnitDependencyLoader::ReadDependency, node.externals_ );
     nodes_.push_back( node );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetricLoader::ReadDependency
+// Name: UnitDependencyLoader::ReadDependency
 // Created: SLI 2011-02-21
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetricLoader::ReadDependency( xml::xistream& xis, T_Dependencies& dependencies ) const
+void UnitDependencyLoader::ReadDependency( xml::xistream& xis, T_Dependencies& dependencies ) const
 {
     std::string name;
     T_Contexts contexts;
     xis >> xml::attribute( "name", name )
-        >> xml::list( "context", *this, &ModuleDependencyMetricLoader::ReadContext, contexts );
+        >> xml::list( "context", *this, &UnitDependencyLoader::ReadContext, contexts );
     dependencies.push_back( std::make_pair( name, contexts ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetricLoader::ReadContext
+// Name: UnitDependencyLoader::ReadContext
 // Created: SLI 2011-02-21
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetricLoader::ReadContext( xml::xistream& xis, T_Contexts& contexts ) const
+void UnitDependencyLoader::ReadContext( xml::xistream& xis, T_Contexts& contexts ) const
 {
     std::string context;
     xis >> context;

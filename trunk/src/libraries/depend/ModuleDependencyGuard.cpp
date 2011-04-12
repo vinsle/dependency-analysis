@@ -19,7 +19,7 @@ using namespace depend;
 // Name: ModuleDependencyGuard constructor
 // Created: SLI 2011-02-08
 // -----------------------------------------------------------------------------
-ModuleDependencyGuard::ModuleDependencyGuard( xml::xisubstream xis, const Visitable< DependencyMetricVisitor_ABC >& dependencies )
+ModuleDependencyGuard::ModuleDependencyGuard( xml::xisubstream xis, const Visitable< DependencyVisitor_ABC >& dependencies )
 {
     xis >> xml::start( "dependencies" )
             >> xml::list( "module", *this, &ModuleDependencyGuard::ReadModule );

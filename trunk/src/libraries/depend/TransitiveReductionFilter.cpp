@@ -23,7 +23,7 @@ using namespace depend;
 // Name: TransitiveReductionFilter::TransitiveReductionFilter
 // Created: SLI 2010-09-08
 // -----------------------------------------------------------------------------
-TransitiveReductionFilter::TransitiveReductionFilter( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter )
+TransitiveReductionFilter::TransitiveReductionFilter( const Visitable< DependencyVisitor_ABC >& metric, const Filter_ABC& filter )
     : filter_( filter )
 {
     metric.Apply( *this );

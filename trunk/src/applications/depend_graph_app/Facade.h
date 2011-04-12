@@ -28,7 +28,7 @@ namespace depend
     class Filter_ABC;
     class UnitSerializer;
     class ClassMetricVisitor_ABC;
-    class DependencyMetricVisitor_ABC;
+    class DependencyVisitor_ABC;
     template< typename T > class Visitable;
 }
 
@@ -79,7 +79,7 @@ private:
     std::auto_ptr< depend::ClassLoader > classLoader_;
     std::auto_ptr< depend::Visitable< depend::UnitObserver_ABC > > unitCache_;
     std::auto_ptr< depend::Visitable< depend::ClassMetricVisitor_ABC > > classMetric_;
-    std::auto_ptr< depend::Visitable< depend::DependencyMetricVisitor_ABC > > dependencyMetric_;
+    std::auto_ptr< depend::Visitable< depend::DependencyVisitor_ABC > > dependencyMetric_;
     std::auto_ptr< depend::UnitSerializer > unitSerializer_;
     std::auto_ptr< GraphSerializer > graphSerializer_;
     std::vector< std::string > modules_;

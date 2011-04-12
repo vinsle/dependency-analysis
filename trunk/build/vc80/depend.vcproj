@@ -334,11 +334,11 @@
 				Name="metrics"
 				>
 				<File
-					RelativePath="..\..\src\libraries\depend\ClassDependencyMetric.cpp"
+					RelativePath="..\..\src\libraries\depend\ClassDependency.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ClassDependencyMetric.h"
+					RelativePath="..\..\src\libraries\depend\ClassDependency.h"
 					>
 				</File>
 				<File
@@ -366,7 +366,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\DependencyMetricVisitor_ABC.h"
+					RelativePath="..\..\src\libraries\depend\DependencyVisitor_ABC.h"
 					>
 				</File>
 				<File
@@ -378,19 +378,19 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetric.cpp"
+					RelativePath="..\..\src\libraries\depend\UnitDependency.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetric.h"
+					RelativePath="..\..\src\libraries\depend\UnitDependency.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetricLoader.cpp"
+					RelativePath="..\..\src\libraries\depend\UnitDependencyLoader.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\depend\ModuleDependencyMetricLoader.h"
+					RelativePath="..\..\src\libraries\depend\UnitDependencyLoader.h"
 					>
 				</File>
 			</Filter>

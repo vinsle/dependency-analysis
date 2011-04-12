@@ -6,8 +6,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef depend_ModuleDependencyMetricLoader_h
-#define depend_ModuleDependencyMetricLoader_h
+#ifndef depend_ModuleDependencyLoader_h
+#define depend_ModuleDependencyLoader_h
 
 #include "Visitable.h"
 #include <vector>
@@ -21,26 +21,26 @@ namespace xml
 
 namespace depend
 {
-    class DependencyMetricVisitor_ABC;
+    class DependencyVisitor_ABC;
 
 // =============================================================================
-/** @class  ModuleDependencyMetricLoader
+/** @class  UnitDependencyLoader
     @brief  Module dependency metric loader
 */
 // Created: SLI 2011-02-18
 // =============================================================================
-class ModuleDependencyMetricLoader : public Visitable< DependencyMetricVisitor_ABC >
+class UnitDependencyLoader : public Visitable< DependencyVisitor_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModuleDependencyMetricLoader( xml::xisubstream xis );
-    virtual ~ModuleDependencyMetricLoader();
+    explicit UnitDependencyLoader( xml::xisubstream xis );
+    virtual ~UnitDependencyLoader();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Apply( DependencyMetricVisitor_ABC& visitor ) const;
+    virtual void Apply( DependencyVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -75,4 +75,4 @@ private:
 
 }
 
-#endif // depend_ModuleDependencyMetricLoader_h
+#endif // depend_ModuleDependencyLoader_h

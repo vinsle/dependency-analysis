@@ -7,7 +7,7 @@
 //
 
 #include "Facade.h"
-#include "depend/ModuleDependencyMetricLoader.h"
+#include "depend/UnitDependencyLoader.h"
 #include "depend/Log.h"
 #include "depend/ModuleDependencyGuard.h"
 #include "depend/DependencyGuardVisitor_ABC.h"
@@ -22,7 +22,7 @@ using namespace depend;
 // -----------------------------------------------------------------------------
 Facade::Facade( xml::xisubstream xis )
     : log_             ( new Log( xml::xistringstream( "<root warning='true'/>" ) >> xml::start( "root" ) ) )
-    , dependencyMetric_( new ModuleDependencyMetricLoader( xis ) )
+    , dependencyMetric_( new UnitDependencyLoader( xis ) )
 {
     // NOTHING
 }

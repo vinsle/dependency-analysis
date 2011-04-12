@@ -9,7 +9,7 @@
 #ifndef depend_ModuleDependencyGuard_h
 #define depend_ModuleDependencyGuard_h
 
-#include "DependencyMetricVisitor_ABC.h"
+#include "DependencyVisitor_ABC.h"
 #include <map>
 #include <vector>
 #include <set>
@@ -31,12 +31,12 @@ namespace depend
 */
 // Created: SLI 2011-02-08
 // =============================================================================
-class ModuleDependencyGuard : private DependencyMetricVisitor_ABC
+class ModuleDependencyGuard : private DependencyVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleDependencyGuard( xml::xisubstream xis, const Visitable< DependencyMetricVisitor_ABC >& dependencies );
+             ModuleDependencyGuard( xml::xisubstream xis, const Visitable< DependencyVisitor_ABC >& dependencies );
     virtual ~ModuleDependencyGuard();
     //@}
 

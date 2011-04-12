@@ -10,7 +10,7 @@
 #define depend_TransitiveReductionFilter_h
 
 #include "Filter_ABC.h"
-#include "DependencyMetricVisitor_ABC.h"
+#include "DependencyVisitor_ABC.h"
 #pragma warning( push, 0 )
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/labeled_graph.hpp>
@@ -29,12 +29,12 @@ namespace depend
 */
 // Created: SLI 2010-09-08
 // =============================================================================
-class TransitiveReductionFilter : public Filter_ABC, private DependencyMetricVisitor_ABC
+class TransitiveReductionFilter : public Filter_ABC, private DependencyVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TransitiveReductionFilter( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter );
+             TransitiveReductionFilter( const Visitable< DependencyVisitor_ABC >& metric, const Filter_ABC& filter );
     virtual ~TransitiveReductionFilter();
     //@}
     

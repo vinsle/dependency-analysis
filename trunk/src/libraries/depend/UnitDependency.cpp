@@ -7,8 +7,8 @@
 //
 
 #include "depend_pch.h"
-#include "ModuleDependencyMetric.h"
-#include "DependencyMetricVisitor_ABC.h"
+#include "UnitDependency.h"
+#include "DependencyVisitor_ABC.h"
 #include "ExternalModuleResolver_ABC.h"
 #include "InternalModuleResolver_ABC.h"
 #include "Log_ABC.h"
@@ -19,10 +19,10 @@
 using namespace depend;
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric constructor
+// Name: UnitDependency constructor
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-ModuleDependencyMetric::ModuleDependencyMetric( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
+UnitDependency::UnitDependency( Subject< UnitObserver_ABC >& unitObserver, Subject< FileObserver_ABC >& fileObserver,
                                                 Subject< IncludeObserver_ABC >& includeObserver, const ExternalModuleResolver_ABC& externalResolver,
                                                 const InternalModuleResolver_ABC& internalResolver, const Log_ABC& log )
     : Observer< UnitObserver_ABC >   ( unitObserver )
@@ -36,10 +36,10 @@ ModuleDependencyMetric::ModuleDependencyMetric( Subject< UnitObserver_ABC >& uni
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric destructor
+// Name: UnitDependency destructor
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-ModuleDependencyMetric::~ModuleDependencyMetric()
+UnitDependency::~UnitDependency()
 {
     // NOTHING
 }
@@ -59,17 +59,17 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric::Apply
+// Name: UnitDependency::Apply
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
+void UnitDependency::Apply( DependencyVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const Metric& metric, metrics_ )
     {
         std::vector< T_Dependency > cleaned;
         std::set_difference( metric.internal_.begin(), metric.internal_.end(), metric.files_.begin(), metric.files_.end(), std::back_insert_iterator< std::vector< T_Dependency > >( cleaned ) );
-        boost::function< void( const std::string&, const std::string&, const std::string& ) > NotifyInternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyInternalDependency, &visitor, _1, _2, _3 );
-        boost::function< void( const std::string&, const std::string&, const std::string& ) > NotifyExternal = boost::bind( &DependencyMetricVisitor_ABC::NotifyExternalDependency, &visitor, _1, _2, _3 );
+        boost::function< void( const std::string&, const std::string&, const std::string& ) > NotifyInternal = boost::bind( &DependencyVisitor_ABC::NotifyInternalDependency, &visitor, _1, _2, _3 );
+        boost::function< void( const std::string&, const std::string&, const std::string& ) > NotifyExternal = boost::bind( &DependencyVisitor_ABC::NotifyExternalDependency, &visitor, _1, _2, _3 );
         BOOST_FOREACH( const T_Dependency& include, cleaned )
             if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( metric.unit_, include.file_, include.include_ ), include.contexts_ ) )
                 if( !Notify( NotifyExternal, metric.unit_, externalResolver_.Resolve( include.include_ ), include.contexts_ ) )
@@ -86,10 +86,10 @@ void ModuleDependencyMetric::Apply( DependencyMetricVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric::NotifyUnit
+// Name: UnitDependency::NotifyUnit
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetric::NotifyUnit( const std::string& unit, const std::string& /*context*/ )
+void UnitDependency::NotifyUnit( const std::string& unit, const std::string& /*context*/ )
 {
     Metric metric;
     metric.unit_ = unit;
@@ -98,10 +98,10 @@ void ModuleDependencyMetric::NotifyUnit( const std::string& unit, const std::str
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric::NotifyFile
+// Name: UnitDependency::NotifyFile
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetric::NotifyFile( const std::string& path, std::istream& /*stream*/, const std::string& /*context*/ )
+void UnitDependency::NotifyFile( const std::string& path, std::istream& /*stream*/, const std::string& /*context*/ )
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid file '" + path + "' out of a unit" );
@@ -123,10 +123,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric::NotifyInternalInclude
+// Name: UnitDependency::NotifyInternalInclude
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetric::NotifyInternalInclude( const std::string& include, const std::string& context )
+void UnitDependency::NotifyInternalInclude( const std::string& include, const std::string& context )
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid include '" + include + "' out of a unit" );
@@ -134,10 +134,10 @@ void ModuleDependencyMetric::NotifyInternalInclude( const std::string& include, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleDependencyMetric::NotifyExternalInclude
+// Name: UnitDependency::NotifyExternalInclude
 // Created: SLI 2010-08-19
 // -----------------------------------------------------------------------------
-void ModuleDependencyMetric::NotifyExternalInclude( const std::string& include, const std::string& context )
+void UnitDependency::NotifyExternalInclude( const std::string& include, const std::string& context )
 {
     if( metrics_.empty() )
         throw std::runtime_error( "invalid include '" + include + "' out of a unit" );

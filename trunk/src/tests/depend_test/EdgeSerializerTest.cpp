@@ -29,8 +29,8 @@ namespace
         mock::sequence s;
         MockVisitable< UnitObserver_ABC > units;
         UnitObserver_ABC* unitsVisitor;
-        MockVisitable< DependencyMetricVisitor_ABC > dependencyMetric;
-        DependencyMetricVisitor_ABC* dependencyVisitor;
+        MockVisitable< DependencyVisitor_ABC > dependencyMetric;
+        DependencyVisitor_ABC* dependencyVisitor;
         MockFilter filter;
     };
     class SerializeFixture : public Fixture

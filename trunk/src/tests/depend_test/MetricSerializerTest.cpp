@@ -27,9 +27,9 @@ namespace
             MOCK_EXPECT( dependencyMetric, Apply ).once().with( mock::retrieve( dependencyVisitor ) );
         }
         MockVisitable< ClassMetricVisitor_ABC > classMetric;
-        MockVisitable< DependencyMetricVisitor_ABC > dependencyMetric;
+        MockVisitable< DependencyVisitor_ABC > dependencyMetric;
         ClassMetricVisitor_ABC* classVisitor;
-        DependencyMetricVisitor_ABC* dependencyVisitor;
+        DependencyVisitor_ABC* dependencyVisitor;
         MockFilter filter;
     };
     class SerializeFixture : public Fixture

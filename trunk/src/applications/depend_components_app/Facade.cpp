@@ -8,7 +8,7 @@
 
 #include "Facade.h"
 #include "depend/Filter_ABC.h"
-#include "depend/ModuleDependencyMetricLoader.h"
+#include "depend/UnitDependencyLoader.h"
 #include "depend/StronglyConnectedComponents.h"
 #include "depend/StronglyConnectedComponentsVisitor_ABC.h"
 #include "depend/StronglyConnectedComponentsSerializer.h"
@@ -44,7 +44,7 @@ namespace
 // -----------------------------------------------------------------------------
 Facade::Facade( xml::xisubstream xis, bool warning )
     : warning_         ( warning )
-    , dependencyMetric_( new ModuleDependencyMetricLoader( xis ) )
+    , dependencyMetric_( new UnitDependencyLoader( xis ) )
     , filter_          ( new SimpleFilter() )
     , components_      ( new StronglyConnectedComponents( *dependencyMetric_, *filter_ ) )
 {

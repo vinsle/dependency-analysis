@@ -10,7 +10,7 @@
 #include "GraphSerializer.h"
 #include "depend/ClassMetric.h"
 #include "depend/ClassLoader.h"
-#include "depend/ModuleDependencyMetricLoader.h"
+#include "depend/UnitDependencyLoader.h"
 #include "depend/EdgeSerializer.h"
 #include "depend/MetricSerializer.h"
 #include "depend/UnitSerializer.h"
@@ -39,7 +39,7 @@ Facade::Facade( xml::xisubstream xis )
     , filter_          ( new Filter( xis ) )
     , classLoader_     ( new ClassLoader() )
     , unitCache_       ( new UnitCache( *classLoader_ ) )
-    , dependencyMetric_( new ModuleDependencyMetricLoader( xml::xifstream( xis.content< std::string >( "input" ) ) ) )
+    , dependencyMetric_( new UnitDependencyLoader( xml::xifstream( xis.content< std::string >( "input" ) ) ) )
     , classMetric_     ( new ClassMetric( *classLoader_, *classLoader_ ) )
     , unitSerializer_  ( new UnitSerializer( *classLoader_ ) )
     , graphSerializer_ ( new GraphSerializer( xis ) )
@@ -74,10 +74,10 @@ void Facade::Process( xml::xisubstream xis )
 
 namespace
 {
-    class FilterExtender : public Filter_ABC, private DependencyMetricVisitor_ABC
+    class FilterExtender : public Filter_ABC, private DependencyVisitor_ABC
     {
     public:
-        FilterExtender( const Visitable< DependencyMetricVisitor_ABC >& metric, const Filter_ABC& filter )
+        FilterExtender( const Visitable< DependencyVisitor_ABC >& metric, const Filter_ABC& filter )
             : filter_( filter )
         {
             metric.Apply( *this );

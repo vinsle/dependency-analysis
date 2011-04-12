@@ -9,7 +9,7 @@
 #ifndef depend_MetricSerializer_h
 #define depend_MetricSerializer_h
 
-#include "DependencyMetricVisitor_ABC.h"
+#include "DependencyVisitor_ABC.h"
 #include "ClassMetricVisitor_ABC.h"
 #include <set>
 #include <map>
@@ -31,12 +31,12 @@ namespace depend
 */
 // Created: SLI 2010-08-20
 // =============================================================================
-class MetricSerializer : private DependencyMetricVisitor_ABC, private ClassMetricVisitor_ABC
+class MetricSerializer : private DependencyVisitor_ABC, private ClassMetricVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MetricSerializer( const Visitable< DependencyMetricVisitor_ABC >& dependencies, const Visitable< ClassMetricVisitor_ABC >& classes );
+             MetricSerializer( const Visitable< DependencyVisitor_ABC >& dependencies, const Visitable< ClassMetricVisitor_ABC >& classes );
     virtual ~MetricSerializer();
     //@}
 
