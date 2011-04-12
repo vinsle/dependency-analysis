@@ -6,9 +6,9 @@ Dependency-analysis is a tool suite helping developpers to analyse and maintain 
 * Dependency graph drawing.
 
 It's own dependencies are:
- * Turtle: http://sourceforge.net/apps/mediawiki/turtle/index.php?title=Turtle
+ * Turtle: http://turtle.sourceforge.net
  * Boost: http://www.boost.org
- * [XeuMeuLeu: http://sourceforge.net/apps/mediawiki/xeumeuleu/index.php?title=Welcome
+ * XeuMeuLeu: http://xeumeuleu.sourceforge.net
  * Apache Xerces: http://xerces.apache.org/xerces-c
  * GraphViz: http://www.graphviz.org.
 
