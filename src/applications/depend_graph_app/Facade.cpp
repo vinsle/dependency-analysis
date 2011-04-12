@@ -13,6 +13,7 @@
 #include "depend/UnitDependencyLoader.h"
 #include "depend/EdgeSerializer.h"
 #include "depend/MetricSerializer.h"
+#include "depend/UnitMetrics.h"
 #include "depend/UnitSerializer.h"
 #include "depend/ExternalSerializer.h"
 #include "depend/StronglyConnectedComponents.h"
@@ -122,7 +123,8 @@ void Facade::Serialize( xml::xostream& xos )
     xos << xml::start( "graph" );
     EdgeSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos, filter );
     xos << xml::end;
-    MetricSerializer( *dependencyMetric_, *classMetric_ ).Serialize( xos, filter );
+    const UnitMetrics metrics( *unitCache_, *dependencyMetric_, *classMetric_ );
+    MetricSerializer( metrics ).Serialize( xos, filter );
     StronglyConnectedComponents components( *dependencyMetric_, filter );
     StronglyConnectedComponentsSerializer( components ).Serialize( xos );
     xos << xml::end;

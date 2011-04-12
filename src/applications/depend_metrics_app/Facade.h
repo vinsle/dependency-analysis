@@ -22,6 +22,7 @@ namespace depend
     class ClassLoader;
     class ClassMetricVisitor_ABC;
     class DependencyVisitor_ABC;
+    class UnitObserver_ABC;
     template< typename T > class Visitable;
 }
 
@@ -52,6 +53,7 @@ private:
     std::auto_ptr< depend::ClassLoader > classLoader_;
     std::auto_ptr< depend::Visitable< depend::ClassMetricVisitor_ABC > > classMetric_;
     std::auto_ptr< depend::Visitable< depend::DependencyVisitor_ABC > > dependencyMetric_;
+    std::auto_ptr< depend::Visitable< depend::UnitObserver_ABC > > units_;
     //@}
 };
 
