@@ -61,15 +61,18 @@ namespace
             result += number.second;
         return result;
     }
-    void SerializeMetrics( xml::xostream& xos, const std::string& module, unsigned int classes, unsigned int abstractClasses, unsigned int ce, unsigned int ca )
+    void SerializeMetrics( xml::xostream& xos, const std::string& module, unsigned int classes, unsigned int abstractClasses, unsigned int efferent, unsigned int afferent, unsigned int external )
     {
         const int abstractness = classes == 0u ? 0u : ( 100u * abstractClasses ) / classes;
-        const int instability = ce + ca == 0u ? 0u : ( 100u * ce ) / ( ce + ca );
+        const int instability = efferent + afferent == 0u ? 0u : ( 100u * efferent ) / ( efferent + afferent );
         const int distance = std::abs( abstractness + instability - 100 );
         xos << xml::start( "metric" )
                 << xml::attribute( "name", module )
-                << xml::content( "number-of-classes", classes )
-                << xml::content( "number-of-abstract-classes", abstractClasses )
+                << xml::content( "afferent", afferent )
+                << xml::content( "efferent", efferent )
+                << xml::content( "external", external )
+                << xml::content( "classes", classes )
+                << xml::content( "abstract-classes", abstractClasses )
                 << xml::content( "abstractness", abstractness )
                 << xml::content( "instability", instability )
                 << xml::content( "distance", distance )
@@ -86,7 +89,7 @@ void MetricSerializer::Serialize( xml::xostream& xos, const Filter_ABC& filter )
     xos << xml::start( "metrics" );
     BOOST_FOREACH( const std::string& module, modules_ )
         if( filter.Check( module ) )
-            SerializeMetrics( xos, module, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ) );
+            SerializeMetrics( xos, module, FindClass( module ).classes_, FindClass( module ).abstract_, Sum( module, efferent_ ), Sum( module, afferent_ ), Sum( module, external_ ) );
     xos << xml::end;
 }
 
