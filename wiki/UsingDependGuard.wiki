@@ -38,7 +38,7 @@ Example of dependency XML input:
 
 There are four cases when checking dependencies:
 
- * *Good dependency*: A dependency from a source module to a target module is defined in the xml. The dependency is checked during code analysis. Nothing more append.
+ * *Authorized dependency*: A dependency from a source module to a target module defined in the xml and checked during code analysis. Nothing more append.
 {{{
 <dependencies>
     <module name='source'>
@@ -47,7 +47,7 @@ There are four cases when checking dependencies:
 </dependencies>
 }}}
 
- * *Unexisting dependency*: A dependency is declared in the XML but not checked during code analysis. A warning is produced to prevent that there is no dependency any more.
+ * *Unexisting dependency*: A dependency declared in the XML but not checked during code analysis. A warning is produced to prevent that there is no dependency any more.
 {{{Warning: no dependency found from module 'source' to module 'target', you probably should remove it from your dependency file.}}}
 
  * *Obsolete dependency*: A dependency is declared but labelled as *obsolete-dependency* and checked during code analysis. A warning is produced with the incriming include: 
