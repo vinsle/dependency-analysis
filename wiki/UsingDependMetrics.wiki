@@ -2,12 +2,17 @@
 
 = Introduction =
 
-Add your content here.
+*Depend metrics* is a tool made for dependency [http://www.objectmentor.com/resources/articles/oodmetrc.pdf metrics] computation.
 
+There are 7 computed metrics for each module:
+ * *Number of efferent dependencies*
+ * *Number of afferent dependencies*
+ * *Number of classes*
+ * *Number of abstract classes*
+ * *Abstractness*
+ * *Instability*
+ * *Distance*
 
-= Details =
+= Command line parameters =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Metrics interpretations =
