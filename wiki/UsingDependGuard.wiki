@@ -32,4 +32,18 @@ Example of dependency XML input:
         <dependency>depend</dependency>
     </module>
 </dependencies>
-}}} 
+}}}
+
+= Dependency checking =
+
+There are four cases when checking dependencies:
+
+ # The dependency from a source module to a target module is defined in the xml, the dependency is checked and nothing append
+{{{
+<dependencies>
+    <module name='source'>
+        <dependency>target</dependency>
+    </module>
+</dependencies>
+}}}
+ # A dependency is declared in the XML but not checked during code analysis. A warning is produced.
