@@ -1,13 +1,16 @@
 #summary Explains how to use and configure filters.
 
-= Introduction =
+= Filter option =
 
-Add your content here.
+Calling filter option with a module name remove all modules but filtered one and 
+ {{{--filter=module}}}.
 
+Many filters can be added: {{{--filter=module1 --filter=module2}}}.
 
-= Details =
+http://lh4.googleusercontent.com/_zeWn5qPueCk/TaXdRadtNVI/AAAAAAAADjA/3PYz39TkSiU/entire.png
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+http://lh6.googleusercontent.com/_zeWn5qPueCk/TaXdRJ4Eg-I/AAAAAAAADi8/sj3V6lRSRVM/filter.png
+
+= Extend option =
+
+https://lh6.googleusercontent.com/_zeWn5qPueCk/TaXj4IOQcbI/AAAAAAAADjQ/iNEPBILxHLc/extend.png
