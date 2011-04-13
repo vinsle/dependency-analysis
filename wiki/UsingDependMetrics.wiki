@@ -14,10 +14,26 @@
  * Instability
  * Distance
 
+{{{
+<metrics>
+  <metric name="depend">
+    <afferent>49</afferent>
+    <efferent>0</efferent>
+    <external>90</external>
+    <classes>53</classes>
+    <abstract-classes>18</abstract-classes>
+    <abstractness>33</abstractness>
+    <instability>0</instability>
+    <distance>67</distance>
+  </metric>
+  ...
+</metrics>
+}}}
+
 See UnderstandingMetrics for more informations on metrics.
 
 = Command line parameters =
-{{{Usage: depend_metrics [options] --graph=graph.xml}}}
+{{{Usage: depend_metrics [options] --output=metrics.xml --graph=graph.xml}}}
 
  * *help*(-h): produce help message
  * *version*(-v): produce version message
@@ -26,4 +42,4 @@ See UnderstandingMetrics for more informations on metrics.
  * *filter*: select only modules in filter and their afferent and efferent modules
  * *extend*: extend to all reachable modules if filter is enabled
 
-= Metrics interpretations =
+See UsingFilters for more informations on *filter* and *extend* options.
