@@ -4,6 +4,17 @@
 
 *Depend components* is a tool made for automatic detection of [http://en.wikipedia.org/wiki/Circular_dependency circular dependencies] (or [http://en.wikipedia.org/wiki/Strongly_connected_component strongly connected components]) between modules. This tool will return an *error* code if any circular dependency is found and produce an xml containing all detected components.
 
+= Command line parameters =
+
+{{{Usage: depend_components [options] --graph=graph.xml --output=components.xml}}}
+
+ * *help*(-h): produce help message
+ * *version*(-v): produce version message
+ * *output*: set output components file
+ * *graph*: set graph input file (from [UsingDepend depend]) for analysis
+ * *disable-warnings*: disable console warnings
+
+
 = Example =
 
 Here is an example with three modules with a circular dependency and one module out of this.
@@ -19,7 +30,7 @@ XML produced:
 </strongly-connected-components>
 }}}
 
-Console output:
+Console output (warnings are activated by default):
 {{{
 Strongly connected component detected:
  - circular1
@@ -30,13 +41,3 @@ Strongly connected component detected:
 Dependency graph:
 
 http://lh4.googleusercontent.com/_zeWn5qPueCk/TaWkeO7e1tI/AAAAAAAADiM/I1_AgmudvQ4/circular_components.png
-
-= Command line parameters =
-
-{{{Usage: depend_components [options] --graph=graph.xml --output=components.xml}}}
-
- * *help*(-h): produce help message
- * *version*(-v): produce version message
- * *output*: set output components file
- * *graph*: set graph input file (from [UsingDepend depend]) for analysis
- * *disable-warnings*: disable console warnings
