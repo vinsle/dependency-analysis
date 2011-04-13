@@ -1,4 +1,5 @@
 #summary Explains how to interpret dependency metrics.
+#labels Featured
 
 = Introduction =
 
