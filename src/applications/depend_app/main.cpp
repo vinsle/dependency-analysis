@@ -7,6 +7,7 @@
 //
 
 #include "Facade.h"
+#include "application/Version.h"
 #pragma warning( push, 0 )
 #pragma warning( disable: 4512 4996 )
 #include <boost/program_options.hpp>
@@ -18,35 +19,18 @@
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
-
-#ifndef BUILD_VERSION
-#   error BUILD_VERSION undefined !
-#endif
-#ifndef BUILD_TIME
-#   error BUILD_TIME undefined !
-#endif
-
 namespace bpo = boost::program_options;
 
 namespace
 {
-    static const std::string version = TOSTRING( BUILD_VERSION );
-    static const std::string time = TOSTRING( BUILD_TIME );
-
     void CheckOptions( const bpo::variables_map& vm, const bpo::options_description& cmdline )
     {
+        const application::Version version;
         if( vm.count( "help" ) )
             std::cout << "Usage: depend [options] path1 path2..." << std::endl
                       << cmdline << std::endl;
         else if( vm.count( "version" ) )
-            std::cout << "depend " << version << " (built " << time << ")" << std::endl << std::endl
-                      << "Copyright Silvin Lubecki 2010" << std::endl
-                      << "Distributed under the Boost Software License, Version 1.0. (See" << std::endl
-                      << "accompanying file LICENSE_1_0.txt or copy at" << std::endl
-                      << "http://www.boost.org/LICENSE_1_0.txt)" << std::endl
-                      << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
+            application::Version().Serialize( std::cout, "depend" );
         else if( ! vm.count( "path" ) )
             throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
     }
