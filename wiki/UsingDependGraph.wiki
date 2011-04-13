@@ -2,7 +2,9 @@
 
 = Introduction =
 
-*Depend Graph* is a tool made for graph generation using [http://www.graphviz.org GraphViz]. Each module is represented as a node. An edge represents a module dependency to another module. Three metrics are drawn:
+*Depend Graph* is a tool made for graph generation using [http://www.graphviz.org GraphViz]. Each module is represented as a node and an edge represents a module dependency to another module.
+
+Three metrics are actually drawn:
  * *I* for Instability
  * *A* for Abstractness
  * *D* for Distance (see UnderstandingMetrics for more informations)
