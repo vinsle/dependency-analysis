@@ -23,7 +23,7 @@
         </tstamp>
         <build-lib name="application">
             <defineset>
-                <define name="BUILD_VERSION" value="${depend.version}.${svn.version}"/>
+                <define name="BUILD_VERSION" value="${depend.version}.${svn.revision}"/>
                 <define name="BUILD_TIME" value="${now}"/>
             </defineset>
         </build-lib>
