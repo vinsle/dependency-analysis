@@ -2,12 +2,23 @@
 
 = Introduction =
 
-Add your content here.
+*Depend components* is a tool made for automatic detection of [http://en.wikipedia.org/wiki/Circular_dependency circular dependencies] (or [http://en.wikipedia.org/wiki/Strongly_connected_component strongly connected components]) between modules. This tool will return an *error* code if any circular dependency is found and produce an xml containing all detected components.
 
+{{{
+<strongly-connected-components>
+    <component>
+        <node>unit1</node>
+        <node>unit2</node>
+     </component>
+</strongly-connected-components>
+}}}
 
-= Details =
+= Command line parameters =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+{{{Usage: depend_components [options] --graph=graph.xml --output=components.xml}}}
+
+ * *help*(-h): produce help message
+ * *version*(-v): produce version message
+ * *output*: set output components file
+ * *graph*: set graph input file (from [UsingDepend depend]) for analysis
+ * *disable-warnings*: disable console warnings
