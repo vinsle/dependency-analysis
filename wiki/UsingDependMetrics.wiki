@@ -39,7 +39,7 @@ See UnderstandingMetrics for more informations on metrics.
  * *help*(-h): produce help message
  * *version*(-v): produce version message
  * *graph*: set graph input file for analysis
- * *output*: set output metrics file
+ * *output*: set output metrics file ( the result is printed on standard output by default ).
  * *filter*: select only modules in filter and their afferent and efferent modules
  * *extend*: extend to all reachable modules if filter is enabled
 
