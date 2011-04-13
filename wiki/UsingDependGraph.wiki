@@ -2,12 +2,24 @@
 
 = Introduction =
 
-Add your content here.
+*Depend Graph* is a tool made for graph generation using [http://www.graphviz.org GraphViz]. Each module is represented as a node. An edge represents a module dependency to another module. Three metrics are drawn:
+ * *I* for Instability
+ * *A* for Abstractness
+ * *D* for Distance (see UnderstandingMetrics for more informations)
+Node coloration depends on distance value, from <font color='red'>*Red*</font> with D = 100 through <font color='orange'>*Orange*</font> with D = 50, to <font color='green'>*Green*</font> with D = 0 (_the bigger the Distance, the poorer the design_).
+
+All strongly connected components (or [UsingDependComponents circular dependencies]) are represented with same colored edges.
+
+Default Graphviz layout can be totally overridden using proper command line parameters (*layout*, *graph*, *node*, *edge*).
 
 
-= Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+<font color='red'>*Important*</font>: GraphViz <font color='red'>*must*</font> be installed before using *Depend Graph*.
+
+= Command line parameters =
+
+
+
+= Example =
+
+[http://sourceforge.net/apps/mediawiki/youki/index.php http://lh3.ggpht.com/_zeWn5qPueCk/TH_GfcWat4I/AAAAAAAADeU/do7NuUbFSzc/youki2.png]
