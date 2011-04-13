@@ -1,4 +1,5 @@
 #summary Quick start for a first dependency analysis.
+#labels Featured
 
 = Introduction =
 
