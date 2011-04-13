@@ -12,14 +12,39 @@ All strongly connected components (or [UsingDependComponents circular dependenci
 
 Default Graphviz layout can be totally overridden using proper command line parameters (*layout*, *graph*, *node*, *edge*).
 
-
-
 <font color='red'>*Important*</font>: GraphViz <font color='red'>*must*</font> be installed before using *Depend Graph*.
 
 = Command line parameters =
 
+{{{Usage: depend_graph [options] --output=output --input=graph.xml}}}
 
+== Generic options ==
+ * *help*(-h): produce help message
+ * *version*(-v): produce version message
+ * *input*: set graph input file for analysis
+ * *output*: set graph output file
+ * *filter*: select only modules in filter and their afferent and efferent modules
+ * *extend*: extend to all reachable modules if filter is enabled
+ * *all*: render every graph centered on each node"
 
-= Example =
+See UsingFilters for more informations on filter and extend options.
+
+== Graph options ==
+ * *layout*: set layout algorithm (dot or neato, dot by default)
+ * *format*: set graph output format (png, jpg, svg or pdf, png by default)
+ * *graph*(-g): set graph options
+ * *node*(-n): set node options
+ * *edge*(-e): set edge options
+ * *dependencies*: set optional external dependencies drawing (values are: 'internal', 'external' or 'both', with 'internal' by default)
+
+See [http://www.graphviz.org/doc/info/attrs.html Graphviz options] for more informations on *graph*, *node* and *edge* parameters.
+
+= Examples =
+
+Using {{{--all}}} and {{{--dependencies=both}}} options to center graph on depend_graph module and show internal and external dependencies:
+
+https://lh5.googleusercontent.com/_zeWn5qPueCk/TaXVuBg__6I/AAAAAAAADis/2Vh1fnnCZTQ/graph_depend_graph_app.png
+
+[http://sourceforge.net/apps/mediawiki/youki/index.php Youki] project:
 
 [http://sourceforge.net/apps/mediawiki/youki/index.php http://lh3.ggpht.com/_zeWn5qPueCk/TH_GfcWat4I/AAAAAAAADeU/do7NuUbFSzc/youki2.png]
