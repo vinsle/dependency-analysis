@@ -38,7 +38,7 @@ namespace
     void CheckOptions( const bpo::variables_map& vm, const bpo::options_description& cmdline )
     {
         if( vm.count( "help" ) )
-            std::cout << "Usage: depend_graph [options] graph.xml" << std::endl
+            std::cout << "Usage: depend_graph [options] --output=output graph.xml" << std::endl
                       << cmdline << std::endl;
         else if( vm.count( "version" ) )
             std::cout << "depend " << version << " (built " << time << ")" << std::endl << std::endl
@@ -47,14 +47,10 @@ namespace
                       << "accompanying file LICENSE_1_0.txt or copy at" << std::endl
                       << "http://www.boost.org/LICENSE_1_0.txt)" << std::endl
                       << "See http://code.google.com/p/dependency-analysis for more informations" << std::endl;
-        else if( ! vm.count( "input" ) && ! vm.count( "load-configuration" ) )
-            throw std::invalid_argument( "Invalid application option argument: missing directory for analysis" );
-    }
-    std::string Check( const std::string& variable )
-    {
-        if( variable == "DEPEND_FILE" )
-            return "load-configuration";
-        return "";
+        else if( ! vm.count( "input" ) )
+            throw std::invalid_argument( "Invalid application option argument: missing input graph for analysis" );
+        else if( ! vm.count( "output" ) )
+            throw std::invalid_argument( "Invalid application option argument: missing output file" );
     }
     const bpo::variables_map ParseCommandLine( int argc, char* argv[] )
     {
@@ -76,19 +72,11 @@ namespace
             ( "node,n", bpo::value< std::vector< std::string > >()                    , "set node options (see http://www.graphviz.org/doc/info/attrs.html)" )
             ( "edge,e", bpo::value< std::vector< std::string > >()                    , "set edge options (see http://www.graphviz.org/doc/info/attrs.html)" )
             ( "dependencies", bpo::value< std::string >()->default_value( "internal" ), "set optional external dependencies drawing (internal|external|both)" );
-        bpo::options_description configuration( "Configuration options" );
-        configuration.add_options()
-            ( "load-configuration", bpo::value< std::string >(), "load configuration file" )
-            ( "save-configuration", bpo::value< std::string >(), "save configuration file" );
-        cmdline.add( options ).add( graph ).add( configuration );
+        cmdline.add( options ).add( graph );
         bpo::positional_options_description p;
         p.add( "input", -1 );
         bpo::variables_map vm;
         bpo::store( bpo::command_line_parser( argc, argv ).options( cmdline ).positional( p ).run(), vm );
-        bpo::store( bpo::parse_environment( cmdline, boost::bind( &Check, _1 ) ), vm );
-        const std::string filename = vm.count( "load-configuration" ) ? vm[ "load-configuration" ].as< std::string >() : "config.ini";
-        if( boost::filesystem::exists( filename ) )
-            bpo::store( bpo::parse_config_file< char >( filename.c_str(), cmdline ), vm );
         bpo::notify( vm );
         CheckOptions( vm, cmdline );
         return vm;
@@ -138,37 +126,6 @@ namespace
              << xml::end;
         return xobs;
     }
-    void SerializeComment( std::ostream& os, const std::string& comment )
-    {
-        os << "#" << comment << std::endl;
-    }
-    void SerializeLine( std::ostream& os, const std::string& option, const std::string& value )
-    {
-        os << option << "=" << value << std::endl;
-    }
-    void Serialize( std::ostream& os, const std::string& option, const std::string& value )
-    {
-        SerializeComment( os, " " + option );
-        SerializeLine( os, option, value );
-    }
-    void Serialize( std::ostream& os, const std::string& option, const std::vector< std::string >& values )
-    {
-        SerializeComment( os, " " + option );
-        BOOST_FOREACH( const std::string& value, values )
-            SerializeLine( os, option, value );
-    }
-    template< typename T >
-    void Serialize( std::ostream& os, const std::string& option, const bpo::variables_map& vm )
-    {
-        if( ! vm.count( option ) )
-        {
-            SerializeComment( os, " " + option );
-            SerializeComment( os, option + "=sample" );
-        }
-        else
-            Serialize( os, option, vm[ option ].as< T >() );
-        os << std::endl;
-    }
 }
 
 int main( int argc, char* argv[] )
@@ -181,21 +138,6 @@ int main( int argc, char* argv[] )
         std::auto_ptr< xml::xobufferstream > xobs = Translate( vm );
         Facade facade( *xobs );
         facade.Process( *xobs );
-        if( vm.count( "save-configuration" ) > 0 )
-        {
-            std::ofstream ofs( vm[ "save-configuration" ].as< std::string >().c_str() );
-            Serialize< std::string >( ofs, "input", vm );
-            Serialize< std::string >( ofs, "output", vm );
-            Serialize< std::vector< std::string > >( ofs, "filter", vm );
-            Serialize< std::string >( ofs, "extend", vm );
-            Serialize< std::string >( ofs, "all", vm );
-            Serialize< std::string >( ofs, "layout", vm );
-            Serialize< std::string >( ofs, "format", vm );
-            Serialize< std::vector< std::string > >( ofs, "graph", vm );
-            Serialize< std::vector< std::string > >( ofs, "node", vm );
-            Serialize< std::vector< std::string > >( ofs, "edge", vm );
-            Serialize< std::string >( ofs, "dependencies", vm );
-        }
         return EXIT_SUCCESS;
     }
     catch( std::exception& e )
