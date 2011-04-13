@@ -2,7 +2,7 @@
 
 = Introduction =
 
-*Depend components* is a tool made for automatic detection of [http://en.wikipedia.org/wiki/Circular_dependency circular dependencies] (or [http://en.wikipedia.org/wiki/Strongly_connected_component strongly connected components]) between modules. This tool will return an *error* code if any circular dependency is found and produce an xml containing all detected components.
+*Depend components* is a tool made for automatic detection of [http://en.wikipedia.org/wiki/Circular_dependency circular dependencies] (or [http://en.wikipedia.org/wiki/Strongly_connected_component strongly connected components]) between modules. This tool will return an *error* code if any circular dependency is found and will produce an xml containing all components detected.
 
 = Command line parameters =
 
