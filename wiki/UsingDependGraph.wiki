@@ -10,11 +10,11 @@ Three metrics are actually drawn:
  * *D* for Distance (see UnderstandingMetrics for more informations)
 Node coloration depends on distance value, from <font color='red'>*Red*</font> with D = 100 through <font color='orange'>*Orange*</font> with D = 50, to <font color='green'>*Green*</font> with D = 0 (_the bigger the Distance, the poorer the design_).
 
-All strongly connected components (or [UsingDependComponents circular dependencies]) are represented with same colored edges.
+All strongly connected components (or [UsingDependComponents circular dependencies]) are represented with the same color on edge.
 
 Default Graphviz layout can be totally overridden using proper command line parameters (*layout*, *graph*, *node*, *edge*).
 
-<font color='red'>*Important*</font>: GraphViz <font color='red'>*must*</font> be installed before using *Depend Graph*.
+<font color='red'>*Important*</font>: Graphviz <font color='red'>*must*</font> be installed before using *Depend Graph*.
 
 = Command line parameters =
 
