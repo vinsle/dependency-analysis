@@ -50,7 +50,7 @@ Version::~Version()
 // -----------------------------------------------------------------------------
 void Version::Serialize( std::ostream& os, const std::string& application ) const
 {
-    os << application << " (version:" << version << ", built " << time << ")" << std::endl << std::endl
+    os << application << " (version " << version << ", built " << time << ")" << std::endl << std::endl
        << "Copyright Silvin Lubecki 2010-2011" << std::endl
        << "Distributed under the Boost Software License, Version 1.0." << std::endl
        << "(See accompanying file LICENSE_1_0.txt or " << std::endl
