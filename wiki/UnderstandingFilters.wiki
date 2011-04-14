@@ -1,0 +1,16 @@
+#summary Explains how to use and configure filters.
+
+= Filter option =
+
+Calling filter option with a module name remove all modules but filtered one and 
+ {{{--filter=module}}}.
+
+Many filters can be added: {{{--filter=module1 --filter=module2}}}.
+
+http://lh4.googleusercontent.com/_zeWn5qPueCk/TaXdRadtNVI/AAAAAAAADjA/3PYz39TkSiU/entire.png
+
+http://lh6.googleusercontent.com/_zeWn5qPueCk/TaXdRJ4Eg-I/AAAAAAAADi8/sj3V6lRSRVM/filter.png
+
+= Extend option =
+
+https://lh6.googleusercontent.com/_zeWn5qPueCk/TaXj4IOQcbI/AAAAAAAADjQ/iNEPBILxHLc/extend.png
