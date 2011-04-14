@@ -8,6 +8,8 @@ Depend's main goal is to produce an XML file containing the code analysis result
 
 But depend can also be used to detect include errors like case sensitive includes, "" vs <> includes, etc...
 
+See UnderstandingDependDetection for more informations about directories structure, module definition, dependency detection and limitations. 
+
 = Command line parameters =
 
 {{{Usage: depend [options] path1 path2...}}}
