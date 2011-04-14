@@ -29,7 +29,7 @@ Default Graphviz layout can be totally overridden using proper command line para
  * *extend*: extend to all reachable modules if filter is enabled
  * *all*: render every graph centered on each node"
 
-See UsingFilters for more informations on filter and extend options.
+See UnderstandingFilters for more informations on filter and extend options.
 
 == Graph options ==
  * *layout*: set layout algorithm (dot or neato, dot by default)
