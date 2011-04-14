@@ -1,3 +1,4 @@
+#labels Deprecated
 = Using Jung =
 
 A futur way is to use [http://jung.sourceforge.net/doc/api/index.html API] as a front-end for "dynamic" analysis.
