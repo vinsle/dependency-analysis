@@ -1,16 +1,28 @@
 #summary Explains how to use and configure filters.
 
-= Filter option =
+= Introduction =
 
-Calling filter option with a module name remove all modules but filtered one and 
- {{{--filter=module}}}.
+*Filter* and *Extend* options can be used to focus analysis on one (or more) module and its dependencies.
 
-Many filters can be added: {{{--filter=module1 --filter=module2}}}.
+== Filter option ==
+
+Calling filter option with a module name will define this module as a _root_ module, which is automatically added. Direct afferent and efferent dependencies of this (these) root(s) module(s) are also selected.
+
+{{{application --filter=module_name}}}.
+
+Many filters can be added:
+
+{{{application --filter=module1 --filter=module2}}}.
+
+
+== Extend option ==
+
+= Example =
 
 http://lh4.googleusercontent.com/_zeWn5qPueCk/TaXdRadtNVI/AAAAAAAADjA/3PYz39TkSiU/entire.png
 
 http://lh6.googleusercontent.com/_zeWn5qPueCk/TaXdRJ4Eg-I/AAAAAAAADi8/sj3V6lRSRVM/filter.png
 
-= Extend option =
+https://lh4.googleusercontent.com/_zeWn5qPueCk/Taa_6Y8EeLI/AAAAAAAADjg/mQGW6p0-A0A/filtered.png
 
 https://lh6.googleusercontent.com/_zeWn5qPueCk/TaXj4IOQcbI/AAAAAAAADjQ/iNEPBILxHLc/extend.png
