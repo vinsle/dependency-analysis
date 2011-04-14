@@ -2,12 +2,12 @@
 
 = Introduction =
 
-Add your content here.
+= Directories structure and module definition =
 
+= Dependency detection =
 
-= Details =
+== Internal ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== External ==
+
+= Classes and abstractness detection =
