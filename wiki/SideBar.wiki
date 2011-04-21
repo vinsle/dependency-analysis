@@ -1,0 +1,17 @@
+#summary Side bar description
+
+ * [QuickStart Quick start]
+ * Using dependency tools
+  * [UsingDepend Depend]
+  * [UsingDependGuard Depend guard]
+  * [UsingDependComponents Depend components]
+  * [UsingDependMetrics Depend metrics]
+  * [UsingDependGraph Depend graph]
+ * Understanding dependency tools
+  * [UnderstandingFilters Filters]
+  * [UnderstandingDependencyDetection Dependency detection]
+  * [UnderstandingMetrics Metrics]
+ * [FAQ FAQ]
+ * [Links Links]
+ * [Roadmap Roadmap]
+ * [CompileProject Compile project]
