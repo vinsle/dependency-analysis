@@ -1,5 +1,3 @@
-#summary Side bar description
-
  * [QuickStart Quick start]
  * Using dependency tools
   * [UsingDepend Depend]
