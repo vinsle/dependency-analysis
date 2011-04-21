@@ -10,7 +10,7 @@
   * [UnderstandingFilters Filters]
   * [UnderstandingDependencyDetection Dependency detection]
   * [UnderstandingMetrics Metrics]
- * Advances
+ * Advanced
   * [Links Links]
   * [Roadmap Roadmap]
   * [CompileProject Compile project]
