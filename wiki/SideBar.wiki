@@ -1,4 +1,5 @@
  * [QuickStart Quick start]
+ * [FAQ FAQ]
  * Using dependency tools
   * [UsingDepend Depend]
   * [UsingDependGuard Depend guard]
@@ -9,7 +10,7 @@
   * [UnderstandingFilters Filters]
   * [UnderstandingDependencyDetection Dependency detection]
   * [UnderstandingMetrics Metrics]
- * [FAQ FAQ]
- * [Links Links]
- * [Roadmap Roadmap]
- * [CompileProject Compile project]
+ * Advances
+  * [Links Links]
+  * [Roadmap Roadmap]
+  * [CompileProject Compile project]
