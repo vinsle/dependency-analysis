@@ -86,6 +86,7 @@
     <target name="depend_components_app" depends="depend,application" description="build application">
         <build-app name="depend_components_app" pattern="depend_components" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
             <defineset define="XERCES_STATIC_LIBRARY"/>
+            <compilerarg value="-Wno-deprecated" if="is-gcc"/>
             <syslibset libs="advapi32" if="is-msvc"/>
             <syslibset libs="pthread" if="is-linux"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>

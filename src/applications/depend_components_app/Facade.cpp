@@ -16,6 +16,7 @@
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <set>
+#include <iostream>
 
 using namespace depend;
 
