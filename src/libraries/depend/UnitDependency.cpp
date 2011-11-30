@@ -115,20 +115,6 @@ void UnitDependency::NotifyFile( const std::string& path, std::istream& /*stream
     lastFile_ = path;
 }
 
-namespace
-{
-    template< typename T >
-    void Insert( T& dependencies, const std::string& include, const std::string& context, const std::string& file )
-    {
-        const typename T::value_type dependency( include, file );
-        typename T::iterator it = dependencies.find( dependency );
-        if( it == dependencies.end() )
-            it = dependencies.insert( dependency ).first;
-        std::vector< std::string >& contexts = it->contexts_;
-        contexts.push_back( context );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: UnitDependency::NotifyInternalInclude
 // Created: SLI 2010-08-19
@@ -149,4 +135,17 @@ void UnitDependency::NotifyExternalInclude( const std::string& include, const st
     if( metrics_.empty() )
         throw std::runtime_error( "invalid include '" + include + "' out of a unit" );
     Insert( metrics_.back().external_, include, context, lastFile_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitDependency::Insert
+// Created: SLI 2011-11-30
+// -----------------------------------------------------------------------------
+void UnitDependency::Insert( T_Dependencies& dependencies, const std::string& include, const std::string& context, const std::string& file )
+{
+    const T_Dependencies::value_type dependency( include, file );
+    T_Dependencies::iterator it = dependencies.find( dependency );
+    if( it == dependencies.end() )
+        it = dependencies.insert( dependency ).first;
+    it->contexts_.push_back( context );
 }

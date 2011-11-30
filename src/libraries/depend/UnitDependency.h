@@ -89,6 +89,12 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void Insert( T_Dependencies& dependencies, const std::string& include, const std::string& context, const std::string& file );
+    //@}
+
+private:
     //! @name Member data
     //@{
     const ExternalModuleResolver_ABC& externalResolver_;
