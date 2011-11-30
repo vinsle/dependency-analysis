@@ -56,7 +56,7 @@
 
     <target name="depend_app" depends="depend,application" description="build application">
         <build-app name="depend_app" pattern="depend" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
-            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <defineset define="XERCES_STATIC_LIBRARY"/>
             <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
@@ -64,7 +64,7 @@
 
     <target name="depend_guard_app" depends="depend,application" description="build application">
         <build-app name="depend_guard_app" pattern="depend_guard" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
-            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <defineset define="XERCES_STATIC_LIBRARY"/>
             <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
@@ -72,7 +72,7 @@
 
     <target name="depend_metrics_app" depends="depend,application" description="build application">
         <build-app name="depend_metrics_app" pattern="depend_metrics" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
-            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <defineset define="XERCES_STATIC_LIBRARY"/>
             <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
@@ -80,7 +80,7 @@
 
     <target name="depend_components_app" depends="depend,application" description="build application">
         <build-app name="depend_components_app" pattern="depend_components" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
-            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <defineset define="XERCES_STATIC_LIBRARY"/>
             <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
@@ -88,7 +88,7 @@
 
     <target name="depend_graph_app" depends="depend,application" description="build application">
         <build-app name="depend_graph_app" pattern="depend_graph" depends="boost" libs="depend,application,gvc,graph,xerces-c_static_3" subsystem="console">
-            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <defineset define="XERCES_STATIC_LIBRARY"/>
             <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
