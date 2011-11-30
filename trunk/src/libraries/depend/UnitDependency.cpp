@@ -147,5 +147,5 @@ void UnitDependency::Insert( T_Dependencies& dependencies, const std::string& in
     T_Dependencies::iterator it = dependencies.find( dependency );
     if( it == dependencies.end() )
         it = dependencies.insert( dependency ).first;
-    it->contexts_.push_back( context );
+    static_cast< T_Contexts& >( it->contexts_ ).push_back( context );
 }
