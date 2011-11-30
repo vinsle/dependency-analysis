@@ -19,7 +19,6 @@
 #   pragma warning( disable: 4701 4702 4996 )
 #elif defined __GNUC__
 #   pragma GCC system_header
-#   include <bits/stl_algo.h>
 #endif
 #include <boost/xpressive/xpressive.hpp>
 #include <boost/property_map/property_map.hpp>

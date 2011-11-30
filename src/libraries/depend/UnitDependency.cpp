@@ -124,7 +124,8 @@ namespace
         typename T::iterator it = dependencies.find( dependency );
         if( it == dependencies.end() )
             it = dependencies.insert( dependency ).first;
-        it->contexts_.push_back( context );
+        std::vector< std::string >& contexts = it->contexts_;
+        contexts.push_back( context );
     }
 }
 
