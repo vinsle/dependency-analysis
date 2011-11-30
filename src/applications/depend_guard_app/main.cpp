@@ -8,11 +8,14 @@
 
 #include "Facade.h"
 #include "application/Version.h"
-#pragma warning( push, 0 )
-#pragma warning( disable: 4512 4996 )
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#   pragma warning( disable: 4512 4996 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
-#pragma warning( pop )
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 #include <boost/foreach.hpp>
 #include <iostream>
 #include <xeumeuleu/xml.hpp>
