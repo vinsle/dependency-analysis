@@ -11,8 +11,10 @@
 #ifdef _MSC_VER
 #   pragma warning( push, 0 )
 #   pragma warning( disable: 4512 4996 )
-#   include <boost/program_options.hpp>
-#   include <boost/filesystem.hpp>
+#endif
+#include <boost/program_options.hpp>
+#include <boost/filesystem.hpp>
+#ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
 #include <iostream>
