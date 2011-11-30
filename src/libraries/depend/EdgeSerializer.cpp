@@ -42,7 +42,7 @@ namespace
         typename T::const_iterator it = dependencies.find( module );
         if( it == dependencies.end() )
             return;
-        BOOST_FOREACH( typename const U::value_type& to, it->second )
+        BOOST_FOREACH( const typename U::value_type& to, it->second )
             if( filter.Check( to.first ) )
             {
                 xos << xml::start( "dependency" )

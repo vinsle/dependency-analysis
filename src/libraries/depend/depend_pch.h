@@ -14,4 +14,21 @@
 #   pragma warning( disable : 4503 ) // decorated name length exceeded, name was truncated
 #endif
 
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#   pragma warning( disable: 4701 4702 4996 )
+#elif defined __GNUC__
+#   pragma GCC system_header
+#endif
+#include <boost/xpressive/xpressive.hpp>
+#include <boost/property_map/property_map.hpp>
+#include <boost/graph/visitors.hpp>
+#include <boost/graph/strong_components.hpp>
+#include <boost/graph/breadth_first_search.hpp>
+#include <boost/graph/graph_utility.hpp>
+#include <boost/algorithm/string.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+
 #endif // depend_pch_h

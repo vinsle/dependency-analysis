@@ -11,19 +11,6 @@
 #include "ClassObserver_ABC.h"
 #include <boost/foreach.hpp>
 
-#ifdef _MSC_VER
-#   pragma warning( push, 0 )
-#   pragma warning( disable: 4701 4996 )
-#elif defined __GNUC__
-#   pragma GCC system_header
-#endif
-
-#include <boost/xpressive/xpressive.hpp>
-
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-
 using namespace depend;
 using namespace boost::xpressive;
 

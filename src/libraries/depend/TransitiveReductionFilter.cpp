@@ -10,12 +10,6 @@
 #include "TransitiveReductionFilter.h"
 #include "Visitable.h"
 #include <boost/foreach.hpp>
-#pragma warning( push, 0 )
-#include <boost/graph/visitors.hpp>
-#include <boost/graph/breadth_first_search.hpp>
-#include <boost/property_map/property_map.hpp>
-#include <boost/graph/graph_utility.hpp>
-#pragma warning( pop )
 
 using namespace depend;
 

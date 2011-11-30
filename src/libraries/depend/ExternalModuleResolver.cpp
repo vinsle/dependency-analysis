@@ -11,10 +11,6 @@
 #include "Finder_ABC.h"
 #include "Log_ABC.h"
 #include <boost/foreach.hpp>
-#pragma warning( push, 0 )
-#pragma warning( disable: 4512 4996 )
-#include <boost/algorithm/string.hpp>
-#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 

@@ -51,9 +51,13 @@ void ModuleVisitor::Visit( const std::string& filename, const std::string& conte
     try
     {
         for( boost::filesystem::directory_iterator it( path ); it != boost::filesystem::directory_iterator(); ++it )
+        {
             if( IsDirectory( *it ) )
+            {
                 BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
                     observer->NotifyUnit( it->filename(), context.empty() ? it->filename() : context + "/" + it->filename() );
+            }
+        }
     }
     catch( boost::filesystem::basic_filesystem_error< boost::filesystem::path > e )
     {

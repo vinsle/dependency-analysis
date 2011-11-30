@@ -69,6 +69,8 @@ void ClassLoader::ReadClass( xml::xistream& xis )
     BOOST_FOREACH( Subject< ClassObserver_ABC >::T_Observers::value_type& observer, Subject< ClassObserver_ABC >::observers_ )
         observer->NotifyClass( name, context );
     if( abstractness == "true" )
+    {
         BOOST_FOREACH( Subject< ClassObserver_ABC >::T_Observers::value_type& observer, Subject< ClassObserver_ABC >::observers_ )
             observer->NotifyAbstractness();
+    }
 }

@@ -52,8 +52,10 @@ namespace
         if( unit.empty() )
             return false;
         if( currentUnit != unit )
+        {
             BOOST_FOREACH( const std::string& context, contexts )
                 notify( currentUnit, unit, context );
+        }
         return true;
     }
 }

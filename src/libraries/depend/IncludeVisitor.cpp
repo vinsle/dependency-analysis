@@ -10,10 +10,6 @@
 #include "IncludeVisitor.h"
 #include "IncludeObserver_ABC.h"
 #include <boost/foreach.hpp>
-#pragma warning( push, 0 )
-#pragma warning( disable: 4701 4996 )
-#include <boost/xpressive/xpressive.hpp>
-#pragma warning( pop )
 
 using namespace depend;
 using namespace boost::xpressive;
@@ -53,9 +49,13 @@ void IncludeVisitor::NotifyUncommentedLine( const std::string& line, const std::
     sregex_iterator it( line.begin(), line.end(), rule );
     sregex_iterator end;
     if( it != end )
+    {
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
+        {
             if( !std::string( (*it)[ internal_tag ] ).empty() )
                 observer->NotifyInternalInclude( (*it)[ internal_tag ], context ); // $$$$ _RC_ SLI 2010-08-19: seperate in two different visitors
             else
                 observer->NotifyExternalInclude( (*it)[ external_tag ], context );
+        }
+    }
 }
