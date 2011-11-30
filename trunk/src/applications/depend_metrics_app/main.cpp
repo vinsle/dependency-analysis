@@ -8,11 +8,14 @@
 
 #include "Facade.h"
 #include "application/Version.h"
-#pragma warning( push, 0 )
-#pragma warning( disable: 4512 4996 )
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#   pragma warning( disable: 4512 4996 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
-#pragma warning( pop )
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 #include <iostream>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
@@ -58,8 +61,10 @@ namespace
                   << xml::content( "extend", vm.count( "extend" ) )
                   << xml::start( "filters" );
         if( vm.count( "filter" ) )
+        {
             BOOST_FOREACH( const std::string& filter, vm[ "filter" ].as< std::vector< std::string > >() )
                 *xobs << xml::content( "filter", filter );
+        }
         *xobs   << xml::end
              << xml::end;
         return xobs;
