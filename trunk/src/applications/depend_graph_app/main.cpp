@@ -72,6 +72,7 @@ namespace
     {
         xos << xml::start( option );
         if( vm.count( option ) )
+        {
             BOOST_FOREACH( const std::string& option, vm[ option ].as< std::vector< std::string > >() )
             {
                 std::vector< std::string > buffer;
@@ -83,6 +84,7 @@ namespace
                         << xml::attribute( "value", buffer.at( 1 ) )
                     << xml::end;
             }
+        }
         xos << xml::end;
     }
     void Serialize( xml::xostream& xos, const std::string& node, const std::vector< std::string >& options )
