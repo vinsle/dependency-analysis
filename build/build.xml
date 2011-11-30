@@ -14,6 +14,7 @@
     <target name="depend" description="build library">
         <build-lib name="depend">
             <defineset define="XERCES_STATIC_LIBRARY"/>
+            <compilerarg value="-Wno-deprecated" if="is-gcc"/>
         </build-lib>
     </target>
 
