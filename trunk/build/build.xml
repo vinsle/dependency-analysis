@@ -38,8 +38,8 @@
     <target name="depend_test" depends="depend" description="build and run unit tests">
         <build-test name="depend" depends="boost" libs="depend,xerces-c_static_3">
             <defineset define="XERCES_STATIC_LIBRARY"/>
-            <syslibset libs="advapi32"/>
-            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+            <syslibset libs="advapi32" unless="is-linux"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-test>
     </target>
 
@@ -54,8 +54,8 @@
             <defineset>
                 <define name="XERCES_STATIC_LIBRARY"/>
             </defineset>
-            <syslibset libs="advapi32"/>
-            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+            <syslibset libs="advapi32" unless="is-linux"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
@@ -64,8 +64,8 @@
             <defineset>
                 <define name="XERCES_STATIC_LIBRARY"/>
             </defineset>
-            <syslibset libs="advapi32"/>
-            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+            <syslibset libs="advapi32" unless="is-linux"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
@@ -74,8 +74,8 @@
             <defineset>
                 <define name="XERCES_STATIC_LIBRARY"/>
             </defineset>
-            <syslibset libs="advapi32"/>
-            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+            <syslibset libs="advapi32" unless="is-linux"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
@@ -84,8 +84,8 @@
             <defineset>
                 <define name="XERCES_STATIC_LIBRARY"/>
             </defineset>
-            <syslibset libs="advapi32"/>
-            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+            <syslibset libs="advapi32" unless="is-linux"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
@@ -94,8 +94,8 @@
             <defineset>
                 <define name="XERCES_STATIC_LIBRARY"/>
             </defineset>
-            <syslibset libs="advapi32"/>
-            <linkerarg value="/NODEFAULTLIB:LIBCMT"/>
+            <syslibset libs="advapi32" unless="is-linux"/>
+            <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
