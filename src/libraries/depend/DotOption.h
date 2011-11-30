@@ -10,6 +10,7 @@
 #define depend_DotOption_h
 
 #include <string>
+#include <stdexcept>
 
 namespace depend
 {

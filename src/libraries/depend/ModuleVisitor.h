@@ -10,6 +10,7 @@
 #define depend_ModuleVisitor_h
 
 #include "Subject.h"
+#include <string>
 
 namespace depend
 {

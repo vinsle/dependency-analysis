@@ -73,6 +73,7 @@ namespace
     {
         for( boost::filesystem::directory_iterator it( current ); it != boost::filesystem::directory_iterator(); ++it )
             if( IsValid( *it ) )
+            {
                 if( boost::filesystem::is_directory( *it ) )
                     Visit( root, *it, observers, extensions, context );
                 else
@@ -82,12 +83,13 @@ namespace
                         if( !ifs )
                             throw std::runtime_error( "could not open file '" + it->string() + "'" );
                         const std::string relative = Relative( root, *it );
-                        BOOST_FOREACH( T::value_type& observer, observers )
+                        BOOST_FOREACH( typename T::value_type& observer, observers )
                         {
                             istream_guard guard( ifs );
                             observer->NotifyFile( relative, ifs, context + "/" + relative );
                         }
                     }
+            }
     }
 }
 

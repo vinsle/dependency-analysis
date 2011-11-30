@@ -10,6 +10,8 @@
 #define depend_FileVisitor_h
 
 #include "Subject.h"
+#include <string>
+#include <vector>
 
 namespace xml
 {

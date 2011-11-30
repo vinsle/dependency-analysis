@@ -74,14 +74,18 @@ void UnitDependency::Apply( DependencyVisitor_ABC& visitor ) const
             if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( metric.unit_, include.file_, include.include_ ), include.contexts_ ) )
                 if( !Notify( NotifyExternal, metric.unit_, externalResolver_.Resolve( include.include_ ), include.contexts_ ) )
                     if( !externalResolver_.IsExcluded( include.include_ ) )
+                    {
                         BOOST_FOREACH( const std::string& context, include.contexts_ )
                             log_.Warn( "Warning: include \"" + include.include_ + "\" in unit '" + metric.unit_ + "' cannot be resolved", context );
+                    }
         BOOST_FOREACH( const T_Dependency& include, metric.external_ )
             if( !Notify( NotifyExternal, metric.unit_, externalResolver_.Resolve( include.include_ ), include.contexts_ ) )
                 if( !Notify( NotifyInternal, metric.unit_, internalResolver_.Resolve( metric.unit_, include.file_, include.include_ ), include.contexts_ ) )
                     if( !externalResolver_.IsExcluded( include.include_ ) )
+                    {
                         BOOST_FOREACH( const std::string& context, include.contexts_ )
                             log_.Warn( "Warning: include <" + include.include_ + "> in unit '" + metric.unit_ + "' cannot be resolved", context );
+                    }
     }
 }
 
@@ -114,8 +118,8 @@ namespace
     template< typename T >
     void Insert( T& dependencies, const std::string& include, const std::string& context, const std::string& file )
     {
-        const T::value_type dependency( include, file );
-        T::iterator it = dependencies.find( dependency );
+        const typename T::value_type dependency( include, file );
+        typename T::iterator it = dependencies.find( dependency );
         if( it == dependencies.end() )
             it = dependencies.insert( dependency ).first;
         it->contexts_.push_back( context );

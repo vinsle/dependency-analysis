@@ -10,6 +10,7 @@
 #include "ClassMetric.h"
 #include "ClassMetricVisitor_ABC.h"
 #include <boost/foreach.hpp>
+#include <stdexcept>
 
 using namespace depend;
 
