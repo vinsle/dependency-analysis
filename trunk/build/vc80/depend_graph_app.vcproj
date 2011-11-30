@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
+				AdditionalOptions="/NODEFAULTLIB:LIBCMTD"
 				AdditionalDependencies="advapi32.lib xerces-c_static_3D.lib graph.lib gvc.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;../../lib/vc80"
