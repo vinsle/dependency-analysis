@@ -11,12 +11,19 @@
 
 #include "Filter_ABC.h"
 #include "DependencyVisitor_ABC.h"
-#pragma warning( push, 0 )
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#   pragma warning( disable: 4701 4702 4996 )
+#elif defined __GNUC__
+#   pragma GCC system_header
+#endif
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/labeled_graph.hpp>
 #include <boost/graph/visitors.hpp>
 #include <boost/graph/properties.hpp>
-#pragma warning( pop )
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 #include <vector>
 
 namespace depend

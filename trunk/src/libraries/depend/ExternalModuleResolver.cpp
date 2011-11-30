@@ -10,8 +10,8 @@
 #include "ExternalModuleResolver.h"
 #include "Finder_ABC.h"
 #include "Log_ABC.h"
-#include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 
 using namespace depend;
