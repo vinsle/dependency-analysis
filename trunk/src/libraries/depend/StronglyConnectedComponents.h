@@ -11,10 +11,16 @@
 
 #include "DependencyVisitor_ABC.h"
 #include "Visitable.h"
-#pragma warning( push, 0 )
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#elif defined __GNUC__
+#   pragma GCC system_header
+#endif
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/labeled_graph.hpp>
-#pragma warning( pop )
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 #include <vector>
 
 namespace depend

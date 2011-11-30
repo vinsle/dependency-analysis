@@ -50,8 +50,10 @@ void ModuleDependencyGuard::Apply( DependencyGuardVisitor_ABC& visitor ) const
     BOOST_FOREACH( const T_Modules::value_type& module, obsoletes_ )
         BOOST_FOREACH( const std::string& dependency, module.second )
             if( checked_.find( module.first + dependency ) != checked_.end() )
+            {
                 BOOST_FOREACH( const std::string& context, checked_.find( module.first + dependency )->second )
                     visitor.NotifyObsoleteDependency( module.first, dependency, context );
+            }
 }
 
 // -----------------------------------------------------------------------------

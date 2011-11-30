@@ -11,15 +11,6 @@
 #include "Filter_ABC.h"
 #include "StronglyConnectedComponentsVisitor_ABC.h"
 #include "ComponentVisitor_ABC.h"
-#ifdef _MSC_VER
-#   pragma warning( push, 0 )
-#elif defined __GNUC__
-#   pragma GCC system_header
-#endif
-#include <boost/graph/strong_components.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 #include <boost/foreach.hpp>
 #include <map>
 
@@ -66,13 +57,13 @@ namespace
         typedef std::vector< std::string > T_Dependencies;
         typedef std::map< typename T::key_type, T_Dependencies > T_Components;
         T_Components sorted_components;
-        BOOST_FOREACH( typename const T::value_type& component, components )
+        BOOST_FOREACH( const typename T::value_type& component, components )
         {
             typename U::const_iterator it = labels.find( component.first );
             if( filter.Check( it->second ) )
                 sorted_components[ component.second ].push_back( it->second );
         }
-        BOOST_FOREACH( typename const T_Components::value_type& component, sorted_components )
+        BOOST_FOREACH( const typename T_Components::value_type& component, sorted_components )
             if( component.second.size() > 1 )
                 visitor.NotifyComponent( Component( component.second ) );
     }
@@ -84,7 +75,7 @@ namespace
 // -----------------------------------------------------------------------------
 void StronglyConnectedComponents::Apply( StronglyConnectedComponentsVisitor_ABC& visitor ) const
 {
-    typedef std::map< typename T_Graph::vertex_descriptor, typename T_Graph::vertices_size_type > T_Map;
+    typedef std::map< T_Graph::vertex_descriptor, T_Graph::vertices_size_type > T_Map;
     typedef boost::associative_property_map< T_Map > T_PropertyMap;
     T_Map mymap;
     T_PropertyMap pmap( mymap );

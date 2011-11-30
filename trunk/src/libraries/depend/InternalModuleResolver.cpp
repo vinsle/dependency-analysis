@@ -57,14 +57,20 @@ std::string InternalModuleResolver::Resolve( const std::string& module, const st
     bfs::path fileContext = bfs::path( file ).parent_path();
     bfs::path includePath( include );
     BOOST_FOREACH( const std::string& path, paths_ )
+    {
         if( finder_.Find( ( bfs::path( path ) / module / fileContext / includePath ).string() ) )
             return module;
+    }
     const size_t position = include.find_first_of( '/' );
     const std::string unit = include.substr( 0, position );
     if( position != std::string::npos && units_.find( unit ) != units_.end() )
+    {
         BOOST_FOREACH( const std::string& path, paths_ )
+        {
             if( finder_.Find( ( bfs::path( path ) / includePath ).string() ) )
                 return unit;
+        }
+    }
     return "";
 }
 

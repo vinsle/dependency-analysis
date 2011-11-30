@@ -35,7 +35,7 @@ inline std::istream& operator>>( std::istream& is, DotOption& option )
              s == "external"  ? External :
                                 Both;
     if( option == Both && s != "both" )
-        throw std::bad_cast( std::string( "DotOption '" + s + "' is unknown" ).c_str() );
+        throw std::invalid_argument( std::string( "DotOption '" + s + "' is unknown" ).c_str() );
     return is;
 }
 

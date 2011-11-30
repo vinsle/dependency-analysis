@@ -10,10 +10,6 @@
 #include "UncommentedLineVisitor.h"
 #include "UncommentedLineObserver_ABC.h"
 #include <boost/foreach.hpp>
-#pragma warning( push, 0 )
-#pragma warning( disable: 4701 4996 )
-#include <boost/xpressive/xpressive.hpp>
-#pragma warning( pop )
 
 using namespace depend;
 using namespace boost::xpressive;
@@ -47,6 +43,8 @@ void UncommentedLineVisitor::NotifyLine( const std::string& line, const std::str
     const sregex comment = ( as_xpr( "/*" ) | as_xpr( "//" ) ) >> statement >> eos;
     std::string output = regex_replace( line, comment, "" );
     if( !output.empty() )
+    {
         BOOST_FOREACH( T_Observers::value_type& observer, observers_ )
             observer->NotifyUncommentedLine( output, context );
+    }
 }
