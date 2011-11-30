@@ -10,10 +10,19 @@
 #include "ClassVisitor.h"
 #include "ClassObserver_ABC.h"
 #include <boost/foreach.hpp>
-#pragma warning( push, 0 )
-#pragma warning( disable: 4701 4996 )
+
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#   pragma warning( disable: 4701 4996 )
+#elif defined __GNUC__
+#   pragma GCC system_header
+#endif
+
 #include <boost/xpressive/xpressive.hpp>
-#pragma warning( pop )
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 using namespace depend;
 using namespace boost::xpressive;
@@ -53,7 +62,7 @@ namespace
         sregex_iterator end;
         if( it != end )
         {
-            BOOST_FOREACH( T::value_type& observer, observers )
+            BOOST_FOREACH( typename T::value_type& observer, observers )
                 observer->NotifyClass( (*it)[ class_tag ], context );
             return true;
         }

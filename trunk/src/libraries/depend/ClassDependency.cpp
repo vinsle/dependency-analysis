@@ -10,6 +10,7 @@
 #include "ClassDependency.h"
 #include "DependencyVisitor_ABC.h"
 #include <boost/foreach.hpp>
+#include <stdexcept>
 
 using namespace depend;
 

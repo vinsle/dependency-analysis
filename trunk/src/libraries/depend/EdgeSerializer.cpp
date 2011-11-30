@@ -39,10 +39,10 @@ namespace
     template< typename T, typename U >
     void SerializeDependency( xml::xostream& xos, const std::string& module, const T& dependencies, const Filter_ABC& filter )
     {
-        T::const_iterator it = dependencies.find( module );
+        typename T::const_iterator it = dependencies.find( module );
         if( it == dependencies.end() )
             return;
-        BOOST_FOREACH( const U::value_type& to, it->second )
+        BOOST_FOREACH( typename const U::value_type& to, it->second )
             if( filter.Check( to.first ) )
             {
                 xos << xml::start( "dependency" )

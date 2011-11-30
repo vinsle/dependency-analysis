@@ -51,7 +51,7 @@ namespace
     template< typename T >
     unsigned int Sum( const std::string& module, const T& dependencies )
     {
-        T::const_iterator it = dependencies.find( module );
+        typename T::const_iterator it = dependencies.find( module );
         if( it == dependencies.end() )
             return 0u;
         unsigned int result = 0u;

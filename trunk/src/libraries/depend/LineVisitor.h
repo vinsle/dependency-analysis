@@ -10,6 +10,7 @@
 #define depend_LineVisitor_h
 
 #include "Subject.h"
+#include <istream>
 
 namespace depend
 {
