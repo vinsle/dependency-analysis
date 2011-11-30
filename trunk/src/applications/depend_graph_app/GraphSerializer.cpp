@@ -60,7 +60,7 @@ namespace
     template< typename T, typename U >
     void SetAttributes( const T& options, const U& fun, Agraph_t* graph )
     {
-        BOOST_FOREACH( const T::value_type& option, options )
+        BOOST_FOREACH( const typename T::value_type& option, options )
         {
             Agsym_t* attribute = fun( graph, const_cast< char* >( option.first.c_str() ), const_cast< char* >( option.second.c_str() ) );
             agset( graph, attribute->name, attribute->value );
