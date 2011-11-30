@@ -3,8 +3,13 @@
 
     <property environment="env"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
-
-    <property name="depend.version" value="v0.0"/>
+    
+    <property name="version.company" value="Depend Team"/>
+    <property name="version.product" value="Dependency analysis"/>
+    <property name="version.major" value="0"/>
+    <property name="version.minor" value="0"/>
+    <property name="version.version" value="${version.major}.${version.minor}.${svn.revision}"/>
+    <property name="depend.version" value="v${version.major}.${version.minor}"/>
 
     <!--
     ============================================================================
@@ -38,7 +43,7 @@
     <target name="depend_test" depends="depend" description="build and run unit tests">
         <build-test name="depend" depends="boost" libs="depend,xerces-c_static_3">
             <defineset define="XERCES_STATIC_LIBRARY"/>
-            <syslibset libs="advapi32" unless="is-linux"/>
+            <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-test>
     </target>
@@ -51,50 +56,40 @@
 
     <target name="depend_app" depends="depend,application" description="build application">
         <build-app name="depend_app" pattern="depend" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
-            <defineset>
-                <define name="XERCES_STATIC_LIBRARY"/>
-            </defineset>
-            <syslibset libs="advapi32" unless="is-linux"/>
+            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
     <target name="depend_guard_app" depends="depend,application" description="build application">
         <build-app name="depend_guard_app" pattern="depend_guard" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
-            <defineset>
-                <define name="XERCES_STATIC_LIBRARY"/>
-            </defineset>
-            <syslibset libs="advapi32" unless="is-linux"/>
+            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
     <target name="depend_metrics_app" depends="depend,application" description="build application">
         <build-app name="depend_metrics_app" pattern="depend_metrics" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
-            <defineset>
-                <define name="XERCES_STATIC_LIBRARY"/>
-            </defineset>
-            <syslibset libs="advapi32" unless="is-linux"/>
+            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
     <target name="depend_components_app" depends="depend,application" description="build application">
         <build-app name="depend_components_app" pattern="depend_components" depends="boost" libs="depend,application,xerces-c_static_3" subsystem="console">
-            <defineset>
-                <define name="XERCES_STATIC_LIBRARY"/>
-            </defineset>
-            <syslibset libs="advapi32" unless="is-linux"/>
+            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
 
     <target name="depend_graph_app" depends="depend,application" description="build application">
         <build-app name="depend_graph_app" pattern="depend_graph" depends="boost" libs="depend,application,gvc,graph,xerces-c_static_3" subsystem="console">
-            <defineset>
-                <define name="XERCES_STATIC_LIBRARY"/>
-            </defineset>
-            <syslibset libs="advapi32" unless="is-linux"/>
+            <defineset defines="XERCES_STATIC_LIBRARY"/>
+            <syslibset libs="advapi32" if="is-msvc"/>
             <linkerarg value="/NODEFAULTLIB:LIBCMT" if="is-msvc"/>
         </build-app>
     </target>
