@@ -9,6 +9,7 @@
 #include "depend_pch.h"
 #include "ModuleVisitor.h"
 #include "UnitObserver_ABC.h"
+#include "Log_ABC.h"
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
@@ -19,7 +20,8 @@ using namespace depend;
 // Name: ModuleVisitor constructor
 // Created: SLI 2010-08-17
 // -----------------------------------------------------------------------------
-ModuleVisitor::ModuleVisitor()
+ModuleVisitor::ModuleVisitor( Log_ABC& log )
+    : log_( log )
 {
     // NOTHING
 }
@@ -61,6 +63,6 @@ void ModuleVisitor::Visit( const std::string& filename, const std::string& conte
     }
     catch( boost::filesystem::basic_filesystem_error< boost::filesystem::path > e )
     {
-        throw std::runtime_error( "Cannot visit module '" + filename + "'" );
+        log_.Warn( "Cannot visit module", filename );
     }
 }

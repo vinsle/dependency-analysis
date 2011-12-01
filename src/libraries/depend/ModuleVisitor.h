@@ -15,6 +15,7 @@
 namespace depend
 {
     class UnitObserver_ABC;
+    class Log_ABC;
 
 // =============================================================================
 /** @class  ModuleVisitor
@@ -27,13 +28,19 @@ class ModuleVisitor : public Subject< UnitObserver_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ModuleVisitor();
+    explicit ModuleVisitor( Log_ABC& log );
     virtual ~ModuleVisitor();
     //@}
 
     //! @name Operations
     //@{
     void Visit( const std::string& filename, const std::string& context );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Log_ABC& log_;
     //@}
 };
 
