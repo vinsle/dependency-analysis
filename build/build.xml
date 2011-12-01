@@ -3,7 +3,7 @@
 
     <property environment="env"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
-    
+
     <property name="version.company" value="Depend Team"/>
     <property name="version.product" value="Dependency analysis"/>
     <property name="version.major" value="0"/>
@@ -16,6 +16,7 @@
       libraries
     ============================================================================
     -->
+
     <target name="depend" description="build library">
         <build-lib name="depend">
             <defineset define="XERCES_STATIC_LIBRARY"/>
@@ -108,6 +109,7 @@
       package
     ============================================================================
     -->
+
     <target name="documentation" description="generate depend documentation">
         <doxygen-report name="depend" input="${libraries.dir}/depend">
             <property name="FILE_PATTERNS"          value="*.h"/>
