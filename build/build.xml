@@ -95,7 +95,7 @@
     </target>
 
     <target name="depend_graph_app" depends="depend,application" description="build application">
-        <build-app name="depend_graph_app" pattern="depend_graph" depends="boost" libs="depend,application,gvc,graph,xerces-c_static_3" subsystem="console">
+        <build-app name="depend_graph_app" pattern="depend_graph" depends="boost,graphviz" libs="depend,application,xerces-c_static_3" subsystem="console">
             <defineset define="XERCES_STATIC_LIBRARY"/>
             <compilerarg value="-Wno-deprecated" if="is-gcc"/>
             <syslibset libs="advapi32" if="is-msvc"/>
