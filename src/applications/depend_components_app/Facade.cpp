@@ -90,8 +90,8 @@ namespace
             if( warning_ )
                 std::cout << " - " << unit << std::endl;
         }
-        unsigned int components_;
         bool warning_;
+        unsigned int components_;
     };
 }
 
