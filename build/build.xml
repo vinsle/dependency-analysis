@@ -11,6 +11,10 @@
     <property name="version.version" value="${version.major}.${version.minor}.${svn.revision}"/>
     <property name="depend.version" value="v${version.major}.${version.minor}"/>
 
+    <condition property="exe" value=".exe" else="">
+        <os family="windows"/>
+    </condition>
+
     <!--
     ============================================================================
       libraries
@@ -129,11 +133,11 @@
     <target name="package" depends="build,test,documentation" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/depend_${depend.version}.zip">
-            <fileset file="${out.dir}/release/applications/depend_app/depend.exe"/>
-            <fileset file="${out.dir}/release/applications/depend_guard_app/depend_guard.exe"/>
-            <fileset file="${out.dir}/release/applications/depend_metrics_app/depend_metrics.exe"/>
-            <fileset file="${out.dir}/release/applications/depend_components_app/depend_components.exe"/>
-            <fileset file="${out.dir}/release/applications/depend_graph_app/depend_graph.exe"/>
+            <fileset file="${out.dir}/release/applications/depend_app/depend${exe}"/>
+            <fileset file="${out.dir}/release/applications/depend_guard_app/depend_guard${exe}"/>
+            <fileset file="${out.dir}/release/applications/depend_metrics_app/depend_metrics${exe}"/>
+            <fileset file="${out.dir}/release/applications/depend_components_app/depend_components${exe}"/>
+            <fileset file="${out.dir}/release/applications/depend_graph_app/depend_graph${exe}"/>
             <fileset file="${root.dir}/*.txt"/>
         </zip>
         <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
@@ -149,7 +153,7 @@
 
     <macrodef name="dependency-analysis">
         <sequential>
-            <exec taskname="depend" executable="${out.dir}/release/applications/depend_app/depend.exe" dir="${run.dir}" failonerror="true">
+            <exec taskname="depend" executable="${out.dir}/release/applications/depend_app/depend" dir="${run.dir}" failonerror="true">
                 <arg value="--output=${reports.dir}/depend.xml"/>
                 <arg value="${libraries.dir}"/>
                 <arg value="${applications.dir}"/>
@@ -163,7 +167,7 @@
     <macrodef name="dependency-guard">
         <attribute name="dependencies"/>
         <sequential>
-            <exec taskname="depend_guard" executable="${out.dir}/release/applications/depend_guard_app/depend_guard.exe" failonerror="true">
+            <exec taskname="depend_guard" executable="${out.dir}/release/applications/depend_guard_app/depend_guard" failonerror="true">
                 <arg value="--dependencies=@{dependencies}"/>
                 <arg value="--graph=${reports.dir}/depend.xml"/>
             </exec>
@@ -172,7 +176,7 @@
 
     <macrodef name="dependency-metrics">
         <sequential>
-            <exec taskname="depend_metrics" executable="${out.dir}/release/applications/depend_metrics_app/depend_metrics.exe" failonerror="true">
+            <exec taskname="depend_metrics" executable="${out.dir}/release/applications/depend_metrics_app/depend_metrics" failonerror="true">
                 <arg value="--graph=${reports.dir}/depend.xml"/>
                 <arg value="--output=${reports.dir}/depend-metrics.xml"/>
             </exec>
@@ -181,7 +185,7 @@
 
     <macrodef name="dependency-components">
         <sequential>
-            <exec taskname="depend_components" executable="${out.dir}/release/applications/depend_components_app/depend_components.exe" failonerror="true">
+            <exec taskname="depend_components" executable="${out.dir}/release/applications/depend_components_app/depend_components" failonerror="true">
                 <arg value="--graph=${reports.dir}/depend.xml"/>
                 <arg value="--output=${reports.dir}/depend-components.xml"/>
             </exec>
@@ -190,7 +194,7 @@
 
     <macrodef name="dependency-graph">
         <sequential>
-            <exec taskname="depend_graph" executable="${out.dir}/release/applications/depend_graph_app/depend_graph.exe" dir="${run.dir}" failonerror="true">
+            <exec taskname="depend_graph" executable="${out.dir}/release/applications/depend_graph_app/depend_graph" dir="${run.dir}" failonerror="true">
                 <arg value="--output=${reports.dir}/graph.png"/>
                 <arg value="${reports.dir}/depend.xml"/>
             </exec>
