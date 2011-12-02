@@ -15,6 +15,9 @@
         <os family="windows"/>
     </condition>
 
+    <condition property="package" value="windows" else="linux">
+        <os family="windows"/>
+    </condition>
     <!--
     ============================================================================
       libraries
@@ -132,7 +135,7 @@
 
     <target name="package" depends="build,test,documentation" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/depend_${depend.version}.zip">
+        <zip destfile="${dist.dir}/depend_${package}_${depend.version}.zip">
             <fileset file="${out.dir}/release/applications/depend_app/depend${exe}"/>
             <fileset file="${out.dir}/release/applications/depend_guard_app/depend_guard${exe}"/>
             <fileset file="${out.dir}/release/applications/depend_metrics_app/depend_metrics${exe}"/>
