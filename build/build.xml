@@ -143,7 +143,7 @@
             <fileset file="${out.dir}/release/applications/depend_graph_app/depend_graph${exe}"/>
             <fileset file="${root.dir}/*.txt"/>
         </zip>
-        <zip destfile="${dist.dir}/documentation_${depend.version}.zip">
+        <zip destfile="${dist.dir}/documentation_${package}_${depend.version}.zip">
             <fileset dir="${doc.dir}"/>
         </zip>
     </target>
