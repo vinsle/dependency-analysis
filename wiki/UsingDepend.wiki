@@ -54,7 +54,3 @@ It produces an xml like this:
   </classes>
 </graph>
 }}}
-
-Another exemple on a project using Qt (with special include directories and Qt moc objects generated and included in code):
-
-{{{depend.exe --output=depend.xml --path=src/libraries --path=src/applications --path=out/release/applications --path=out/release/libraries --include=include --include="include/qt,Qt" --exclude="$VSINSTALLDIR}/VC/include" --exclude="$VSINSTALLDIR}/VC/PlatformSDK/Include" --warning}}}
