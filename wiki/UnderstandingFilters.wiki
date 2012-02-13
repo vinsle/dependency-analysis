@@ -14,15 +14,22 @@ Many filters can be added:
 
 {{{application --filter=module1 --filter=module2}}}.
 
-
 == Extend option ==
 
 = Example =
 
+== All the modules ==
+
 http://lh4.googleusercontent.com/_zeWn5qPueCk/TaXdRadtNVI/AAAAAAAADjA/3PYz39TkSiU/entire.png
+
+== Filter ==
 
 http://lh6.googleusercontent.com/_zeWn5qPueCk/TaXdRJ4Eg-I/AAAAAAAADi8/sj3V6lRSRVM/filter.png
 
+== Filtered ==
+
 https://lh4.googleusercontent.com/_zeWn5qPueCk/Taa_6Y8EeLI/AAAAAAAADjg/mQGW6p0-A0A/filtered.png
+
+== Extended ==
 
 https://lh6.googleusercontent.com/_zeWn5qPueCk/TaXj4IOQcbI/AAAAAAAADjQ/iNEPBILxHLc/extend.png
