@@ -1,5 +1,7 @@
 #summary Explains how to use depend_graph.
 
+<font color='red'>/!\ *Important* /!\</font>: Graphviz <font color='red'>*must*</font> be installed before using *Depend Graph*.
+
 = Introduction =
 
 *Depend Graph* is a tool made for graph generation using [http://www.graphviz.org GraphViz]. Each module is represented as a node and an edge represents a module dependency to another module.
@@ -13,8 +15,6 @@ Node coloration depends on distance value, from <font color='red'>*Red*</font> w
 All strongly connected components (or [UsingDependComponents circular dependencies]) are represented with the same color on edge.
 
 Default Graphviz layout can be totally overridden using proper command line parameters (*layout*, *graph*, *node*, *edge*).
-
-<font color='red'>*Important*</font>: Graphviz <font color='red'>*must*</font> be installed before using *Depend Graph*.
 
 = Command line parameters =
 
