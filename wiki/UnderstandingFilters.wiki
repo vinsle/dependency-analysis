@@ -4,6 +4,10 @@
 
 *Filter* and *Extend* options can be used to focus analysis on one (or more) module and its dependencies.
 
+The applications using *Filter* and *Extend* options are:
+ * depend_metrics
+ * depend_graph
+
 == Filter option ==
 
 Calling filter option with a module name will define this module as a _root_ module, which is automatically added. Direct afferent and efferent dependencies of this (these) root(s) module(s) are also selected.
@@ -20,11 +24,64 @@ Many filters can be added:
 
 == All the modules ==
 
+{{{
+<nodes>
+  <node name="filtered">
+    <efferent-dependencies/>
+    <external-dependencies/>
+  </node>
+  <node name="afferent-transitive-dependency">
+    <efferent-dependencies>
+      <dependency name="afferent-dependency"/>
+        <context/>
+      </dependency>
+    </efferent-dependencies>
+    <external-dependencies/>
+  </node>
+  <node name="afferent-dependency">
+    <efferent-dependencies>
+      <dependency name="center"/>
+        <context/>
+      </dependency>
+    </efferent-dependencies>
+    <external-dependencies/>
+  </node>
+  <node name="center">
+    <efferent-dependencies>
+      <dependency name="efferent-dependency"/>
+        <context/>
+      </dependency>
+    </efferent-dependencies>
+    <external-dependencies/>
+  </node>
+  <node name="efferent-dependency">
+    <efferent-dependencies>
+      <dependency name="efferent-transitive-dependency"/>
+        <context/>
+      </dependency>
+    </efferent-dependencies>
+    <external-dependencies/>
+  </node>
+  <node name="efferent-transitive-dependency">
+    <efferent-dependencies/>
+    <external-dependencies/>
+  </node>
+</nodes>
+}}}
+
 http://lh4.googleusercontent.com/_zeWn5qPueCk/TaXdRadtNVI/AAAAAAAADjA/3PYz39TkSiU/entire.png
+
+This graph was rendered using the following command line:
+
+{{{depend_graph dependencies.xml}}}
 
 == Filter ==
 
 http://lh6.googleusercontent.com/_zeWn5qPueCk/TaXdRJ4Eg-I/AAAAAAAADi8/sj3V6lRSRVM/filter.png
+
+This graph was rendered using the following command line:
+
+{{{depend_graph dependencies.xml --filter=center}}}
 
 == Filtered ==
 
