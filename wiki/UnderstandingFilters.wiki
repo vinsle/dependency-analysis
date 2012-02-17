@@ -81,12 +81,18 @@ http://lh6.googleusercontent.com/_zeWn5qPueCk/TaXdRJ4Eg-I/AAAAAAAADi8/sj3V6lRSRV
 
 This graph was rendered using the following command line:
 
-{{{depend_graph dependencies.xml --filter=center}}}
-
-== Filtered ==
+{{{depend_graph --output=all_nodes.png dependencies.xml --filter=center}}}
 
 https://lh4.googleusercontent.com/_zeWn5qPueCk/Taa_6Y8EeLI/AAAAAAAADjg/mQGW6p0-A0A/filtered.png
+
+And this one was rendered using the following command line:
+
+{{{depend_graph --output=all_nodes.png dependencies.xml --filter=filtered}}}
 
 == Extended ==
 
 https://lh6.googleusercontent.com/_zeWn5qPueCk/TaXj4IOQcbI/AAAAAAAADjQ/iNEPBILxHLc/extend.png
+
+This graph was rendered using the following command line:
+
+{{{depend_graph --output=all_nodes.png dependencies.xml --filter=center}}}
