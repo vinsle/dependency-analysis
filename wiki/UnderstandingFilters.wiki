@@ -32,32 +32,32 @@ Many filters can be added:
   </node>
   <node name="afferent-transitive-dependency">
     <efferent-dependencies>
-      <dependency name="afferent-dependency"/>
-        <context/>
+      <dependency name="afferent-dependency">
+        <context>context</context>
       </dependency>
     </efferent-dependencies>
     <external-dependencies/>
   </node>
   <node name="afferent-dependency">
     <efferent-dependencies>
-      <dependency name="center"/>
-        <context/>
+      <dependency name="center">
+        <context>context</context>
       </dependency>
     </efferent-dependencies>
     <external-dependencies/>
   </node>
   <node name="center">
     <efferent-dependencies>
-      <dependency name="efferent-dependency"/>
-        <context/>
+      <dependency name="efferent-dependency">
+        <context>context</context>
       </dependency>
     </efferent-dependencies>
     <external-dependencies/>
   </node>
   <node name="efferent-dependency">
     <efferent-dependencies>
-      <dependency name="efferent-transitive-dependency"/>
-        <context/>
+      <dependency name="efferent-transitive-dependency">
+        <context>context</context>
       </dependency>
     </efferent-dependencies>
     <external-dependencies/>
@@ -73,7 +73,7 @@ http://lh4.googleusercontent.com/_zeWn5qPueCk/TaXdRadtNVI/AAAAAAAADjA/3PYz39TkSi
 
 This graph was rendered using the following command line:
 
-{{{depend_graph dependencies.xml}}}
+{{{depend_graph --output=all_nodes.png dependencies.xml}}}
 
 == Filter ==
 
