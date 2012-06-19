@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|Win32">
+      <Configuration>debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|Win32">
+      <Configuration>release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{02EED1A3-A91E-40CD-ADB3-F69394CF8C84}</ProjectGuid>
+    <RootNamespace>depend</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectName)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../src/libraries;../../include;$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;XERCES_STATIC_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>depend_pch.h</PrecompiledHeaderFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>../../src/libraries;../../include;$(TargetDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;XERCES_STATIC_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>depend_pch.h</PrecompiledHeaderFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\depend\depend_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">depend_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='release|Win32'">depend_pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\Filter.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\Finder.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\Log.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\TransitiveReductionFilter.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ClassVisitor.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\FileVisitor.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\IncludeVisitor.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\LineVisitor.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ModuleVisitor.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\UncommentedLineVisitor.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\UnitCache.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ClassDependency.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ClassLoader.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ClassMetric.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ModuleDependencyGuard.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\UnitDependency.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\UnitDependencyLoader.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\UnitMetrics.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ClassSerializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\DotSerializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\EdgeSerializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ExternalSerializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\MetricSerializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\UnitSerializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ExternalModuleResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\InternalModuleResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\ProxyModuleResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\StronglyConnectedComponents.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\StronglyConnectedComponentsSerializer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\depend\depend_pch.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Filter.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Filter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Finder.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Finder_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\istream_guard.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Log.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Log_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Observer.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Subject.h" />
+    <ClInclude Include="..\..\src\libraries\depend\TransitiveReductionFilter.h" />
+    <ClInclude Include="..\..\src\libraries\depend\Visitable.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ClassObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ClassVisitor.h" />
+    <ClInclude Include="..\..\src\libraries\depend\FileObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\FileVisitor.h" />
+    <ClInclude Include="..\..\src\libraries\depend\IncludeObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\IncludeVisitor.h" />
+    <ClInclude Include="..\..\src\libraries\depend\LineObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\LineVisitor.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ModuleVisitor.h" />
+    <ClInclude Include="..\..\src\libraries\depend\UncommentedLineObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\UncommentedLineVisitor.h" />
+    <ClInclude Include="..\..\src\libraries\depend\UnitCache.h" />
+    <ClInclude Include="..\..\src\libraries\depend\UnitObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ClassDependency.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ClassLoader.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ClassMetric.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ClassMetricVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\DependencyGuardVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\DependencyVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\MetricsVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ModuleDependencyGuard.h" />
+    <ClInclude Include="..\..\src\libraries\depend\UnitDependency.h" />
+    <ClInclude Include="..\..\src\libraries\depend\UnitDependencyLoader.h" />
+    <ClInclude Include="..\..\src\libraries\depend\UnitMetrics.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ClassSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\depend\DotOption.h" />
+    <ClInclude Include="..\..\src\libraries\depend\DotSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\depend\EdgeSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ExternalSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\depend\MetricSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\depend\UnitSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ExternalModuleResolver.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ExternalModuleResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\InternalModuleResolver.h" />
+    <ClInclude Include="..\..\src\libraries\depend\InternalModuleResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ProxyModuleResolver.h" />
+    <ClInclude Include="..\..\src\libraries\depend\ComponentVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\StronglyConnectedComponents.h" />
+    <ClInclude Include="..\..\src\libraries\depend\StronglyConnectedComponentsSerializer.h" />
+    <ClInclude Include="..\..\src\libraries\depend\StronglyConnectedComponentsVisitor_ABC.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
