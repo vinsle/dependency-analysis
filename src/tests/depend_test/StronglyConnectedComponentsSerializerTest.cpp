@@ -22,7 +22,7 @@ namespace
         Fixture()
             : visitor( 0 )
         {
-            MOCK_EXPECT( components, Apply ).once().with( mock::retrieve( visitor ) );
+            MOCK_EXPECT( components.Apply ).once().with( mock::retrieve( visitor ) );
         }
         MockVisitable< StronglyConnectedComponentsVisitor_ABC > components;
         StronglyConnectedComponentsVisitor_ABC* visitor;
@@ -60,7 +60,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_component_serialization, ComponentFixture )
 {
     MockVisitable< ComponentVisitor_ABC > component;
-    MOCK_EXPECT( component, Apply ).once().with( &NotifyUnits );
+    MOCK_EXPECT( component.Apply ).once().with( &NotifyUnits );
     visitor->NotifyComponent( component );
     const std::string expected = 
         "<strongly-connected-components>"

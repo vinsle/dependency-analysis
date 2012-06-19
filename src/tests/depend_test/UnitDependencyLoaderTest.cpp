@@ -44,9 +44,9 @@ BOOST_AUTO_TEST_CASE( loader_parse_dependency_xml_and_notifies_visitor )
     UnitDependencyLoader loader( xis );
     MockDependencyVisitor visitor;
     mock::sequence s;
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().in( s ).with( "from", "to", "context1" );
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().in( s ).with( "from", "to", "context2" );
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().in( s ).with( "from", "external", "context3" );
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().in( s ).with( "to", "from", "context4" );
+    MOCK_EXPECT( visitor.NotifyInternalDependency ).once().in( s ).with( "from", "to", "context1" );
+    MOCK_EXPECT( visitor.NotifyInternalDependency ).once().in( s ).with( "from", "to", "context2" );
+    MOCK_EXPECT( visitor.NotifyExternalDependency ).once().in( s ).with( "from", "external", "context3" );
+    MOCK_EXPECT( visitor.NotifyInternalDependency ).once().in( s ).with( "to", "from", "context4" );
     loader.Apply( visitor );
 }

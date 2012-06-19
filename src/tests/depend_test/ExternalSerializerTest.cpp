@@ -18,11 +18,11 @@ BOOST_AUTO_TEST_CASE( simple_external_serialization )
 {
     MockVisitable< DependencyVisitor_ABC > dependency;
     DependencyVisitor_ABC* visitor = 0;
-    MOCK_EXPECT( dependency, Apply ).once().with( mock::retrieve( visitor ) );
+    MOCK_EXPECT( dependency.Apply ).once().with( mock::retrieve( visitor ) );
     MockFilter filter;
     ExternalSerializer serializer( dependency, filter );
     BOOST_REQUIRE( visitor );
-    MOCK_EXPECT( filter, Check ).once().with( "from" ).returns( true );
+    MOCK_EXPECT( filter.Check ).once().with( "from" ).returns( true );
     visitor->NotifyExternalDependency( "from", "external", "context" );
     xml::xostringstream xos;
     serializer.Serialize( xos );
@@ -37,13 +37,13 @@ BOOST_AUTO_TEST_CASE( external_serialization_can_be_filtered )
 {
     MockVisitable< DependencyVisitor_ABC > dependency;
     DependencyVisitor_ABC* visitor = 0;
-    MOCK_EXPECT( dependency, Apply ).once().with( mock::retrieve( visitor ) );
+    MOCK_EXPECT( dependency.Apply ).once().with( mock::retrieve( visitor ) );
     MockFilter filter;
     ExternalSerializer serializer( dependency, filter );
     BOOST_REQUIRE( visitor );
-    MOCK_EXPECT( filter, Check ).once().with( "from" ).returns( true );
+    MOCK_EXPECT( filter.Check ).once().with( "from" ).returns( true );
     visitor->NotifyExternalDependency( "from", "external", "context" );
-    MOCK_EXPECT( filter, Check ).once().with( "filtered" ).returns( false );
+    MOCK_EXPECT( filter.Check ).once().with( "filtered" ).returns( false );
     visitor->NotifyExternalDependency( "filtered", "unused", "context" );
     xml::xostringstream xos;
     serializer.Serialize( xos );

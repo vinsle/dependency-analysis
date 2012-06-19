@@ -18,15 +18,15 @@ BOOST_AUTO_TEST_CASE( simple_unit_serialization )
 {
     MockSubject< UnitObserver_ABC > mockSubject;
     UnitObserver_ABC* observer = 0;
-    MOCK_EXPECT( mockSubject, Register ).once().with( mock::retrieve( observer ) );
-    MOCK_EXPECT( mockSubject, Unregister ).once();
+    MOCK_EXPECT( mockSubject.Register ).once().with( mock::retrieve( observer ) );
+    MOCK_EXPECT( mockSubject.Unregister ).once();
     UnitSerializer serializer( mockSubject );
     BOOST_REQUIRE( observer );
     observer->NotifyUnit( "unit", "context" );
     xml::xostringstream xos;
     MockFilter filter;
-    MOCK_EXPECT( filter, Check ).returns( true );
-    MOCK_EXPECT( filter, CheckCore ).returns( true );
+    MOCK_EXPECT( filter.Check ).returns( true );
+    MOCK_EXPECT( filter.CheckCore ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<units>"
@@ -39,17 +39,17 @@ BOOST_AUTO_TEST_CASE( unit_serialization_can_be_filtered )
 {
     MockSubject< UnitObserver_ABC > mockSubject;
     UnitObserver_ABC* observer = 0;
-    MOCK_EXPECT( mockSubject, Register ).once().with( mock::retrieve( observer ) );
-    MOCK_EXPECT( mockSubject, Unregister ).once();
+    MOCK_EXPECT( mockSubject.Register ).once().with( mock::retrieve( observer ) );
+    MOCK_EXPECT( mockSubject.Unregister ).once();
     UnitSerializer serializer( mockSubject );
     BOOST_REQUIRE( observer );
     observer->NotifyUnit( "unit1", "context" );
     observer->NotifyUnit( "unit2", "context" );
     xml::xostringstream xos;
     MockFilter filter;
-    MOCK_EXPECT( filter, Check ).once().with( "unit1" ).returns( true );
-    MOCK_EXPECT( filter, CheckCore ).once().with( "unit1" ).returns( false );
-    MOCK_EXPECT( filter, Check ).returns( false );
+    MOCK_EXPECT( filter.Check ).once().with( "unit1" ).returns( true );
+    MOCK_EXPECT( filter.CheckCore ).once().with( "unit1" ).returns( false );
+    MOCK_EXPECT( filter.Check ).returns( false );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<units>"

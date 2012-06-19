@@ -21,8 +21,8 @@ namespace
         Fixture()
             : lineObserver( 0 )
         {
-            MOCK_EXPECT( mockVisitor, Register ).once().with( mock::retrieve( lineObserver ) );
-            MOCK_EXPECT( mockVisitor, Unregister ).once();
+            MOCK_EXPECT( mockVisitor.Register ).once().with( mock::retrieve( lineObserver ) );
+            MOCK_EXPECT( mockVisitor.Unregister ).once();
         }
         UncommentedLineObserver_ABC* lineObserver;
         MockSubject< UncommentedLineObserver_ABC > mockVisitor;
@@ -52,18 +52,18 @@ BOOST_FIXTURE_TEST_CASE( include_visitor_does_not_notify_listeners_on_empty_line
 
 BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_listeners_with_filename, IncludeFixture )
 {
-    MOCK_EXPECT( includeObserver, NotifyInternalInclude ).once().with( "test", "context" );
+    MOCK_EXPECT( includeObserver.NotifyInternalInclude ).once().with( "test", "context" );
     lineObserver->NotifyUncommentedLine( "#include \"test\"", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( include_visitor_notifies_with_external_include, IncludeFixture )
 {
-    MOCK_EXPECT( includeObserver, NotifyExternalInclude ).once().with( "test", "context" );
+    MOCK_EXPECT( includeObserver.NotifyExternalInclude ).once().with( "test", "context" );
     lineObserver->NotifyUncommentedLine( "#include <test>", "context" );
 }
 
 BOOST_FIXTURE_TEST_CASE( regular_expression_handles_spaces, IncludeFixture )
 {
-    MOCK_EXPECT( includeObserver, NotifyInternalInclude ).once().with( "test", "context" );
+    MOCK_EXPECT( includeObserver.NotifyInternalInclude ).once().with( "test", "context" );
     lineObserver->NotifyUncommentedLine( "  #  include \t  \"test\"  ", "context" );
 }

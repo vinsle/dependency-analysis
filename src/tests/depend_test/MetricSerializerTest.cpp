@@ -22,7 +22,7 @@ namespace
         Fixture()
             : metricsVisitor( 0 )
         {
-            MOCK_EXPECT( metrics, Apply ).once().with( mock::retrieve( metricsVisitor ) );
+            MOCK_EXPECT( metrics.Apply ).once().with( mock::retrieve( metricsVisitor ) );
         }
         MockVisitable< MetricsVisitor_ABC > metrics;
         MetricsVisitor_ABC* metricsVisitor;
@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_metrics_in_xml, SerializeFixture )
 {
     metricsVisitor->NotifyMetrics( "module1", 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u );
     xml::xostringstream xos;
-    MOCK_EXPECT( filter, Check ).returns( true );
+    MOCK_EXPECT( filter.Check ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<metrics>"
@@ -68,9 +68,9 @@ BOOST_FIXTURE_TEST_CASE( serialize_metrics_with_module_filter, SerializeFixture 
     metricsVisitor->NotifyMetrics( "module2", 21u, 22u, 23u, 24u, 25u, 26u, 27u, 28u );
     metricsVisitor->NotifyMetrics( "module3", 31u, 32u, 33u, 34u, 35u, 36u, 37u, 38u );
     xml::xostringstream xos;
-    MOCK_EXPECT( filter, Check ).with( "module1" ).returns( true );
-    MOCK_EXPECT( filter, Check ).with( "module2" ).returns( true );
-    MOCK_EXPECT( filter, Check ).returns( false );
+    MOCK_EXPECT( filter.Check ).with( "module1" ).returns( true );
+    MOCK_EXPECT( filter.Check ).with( "module2" ).returns( true );
+    MOCK_EXPECT( filter.Check ).returns( false );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<metrics>"

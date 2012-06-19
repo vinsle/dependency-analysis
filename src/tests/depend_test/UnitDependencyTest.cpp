@@ -27,12 +27,12 @@ namespace
             , fileObserver   ( 0 )
             , includeObserver( 0 )
         {
-            MOCK_EXPECT( mockUnitObserver, Register ).once().with( mock::retrieve( unitObserver ) );
-            MOCK_EXPECT( mockUnitObserver, Unregister ).once();
-            MOCK_EXPECT( mockFileVisitor, Register ).once().with( mock::retrieve( fileObserver ) );
-            MOCK_EXPECT( mockFileVisitor, Unregister ).once();
-            MOCK_EXPECT( mockIncludeVisitor, Register ).once().with( mock::retrieve( includeObserver ) );
-            MOCK_EXPECT( mockIncludeVisitor, Unregister ).once();
+            MOCK_EXPECT( mockUnitObserver.Register ).once().with( mock::retrieve( unitObserver ) );
+            MOCK_EXPECT( mockUnitObserver.Unregister ).once();
+            MOCK_EXPECT( mockFileVisitor.Register ).once().with( mock::retrieve( fileObserver ) );
+            MOCK_EXPECT( mockFileVisitor.Unregister ).once();
+            MOCK_EXPECT( mockIncludeVisitor.Register ).once().with( mock::retrieve( includeObserver ) );
+            MOCK_EXPECT( mockIncludeVisitor.Unregister ).once();
         }
         UnitObserver_ABC* unitObserver;
         FileObserver_ABC* fileObserver;
@@ -65,10 +65,10 @@ BOOST_FIXTURE_TEST_CASE( external_dependencies_are_notified, MetricFixture )
     includeObserver->NotifyExternalInclude( "include1", "include context1" );
     includeObserver->NotifyExternalInclude( "include2", "include context2" );
     MockDependencyVisitor visitor;
-    MOCK_EXPECT( externalResolver, Resolve ).once().with( "include1" ).returns( "external" );
-    MOCK_EXPECT( externalResolver, Resolve ).once().with( "include2" ).returns( "external2" );
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "external", "include context1" );
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "external2", "include context2" );
+    MOCK_EXPECT( externalResolver.Resolve ).once().with( "include1" ).returns( "external" );
+    MOCK_EXPECT( externalResolver.Resolve ).once().with( "include2" ).returns( "external2" );
+    MOCK_EXPECT( visitor.NotifyExternalDependency ).once().with( "module", "external", "include context1" );
+    MOCK_EXPECT( visitor.NotifyExternalDependency ).once().with( "module", "external2", "include context2" );
     metric.Apply( visitor );
 }
 
@@ -78,9 +78,9 @@ BOOST_FIXTURE_TEST_CASE( all_external_dependencies_contexts_are_forwarded, Metri
     includeObserver->NotifyExternalInclude( "include", "include context1" );
     includeObserver->NotifyExternalInclude( "include", "include context2" );
     MockDependencyVisitor visitor;
-    MOCK_EXPECT( externalResolver, Resolve ).once().with( "include" ).returns( "external" );
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "external", "include context1" );
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "external", "include context2" );
+    MOCK_EXPECT( externalResolver.Resolve ).once().with( "include" ).returns( "external" );
+    MOCK_EXPECT( visitor.NotifyExternalDependency ).once().with( "module", "external", "include context1" );
+    MOCK_EXPECT( visitor.NotifyExternalDependency ).once().with( "module", "external", "include context2" );
     metric.Apply( visitor );
 }
 
@@ -91,7 +91,7 @@ BOOST_FIXTURE_TEST_CASE( internal_include_begining_with_module_itself_does_not_c
     includeObserver->NotifyInternalInclude( "module/internal", "include context" );
     MockDependencyVisitor visitor;
     mock::sequence s;
-    MOCK_EXPECT( internalResolver, Resolve ).once().in( s ).with( "module", "file", "module/internal" ).returns( "module" );
+    MOCK_EXPECT( internalResolver.Resolve ).once().in( s ).with( "module", "file", "module/internal" ).returns( "module" );
     metric.Apply( visitor );
 }
 
@@ -102,9 +102,9 @@ BOOST_FIXTURE_TEST_CASE( internal_include_can_be_an_external_dependency, MetricF
     includeObserver->NotifyInternalInclude( "other/internal", "include context" );
     MockDependencyVisitor visitor;
     mock::sequence s;
-    MOCK_EXPECT( internalResolver, Resolve ).once().in( s ).with( "module", "file", "other/internal" ).returns( "" );
-    MOCK_EXPECT( externalResolver, Resolve ).once().in( s ).with( "other/internal" ).returns( "other" );
-    MOCK_EXPECT( visitor, NotifyExternalDependency ).once().with( "module", "other", "include context" );
+    MOCK_EXPECT( internalResolver.Resolve ).once().in( s ).with( "module", "file", "other/internal" ).returns( "" );
+    MOCK_EXPECT( externalResolver.Resolve ).once().in( s ).with( "other/internal" ).returns( "other" );
+    MOCK_EXPECT( visitor.NotifyExternalDependency ).once().with( "module", "other", "include context" );
     metric.Apply( visitor );
 }
 
@@ -116,9 +116,9 @@ BOOST_FIXTURE_TEST_CASE( external_include_can_be_an_internal_dependency, MetricF
     unitObserver->NotifyUnit( "module2", "module context2" );
     fileObserver->NotifyFile( "file2", is, "file context2" );
     MockDependencyVisitor visitor;
-    MOCK_EXPECT( externalResolver, Resolve ).once().with( "module2/file2" ).returns( "" );
-    MOCK_EXPECT( internalResolver, Resolve ).once().with( "module", "file", "module2/file2" ).returns( "module2" );
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "module", "module2", "include context" );
+    MOCK_EXPECT( externalResolver.Resolve ).once().with( "module2/file2" ).returns( "" );
+    MOCK_EXPECT( internalResolver.Resolve ).once().with( "module", "file", "module2/file2" ).returns( "module2" );
+    MOCK_EXPECT( visitor.NotifyInternalDependency ).once().with( "module", "module2", "include context" );
     metric.Apply( visitor );
 }
 
@@ -143,7 +143,7 @@ BOOST_FIXTURE_TEST_CASE( dependency_metric_detects_module_dependencies_with_inte
     fileObserver->NotifyFile( "file2", is, "file context2" );
     includeObserver->NotifyInternalInclude( "file2", "include context3" );
     MockDependencyVisitor visitor;
-    MOCK_EXPECT( internalResolver, Resolve ).once().with( "module", "file", "module2/file2" ).returns( "module2" );
-    MOCK_EXPECT( visitor, NotifyInternalDependency ).once().with( "module", "module2", "include context2" );
+    MOCK_EXPECT( internalResolver.Resolve ).once().with( "module", "file", "module2/file2" ).returns( "module2" );
+    MOCK_EXPECT( visitor.NotifyInternalDependency ).once().with( "module", "module2", "include context2" );
     metric.Apply( visitor );
 }

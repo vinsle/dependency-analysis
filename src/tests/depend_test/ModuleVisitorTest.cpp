@@ -18,7 +18,7 @@ BOOST_AUTO_TEST_CASE( visiting_invalid_directory_throws )
 {
     MockLog log;
     ModuleVisitor visitor( log );
-    MOCK_EXPECT( log, Warn ).once();
+    MOCK_EXPECT( log.Warn ).once();
     visitor.Visit( "invalid_directory", "" );
 }
 
@@ -28,8 +28,8 @@ BOOST_AUTO_TEST_CASE( module_visitor_lists_all_first_level_directories_and_notif
     ModuleVisitor visitor( log );
     MockUnitObserver observer;
     visitor.Register( observer );
-    MOCK_EXPECT( observer, NotifyUnit ).once().with( "first", "first" );
-    MOCK_EXPECT( observer, NotifyUnit ).once().with( "second", "second" );
+    MOCK_EXPECT( observer.NotifyUnit ).once().with( "first", "first" );
+    MOCK_EXPECT( observer.NotifyUnit ).once().with( "second", "second" );
     visitor.Visit( BOOST_RESOLVE( "module_visitor_lists_all_first_level_directories_and_notifies_listeners" ), "" );
     visitor.Unregister( observer );
 }
