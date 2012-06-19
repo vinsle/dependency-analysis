@@ -1,4 +1,4 @@
-Dependency-analysis is a tool suite helping developpers to analyse and maintain quality on their project, including:
+Dependency-analysis is a tool suite helping developpers to analyze and maintain quality on their project, including:
 * Dependency detection
 * Dependency guard
 * Cyclic dependencies detection
