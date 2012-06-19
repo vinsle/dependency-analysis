@@ -56,6 +56,12 @@ BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_listeners_with_class_name, Class
     lineObserver->NotifyUncommentedLine( "class test", "context" );
 }
 
+BOOST_FIXTURE_TEST_CASE( class_visitor_notifies_listeners_with_struct_name, ClassFixture )
+{
+    MOCK_EXPECT( classObserver.NotifyClass ).once().with( "test", "context" );
+    lineObserver->NotifyUncommentedLine( "struct test", "context" );
+}
+
 BOOST_FIXTURE_TEST_CASE( class_name_can_be_valid_c_identifier, ClassFixture )
 {
     MOCK_EXPECT( classObserver.NotifyClass ).once().with( "_test_Name_3", "context" );
@@ -95,7 +101,7 @@ BOOST_FIXTURE_TEST_CASE( class_visitor_handles_templates, ClassFixture )
     MOCK_EXPECT( classObserver.NotifyClass ).once().with( "test", "context2" );
     lineObserver->NotifyUncommentedLine( "class< T, U > test", "context2" );
     MOCK_EXPECT( classObserver.NotifyClass ).once().with( "test", "context3" );
-    lineObserver->NotifyUncommentedLine( "class< < T, U >, K > test", "context3" );
+    lineObserver->NotifyUncommentedLine( "struct< < T, U >, K > test", "context3" );
 }
 
 BOOST_FIXTURE_TEST_CASE( class_visitor_handles_template_forward_declaration, ClassFixture )
@@ -158,7 +164,7 @@ BOOST_FIXTURE_TEST_CASE( class_visitor_handles_multiple_classes_in_the_same_file
     MOCK_EXPECT( classObserver.NotifyAbstractness ).once().in( s );
     lineObserver->NotifyUncommentedLine( "void method() = 0", "context" );
     MOCK_EXPECT( classObserver.NotifyClass ).once().in( s );
-    lineObserver->NotifyUncommentedLine( "class test2", "context" );
+    lineObserver->NotifyUncommentedLine( "struct test2", "context" );
     MOCK_EXPECT( classObserver.NotifyAbstractness ).once().in( s );
     lineObserver->NotifyUncommentedLine( "void method() = 0", "context" );
 }
