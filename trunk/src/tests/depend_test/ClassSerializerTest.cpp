@@ -17,12 +17,12 @@ BOOST_AUTO_TEST_CASE( classes_serialization )
 {
     MockSubject< UnitObserver_ABC > unitSubject;
     UnitObserver_ABC* unitObserver = 0;
-    MOCK_EXPECT( unitSubject, Register ).once().with( mock::retrieve( unitObserver ) );
-    MOCK_EXPECT( unitSubject, Unregister ).once();
+    MOCK_EXPECT( unitSubject.Register ).once().with( mock::retrieve( unitObserver ) );
+    MOCK_EXPECT( unitSubject.Unregister ).once();
     MockSubject< ClassObserver_ABC > classSubject;
     ClassObserver_ABC* classObserver = 0;
-    MOCK_EXPECT( classSubject, Register ).once().with( mock::retrieve( classObserver ) );
-    MOCK_EXPECT( classSubject, Unregister ).once();
+    MOCK_EXPECT( classSubject.Register ).once().with( mock::retrieve( classObserver ) );
+    MOCK_EXPECT( classSubject.Unregister ).once();
     ClassSerializer serializer( unitSubject, classSubject );
     BOOST_REQUIRE( unitObserver );
     BOOST_REQUIRE( classObserver );

@@ -31,9 +31,9 @@ BOOST_AUTO_TEST_CASE( class_loads_from_xml_and_notifies_listeners )
     loader.Subject< UnitObserver_ABC >::Register( unitObserver );
     loader.Subject< ClassObserver_ABC >::Register( classObserver );
     mock::sequence s;
-    MOCK_EXPECT( unitObserver, NotifyUnit ).once().in( s ).with( "module1", "" );
-    MOCK_EXPECT( classObserver, NotifyClass ).once().in( s ).with( "class1", "context1" );
-    MOCK_EXPECT( classObserver, NotifyAbstractness ).once().in( s );
-    MOCK_EXPECT( classObserver, NotifyClass ).once().in( s ).with( "class2", "context2" );
+    MOCK_EXPECT( unitObserver.NotifyUnit ).once().in( s ).with( "module1", "" );
+    MOCK_EXPECT( classObserver.NotifyClass ).once().in( s ).with( "class1", "context1" );
+    MOCK_EXPECT( classObserver.NotifyAbstractness ).once().in( s );
+    MOCK_EXPECT( classObserver.NotifyClass ).once().in( s ).with( "class2", "context2" );
     loader.Process( xis );
 }

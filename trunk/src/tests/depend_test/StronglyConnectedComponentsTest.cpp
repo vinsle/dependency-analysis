@@ -26,7 +26,7 @@ namespace
         Fixture()
             : visitor( 0 )
         {
-            MOCK_EXPECT( dependencies, Apply ).once().with( mock::retrieve( visitor ) );
+            MOCK_EXPECT( dependencies.Apply ).once().with( mock::retrieve( visitor ) );
         }
         MockVisitable< DependencyVisitor_ABC > dependencies;
         DependencyVisitor_ABC* visitor;
@@ -48,7 +48,7 @@ namespace
     {
         MockComponentVisitor visitor;
         BOOST_FOREACH( const std::string& unit, expected )
-            MOCK_EXPECT( visitor, NotifyUnit ).once().with( unit );
+            MOCK_EXPECT( visitor.NotifyUnit ).once().with( unit );
         actual.Apply( visitor );
         return true;
     }
@@ -65,8 +65,8 @@ BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_detection, Compone
     visitor->NotifyInternalDependency( "to", "from", "context" );
     visitor->NotifyInternalDependency( "other", "to", "context" );
     const std::vector< std::string > component = boost::assign::list_of( "from" )( "to" );
-    MOCK_EXPECT( mockVisitor, NotifyComponent ).once().with( boost::bind( &CheckComponent, _1, boost::cref( component ) ) );
-    MOCK_EXPECT( filter, Check ).returns( true );
+    MOCK_EXPECT( mockVisitor.NotifyComponent ).once().with( boost::bind( &CheckComponent, _1, boost::cref( component ) ) );
+    MOCK_EXPECT( filter.Check ).returns( true );
     components.Apply( mockVisitor );
 }
 
@@ -75,8 +75,8 @@ BOOST_FIXTURE_TEST_CASE( filtered_components_with_only_one_module_is_empty, Comp
     visitor->NotifyInternalDependency( "from", "to", "context" );
     visitor->NotifyInternalDependency( "to", "from", "context" );
     visitor->NotifyInternalDependency( "other", "to", "context" );
-    MOCK_EXPECT( filter, Check ).with( "from" ).returns( true );
-    MOCK_EXPECT( filter, Check ).returns( false );
+    MOCK_EXPECT( filter.Check ).with( "from" ).returns( true );
+    MOCK_EXPECT( filter.Check ).returns( false );
     components.Apply( mockVisitor );
 }
 
@@ -87,10 +87,10 @@ BOOST_FIXTURE_TEST_CASE( simple_strongly_connected_components_are_filtered, Comp
     visitor->NotifyInternalDependency( "other", "to", "context" );
     visitor->NotifyInternalDependency( "from", "other", "context" );
     const std::vector< std::string > component = boost::assign::list_of( "from" )( "to" );
-    MOCK_EXPECT( mockVisitor, NotifyComponent ).once().with( boost::bind( &CheckComponent, _1, boost::cref( component ) ) );
-    MOCK_EXPECT( filter, Check ).with( "from" ).returns( true );
-    MOCK_EXPECT( filter, Check ).with( "to" ).returns( true );
-    MOCK_EXPECT( filter, Check ).returns( false );
+    MOCK_EXPECT( mockVisitor.NotifyComponent ).once().with( boost::bind( &CheckComponent, _1, boost::cref( component ) ) );
+    MOCK_EXPECT( filter.Check ).with( "from" ).returns( true );
+    MOCK_EXPECT( filter.Check ).with( "to" ).returns( true );
+    MOCK_EXPECT( filter.Check ).returns( false );
     components.Apply( mockVisitor );
 }
 
@@ -102,8 +102,8 @@ BOOST_FIXTURE_TEST_CASE( multiple_strongly_connected_components_are_detected, Co
     visitor->NotifyInternalDependency( "otherTo", "otherFrom", "context" );
     const std::vector< std::string > firstComponent = boost::assign::list_of( "from" )( "to" );
     const std::vector< std::string > secondComponent = boost::assign::list_of( "otherFrom" )( "otherTo" );
-    MOCK_EXPECT( mockVisitor, NotifyComponent ).once().with( boost::bind( &CheckComponent, _1, boost::cref( firstComponent ) ) );
-    MOCK_EXPECT( mockVisitor, NotifyComponent ).once().with( boost::bind( &CheckComponent, _1, boost::cref( secondComponent ) ) );
-    MOCK_EXPECT( filter, Check ).returns( true );
+    MOCK_EXPECT( mockVisitor.NotifyComponent ).once().with( boost::bind( &CheckComponent, _1, boost::cref( firstComponent ) ) );
+    MOCK_EXPECT( mockVisitor.NotifyComponent ).once().with( boost::bind( &CheckComponent, _1, boost::cref( secondComponent ) ) );
+    MOCK_EXPECT( filter.Check ).returns( true );
     components.Apply( mockVisitor );
 }

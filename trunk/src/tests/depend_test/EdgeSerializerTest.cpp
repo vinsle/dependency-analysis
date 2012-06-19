@@ -23,8 +23,8 @@ namespace
             : unitsVisitor     ( 0 )
             , dependencyVisitor( 0 )
         {
-            MOCK_EXPECT( units, Apply ).once().in( s ).with( mock::retrieve( unitsVisitor ) );
-            MOCK_EXPECT( dependencyMetric, Apply ).once().in( s ).with( mock::retrieve( dependencyVisitor ) );
+            MOCK_EXPECT( units.Apply ).once().in( s ).with( mock::retrieve( unitsVisitor ) );
+            MOCK_EXPECT( dependencyMetric.Apply ).once().in( s ).with( mock::retrieve( dependencyVisitor ) );
         }
         mock::sequence s;
         MockVisitable< UnitObserver_ABC > units;
@@ -53,7 +53,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_in_xml, SerializeFixture )
     dependencyVisitor->NotifyInternalDependency( "module2", "module1", "context2" );
     dependencyVisitor->NotifyExternalDependency( "module1", "boost", "context3" );
     xml::xostringstream xos;
-    MOCK_EXPECT( filter, Check ).returns( true );
+    MOCK_EXPECT( filter.Check ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<nodes>"
@@ -85,7 +85,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_units_without_dependency_in_xml, SerializeFix
 {
     unitsVisitor->NotifyUnit( "module", "context" );
     xml::xostringstream xos;
-    MOCK_EXPECT( filter, Check ).returns( true );
+    MOCK_EXPECT( filter.Check ).returns( true );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<nodes>"
@@ -105,10 +105,10 @@ BOOST_FIXTURE_TEST_CASE( serialize_edges_with_module_filter, SerializeFixture )
     dependencyVisitor->NotifyInternalDependency( "module3", "module2", "context4" );
     dependencyVisitor->NotifyInternalDependency( "module1", "module2", "context5" );
     xml::xostringstream xos;
-    MOCK_EXPECT( filter, Check ).with( "module1" ).returns( true );
-    MOCK_EXPECT( filter, Check ).with( "module2" ).returns( true );
-    MOCK_EXPECT( filter, Check ).with( "module3" ).returns( true );
-    MOCK_EXPECT( filter, Check ).returns( false );
+    MOCK_EXPECT( filter.Check ).with( "module1" ).returns( true );
+    MOCK_EXPECT( filter.Check ).with( "module2" ).returns( true );
+    MOCK_EXPECT( filter.Check ).with( "module3" ).returns( true );
+    MOCK_EXPECT( filter.Check ).returns( false );
     serializer.Serialize( xos, filter );
     const std::string expected =
         "<nodes>"

@@ -22,10 +22,10 @@ namespace
             : classObserver ( 0 )
             , moduleObserver( 0 )
         {
-            MOCK_EXPECT( mockModuleVisitor, Register ).once().with( mock::retrieve( moduleObserver ) );
-            MOCK_EXPECT( mockModuleVisitor, Unregister ).once();
-            MOCK_EXPECT( mockClassVisitor, Register ).once().with( mock::retrieve( classObserver ) );
-            MOCK_EXPECT( mockClassVisitor, Unregister ).once();
+            MOCK_EXPECT( mockModuleVisitor.Register ).once().with( mock::retrieve( moduleObserver ) );
+            MOCK_EXPECT( mockModuleVisitor.Unregister ).once();
+            MOCK_EXPECT( mockClassVisitor.Register ).once().with( mock::retrieve( classObserver ) );
+            MOCK_EXPECT( mockClassVisitor.Unregister ).once();
         }
         ClassObserver_ABC* classObserver;
         UnitObserver_ABC* moduleObserver;
@@ -51,6 +51,6 @@ BOOST_FIXTURE_TEST_CASE( class_metric_count_classes_and_abstract_classes_on_modu
     classObserver->NotifyClass( "class", "context" );
     classObserver->NotifyAbstractness();
     MockClassMetricVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyClassMetric ).once().with( "module", 1u, 1u );
+    MOCK_EXPECT( visitor.NotifyClassMetric ).once().with( "module", 1u, 1u );
     metric.Apply( visitor );
 }

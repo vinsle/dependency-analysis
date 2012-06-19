@@ -23,9 +23,9 @@ namespace
             , classVisitor     ( 0 )
             , dependencyVisitor( 0 )
         {
-            MOCK_EXPECT( units, Apply ).once().with( mock::retrieve( unitObserver ) );
-            MOCK_EXPECT( classMetric, Apply ).once().with( mock::retrieve( classVisitor ) );
-            MOCK_EXPECT( dependencyMetric, Apply ).once().with( mock::retrieve( dependencyVisitor ) );
+            MOCK_EXPECT( units.Apply ).once().with( mock::retrieve( unitObserver ) );
+            MOCK_EXPECT( classMetric.Apply ).once().with( mock::retrieve( classVisitor ) );
+            MOCK_EXPECT( dependencyMetric.Apply ).once().with( mock::retrieve( dependencyVisitor ) );
         }
         MockVisitable< UnitObserver_ABC > units;
         MockVisitable< ClassMetricVisitor_ABC > classMetric;
@@ -52,7 +52,7 @@ BOOST_FIXTURE_TEST_CASE( metrics_are_null_by_default, MetricsFixture )
 {
     unitObserver->NotifyUnit( "module", "context" );
     MockMetricsVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyMetrics ).once().with( "module", 0u, 0u, 0u, 0u, 0u, 0u, 0u, 100u );
+    MOCK_EXPECT( visitor.NotifyMetrics ).once().with( "module", 0u, 0u, 0u, 0u, 0u, 0u, 0u, 100u );
     metrics.Apply( visitor );
 }
 
@@ -64,7 +64,7 @@ BOOST_FIXTURE_TEST_CASE( metrics_are_computed, MetricsFixture )
     dependencyVisitor->NotifyInternalDependency( "module2", "module1", "context" );
     dependencyVisitor->NotifyExternalDependency( "module1", "boost", "context" );
     MockMetricsVisitor visitor;
-    MOCK_EXPECT( visitor, NotifyMetrics ).once().with( "module1", 1u, 1u, 1u, 4u, 2u, 50u, 50u, 0u );
-    MOCK_EXPECT( visitor, NotifyMetrics ).once().with( "module2", 1u, 1u, 0u, 4u, 2u, 50u, 50u, 0u );
+    MOCK_EXPECT( visitor.NotifyMetrics ).once().with( "module1", 1u, 1u, 1u, 4u, 2u, 50u, 50u, 0u );
+    MOCK_EXPECT( visitor.NotifyMetrics ).once().with( "module2", 1u, 1u, 0u, 4u, 2u, 50u, 50u, 0u );
     metrics.Apply( visitor );
 }

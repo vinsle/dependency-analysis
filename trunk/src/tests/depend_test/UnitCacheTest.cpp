@@ -17,12 +17,12 @@ BOOST_AUTO_TEST_CASE( unit_cache_can_be_visited )
 {
     MockSubject< UnitObserver_ABC > moduleSubject;
     UnitObserver_ABC* observer = 0;
-    MOCK_EXPECT( moduleSubject, Register ).once().with( mock::retrieve( observer ) );
-    MOCK_EXPECT( moduleSubject, Unregister ).once();
+    MOCK_EXPECT( moduleSubject.Register ).once().with( mock::retrieve( observer ) );
+    MOCK_EXPECT( moduleSubject.Unregister ).once();
     const UnitCache cache( moduleSubject );
     BOOST_REQUIRE( observer );
     observer->NotifyUnit( "unit", "context" );
     MockUnitObserver unitObserver;
-    MOCK_EXPECT( unitObserver, NotifyUnit ).once().with( "unit", "context" );
+    MOCK_EXPECT( unitObserver.NotifyUnit ).once().with( "unit", "context" );
     cache.Apply( unitObserver );
 }
