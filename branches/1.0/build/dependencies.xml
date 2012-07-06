@@ -1,0 +1,22 @@
+<dependencies>
+    <module name='depend_app'>
+        <dependency>depend</dependency>
+        <dependency>application</dependency>
+    </module>
+    <module name='depend_guard_app'>
+        <dependency>depend</dependency>
+        <dependency>application</dependency>
+    </module>
+    <module name='depend_metrics_app'>
+        <dependency>depend</dependency>
+        <dependency>application</dependency>
+    </module>
+    <module name='depend_components_app'>
+        <dependency>depend</dependency>
+        <dependency>application</dependency>
+    </module>
+    <module name='depend_graph_app'>
+        <dependency>depend</dependency>
+        <dependency>application</dependency>
+    </module>
+</dependencies>

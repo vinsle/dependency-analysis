@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_app", "depend_app.vcxproj", "{D9BE8B23-C5F5-4C87-A950-E5E039837627}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_test", "depend_test.vcxproj", "{E4B46F40-895D-4146-91E9-D36D6AC02696}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend", "depend.vcxproj", "{02EED1A3-A91E-40CD-ADB3-F69394CF8C84}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_guard_app", "depend_guard_app.vcxproj", "{0E38197C-5297-4C47-8B35-98CC6F1169C4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_graph_app", "depend_graph_app.vcxproj", "{052071D8-F228-42B2-A047-4688947AEEDE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_metrics_app", "depend_metrics_app.vcxproj", "{B31494C9-DDAA-4508-A523-159876E66C97}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "depend_components_app", "depend_components_app.vcxproj", "{D1DB7BA6-B085-47F2-948E-018A955C4D59}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "application", "application.vcxproj", "{5D3204DC-01F0-4BF5-8871-5D235C9C59A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug|Win32 = debug|Win32
+		release|Win32 = release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9BE8B23-C5F5-4C87-A950-E5E039837627}.debug|Win32.ActiveCfg = debug|Win32
+		{D9BE8B23-C5F5-4C87-A950-E5E039837627}.debug|Win32.Build.0 = debug|Win32
+		{D9BE8B23-C5F5-4C87-A950-E5E039837627}.release|Win32.ActiveCfg = release|Win32
+		{D9BE8B23-C5F5-4C87-A950-E5E039837627}.release|Win32.Build.0 = release|Win32
+		{E4B46F40-895D-4146-91E9-D36D6AC02696}.debug|Win32.ActiveCfg = debug|Win32
+		{E4B46F40-895D-4146-91E9-D36D6AC02696}.debug|Win32.Build.0 = debug|Win32
+		{E4B46F40-895D-4146-91E9-D36D6AC02696}.release|Win32.ActiveCfg = release|Win32
+		{E4B46F40-895D-4146-91E9-D36D6AC02696}.release|Win32.Build.0 = release|Win32
+		{02EED1A3-A91E-40CD-ADB3-F69394CF8C84}.debug|Win32.ActiveCfg = debug|Win32
+		{02EED1A3-A91E-40CD-ADB3-F69394CF8C84}.debug|Win32.Build.0 = debug|Win32
+		{02EED1A3-A91E-40CD-ADB3-F69394CF8C84}.release|Win32.ActiveCfg = release|Win32
+		{02EED1A3-A91E-40CD-ADB3-F69394CF8C84}.release|Win32.Build.0 = release|Win32
+		{0E38197C-5297-4C47-8B35-98CC6F1169C4}.debug|Win32.ActiveCfg = debug|Win32
+		{0E38197C-5297-4C47-8B35-98CC6F1169C4}.debug|Win32.Build.0 = debug|Win32
+		{0E38197C-5297-4C47-8B35-98CC6F1169C4}.release|Win32.ActiveCfg = release|Win32
+		{0E38197C-5297-4C47-8B35-98CC6F1169C4}.release|Win32.Build.0 = release|Win32
+		{052071D8-F228-42B2-A047-4688947AEEDE}.debug|Win32.ActiveCfg = debug|Win32
+		{052071D8-F228-42B2-A047-4688947AEEDE}.debug|Win32.Build.0 = debug|Win32
+		{052071D8-F228-42B2-A047-4688947AEEDE}.release|Win32.ActiveCfg = release|Win32
+		{052071D8-F228-42B2-A047-4688947AEEDE}.release|Win32.Build.0 = release|Win32
+		{B31494C9-DDAA-4508-A523-159876E66C97}.debug|Win32.ActiveCfg = debug|Win32
+		{B31494C9-DDAA-4508-A523-159876E66C97}.debug|Win32.Build.0 = debug|Win32
+		{B31494C9-DDAA-4508-A523-159876E66C97}.release|Win32.ActiveCfg = release|Win32
+		{B31494C9-DDAA-4508-A523-159876E66C97}.release|Win32.Build.0 = release|Win32
+		{D1DB7BA6-B085-47F2-948E-018A955C4D59}.debug|Win32.ActiveCfg = debug|Win32
+		{D1DB7BA6-B085-47F2-948E-018A955C4D59}.debug|Win32.Build.0 = debug|Win32
+		{D1DB7BA6-B085-47F2-948E-018A955C4D59}.release|Win32.ActiveCfg = release|Win32
+		{D1DB7BA6-B085-47F2-948E-018A955C4D59}.release|Win32.Build.0 = release|Win32
+		{5D3204DC-01F0-4BF5-8871-5D235C9C59A4}.debug|Win32.ActiveCfg = debug|Win32
+		{5D3204DC-01F0-4BF5-8871-5D235C9C59A4}.debug|Win32.Build.0 = debug|Win32
+		{5D3204DC-01F0-4BF5-8871-5D235C9C59A4}.release|Win32.ActiveCfg = release|Win32
+		{5D3204DC-01F0-4BF5-8871-5D235C9C59A4}.release|Win32.Build.0 = release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

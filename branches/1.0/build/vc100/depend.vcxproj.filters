@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9789beac-ecbb-41e0-a1d5-f91aeff98eaf}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\tools">
+      <UniqueIdentifier>{9bf9146e-d40f-4c45-88ba-af2a5ddfdabc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\visitors">
+      <UniqueIdentifier>{f08144ca-7598-4af4-9347-98aaf86cd58f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\metrics">
+      <UniqueIdentifier>{d0d48d42-c7a3-45fe-ac79-86d8ae247a9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\serialization">
+      <UniqueIdentifier>{b947633c-299c-49d8-b158-fdc1d28139c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\resolvers">
+      <UniqueIdentifier>{7ac5ea5d-0dfe-40a3-8dd2-a31e5c105462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components">
+      <UniqueIdentifier>{fecc73ae-2941-43aa-b0fb-cca4f1b57635}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\depend\depend_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\Filter.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\Finder.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\Log.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\TransitiveReductionFilter.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ClassVisitor.cpp">
+      <Filter>Source Files\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\FileVisitor.cpp">
+      <Filter>Source Files\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\IncludeVisitor.cpp">
+      <Filter>Source Files\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\LineVisitor.cpp">
+      <Filter>Source Files\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ModuleVisitor.cpp">
+      <Filter>Source Files\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\UncommentedLineVisitor.cpp">
+      <Filter>Source Files\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\UnitCache.cpp">
+      <Filter>Source Files\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ClassDependency.cpp">
+      <Filter>Source Files\metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ClassLoader.cpp">
+      <Filter>Source Files\metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ClassMetric.cpp">
+      <Filter>Source Files\metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ModuleDependencyGuard.cpp">
+      <Filter>Source Files\metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\UnitDependency.cpp">
+      <Filter>Source Files\metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\UnitDependencyLoader.cpp">
+      <Filter>Source Files\metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\UnitMetrics.cpp">
+      <Filter>Source Files\metrics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ClassSerializer.cpp">
+      <Filter>Source Files\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\DotSerializer.cpp">
+      <Filter>Source Files\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\EdgeSerializer.cpp">
+      <Filter>Source Files\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ExternalSerializer.cpp">
+      <Filter>Source Files\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\MetricSerializer.cpp">
+      <Filter>Source Files\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\UnitSerializer.cpp">
+      <Filter>Source Files\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ExternalModuleResolver.cpp">
+      <Filter>Source Files\resolvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\InternalModuleResolver.cpp">
+      <Filter>Source Files\resolvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\ProxyModuleResolver.cpp">
+      <Filter>Source Files\resolvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\StronglyConnectedComponents.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\StronglyConnectedComponentsSerializer.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\depend\depend_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Filter.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Filter_ABC.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Finder.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Finder_ABC.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\istream_guard.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Log.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Log_ABC.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Observer.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Subject.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\TransitiveReductionFilter.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\Visitable.h">
+      <Filter>Source Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ClassObserver_ABC.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ClassVisitor.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\FileObserver_ABC.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\FileVisitor.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\IncludeObserver_ABC.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\IncludeVisitor.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\LineObserver_ABC.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\LineVisitor.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ModuleVisitor.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\UncommentedLineObserver_ABC.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\UncommentedLineVisitor.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\UnitCache.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\UnitObserver_ABC.h">
+      <Filter>Source Files\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ClassDependency.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ClassLoader.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ClassMetric.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ClassMetricVisitor_ABC.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\DependencyGuardVisitor_ABC.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\DependencyVisitor_ABC.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\MetricsVisitor_ABC.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ModuleDependencyGuard.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\UnitDependency.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\UnitDependencyLoader.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\UnitMetrics.h">
+      <Filter>Source Files\metrics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ClassSerializer.h">
+      <Filter>Source Files\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\DotOption.h">
+      <Filter>Source Files\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\DotSerializer.h">
+      <Filter>Source Files\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\EdgeSerializer.h">
+      <Filter>Source Files\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ExternalSerializer.h">
+      <Filter>Source Files\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\MetricSerializer.h">
+      <Filter>Source Files\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\UnitSerializer.h">
+      <Filter>Source Files\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ExternalModuleResolver.h">
+      <Filter>Source Files\resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ExternalModuleResolver_ABC.h">
+      <Filter>Source Files\resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\InternalModuleResolver.h">
+      <Filter>Source Files\resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\InternalModuleResolver_ABC.h">
+      <Filter>Source Files\resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ProxyModuleResolver.h">
+      <Filter>Source Files\resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\ComponentVisitor_ABC.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\StronglyConnectedComponents.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\StronglyConnectedComponentsSerializer.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\StronglyConnectedComponentsVisitor_ABC.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
