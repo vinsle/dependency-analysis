@@ -1,9 +1,25 @@
-Dependency-analysis is a tool suite helping developpers to analyze and maintain quality on their project, including:
+Dependency-analysis is a tool suite helping developpers to analyze and maintain
+quality on their project, including:
 * Dependency detection
 * Dependency guard
 * Cyclic dependencies detection
 * Abstractness and instability metrics computation
 * Dependency graph drawing.
+
+Quick start:
+
+Depend application is the first step in your code analysis.
+It parses all your C++ code base, identifying dependencies (includes) between
+internal (yours) and external modules.
+
+A simple invocation on dependency-analysis sources:
+./depend --output=depend.xml --path=src/libraries --path=src/applications --warning
+
+Depend Graph is a tool made for graph generation using GraphViz.
+Each module is represented as a node and an edge represents a module dependency to another module.
+Graphviz must be installed before using Depend Graph.
+
+./depend_graph --output=graph.png --input=depend.xml
 
 It's own dependencies are:
  * Turtle: http://turtle.sourceforge.net
@@ -11,5 +27,5 @@ It's own dependencies are:
  * XeuMeuLeu: http://xeumeuleu.sourceforge.net
  * Apache Xerces: http://xerces.apache.org/xerces-c
  * GraphViz: http://www.graphviz.org.
-
+ 
 See http://code.google.com/p/dependency-analysis/ for more informations and download.
