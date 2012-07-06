@@ -141,7 +141,10 @@
             <fileset file="${out.dir}/release/applications/depend_metrics_app/depend_metrics${exe}"/>
             <fileset file="${out.dir}/release/applications/depend_components_app/depend_components${exe}"/>
             <fileset file="${out.dir}/release/applications/depend_graph_app/depend_graph${exe}"/>
-            <fileset file="${root.dir}/*.txt"/>
+            <fileset file="${root.dir}/AUTHORS"/>
+            <fileset file="${root.dir}/CHANGELOG"/>
+            <fileset file="${root.dir}/LICENSE"/>
+            <fileset file="${root.dir}/README"/>
         </zip>
         <zip destfile="${dist.dir}/documentation_${package}_${depend.version}.zip">
             <fileset dir="${doc.dir}"/>
