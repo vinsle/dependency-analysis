@@ -1,0 +1,8 @@
+  <dependency name="xeumeuleu" version="svn rev 725">
+    <dependency name="boost" version="1.42"/>
+    <dependency name="turtle" version="svn rev 475">
+      <dependency name="boost" version="1.42"/>
+    </dependency>
+    <dependency name="xalan-c" version="svn rev 990605 + patch"/>
+    <dependency name="xerces-c" version="2.7.0"/>  <dependency name="xerces-c" version="current"/>
+  </dependency>
