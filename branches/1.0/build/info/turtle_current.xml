@@ -1,0 +1,3 @@
+  <dependency name="turtle" version="svn rev 475">
+    <dependency name="boost" version="1.42"/>
+  </dependency>
