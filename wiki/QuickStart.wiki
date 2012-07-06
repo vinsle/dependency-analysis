@@ -11,8 +11,8 @@ A simple invocation on dependency-analysis sources (assuming you already checkou
 
 {{{./depend --output=depend.xml --path=src/libraries --path=src/applications --warning}}}
 
-Depend Graph is a tool made for graph generation using GraphViz.
+Depend Graph is a tool made for graph generation using !GraphViz.
 Each module is represented as a node and an edge represents a module dependency to another module.
-Graphviz must be installed before using Depend Graph.
+!GraphViz must be installed before using Depend Graph.
 
 {{{./depend_graph --output=graph.png --input=depend.xml}}}
