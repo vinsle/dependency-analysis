@@ -15,8 +15,11 @@
         <os family="windows"/>
     </condition>
 
-    <condition property="package" value="windows" else="linux">
-        <os family="windows"/>
+    <condition property="deploy">
+        <or>
+            <isset property="is-linux"/>
+            <isset property="is-vc100"/>
+        </or>
     </condition>
     <!--
     ============================================================================
@@ -133,7 +136,7 @@
         </doxygen-report>
     </target>
 
-    <target name="package" depends="build,test,documentation" description="package the distribution">
+    <target name="package" depends="build,test,documentation" if="deploy" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/depend_${package}_${depend.version}.zip">
             <fileset file="${out.dir}/release/applications/depend_app/depend${exe}"/>
