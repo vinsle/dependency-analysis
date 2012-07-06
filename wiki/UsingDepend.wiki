@@ -26,7 +26,7 @@ See UnderstandingDependencyDetection for more informations about directories str
 
 A simple invocation on dependency-analysis sources:
 
-{{{depend.exe --output=depend.xml --path=src/libraries --path=src/applications --include=include --exclude="$VSINSTALLDIR}/VC/include" --warning}}}
+{{{depend.exe --output=depend.xml --path=src/libraries --path=src/applications --include=include --exclude="$VSINSTALLDIR/VC/include" --warning}}}
 
 It produces an xml like this:
 {{{
