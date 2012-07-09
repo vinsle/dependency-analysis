@@ -115,6 +115,9 @@
     <ClCompile Include="..\..\src\libraries\depend\StronglyConnectedComponentsSerializer.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\depend\GraphMLSerializer.cpp">
+      <Filter>Source Files\serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\depend\depend_pch.h">
@@ -272,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\depend\StronglyConnectedComponentsVisitor_ABC.h">
       <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\depend\GraphMLSerializer.h">
+      <Filter>Source Files\serialization</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

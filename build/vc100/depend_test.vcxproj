@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\src\tests\depend_test\FileVisitorTest.cpp" />
     <ClCompile Include="..\..\src\tests\depend_test\FilterTest.cpp" />
     <ClCompile Include="..\..\src\tests\depend_test\FinderTest.Cpp" />
+    <ClCompile Include="..\..\src\tests\depend_test\GraphMLSerializerTest.cpp" />
     <ClCompile Include="..\..\src\tests\depend_test\IncludeVisitorTest.cpp" />
     <ClCompile Include="..\..\src\tests\depend_test\InternalModuleResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\depend_test\LineVisitorTest.cpp" />
