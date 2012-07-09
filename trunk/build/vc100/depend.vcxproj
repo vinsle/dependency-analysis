@@ -90,6 +90,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\depend\Filter.cpp" />
     <ClCompile Include="..\..\src\libraries\depend\Finder.cpp" />
+    <ClCompile Include="..\..\src\libraries\depend\GraphMLSerializer.cpp" />
     <ClCompile Include="..\..\src\libraries\depend\Log.cpp" />
     <ClCompile Include="..\..\src\libraries\depend\TransitiveReductionFilter.cpp" />
     <ClCompile Include="..\..\src\libraries\depend\ClassVisitor.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="..\..\src\libraries\depend\Filter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\depend\Finder.h" />
     <ClInclude Include="..\..\src\libraries\depend\Finder_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\depend\GraphMLSerializer.h" />
     <ClInclude Include="..\..\src\libraries\depend\istream_guard.h" />
     <ClInclude Include="..\..\src\libraries\depend\Log.h" />
     <ClInclude Include="..\..\src\libraries\depend\Log_ABC.h" />
