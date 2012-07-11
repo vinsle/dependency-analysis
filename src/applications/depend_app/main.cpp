@@ -48,7 +48,8 @@ namespace
             ( "output", bpo::value< std::string >()                  , "set output file" )
             ( "include,I", bpo::value< std::vector< std::string > >(), "add an include directory path for external dependency (dependency name can be forced with following syntax: --include=\"directory,name\")" )
             ( "exclude,E", bpo::value< std::vector< std::string > >(), "add an include directory path excluded from the dependencies and warnings" )
-            ( "warning"                                              , "enable warnings" );
+            ( "warning"                                              , "enable warnings" )
+            ( "graphml"                                              , "set output format to GraphML" );
         bpo::positional_options_description p;
         p.add( "path", -1 );
         bpo::variables_map vm;
@@ -84,6 +85,7 @@ namespace
         MakeExtensions( *xobs );
         *xobs   << xml::content( "output", vm[ "output" ].as< std::string >() )
                 << xml::content( "warning", vm.count( "warning" ) )
+                << xml::content( "graphml", vm.count( "graphml" ) )
                 << xml::start( "paths" );
         Serialize( *xobs, "path", vm[ "path" ].as< std::vector< std::string > >() );
         *xobs   << xml::end

@@ -23,6 +23,7 @@
 #include "depend/Filter_ABC.h"
 #include "depend/UnitCache.h"
 #include "depend/ClassSerializer.h"
+#include "depend/GraphMLSerializer.h"
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -166,9 +167,14 @@ void Facade::Serialize( xml::xistream& xis )
     if( !output.empty() )
         out.reset( new std::ofstream( output.c_str() ) );
     xml::xostringstream xos;
-    xos << xml::start( "graph" );
-    EdgeSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos, SimpleFilter() );
-    classSerializer_->Serialize( xos );
-    xos << xml::end;
+    if( xis.content< bool >( "graphml" ) )
+        GraphMLSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos );
+    else
+    {
+        xos << xml::start( "graph" );
+        EdgeSerializer( *dependencyMetric_, *unitCache_ ).Serialize( xos, SimpleFilter() );
+        classSerializer_->Serialize( xos );
+        xos << xml::end;
+    }
     *out << xos.str();
 }
